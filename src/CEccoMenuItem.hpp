@@ -11,18 +11,15 @@ enum class MenuItemFlag {
 class CEccoMenuItem {
 public:
 	CEccoMenuItem(char* script_content);
-
 	void Excute();
 
 	//Id
-	std::string m_szId;
-	int m_iCost;
-	std::string m_szScripts;
+	std::string m_szDisplay;
 	int8_t m_iPage;
-	unsigned int m_iIndex;
 	MenuItemFlag m_iFlags = MenuItemFlag::NONE;
 	
 private:
 	CEccoMenuItem* m_pParent;
 	std::unordered_map<std::string, CEccoMenuItem*> m_aryChild;
+	IEccoExcuter* m_pExcuter;
 };
