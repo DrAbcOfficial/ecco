@@ -16,6 +16,12 @@
     <Filter Include="metamod">
       <UniqueIdentifier>{0dea28de-d923-48c1-b23e-01a6a0f9d40b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\script">
+      <UniqueIdentifier>{b53f43ec-4d84-423b-8493-377d65a0a4a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\menu">
+      <UniqueIdentifier>{6ef504f1-56b5-4cd7-b29e-59de9aec839b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\angelscript.cpp">
@@ -39,6 +45,12 @@
     <ClCompile Include="src\sdk_util.cpp">
       <Filter>metamod</Filter>
     </ClCompile>
+    <ClCompile Include="src\script_system.cpp">
+      <Filter>core\script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CEccoMenuItem.cpp">
+      <Filter>core\menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\angelscript.hpp">
@@ -58,6 +70,15 @@
     </ClInclude>
     <ClInclude Include="src\signatures.h">
       <Filter>metamod</Filter>
+    </ClInclude>
+    <ClInclude Include="src\script_system.hpp">
+      <Filter>core\script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEccoMenuItem.hpp">
+      <Filter>core\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sven_api.hpp">
+      <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

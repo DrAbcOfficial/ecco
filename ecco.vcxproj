@@ -12,20 +12,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\angelscript.cpp" />
+    <ClCompile Include="src\CEccoMenuItem.cpp" />
     <ClCompile Include="src\dllapi.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\engine_api.cpp" />
     <ClCompile Include="src\h_export.cpp" />
     <ClCompile Include="src\meta_api.cpp" />
+    <ClCompile Include="src\script_system.cpp" />
     <ClCompile Include="src\sdk_util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="angelscriptlib.h" />
     <ClInclude Include="src\angelscript.hpp" />
+    <ClInclude Include="src\CEccoMenuItem.hpp" />
     <ClInclude Include="src\dlldef.h" />
     <ClInclude Include="src\enginedef.h" />
     <ClInclude Include="src\info_name.h" />
+    <ClInclude Include="src\script_system.hpp" />
     <ClInclude Include="src\signatures.h" />
+    <ClInclude Include="src\sven_api.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -74,8 +79,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/metamod/;./metamod/asext/include;./mmlib/include/sven;./src</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/metamod/;./metamod/asext/include;./mmlib/include/sven;./ChaiScript/include;./src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -93,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/metamod/;./metamod/asext/include;./mmlib/include/sven;./src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/metamod/;./metamod/asext/include;./mmlib/include/sven;./ChaiScript/include;./src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
