@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{1bea9f33-90f5-4f46-8a9c-f866f33e41e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="angelscript">
+      <UniqueIdentifier>{4ce407ae-1657-4a12-8534-11554251a427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="api">
+      <UniqueIdentifier>{26932d62-6696-46f2-9fdf-65d49caa5fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{479a1262-b65b-41f0-af63-48fbb0dc0c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metamod">
+      <UniqueIdentifier>{0dea28de-d923-48c1-b23e-01a6a0f9d40b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\angelscript.cpp">
+      <Filter>angelscript</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dllapi.cpp">
+      <Filter>metamod</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dllmain.cpp">
+      <Filter>metamod</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine_api.cpp">
+      <Filter>metamod</Filter>
+    </ClCompile>
+    <ClCompile Include="src\h_export.cpp">
+      <Filter>metamod</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_api.cpp">
+      <Filter>metamod</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sdk_util.cpp">
+      <Filter>metamod</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\angelscript.hpp">
+      <Filter>angelscript</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dlldef.h">
+      <Filter>metamod</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enginedef.h">
+      <Filter>metamod</Filter>
+    </ClInclude>
+    <ClInclude Include="src\info_name.h">
+      <Filter>metamod</Filter>
+    </ClInclude>
+    <ClInclude Include="angelscriptlib.h">
+      <Filter>angelscript</Filter>
+    </ClInclude>
+    <ClInclude Include="src\signatures.h">
+      <Filter>metamod</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
