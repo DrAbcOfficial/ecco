@@ -1,0 +1,6 @@
+[submodule "metamod"]
+	path = metamod
+	url = https://github.com/hzqst/metamod-fallguys
+[submodule "mmlib"]
+	path = mmlib
+	url = https://github.com/wootguy/mmlib
