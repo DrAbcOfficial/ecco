@@ -76,6 +76,9 @@
     <ClCompile Include="src\CEccoScriptItem.cpp">
       <Filter>core\script</Filter>
     </ClCompile>
+    <ClCompile Include="CEccoBackExcutor.cpp">
+      <Filter>core\menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\angelscript.hpp">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="src\CEccoScriptItem.h">
       <Filter>core\script</Filter>
+    </ClInclude>
+    <ClInclude Include="CEccoBackExcutor.h">
+      <Filter>core\menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

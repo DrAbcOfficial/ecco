@@ -3,11 +3,11 @@
 
 #include "sven_api.hpp"
 
-class CBaseEccoExcuter {
+class CBaseEccoExcutor {
 public:
 	virtual void Excute(edict_t* pPlayer, int selection);
 	virtual std::string GetDisplayName(edict_t* pPlyaer);
 
-protected:
+public:
 	std::string m_szId;
 };

@@ -32,6 +32,7 @@
 #include <meta_api.h>
 
 #include "script_system.h"
+#include "MenuParser.h"
 
 #include "dlldef.h"
 
@@ -40,6 +41,7 @@
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	ResetEccoScriptItems();
 	LoadEccoScriptItems();
+	ParseMenu();
 	SET_META_RESULT(MRES_HANDLED);
 }
 static DLL_FUNCTIONS gFunctionTable = {

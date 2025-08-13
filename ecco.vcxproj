@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CEccoBackExcutor.cpp" />
     <ClCompile Include="src\angelscript.cpp" />
     <ClCompile Include="src\CBaseEccoExcuter.cpp" />
     <ClCompile Include="src\CEccoExitExcutor.cpp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="angelscriptlib.h" />
+    <ClInclude Include="CEccoBackExcutor.h" />
     <ClInclude Include="src\angelscript.hpp" />
     <ClInclude Include="src\CEccoExitExcutor.h" />
     <ClInclude Include="src\CEccoScriptItem.h" />

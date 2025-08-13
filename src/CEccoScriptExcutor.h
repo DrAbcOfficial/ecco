@@ -17,6 +17,4 @@ public:
 	std::bitset<32> m_bitFlags;
 	std::string m_szScript;
 	int m_iCost;
-private:
-	CBaseEccoExcuter* m_pParent;
 };

@@ -12,6 +12,7 @@ CEccoScriptItem::CEccoScriptItem(std::string path){
 		auto pos = m_szName.find_last_of('.');
 		m_szId = (pos == std::string::npos) ? m_szName : m_szName.substr(pos + 1);
 
+		m_iFlags = toml["Ecco"]["flags"].value_or(0);
 		m_iCost = toml["Ecco"]["cost"].value_or(0);
 		m_szScripts = toml["Ecco"]["script"].value_or("");
 
