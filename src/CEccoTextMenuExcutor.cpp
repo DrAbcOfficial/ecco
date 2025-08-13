@@ -2,9 +2,9 @@
 // Have to write by myself :(
 
 #include "meta_utility.h"
-#include "CEccoTextMenu.h"
+#include "CEccoTextMenuExcutor.h"
 
-std::array<CEccoTextMenu*, MAX_PLAYERS> g_aryTextMenus;
+std::array<CEccoTextMenuExcutor*, MAX_PLAYERS> g_aryTextMenus;
 
 // listen for any other functions/plugins opening menus, so that TextMenu knows if it's the active menu
 void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, edict_t* ed) {
@@ -41,20 +41,20 @@ bool TextMenuClientCommandHook(edict_t* pEntity) {
 }
 
 
-bool CEccoTextMenu::IsPlayerViewing(edict_t* ent){
+bool CEccoTextMenuExcutor::IsPlayerViewing(edict_t* ent){
 	if (!IsValidPlayer(ent))
 		return false;
 	int index = ENTINDEX(ent)-1;
 	return m_iViewers.test(index);
 }
 
-void CEccoTextMenu::SetPlayerViewing(edict_t* ent, bool view){
+void CEccoTextMenuExcutor::SetPlayerViewing(edict_t* ent, bool view){
 	int index = ENTINDEX(ent) - 1;
 	m_iViewers.set(index, view);
 	g_aryTextMenus[index] = view ? this : nullptr;
 }
 
-void CEccoTextMenu::HandleMenuMessage(int msg_dest, edict_t* ed) {
+void CEccoTextMenuExcutor::HandleMenuMessage(int msg_dest, edict_t* ed) {
 	// Another text menu has been opened for one or more players, so this menu
 	// is no longer visible and should not handle menuselect commands
 
@@ -75,7 +75,7 @@ void CEccoTextMenu::HandleMenuMessage(int msg_dest, edict_t* ed) {
 		LOG_MESSAGE(PLID, "Who the hell use msg_dest: %d in ShowMenu message????", msg_dest);
 }
 
-void CEccoTextMenu::HandleMenuselectCmd(edict_t* pEntity, int selection) {
+void CEccoTextMenuExcutor::HandleMenuselectCmd(edict_t* pEntity, int selection) {
 	if (m_iViewers.none())
 		return;
 	if (IsPlayerViewing(pEntity)) {
@@ -88,7 +88,7 @@ void CEccoTextMenu::HandleMenuselectCmd(edict_t* pEntity, int selection) {
 	}
 }
 
-void CEccoTextMenu::AddItem(CBaseEccoExcuter* pItem) {
+void CEccoTextMenuExcutor::AddItem(CBaseEccoExcuter* pItem) {
 	//0 not included
 	for (size_t i = 0; i < m_aryOption.size()-1; i++) {
 		if (m_aryOption[i] == nullptr) {
@@ -99,7 +99,7 @@ void CEccoTextMenu::AddItem(CBaseEccoExcuter* pItem) {
 	LOG_ERROR(PLID, "EccoMenu %s added too much item!", m_szId.c_str());
 }
 
-void CEccoTextMenu::Excute(edict_t* pPlayer, int selection) {
+void CEccoTextMenuExcutor::Excute(edict_t* pPlayer, int selection) {
 	//Build message
 	std::string buffer = GetDisplayName(pPlayer) + "\n\n";
 	std::bitset<16> validslots;

@@ -36,8 +36,6 @@ struct CEccoConfigPath {
 	std::string Data;
 	//禁用地图文件路径
 	std::string BanMaps;
-	//脚本列表
-	std::string Scripts;
 	//金币图标
 	std::string MoneyIcon;
 };

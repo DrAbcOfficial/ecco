@@ -10,7 +10,7 @@ using ecco_parser_item_t = struct ecco_parser_item_s {
 	std::string szScript;
 };
 
-CEccoTextMenu* ParseMenu()
+CEccoTextMenuExcutor* ParseMenu()
 {
 	std::vector<ecco_parser_item_t*> pentToDelete;
 	ecco_parser_item_t* pRootParserItem = new ecco_parser_item_t();

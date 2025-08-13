@@ -1,22 +1,18 @@
 #pragma once
-#include <bitset>
-
-#include "CBaseEccoExcuter.h"
-
-enum MenuItemFlag {
-	NONE = 0,
-	HIDECOST
-};
-
-class CEccoScriptItem : public CBaseEccoExcuter {
+#include <string>
+#include <vector>
+#include <unordered_map>
+class CEccoScriptItem{
 public:
-	virtual void Excute(edict_t* pPlayer, int selection) override;
-
-	virtual std::string GetDisplayName(edict_t* pPlyaer) override;
-public:
-	std::bitset<32> m_bitFlags;
-	std::string m_szScript;
+	//原始未拆分的Name
+	std::string m_szName;
+	//拆分后的Id
+	std::string m_szId;
 	int m_iCost;
-private:
-	CBaseEccoExcuter* m_pParent;
+	std::string m_szScripts;
+
+	std::vector<std::string> m_aryPrecaches;
+
+	CEccoScriptItem(std::string path);
 };
+

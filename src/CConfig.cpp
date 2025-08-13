@@ -16,8 +16,7 @@ bool LoadEccoConfig(){
 	std::string s = GET_GAME_INFO(PLID, GINFO_GAMEDIR);
 	std::filesystem::path gamedir(s);
 	gamedir.append("addons/ecco/Config.toml");
-	try
-	{
+	try{
 		auto toml = toml::parse_file(gamedir.string());
 #define GET_VALUE_OR(section, element, def)s_pEccoConfig.section.element=toml["Ecco"][#section][#element].value_or(def)
 #define GET_ROOT_VALUE_OR(element, def)s_pEccoConfig.element=toml["Ecco"][#element].value_or(def)
@@ -33,7 +32,6 @@ bool LoadEccoConfig(){
 
 		GET_VALUE_OR(Path, Data, "store");
 		GET_VALUE_OR(Path, BanMaps, "config/BannedMaps.txt");
-		GET_VALUE_OR(Path, Scripts, "config/Scripts.txt");
 		GET_VALUE_OR(Path, MoneyIcon, "misc_bdsc/dollar.spr");
 
 		GET_VALUE_OR(Color, Positive, 0xFFFF00FF);
@@ -63,8 +61,7 @@ bool LoadEccoConfig(){
 			s_pEccoConfig.AllowLanguages.push_back(str);
 		}
 	}
-	catch (const toml::parse_error& err)
-	{
+	catch (const toml::parse_error& err){
 		auto& src = err.source();
 		LOG_CONSOLE(PLID, "Pharse file %s \n\tat line %d, column %d\n\twith error: %s", src.path.get()->c_str(), src.begin.line, src.begin.column, err.what());
 		return false;

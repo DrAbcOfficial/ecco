@@ -54,17 +54,17 @@
     <ClCompile Include="src\script_system.cpp">
       <Filter>core\script</Filter>
     </ClCompile>
-    <ClCompile Include="src\CEccoScriptItem.cpp">
+    <ClCompile Include="src\CEccoScriptExcutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
     <ClCompile Include="src\meta_utility.cpp" />
-    <ClCompile Include="src\CEccoTextMenu.cpp">
+    <ClCompile Include="src\CEccoTextMenuExcutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
     <ClCompile Include="src\CBaseEccoExcuter.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
-    <ClCompile Include="src\CEccoExitItem.cpp">
+    <ClCompile Include="src\CEccoExitExcutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
     <ClCompile Include="src\MenuParser.cpp">
@@ -72,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="src\CConfig.cpp">
       <Filter>core\config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CEccoScriptItem.cpp">
+      <Filter>core\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +99,7 @@
     <ClInclude Include="src\script_system.h">
       <Filter>core\script</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoScriptItem.h">
+    <ClInclude Include="src\CEccoScriptExcutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
     <ClInclude Include="src\sven_api.hpp">
@@ -106,10 +109,10 @@
     <ClInclude Include="src\CBaseEccoExcuter.h">
       <Filter>core\menu</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoTextMenu.h">
+    <ClInclude Include="src\CEccoTextMenuExcutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoExitItem.h">
+    <ClInclude Include="src\CEccoExitExcutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
     <ClInclude Include="src\MenuParser.h">
@@ -117,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="src\CConfig.h">
       <Filter>core\config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEccoScriptItem.h">
+      <Filter>core\script</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -30,9 +30,18 @@
  */
 #include <extdll.h>
 #include <meta_api.h>
+
+#include "script_system.h"
+
 #include "dlldef.h"
 
 #pragma region PreHooks
+
+static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
+	ResetEccoScriptItems();
+	LoadEccoScriptItems();
+	SET_META_RESULT(MRES_HANDLED);
+}
 static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnGameInit
 	NULL,					// pfnSpawn
@@ -58,7 +67,7 @@ static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnClientPutInServer
 	NULL,					// pfnClientCommand
 	NULL,					// pfnClientUserInfoChanged
-	NULL,					// pfnServerActivate
+	ServerActivate,					// pfnServerActivate
 	NULL,					// pfnServerDeactivate
 
 	NULL,					// pfnPlayerPreThink

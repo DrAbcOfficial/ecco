@@ -21,7 +21,7 @@ extern void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pO
 // this must be called as part of a DLL ClientCommand hook for option selections to work
 extern bool TextMenuClientCommandHook(edict_t* pEntity);
 
-class CEccoTextMenu : public CBaseEccoExcuter {
+class CEccoTextMenuExcutor : public CBaseEccoExcuter {
 public:
 	void AddItem(CBaseEccoExcuter* pItem);
 

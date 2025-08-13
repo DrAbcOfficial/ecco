@@ -1,0 +1,22 @@
+#pragma once
+#include <bitset>
+
+#include "CBaseEccoExcuter.h"
+
+enum MenuItemFlag {
+	NONE = 0,
+	HIDECOST
+};
+
+class CEccoScriptExcutor : public CBaseEccoExcuter {
+public:
+	virtual void Excute(edict_t* pPlayer, int selection) override;
+
+	virtual std::string GetDisplayName(edict_t* pPlyaer) override;
+public:
+	std::bitset<32> m_bitFlags;
+	std::string m_szScript;
+	int m_iCost;
+private:
+	CBaseEccoExcuter* m_pParent;
+};
