@@ -4,3 +4,6 @@
 [submodule "mmlib"]
 	path = mmlib
 	url = https://github.com/wootguy/mmlib
+[submodule "tomlplusplus"]
+	path = tomlplusplus
+	url = https://github.com/marzer/tomlplusplus
