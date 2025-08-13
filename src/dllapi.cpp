@@ -47,6 +47,13 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 }
 
 static void	 ClientCommand (edict_t* pEntity) {
+	//test code
+	if (!_stricmp(CMD_ARGV(0), "ecco_ttss")) {
+		if (g_pRootMenuExecutor)
+			g_pRootMenuExecutor->Excute(pEntity, 0);
+		SET_META_RESULT(MRES_SUPERCEDE);
+	}
+	else
 	SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 }
 static DLL_FUNCTIONS gFunctionTable = {

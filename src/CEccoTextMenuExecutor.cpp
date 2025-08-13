@@ -1,7 +1,5 @@
 // Shit, wootguy didnt finish TextMenu
 // Have to write by myself :(
-#include <array>
-
 #include "meta_utility.h"
 #include "CEccoTextMenuExecutor.h"
 
@@ -80,33 +78,37 @@ void CEccoTextMenuExecutor::HandleMenuselectCmd(edict_t* pEntity, int selection)
 	if (m_iViewers.none())
 		return;
 	if (IsPlayerViewing(pEntity)) {
-		int index = selection - 1;
-		if (index < 0)
-			index = m_aryOption.size() - 1;
-		auto item = m_aryOption[index];
+		auto item = m_aryOption[selection];
 		if (item != nullptr)
 			item->Excute(pEntity, selection);
 	}
 }
 
 void CEccoTextMenuExecutor::AddItem(CBaseEccoExecutor* pItem) {
-	if(m_aryOption.size() >= MAX_MENU_OPTIONS) {
+	if(m_iSize >= MAX_MENU_OPTIONS) {
 		LOG_MESSAGE(PLID, "Cannot add more than %d items to a text menu", MAX_MENU_OPTIONS);
 		return;
 	}
-	m_aryOption.push_back(pItem);
+	m_aryOption[m_iSize] = pItem;
+	m_iSize++;
+}
+
+std::string CEccoTextMenuExecutor::GetDisplayTitle(edict_t* pPlayer) {
+	if(m_szTitle.empty())
+		return m_szId;
+	return m_szTitle;
 }
 
 void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
 	//Build message
-	std::string buffer = GetDisplayName(pPlayer) + "\n\n";
+	std::string buffer = GetDisplayTitle(pPlayer) + "\n\n";
 	std::bitset<16> validslots;
-	for (size_t i = 0; i < m_aryOption.size(); i++) {
+	for (size_t i = 0; i < MAX_MENU_OPTIONS; i++) {
 		auto item = m_aryOption[i];
 		bool valid = item != nullptr;
 		validslots.set(i, valid);
-		if (!valid) {
-			buffer += std::to_string(i == m_aryOption.size() - 1 ? 0 : i + 1) + ". ";
+		if (valid) {
+			buffer += std::to_string(i == MAX_MENU_OPTIONS - 1 ? 0 : i + 1) + ". ";
 			buffer += item->GetDisplayName(pPlayer);
 		}
 		buffer += '\n';

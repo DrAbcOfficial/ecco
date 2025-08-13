@@ -2,7 +2,7 @@
 // Have to write by myself :(
 
 #pragma once
-#include <vector>
+#include <array>
 #include <bitset>
 
 #include <extdll.h>
@@ -28,6 +28,8 @@ public:
 	// set player to NULL to send to all players.
 	virtual void Excute(edict_t* pPlayer, int selection) override;
 
+	std::string GetDisplayTitle(edict_t* pPlayer);
+
 	bool IsPlayerViewing(edict_t* ent);
 	void SetPlayerViewing(edict_t* ent, bool view);
 
@@ -37,11 +39,12 @@ public:
 	void HandleMenuselectCmd(edict_t* pEntity, int selection);
 
 	CBaseEccoExecutor* m_pParent = nullptr; // parent menu, if any
+
+	std::string m_szTitle;
 private:
 	int m_iDuration = 255; // how long the menu shuold be displayed for
 	std::bitset<MAX_PLAYERS> m_iViewers = 0; // bitfield indicating who can see the menu
-	std::vector<CBaseEccoExecutor*> m_aryOption; //ONLY 10 options
-
-	bool m_bIsActive = false;
+	std::array<CBaseEccoExecutor*, MAX_MENU_OPTIONS> m_aryOption; //ONLY 10 options
+	size_t m_iSize = 0; // current size of the menu, used to determine if the menu is full
 };
 
