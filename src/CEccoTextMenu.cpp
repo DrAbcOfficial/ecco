@@ -4,7 +4,7 @@
 #include "meta_utility.h"
 #include "CEccoTextMenu.h"
 
-std::array<std::shared_ptr<CEccoTextMenu>, MAX_PLAYERS> g_aryTextMenus;
+std::array<CEccoTextMenu*, MAX_PLAYERS> g_aryTextMenus;
 
 // listen for any other functions/plugins opening menus, so that TextMenu knows if it's the active menu
 void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, edict_t* ed) {
@@ -27,7 +27,7 @@ void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, 
 
 // handle player selections
 bool TextMenuClientCommandHook(edict_t* pEntity) {
-	if (!stricmp(CMD_ARGV(0), "menuselect")) {
+	if (!_stricmp(CMD_ARGV(0), "menuselect")) {
 		int selection = atoi(CMD_ARGV(1)) - 1;
 		if (selection < 0 || selection >= MAX_MENU_OPTIONS)
 			return true;
@@ -51,7 +51,7 @@ bool CEccoTextMenu::IsPlayerViewing(edict_t* ent){
 void CEccoTextMenu::SetPlayerViewing(edict_t* ent, bool view){
 	int index = ENTINDEX(ent) - 1;
 	m_iViewers.set(index, view);
-	g_aryTextMenus[index] = view ? std::make_shared<CEccoTextMenu>(this) : nullptr;
+	g_aryTextMenus[index] = view ? this : nullptr;
 }
 
 void CEccoTextMenu::HandleMenuMessage(int msg_dest, edict_t* ed) {
@@ -65,7 +65,7 @@ void CEccoTextMenu::HandleMenuMessage(int msg_dest, edict_t* ed) {
 
 	if ((msg_dest == MSG_ONE || msg_dest == MSG_ONE_UNRELIABLE) && ed)
 		SetPlayerViewing(ed, false);
-	else if (msg_dest == MSG_ALL || msg_dest == MSG_ALL) {
+	else if (msg_dest == MSG_ALL) {
 		m_iViewers.reset();
 		for (size_t i = 0; i < g_aryTextMenus.size(); i++) {
 			g_aryTextMenus[i] = nullptr;
@@ -82,7 +82,7 @@ void CEccoTextMenu::HandleMenuselectCmd(edict_t* pEntity, int selection) {
 		int index = selection - 1;
 		if (index < 0)
 			index = m_aryOption.size() - 1;
-		auto item = m_aryOption[index].get();
+		auto item = m_aryOption[index];
 		if (item != nullptr)
 			item->Excute(pEntity, selection);
 	}
@@ -92,7 +92,7 @@ void CEccoTextMenu::AddItem(CBaseEccoExcuter* pItem) {
 	//0 not included
 	for (size_t i = 0; i < m_aryOption.size()-1; i++) {
 		if (m_aryOption[i] == nullptr) {
-			m_aryOption[i] = std::make_shared<CBaseEccoExcuter>(pItem);
+			m_aryOption[i] = pItem;
 			return;
 		}
 	}
@@ -104,7 +104,7 @@ void CEccoTextMenu::Excute(edict_t* pPlayer, int selection) {
 	std::string buffer = GetDisplayName(pPlayer) + "\n\n";
 	std::bitset<16> validslots;
 	for (size_t i = 0; i < m_aryOption.size(); i++) {
-		auto item = m_aryOption[i].get();
+		auto item = m_aryOption[i];
 		bool valid = item != nullptr;
 		validslots.set(i, valid);
 		if (!valid) {
@@ -128,7 +128,7 @@ void CEccoTextMenu::Excute(edict_t* pPlayer, int selection) {
 	else{
 		m_iViewers.reset().flip();
 		for (size_t i = 0; i < g_aryTextMenus.size(); i++) {
-			g_aryTextMenus[i] = std::make_shared<CEccoTextMenu>(this);
+			g_aryTextMenus[i] = this;
 		}
 	}
 }

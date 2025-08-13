@@ -4,7 +4,6 @@
 #pragma once
 #include <array>
 #include <bitset>
-#include <memory>
 #include <meta_api.h>
 
 #include "CBaseEccoExcuter.h"
@@ -38,7 +37,7 @@ public:
 private:
 	int m_iDuration = 255; // how long the menu shuold be displayed for
 	std::bitset<MAX_PLAYERS> m_iViewers = 0; // bitfield indicating who can see the menu
-	std::array<std::shared_ptr<CBaseEccoExcuter>, MAX_MENU_OPTIONS> m_aryOption; //ONLY 10 options
+	std::array<CBaseEccoExcuter*, MAX_MENU_OPTIONS> m_aryOption; //ONLY 10 options
 
 	bool m_bIsActive = false;
 };

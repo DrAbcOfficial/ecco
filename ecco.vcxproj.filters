@@ -22,6 +22,12 @@
     <Filter Include="core\menu">
       <UniqueIdentifier>{6ef504f1-56b5-4cd7-b29e-59de9aec839b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\menu\parser">
+      <UniqueIdentifier>{1ffe3f11-540c-4736-984e-7203cefb2c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\config">
+      <UniqueIdentifier>{7913e517-8707-4d4e-81f6-a875b520bca8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\angelscript.cpp">
@@ -61,6 +67,9 @@
     <ClCompile Include="src\CEccoExitItem.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
+    <ClCompile Include="src\MenuParser.cpp">
+      <Filter>core\menu\parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\angelscript.hpp">
@@ -99,6 +108,9 @@
     </ClInclude>
     <ClInclude Include="src\CEccoExitItem.h">
       <Filter>core\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuParser.h">
+      <Filter>core\menu\parser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

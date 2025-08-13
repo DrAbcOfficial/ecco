@@ -5,7 +5,7 @@
 
 class CBaseEccoExcuter {
 public:
-	virtual void Excute(edict_t* pPlayer, int selection) = 0;
+	virtual void Excute(edict_t* pPlayer, int selection);
 	virtual std::string GetDisplayName(edict_t* pPlyaer);
 
 protected:
