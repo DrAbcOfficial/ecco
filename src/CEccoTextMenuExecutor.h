@@ -2,13 +2,13 @@
 // Have to write by myself :(
 
 #pragma once
-#include <array>
+#include <vector>
 #include <bitset>
 
 #include <extdll.h>
 #include <meta_api.h>
 
-#include "CBaseEccoExcuter.h"
+#include "CBaseEccoExecutor.h"
 
 constexpr int MAX_MENU_OPTIONS = 10;
 constexpr int EXITOPTION_INDEX = 10;
@@ -21,9 +21,9 @@ extern void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pO
 // this must be called as part of a DLL ClientCommand hook for option selections to work
 extern bool TextMenuClientCommandHook(edict_t* pEntity);
 
-class CEccoTextMenuExcutor : public CBaseEccoExcuter {
+class CEccoTextMenuExecutor : public CBaseEccoExecutor {
 public:
-	void AddItem(CBaseEccoExcuter* pItem);
+	void AddItem(CBaseEccoExecutor* pItem);
 
 	// set player to NULL to send to all players.
 	virtual void Excute(edict_t* pPlayer, int selection) override;
@@ -36,10 +36,11 @@ public:
 	// don't call directly. This is triggered by global hook functions
 	void HandleMenuselectCmd(edict_t* pEntity, int selection);
 
+	CBaseEccoExecutor* m_pParent = nullptr; // parent menu, if any
 private:
 	int m_iDuration = 255; // how long the menu shuold be displayed for
 	std::bitset<MAX_PLAYERS> m_iViewers = 0; // bitfield indicating who can see the menu
-	std::array<CBaseEccoExcuter*, MAX_MENU_OPTIONS> m_aryOption; //ONLY 10 options
+	std::vector<CBaseEccoExecutor*> m_aryOption; //ONLY 10 options
 
 	bool m_bIsActive = false;
 };

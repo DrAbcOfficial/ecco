@@ -3,7 +3,8 @@
 #include "MenuParser.h"
 #include "script_system.h"
 
-#include "CEccoScriptExcutor.h"
+#include "CEccoScriptExecutor.h"
+#include "CEccoBackExecutor.h"
 
 using ecco_parser_item_t = struct ecco_parser_item_s {
 	std::string szId;
@@ -44,47 +45,56 @@ static void ParseItem(ecco_parser_item_s* pParent, CEccoScriptItem* pItem, std::
 	}
 }
 
-static void ParseMenu(CEccoTextMenuExcutor* pParentExecutor, ecco_parser_item_t* pParserItem) {
-	if (pParserItem->aryChild.size() > MAX_MENU_OPTIONS) {
-		//处理六个
-		for (size_t i = 0; i < 6; i++) {
-			CEccoTextMenuExcutor* pExecutor = new CEccoTextMenuExcutor();
-			pExecutor->m_szId = pParserItem->szId;
-			pParentExecutor->AddItem(pExecutor);
-			auto iter = pParserItem->aryChild.begin();
-			ParseMenu(pExecutor, *iter);
-			pParserItem->aryChild.erase(iter);
+static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t* pParserItem) {
+	int counter = 0;
+	int page = 0;
+	CEccoTextMenuExecutor* pMenu = pParentExecutor;
+	for (auto& child : pParserItem->aryChild) {
+		if (page > 0 && counter == 0) {
+			//下一页
+			CEccoTextMenuExecutor* pNextPageMenu = new CEccoTextMenuExecutor();
+			pNextPageMenu->m_szId = "ecco_menu_next_page";
+			pNextPageMenu->m_pParent = pMenu;
+			pMenu->AddItem(pNextPageMenu);
+			pMenu = pNextPageMenu;
 		}
-		//添加返回上级，上一页，下一页，关闭选项
-		//返回上级
-
-		//上一页
-
-		//下一页
-		
-		//关闭选项
-	}
-	else {
-
-	}
-	for(auto& child : pParserItem->aryChild) {
 		if (child->pScriptItem) {
-			CEccoScriptExcutor* pExecutor = new CEccoScriptExcutor();
+			CEccoScriptExecutor* pExecutor = new CEccoScriptExecutor();
 			pExecutor->m_szId = pParserItem->pScriptItem->m_szId;
 			pExecutor->m_iCost = pParserItem->pScriptItem->m_iCost;
 			pExecutor->m_szScript = pParserItem->pScriptItem->m_szScripts;
 			pExecutor->m_bitFlags = pParserItem->pScriptItem->m_iFlags;
-			pParentExecutor->AddItem(pExecutor);
+			pExecutor->m_pParent = pMenu;
+			pMenu->AddItem(pExecutor);
 		}
 		else {
-			CEccoTextMenuExcutor* pExecutor = new CEccoTextMenuExcutor();
-			
+			CEccoTextMenuExecutor* pExecutor = new CEccoTextMenuExecutor();
+			pExecutor->m_szId = pParserItem->szId;
+			pExecutor->m_pParent = pMenu;
+			pMenu->AddItem(pExecutor);
 			ParseMenu(pExecutor, child);
+		}
+		counter++;
+		if (counter % 6 == 0) {
+			//返回
+			CEccoBackExecutor* pBackExecutor = new CEccoBackExecutor();
+			pBackExecutor->m_szId = "ecco_menu_back";
+			pBackExecutor->m_pParentExecutor = pParentExecutor;
+			pMenu->AddItem(pBackExecutor);
+			//上一页
+			if (page > 0) {
+				CEccoBackExecutor* pPrevPageExecutor = new CEccoBackExecutor();
+				pPrevPageExecutor->m_szId = "ecco_menu_prev_page";
+				pPrevPageExecutor->m_pParentExecutor = pMenu;
+				pMenu->AddItem(pPrevPageExecutor);
+			}
+			page++;
+			counter = 0;
 		}
 	}
 }
 
-CEccoTextMenuExcutor* ParseMenu(){
+CEccoTextMenuExecutor* ParseMenu(){
 	//构建初级树
 	ecco_parser_item_t* pRootParserItem = new ecco_parser_item_t();
 	s_aryPentToDelete.push_back(pRootParserItem);
@@ -97,7 +107,8 @@ CEccoTextMenuExcutor* ParseMenu(){
 		ParseItem(pRootParserItem, pItem, pItem->m_szName);
 	}
 	//构建菜单执行器
-	CEccoTextMenuExcutor* pRootExecutor = new CEccoTextMenuExcutor();
-
-	return nullptr;
+	CEccoTextMenuExecutor* pRootExecutor = new CEccoTextMenuExecutor();
+	pRootExecutor->m_szId = "ecco_menu_root";
+	ParseMenu(pRootExecutor, pRootParserItem);
+	return pRootExecutor;
 }

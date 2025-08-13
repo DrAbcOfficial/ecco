@@ -2,6 +2,6 @@
 #include <vector>
 #include <string>
 
-#include "CEccoTextMenuExcutor.h"
+#include "CEccoTextMenuExecutor.h"
 
-extern CEccoTextMenuExcutor* ParseMenu();
+extern CEccoTextMenuExecutor* ParseMenu();

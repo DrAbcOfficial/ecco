@@ -54,17 +54,17 @@
     <ClCompile Include="src\script_system.cpp">
       <Filter>core\script</Filter>
     </ClCompile>
-    <ClCompile Include="src\CEccoScriptExcutor.cpp">
+    <ClCompile Include="src\CEccoScriptExecutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
     <ClCompile Include="src\meta_utility.cpp" />
-    <ClCompile Include="src\CEccoTextMenuExcutor.cpp">
+    <ClCompile Include="src\CEccoTextMenuExecutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
-    <ClCompile Include="src\CBaseEccoExcuter.cpp">
+    <ClCompile Include="src\CBaseEccoExecutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
-    <ClCompile Include="src\CEccoExitExcutor.cpp">
+    <ClCompile Include="src\CEccoExitExecutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
     <ClCompile Include="src\MenuParser.cpp">
@@ -76,7 +76,7 @@
     <ClCompile Include="src\CEccoScriptItem.cpp">
       <Filter>core\script</Filter>
     </ClCompile>
-    <ClCompile Include="CEccoBackExcutor.cpp">
+    <ClCompile Include="CEccoBackExecutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
   </ItemGroup>
@@ -102,20 +102,20 @@
     <ClInclude Include="src\script_system.h">
       <Filter>core\script</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoScriptExcutor.h">
+    <ClInclude Include="src\CEccoScriptExecutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
     <ClInclude Include="src\sven_api.hpp">
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_utility.h" />
-    <ClInclude Include="src\CBaseEccoExcuter.h">
+    <ClInclude Include="src\CBaseEccoExecutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoTextMenuExcutor.h">
+    <ClInclude Include="src\CEccoTextMenuExecutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoExitExcutor.h">
+    <ClInclude Include="src\CEccoExitExecutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
     <ClInclude Include="src\MenuParser.h">
@@ -127,7 +127,7 @@
     <ClInclude Include="src\CEccoScriptItem.h">
       <Filter>core\script</Filter>
     </ClInclude>
-    <ClInclude Include="CEccoBackExcutor.h">
+    <ClInclude Include="CEccoBackExecutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
   </ItemGroup>
