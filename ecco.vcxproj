@@ -16,6 +16,7 @@
     <ClCompile Include="src\CEccoExitItem.cpp" />
     <ClCompile Include="src\CEccoTextMenu.cpp" />
     <ClCompile Include="src\CEccoScriptItem.cpp" />
+    <ClCompile Include="src\CConfig.cpp" />
     <ClCompile Include="src\dllapi.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\engine_api.cpp" />
@@ -32,6 +33,7 @@
     <ClInclude Include="src\CEccoExitItem.h" />
     <ClInclude Include="src\CEccoTextMenu.h" />
     <ClInclude Include="src\CEccoScriptItem.h" />
+    <ClInclude Include="src\CConfig.h" />
     <ClInclude Include="src\dlldef.h" />
     <ClInclude Include="src\enginedef.h" />
     <ClInclude Include="src\CBaseEccoExcuter.h" />
@@ -108,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/metamod/;./metamod/asext/include;./mmlib/include/sven;./ChaiScript/include;./src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/metamod/;./metamod/asext/include;./mmlib/include/sven;./ChaiScript/include;./src;./</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>

@@ -44,6 +44,8 @@
 #include "signatures.h"
 #include "angelscript.hpp"
 
+#include "CConfig.h"
+
 mBOOL dlclose_handle_invalid;
 
 IMPORT_ASEXT_API_DEFINE()
@@ -97,6 +99,8 @@ C_DLLEXPORT int Meta_Query(const char* interfaceVersion, plugin_info_t** pPlugIn
 	*pPlugInfo = &Plugin_info;
 	// Get metamod utility function table.
 	gpMetaUtilFuncs = pMetaUtilFuncs;
+
+	LoadEccoConfig();
 	return TRUE;
 }
 
@@ -120,38 +124,23 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 
 	gpGamedllFuncs = pGamedllFuncs;
 
-	auto engineHandle = gpMetaUtilFuncs->pfnGetEngineHandle();
-	auto engineBase = gpMetaUtilFuncs->pfnGetEngineBase();
-
-	if (!engineHandle)
-	{
-		LOG_ERROR(PLID, "engine handle not found!");
-		return FALSE;
-	}
-
-	if (!engineBase)
-	{
-		LOG_ERROR(PLID, "engine base not found!");
-		return FALSE;
-	}
-
-	void* asextHandle = nullptr;
+	const char* game_name = GET_GAME_INFO(PLID, GINFO_NAME);
+	if (!strcmp("svencoop", game_name)) {
+		void* asextHandle = nullptr;
 #ifdef _WIN32
-	LOAD_PLUGIN(PLID, "addons/metamod/dlls/asext.dll", PLUG_LOADTIME::PT_ANYTIME, &asextHandle);
+		LOAD_PLUGIN(PLID, "addons/metamod/dlls/asext.dll", PLUG_LOADTIME::PT_ANYTIME, &asextHandle);
 #else
-	LOAD_PLUGIN(PLID, "addons/metamod/dlls/asext.so", PLUG_LOADTIME::PT_ANYTIME, &asextHandle);
+		LOAD_PLUGIN(PLID, "addons/metamod/dlls/asext.so", PLUG_LOADTIME::PT_ANYTIME, &asextHandle);
 #endif
-	if (!asextHandle)
-	{
-		LOG_ERROR(PLID, "asext dll handle not found!");
-		return FALSE;
+		if (!asextHandle)
+		{
+			LOG_ERROR(PLID, "asext dll handle not found!");
+			return FALSE;
+		}
+		IMPORT_ASEXT_API(asext);
+		RegisterAngelScriptMethods();
+		RegisterAngelScriptHooks();
 	}
-
-	IMPORT_ASEXT_API(asext);
-
-	RegisterAngelScriptMethods();
-	RegisterAngelScriptHooks();
-
 	return TRUE;
 }
 

@@ -70,6 +70,9 @@
     <ClCompile Include="src\MenuParser.cpp">
       <Filter>core\menu\parser</Filter>
     </ClCompile>
+    <ClCompile Include="src\CConfig.cpp">
+      <Filter>core\config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\angelscript.hpp">
@@ -111,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="src\MenuParser.h">
       <Filter>core\menu\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CConfig.h">
+      <Filter>core\config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

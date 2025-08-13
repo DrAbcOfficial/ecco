@@ -4,6 +4,8 @@
 #pragma once
 #include <array>
 #include <bitset>
+
+#include <extdll.h>
 #include <meta_api.h>
 
 #include "CBaseEccoExcuter.h"
