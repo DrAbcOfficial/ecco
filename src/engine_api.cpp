@@ -36,7 +36,14 @@
 
 #include "enginedef.h"
 
+#include "CEccoTextMenuExecutor.h"
+
 #pragma region PreHooks
+
+static void MessageBegin (int msg_dest, int msg_type, const float* pOrigin, edict_t* ed) {
+	TextMenuMessageBeginHook(msg_dest, msg_type, pOrigin, ed);
+	SET_META_RESULT(MRES_HANDLED);
+}
 enginefuncs_t meta_engfuncs = {
 	NULL,						// pfnPrecacheModel()
 	NULL,						// pfnPrecacheSound()
@@ -96,7 +103,7 @@ enginefuncs_t meta_engfuncs = {
 	NULL,						// pfnDecalIndex()
 	NULL,						// pfnPointContents()
 
-	NULL,						// pfnMessageBegin()
+	MessageBegin,						// pfnMessageBegin()
 	NULL,						// pfnMessageEnd()
 
 	NULL,						// pfnWriteByte()

@@ -41,8 +41,13 @@
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	ResetEccoScriptItems();
 	LoadEccoScriptItems();
-	ParseMenu();
+	ReseAllMenus();
+	ParseRootMenu();
 	SET_META_RESULT(MRES_HANDLED);
+}
+
+static void	 ClientCommand (edict_t* pEntity) {
+	SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 }
 static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnGameInit
@@ -67,7 +72,7 @@ static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnClientDisconnect
 	NULL,					// pfnClientKill
 	NULL,					// pfnClientPutInServer
-	NULL,					// pfnClientCommand
+	ClientCommand,					// pfnClientCommand
 	NULL,					// pfnClientUserInfoChanged
 	ServerActivate,					// pfnServerActivate
 	NULL,					// pfnServerDeactivate

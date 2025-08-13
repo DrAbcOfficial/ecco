@@ -14,7 +14,6 @@
     <ClCompile Include="CEccoBackExecutor.cpp" />
     <ClCompile Include="src\angelscript.cpp" />
     <ClCompile Include="src\CBaseEccoExecutor.cpp" />
-    <ClCompile Include="src\CEccoExitExecutor.cpp" />
     <ClCompile Include="src\CEccoScriptItem.cpp" />
     <ClCompile Include="src\CEccoTextMenuExecutor.cpp" />
     <ClCompile Include="src\CEccoScriptExecutor.cpp" />
@@ -33,7 +32,6 @@
     <ClInclude Include="angelscriptlib.h" />
     <ClInclude Include="CEccoBackExecutor.h" />
     <ClInclude Include="src\angelscript.hpp" />
-    <ClInclude Include="src\CEccoExitExecutor.h" />
     <ClInclude Include="src\CEccoScriptItem.h" />
     <ClInclude Include="src\CEccoTextMenuExecutor.h" />
     <ClInclude Include="src\CEccoScriptExecutor.h" />

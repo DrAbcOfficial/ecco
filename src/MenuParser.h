@@ -4,4 +4,7 @@
 
 #include "CEccoTextMenuExecutor.h"
 
-extern CEccoTextMenuExecutor* ParseMenu();
+extern void ReseAllMenus();
+extern void ParseRootMenu();
+
+extern CEccoTextMenuExecutor* g_pRootMenuExecutor;

@@ -6,6 +6,9 @@
 #include "CEccoScriptExecutor.h"
 #include "CEccoBackExecutor.h"
 
+CEccoTextMenuExecutor* g_pRootMenuExecutor = nullptr;
+std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
+
 using ecco_parser_item_t = struct ecco_parser_item_s {
 	std::string szId;
 	ecco_parser_item_s* pParent;
@@ -48,53 +51,91 @@ static void ParseItem(ecco_parser_item_s* pParent, CEccoScriptItem* pItem, std::
 static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t* pParserItem) {
 	int counter = 0;
 	int page = 0;
+
+	auto add_back_prev = [&](CEccoTextMenuExecutor* pMenu) {
+		//返回
+		CEccoBackExecutor* pBackExecutor = new CEccoBackExecutor();
+		g_aryEccoMenuExecutors.push_back(pBackExecutor);
+		pBackExecutor->m_szId = "ecco_menu_back";
+		pBackExecutor->m_pParentExecutor = pParentExecutor;
+		pMenu->AddItem(pBackExecutor);
+		//上一页
+		if (page > 0) {
+			CEccoBackExecutor* pPrevPageExecutor = new CEccoBackExecutor();
+			g_aryEccoMenuExecutors.push_back(pPrevPageExecutor);
+			pPrevPageExecutor->m_szId = "ecco_menu_prev_page";
+			pPrevPageExecutor->m_pParentExecutor = pMenu;
+			pMenu->AddItem(pPrevPageExecutor);
+		}
+		else
+			pMenu->AddItem(nullptr);
+	};
+	auto add_exit = [](CEccoTextMenuExecutor* pMenu) {
+		//关闭
+		CBaseEccoExecutor* pExitExecutor = new CBaseEccoExecutor();
+		pExitExecutor->m_szId = "ecco_menu_exit";
+		pMenu->AddItem(pExitExecutor);
+	};
 	CEccoTextMenuExecutor* pMenu = pParentExecutor;
 	for (auto& child : pParserItem->aryChild) {
 		if (page > 0 && counter == 0) {
 			//下一页
 			CEccoTextMenuExecutor* pNextPageMenu = new CEccoTextMenuExecutor();
+			g_aryEccoMenuExecutors.push_back(pNextPageMenu);
 			pNextPageMenu->m_szId = "ecco_menu_next_page";
 			pNextPageMenu->m_pParent = pMenu;
 			pMenu->AddItem(pNextPageMenu);
+			//关闭
+			add_exit(pMenu);
 			pMenu = pNextPageMenu;
 		}
 		if (child->pScriptItem) {
 			CEccoScriptExecutor* pExecutor = new CEccoScriptExecutor();
-			pExecutor->m_szId = pParserItem->pScriptItem->m_szId;
-			pExecutor->m_iCost = pParserItem->pScriptItem->m_iCost;
-			pExecutor->m_szScript = pParserItem->pScriptItem->m_szScripts;
-			pExecutor->m_bitFlags = pParserItem->pScriptItem->m_iFlags;
+			g_aryEccoMenuExecutors.push_back(pExecutor);
+			pExecutor->m_szId = child->pScriptItem->m_szId;
+			pExecutor->m_iCost = child->pScriptItem->m_iCost;
+			pExecutor->m_szScript = child->pScriptItem->m_szScripts;
+			pExecutor->m_bitFlags = child->pScriptItem->m_iFlags;
 			pExecutor->m_pParent = pMenu;
 			pMenu->AddItem(pExecutor);
 		}
 		else {
 			CEccoTextMenuExecutor* pExecutor = new CEccoTextMenuExecutor();
-			pExecutor->m_szId = pParserItem->szId;
+			g_aryEccoMenuExecutors.push_back(pExecutor);
+			pExecutor->m_szId = child->szId;
 			pExecutor->m_pParent = pMenu;
 			pMenu->AddItem(pExecutor);
 			ParseMenu(pExecutor, child);
 		}
 		counter++;
 		if (counter % 6 == 0) {
-			//返回
-			CEccoBackExecutor* pBackExecutor = new CEccoBackExecutor();
-			pBackExecutor->m_szId = "ecco_menu_back";
-			pBackExecutor->m_pParentExecutor = pParentExecutor;
-			pMenu->AddItem(pBackExecutor);
-			//上一页
-			if (page > 0) {
-				CEccoBackExecutor* pPrevPageExecutor = new CEccoBackExecutor();
-				pPrevPageExecutor->m_szId = "ecco_menu_prev_page";
-				pPrevPageExecutor->m_pParentExecutor = pMenu;
-				pMenu->AddItem(pPrevPageExecutor);
-			}
+			add_back_prev(pMenu);
 			page++;
 			counter = 0;
 		}
 	}
+	int result = pParserItem->aryChild.size() % 6;
+	if (page > 0 && result != 0) {
+		//填充空白
+		for(int i = result; i < 6; i++) {
+			pMenu->AddItem(nullptr);
+		}
+		//返回和上一页
+		add_back_prev(pMenu);
+		pMenu->AddItem(nullptr);
+		//关闭
+		add_exit(pMenu);
+	}
 }
 
-CEccoTextMenuExecutor* ParseMenu(){
+void ReseAllMenus() {
+	for(auto& executor : g_aryEccoMenuExecutors) {
+		delete executor;
+	}
+	g_aryEccoMenuExecutors.clear();
+}
+
+void ParseRootMenu(){
 	//构建初级树
 	ecco_parser_item_t* pRootParserItem = new ecco_parser_item_t();
 	s_aryPentToDelete.push_back(pRootParserItem);
@@ -108,7 +149,14 @@ CEccoTextMenuExecutor* ParseMenu(){
 	}
 	//构建菜单执行器
 	CEccoTextMenuExecutor* pRootExecutor = new CEccoTextMenuExecutor();
+	g_aryEccoMenuExecutors.push_back(pRootExecutor);
 	pRootExecutor->m_szId = "ecco_menu_root";
 	ParseMenu(pRootExecutor, pRootParserItem);
-	return pRootExecutor;
+	//清理临时数据
+	for (auto& pent : s_aryPentToDelete) {
+		delete pent;
+	}
+	s_aryPentToDelete.clear();
+	//设置全局根菜单执行器
+	g_pRootMenuExecutor = pRootExecutor;
 }
