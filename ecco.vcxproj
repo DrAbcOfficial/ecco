@@ -12,9 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\angelscript.cpp" />
-    <ClCompile Include="src\CEccoMenu.cpp" />
-    <ClCompile Include="src\CEccoMenuItem.cpp" />
-    <ClCompile Include="src\CEccoMenuTerminal.cpp" />
+    <ClCompile Include="src\CBaseEccoExcuter.cpp" />
+    <ClCompile Include="src\CEccoExitItem.cpp" />
+    <ClCompile Include="src\CEccoTextMenu.cpp" />
+    <ClCompile Include="src\CEccoScriptItem.cpp" />
     <ClCompile Include="src\dllapi.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\engine_api.cpp" />
@@ -27,15 +28,15 @@
   <ItemGroup>
     <ClInclude Include="angelscriptlib.h" />
     <ClInclude Include="src\angelscript.hpp" />
-    <ClInclude Include="src\CEccoMenu.h" />
-    <ClInclude Include="src\CEccoMenuItem.hpp" />
-    <ClInclude Include="src\CEccoMenuTerminal.h" />
+    <ClInclude Include="src\CEccoExitItem.h" />
+    <ClInclude Include="src\CEccoTextMenu.h" />
+    <ClInclude Include="src\CEccoScriptItem.h" />
     <ClInclude Include="src\dlldef.h" />
     <ClInclude Include="src\enginedef.h" />
-    <ClInclude Include="src\IEccoExcuter.h" />
+    <ClInclude Include="src\CBaseEccoExcuter.h" />
     <ClInclude Include="src\info_name.h" />
     <ClInclude Include="src\meta_utility.h" />
-    <ClInclude Include="src\script_system.hpp" />
+    <ClInclude Include="src\script_system.h" />
     <ClInclude Include="src\signatures.h" />
     <ClInclude Include="src\sven_api.hpp" />
   </ItemGroup>

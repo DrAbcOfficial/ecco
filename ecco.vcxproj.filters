@@ -48,7 +48,17 @@
     <ClCompile Include="src\script_system.cpp">
       <Filter>core\script</Filter>
     </ClCompile>
-    <ClCompile Include="src\CEccoMenuItem.cpp">
+    <ClCompile Include="src\CEccoScriptItem.cpp">
+      <Filter>core\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_utility.cpp" />
+    <ClCompile Include="src\CEccoTextMenu.cpp">
+      <Filter>core\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CBaseEccoExcuter.cpp">
+      <Filter>core\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CEccoExitItem.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,14 +81,24 @@
     <ClInclude Include="src\signatures.h">
       <Filter>metamod</Filter>
     </ClInclude>
-    <ClInclude Include="src\script_system.hpp">
+    <ClInclude Include="src\script_system.h">
       <Filter>core\script</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoMenuItem.hpp">
+    <ClInclude Include="src\CEccoScriptItem.h">
       <Filter>core\menu</Filter>
     </ClInclude>
     <ClInclude Include="src\sven_api.hpp">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_utility.h" />
+    <ClInclude Include="src\CBaseEccoExcuter.h">
+      <Filter>core\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEccoTextMenu.h">
+      <Filter>core\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEccoExitItem.h">
+      <Filter>core\menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

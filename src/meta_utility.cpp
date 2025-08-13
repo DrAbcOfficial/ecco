@@ -1,3 +1,5 @@
+//Copied from mmlib!
+
 #include "meta_utility.h"
 #include <meta_api.h>
 

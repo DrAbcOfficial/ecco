@@ -1,6 +1,4 @@
-#include "script_system.hpp"
+#include "script_system.h"
 
 
-chaiscript::ChaiScript chai;
-void test() {
-}
+chaiscript::ChaiScript g_ScriptEngine;
