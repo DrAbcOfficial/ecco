@@ -5,7 +5,8 @@
 //#define GET_PLAYER_STEAMID(pent) (*g_engfuncs.pfnGetPlayerAuthId)(pent)
 
 //Meta mod has write float, haha
-extern void WRITE_FLOAT(float value);
+extern inline void WRITE_FLOAT(float value);
+extern void WRITE_RGBA(unsigned int rgba);
 
 extern std::string GetPlayerSteamId(edict_t* pent);
 extern bool IsValidPlayer(edict_t* pentPlayer);

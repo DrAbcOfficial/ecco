@@ -3,10 +3,20 @@
 #include "meta_utility.h"
 #include <meta_api.h>
 
-void WRITE_FLOAT(float value){
-	float flValue = value;
-	int* intValue = reinterpret_cast<int*>(&flValue);
-	WRITE_LONG(*intValue);
+inline void WRITE_FLOAT(float value){
+	WRITE_LONG(*reinterpret_cast<int*>(&value));
+}
+
+void WRITE_RGBA(unsigned int rgba){
+
+	unsigned char r = (rgba & 0xFF000000) >> 24;
+	unsigned char g = (rgba & 0xFF0000) >> 16;
+	unsigned char b = (rgba & 0xFF00) >> 8;
+	unsigned char a = rgba & 0xFF;
+	WRITE_BYTE(r);
+	WRITE_BYTE(g);
+	WRITE_BYTE(b);
+	WRITE_BYTE(a);
 }
 
 std::string GetPlayerSteamId(edict_t* pent){

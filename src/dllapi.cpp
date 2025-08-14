@@ -37,10 +37,15 @@
 
 #include "Scheduler.h"
 #include "timer/Timer.h"
+#include "hud/hud.h"
 
 #include "dlldef.h"
 
 #pragma region PreHooks
+
+static void GameInit() {
+	InitHud();
+}
 
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	ResetEccoScriptItems();
@@ -62,12 +67,16 @@ static void	 ClientCommand (edict_t* pEntity) {
 }
 
 static void ClientDisconnect(edict_t* pEntity) {
+	RemoveHudUpdateTimer(pEntity);
 	RemovePlayerScoreToCreditsTimer(pEntity);
 	StorageClientDisconnectHandle(pEntity);
+	SET_META_RESULT(MRES_HANDLED);
 }
 static void ClientPutInServer(edict_t* pEntity) {
 	StorageClientPutinServerHandle(pEntity);
 	AddPlayerScoreToCreditsTimer(pEntity);
+	AddHudUpdateTimer(pEntity);
+	SET_META_RESULT(MRES_HANDLED);
 }
 
 static void StartFrame() {
@@ -75,7 +84,7 @@ static void StartFrame() {
 	SET_META_RESULT(MRES_HANDLED);
 }
 static DLL_FUNCTIONS gFunctionTable = {
-	NULL,					// pfnGameInit
+	GameInit,					// pfnGameInit
 	NULL,					// pfnSpawn
 	NULL,					// pfnThink
 	NULL,					// pfnUse
