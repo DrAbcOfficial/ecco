@@ -44,10 +44,12 @@
 #pragma region PreHooks
 
 static void GameInit() {
+	InitScriptEngine();
 	InitHud();
 }
 
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
+	ResetHud();
 	ResetEccoScriptItems();
 	LoadEccoScriptItems();
 	ReseAllMenus();

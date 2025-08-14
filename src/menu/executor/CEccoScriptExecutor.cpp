@@ -1,6 +1,16 @@
-#include "menu/executor/CEccoScriptExecutor.h"
+#include "storage/Storage.h"
+#include "scripts/script_system.h"
+
+#include "CEccoScriptExecutor.h"
 
 void CEccoScriptExecutor::Excute(edict_t* pPlayer, int selection){
+    auto storage = GetPlayerStorageItem(pPlayer);
+    int remain = storage->GetCredits();
+    if(remain < m_iCost){
+        return;
+	}
+	storage->AddCredits((int64) - m_iCost);
+	EvalScriptContent(pPlayer, m_szScript);
 }
 
 std::string CEccoScriptExecutor::GetDisplayName(edict_t* pPlyaer){

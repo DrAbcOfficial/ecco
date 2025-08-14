@@ -37,6 +37,9 @@
     <Filter Include="core\hud">
       <UniqueIdentifier>{74adda33-8e49-406b-b5c2-46d3ed8e6f0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\scripts\obj">
+      <UniqueIdentifier>{798b7aa1-7c62-4a0b-9b11-07da11ebad01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllapi.cpp">
@@ -103,6 +106,9 @@
     <ClCompile Include="src\hud\CHudNumber.cpp">
       <Filter>core\hud</Filter>
     </ClCompile>
+    <ClCompile Include="src\scripts\basescriptmethods.cpp">
+      <Filter>core\scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dlldef.h">
@@ -168,6 +174,12 @@
     </ClInclude>
     <ClInclude Include="src\hud\CHudNumber.h">
       <Filter>core\hud</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\basescriptmethods.h">
+      <Filter>core\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\obj\CChaiPlayer.h">
+      <Filter>core\scripts\obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
