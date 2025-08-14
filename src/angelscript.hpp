@@ -1,4 +1,5 @@
 #pragma once
+#ifdef _GAME_SVENCOOP
 #ifndef __ANGELSCRIPT_API_HEADER
 #define __ANGELSCRIPT_API_HEADER
 
@@ -51,3 +52,4 @@ extern angelhook_t g_AngelHook;
 #pragma endregion
 
 #endif // !__ANGELSCRIPT_API_HEADER
+#endif // _GAME_SVENCOOP

@@ -29,8 +29,8 @@
     <ClCompile Include="src\sdk_util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="angelscriptlib.h" />
     <ClInclude Include="src\angelscript.hpp" />
+    <ClInclude Include="src\angelscriptlib.h" />
     <ClInclude Include="src\CEccoBackExecutor.h" />
     <ClInclude Include="src\CEccoScriptItem.h" />
     <ClInclude Include="src\CEccoTextMenuExecutor.h" />
@@ -44,7 +44,7 @@
     <ClInclude Include="src\meta_utility.h" />
     <ClInclude Include="src\script_system.h" />
     <ClInclude Include="src\signatures.h" />
-    <ClInclude Include="src\sven_api.hpp" />
+    <ClInclude Include="src\sdk_api.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="exports.def" />
@@ -78,9 +78,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Build.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Build.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
@@ -113,9 +115,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;$(Svencoop);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/metamod/;./metamod/asext/include;./mmlib/include/sven;./ChaiScript/include;./src;./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/asext/include;./mmlib/include/sven;./ChaiScript/include;./src;./;$(MetamodIncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>

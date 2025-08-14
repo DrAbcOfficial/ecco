@@ -1,9 +1,6 @@
 #pragma once
+#ifdef _GAME_SVENCOOP
 
 #include <signatures_template.h>
 
-#ifdef _WIN32
-
-#else
-
-#endif#pragma once
+#endif // _GAME_SVENCOOP

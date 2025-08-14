@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "sven_api.hpp"
+#include <extdll.h>
 
 class CBaseEccoExecutor {
 public:

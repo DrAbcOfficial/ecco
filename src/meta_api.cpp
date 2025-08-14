@@ -48,7 +48,9 @@
 
 mBOOL dlclose_handle_invalid;
 
+#ifdef _GAME_SVENCOOP
 IMPORT_ASEXT_API_DEFINE()
+#endif
 
 // Must provide at least one of these..
 static META_FUNCTIONS gMetaFunctionTable = {
@@ -59,20 +61,22 @@ static META_FUNCTIONS gMetaFunctionTable = {
 	NULL,			// pfnGetNewDLLFunctions		HL SDK2; called before game DLL
 	NULL,			// pfnGetNewDLLFunctions_Post	META; called after game DLL
 	GetEngineFunctions,	// pfnGetEngineFunctions	META; called before HL engine
-	NULL,			// pfnGetEngineFunctions_Post	META; called after HL engine
+	GetEngineFunctions_Post,			// pfnGetEngineFunctions_Post	META; called after HL engine
+#ifdef _GAME_SVENCOOP
 	NULL,			// pfnGetStudioBlendingInterface 2022/07/02 Added by hzqst
 	NULL,			// pfnGetStudioBlendingInterface_Post 2022/07/02 Added by hzqst
+#endif
 };
 
 // Description of plugin
 plugin_info_t Plugin_info = {
-	META_INTERFACE_VERSION,	// ifvers
-	"Ecco",	// name
-	"NOT READY FOR USE",	// version
-	"2025",	// date
-	"Dr.Abc",	// author
-	"https://github.com/DrAbcOfficial/ecco",	// url
-	"ECCO",	// logtag, all caps please
+	(char*)META_INTERFACE_VERSION,	// ifvers
+	(char*)"Ecco",	// name
+	(char*)"NOT READY FOR USE",	// version
+	(char*)"2025",	// date
+	(char*)"Dr.Abc",	// author
+	(char*)"https://github.com/DrAbcOfficial/ecco",	// url
+	(char*)"ECCO",	// logtag, all caps please
 	PT_ANYTIME,	// (when) loadable
 	PT_STARTUP,	// (when) unloadable
 };
@@ -87,9 +91,13 @@ mutil_funcs_t* gpMetaUtilFuncs;		// metamod utility functions
 //  pPlugInfo		(requested) struct with info about plugin
 //  pMetaUtilFuncs	(given) table of utility functions provided by metamod
 
+#ifdef _GAME_SVENCOOP
 C_DLLEXPORT int Meta_Query(const char* interfaceVersion, plugin_info_t** pPlugInfo, mutil_funcs_t* pMetaUtilFuncs)
+#else
+C_DLLEXPORT int Meta_Query(char* interfaceVersion, plugin_info_t** pPlugInfo, mutil_funcs_t* pMetaUtilFuncs)
+#endif
 {
-	if (0 != strcmp(interfaceVersion, META_INTERFACE_VERSION))
+	if (strcmp(interfaceVersion, META_INTERFACE_VERSION))
 	{
 		pMetaUtilFuncs->pfnLogError(PLID, "Meta_Query version mismatch! expect %s but got %s", META_INTERFACE_VERSION, interfaceVersion);
 		return FALSE;
@@ -124,8 +132,7 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 
 	gpGamedllFuncs = pGamedllFuncs;
 
-	const char* game_name = GET_GAME_INFO(PLID, GINFO_NAME);
-	if (!strcmp("svencoop", game_name)) {
+#ifdef _GAME_SVENCOOP
 		void* asextHandle = nullptr;
 #ifdef _WIN32
 		LOAD_PLUGIN(PLID, "addons/metamod/dlls/asext.dll", PLUG_LOADTIME::PT_ANYTIME, &asextHandle);
@@ -140,7 +147,8 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 		IMPORT_ASEXT_API(asext);
 		RegisterAngelScriptMethods();
 		RegisterAngelScriptHooks();
-	}
+#endif
+
 	return TRUE;
 }
 

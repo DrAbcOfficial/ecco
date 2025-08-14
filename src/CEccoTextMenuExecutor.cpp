@@ -5,9 +5,11 @@
 
 std::array<CEccoTextMenuExecutor*, MAX_PLAYERS> g_aryTextMenus;
 
+extern int g_msgShowMenu;
+
 // listen for any other functions/plugins opening menus, so that TextMenu knows if it's the active menu
 void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, edict_t* ed) {
-	if (msg_type != MSG_ShowMenu)
+	if (msg_type != g_msgShowMenu)
 		return;
 	if ((msg_dest == MSG_ONE || msg_dest == MSG_ONE_UNRELIABLE) && IsValidPlayer(ed)) {
 		int index = ENTINDEX(ed) - 1;
@@ -115,9 +117,9 @@ void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
 	}
 	bool validplayer = IsValidPlayer(pPlayer);
 	if (validplayer)
-		MESSAGE_BEGIN(MSG_ONE, MSG_ShowMenu, NULL, pPlayer);
+		MESSAGE_BEGIN(MSG_ONE, g_msgShowMenu, NULL, pPlayer);
 	else
-		MESSAGE_BEGIN(MSG_ALL, MSG_ShowMenu);
+		MESSAGE_BEGIN(MSG_ALL, g_msgShowMenu);
 	WRITE_SHORT(validslots.to_ulong());
 	WRITE_CHAR(m_iDuration);
 	WRITE_BYTE(FALSE); // "need more" (?)

@@ -36,6 +36,8 @@
 // The script engine interface
 //
 
+#ifdef _GAME_SVENCOOP
+
 
 #ifndef ANGELSCRIPT_H
 #define ANGELSCRIPT_H
@@ -1908,3 +1910,5 @@ const asSBCInfo asBCInfo[256] =
 END_AS_NAMESPACE
 
 #endif
+
+#endif // _GAME_SVENCOOP

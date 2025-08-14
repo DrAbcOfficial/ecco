@@ -90,9 +90,6 @@
     <ClInclude Include="src\info_name.h">
       <Filter>metamod</Filter>
     </ClInclude>
-    <ClInclude Include="angelscriptlib.h">
-      <Filter>angelscript</Filter>
-    </ClInclude>
     <ClInclude Include="src\signatures.h">
       <Filter>metamod</Filter>
     </ClInclude>
@@ -102,7 +99,7 @@
     <ClInclude Include="src\CEccoScriptExecutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
-    <ClInclude Include="src\sven_api.hpp">
+    <ClInclude Include="src\sdk_api.hpp">
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_utility.h" />
@@ -123,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="src\CEccoBackExecutor.h">
       <Filter>core\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\angelscriptlib.h">
+      <Filter>angelscript</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
