@@ -35,6 +35,9 @@
 #include "menu/MenuParser.h"
 #include "storage/Storage.h"
 
+#include "Scheduler.h"
+#include "timer/Timer.h"
+
 #include "dlldef.h"
 
 #pragma region PreHooks
@@ -59,12 +62,18 @@ static void	 ClientCommand (edict_t* pEntity) {
 }
 
 static void ClientDisconnect(edict_t* pEntity) {
+	RemovePlayerScoreToCreditsTimer(pEntity);
 	StorageClientDisconnectHandle(pEntity);
 }
 static void ClientPutInServer(edict_t* pEntity) {
 	StorageClientPutinServerHandle(pEntity);
+	AddPlayerScoreToCreditsTimer(pEntity);
 }
 
+static void StartFrame() {
+	g_Scheduler.Think();
+	SET_META_RESULT(MRES_HANDLED);
+}
 static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnGameInit
 	NULL,					// pfnSpawn
@@ -96,7 +105,7 @@ static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnPlayerPreThink
 	NULL,					// pfnPlayerPostThink
 
-	NULL,					// pfnStartFrame
+	StartFrame,					// pfnStartFrame
 	NULL,					// pfnParmsNewLevel
 	NULL,					// pfnParmsChangeLevel
 

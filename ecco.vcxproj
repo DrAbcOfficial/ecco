@@ -17,6 +17,8 @@
     <ClCompile Include="src\dllapi.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\engine_api.cpp" />
+    <ClCompile Include="src\hud\CHudNumber.cpp" />
+    <ClCompile Include="src\hud\hud.cpp" />
     <ClCompile Include="src\h_export.cpp" />
     <ClCompile Include="src\menu\executor\CBaseEccoExecutor.cpp" />
     <ClCompile Include="src\menu\executor\CEccoBackExecutor.cpp" />
@@ -39,6 +41,8 @@
     <ClInclude Include="src\config\CConfig.h" />
     <ClInclude Include="src\dlldef.h" />
     <ClInclude Include="src\enginedef.h" />
+    <ClInclude Include="src\hud\CHudNumber.h" />
+    <ClInclude Include="src\hud\hud.h" />
     <ClInclude Include="src\info_name.h" />
     <ClInclude Include="src\menu\executor\CBaseEccoExecutor.h" />
     <ClInclude Include="src\menu\executor\CEccoBackExecutor.h" />

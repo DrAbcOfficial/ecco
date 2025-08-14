@@ -34,6 +34,9 @@
     <Filter Include="core\scripts">
       <UniqueIdentifier>{b53f43ec-4d84-423b-8493-377d65a0a4a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\hud">
+      <UniqueIdentifier>{74adda33-8e49-406b-b5c2-46d3ed8e6f0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllapi.cpp">
@@ -94,6 +97,12 @@
     <ClCompile Include="src\storage\Storage.cpp">
       <Filter>core\storage</Filter>
     </ClCompile>
+    <ClCompile Include="src\hud\hud.cpp">
+      <Filter>core\hud</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hud\CHudNumber.cpp">
+      <Filter>core\hud</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dlldef.h">
@@ -153,6 +162,12 @@
     </ClInclude>
     <ClInclude Include="src\storage\Storage.h">
       <Filter>core\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hud\hud.h">
+      <Filter>core\hud</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hud\CHudNumber.h">
+      <Filter>core\hud</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

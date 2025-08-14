@@ -3,6 +3,12 @@
 #include "meta_utility.h"
 #include <meta_api.h>
 
+void WRITE_FLOAT(float value){
+	float flValue = value;
+	int* intValue = reinterpret_cast<int*>(&flValue);
+	WRITE_LONG(*intValue);
+}
+
 std::string GetPlayerSteamId(edict_t* pent){
 	const char* infobuffer = GET_INFOKEYBUFFER(pent);
 	const char* id = INFOKEY_VALUE(const_cast<char*>(infobuffer), const_cast<char*>("*sid"));

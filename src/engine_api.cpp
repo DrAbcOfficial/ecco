@@ -274,9 +274,20 @@ C_DLLEXPORT int GetEngineFunctions(enginefuncs_t* pengfuncsFromEngine,
 
 #pragma region PostHooks
 int g_msgShowMenu = -1;
+int g_msgNumDisplay = -1;
+int g_msgUpdateNum = -1;
+
 static int RegUserMsgPost(const char* pszName, int iSize) {
 	if (!strcmp(pszName, "ShowMenu")) {
 		g_msgShowMenu = META_RESULT_ORIG_RET(int);
+		RETURN_META_VALUE(MRES_HANDLED, 0);
+	}
+	if (!strcmp(pszName, "NumDisplay")) {
+		g_msgNumDisplay = META_RESULT_ORIG_RET(int);
+		RETURN_META_VALUE(MRES_HANDLED, 0);
+	}
+	if (!strcmp(pszName, "UpdateNum")) {
+		g_msgUpdateNum = META_RESULT_ORIG_RET(int);
 		RETURN_META_VALUE(MRES_HANDLED, 0);
 	}
 	RETURN_META_VALUE(MRES_IGNORED, 0);
