@@ -73,7 +73,7 @@
     <ClCompile Include="src\CEccoScriptItem.cpp">
       <Filter>core\script</Filter>
     </ClCompile>
-    <ClCompile Include="CEccoBackExecutor.cpp">
+    <ClCompile Include="src\CEccoBackExecutor.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
   </ItemGroup>
@@ -121,7 +121,7 @@
     <ClInclude Include="src\CEccoScriptItem.h">
       <Filter>core\script</Filter>
     </ClInclude>
-    <ClInclude Include="CEccoBackExecutor.h">
+    <ClInclude Include="src\CEccoBackExecutor.h">
       <Filter>core\menu</Filter>
     </ClInclude>
   </ItemGroup>
