@@ -1,0 +1,3 @@
+LIBRARY   BTREE
+EXPORTS
+	GiveFnptrsToDll   @1

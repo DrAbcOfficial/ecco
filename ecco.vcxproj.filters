@@ -125,4 +125,7 @@
       <Filter>core\menu</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="exports.def" />
+  </ItemGroup>
 </Project>
