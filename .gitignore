@@ -37,3 +37,4 @@ Realse
 *.exe
 *.out
 *.app
+/Build.props
