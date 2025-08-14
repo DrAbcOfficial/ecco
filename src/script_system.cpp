@@ -3,6 +3,8 @@
 #include <extdll.h>
 #include <meta_api.h>
 
+#include "meta_utility.h"
+
 #include "script_system.h"
 
 std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
@@ -15,8 +17,7 @@ void ResetEccoScriptItems(){
 }
 
 bool LoadEccoScriptItems(){
-	std::string s = GET_GAME_INFO(PLID, GINFO_GAMEDIR);
-	std::filesystem::path gamedir(s);
+	std::filesystem::path gamedir(GetGameDir());
 	gamedir.append("addons/ecco/scripts");
 	if (!std::filesystem::exists(gamedir)) {
 		LOG_CONSOLE(PLID, "Ecco script directory does not exist: %s", gamedir.string().c_str());

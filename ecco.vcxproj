@@ -18,6 +18,7 @@
     <ClCompile Include="src\CEccoTextMenuExecutor.cpp" />
     <ClCompile Include="src\CEccoScriptExecutor.cpp" />
     <ClCompile Include="src\CConfig.cpp" />
+    <ClCompile Include="src\CPlayerStorageItem.cpp" />
     <ClCompile Include="src\dllapi.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\engine_api.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="src\meta_utility.cpp" />
     <ClCompile Include="src\script_system.cpp" />
     <ClCompile Include="src\sdk_util.cpp" />
+    <ClCompile Include="src\Storage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\angelscript.hpp" />
@@ -36,6 +38,7 @@
     <ClInclude Include="src\CEccoTextMenuExecutor.h" />
     <ClInclude Include="src\CEccoScriptExecutor.h" />
     <ClInclude Include="src\CConfig.h" />
+    <ClInclude Include="src\CPlayerStorageItem.h" />
     <ClInclude Include="src\dlldef.h" />
     <ClInclude Include="src\enginedef.h" />
     <ClInclude Include="src\CBaseEccoExecutor.h" />
@@ -45,6 +48,7 @@
     <ClInclude Include="src\script_system.h" />
     <ClInclude Include="src\signatures.h" />
     <ClInclude Include="src\sdk_api.hpp" />
+    <ClInclude Include="src\Storage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="exports.def" />

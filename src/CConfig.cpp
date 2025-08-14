@@ -4,6 +4,7 @@
 #include <extdll.h>
 #include <meta_api.h>
 
+#include "meta_utility.h"
 #include "CConfig.h"
 
 static CEccoConfig s_pEccoConfig;
@@ -13,8 +14,7 @@ CEccoConfig* GetEccoConfig(){
 }
 
 bool LoadEccoConfig(){
-	std::string s = GET_GAME_INFO(PLID, GINFO_GAMEDIR);
-	std::filesystem::path gamedir(s);
+	std::filesystem::path gamedir(GetGameDir());
 	gamedir.append("addons/ecco/Config.toml");
 	try{
 		auto toml = toml::parse_file(gamedir.string());

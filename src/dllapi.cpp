@@ -33,6 +33,7 @@
 
 #include "script_system.h"
 #include "MenuParser.h"
+#include "Storage.h"
 
 #include "dlldef.h"
 
@@ -56,6 +57,14 @@ static void	 ClientCommand (edict_t* pEntity) {
 	else
 	SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 }
+
+static void ClientDisconnect(edict_t* pEntity) {
+	StorageClientDisconnectHandle(pEntity);
+}
+static void ClientPutInServer(edict_t* pEntity) {
+	StorageClientPutinServerHandle(pEntity);
+}
+
 static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnGameInit
 	NULL,					// pfnSpawn
@@ -76,9 +85,9 @@ static DLL_FUNCTIONS gFunctionTable = {
 	NULL,					// pfnResetGlobalState
 
 	NULL,					// pfnClientConnect
-	NULL,					// pfnClientDisconnect
+	ClientDisconnect,					// pfnClientDisconnect
 	NULL,					// pfnClientKill
-	NULL,					// pfnClientPutInServer
+	ClientPutInServer,					// pfnClientPutInServer
 	ClientCommand,					// pfnClientCommand
 	NULL,					// pfnClientUserInfoChanged
 	ServerActivate,					// pfnServerActivate
