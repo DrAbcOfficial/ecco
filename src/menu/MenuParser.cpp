@@ -1,10 +1,10 @@
 #include <ranges>
 
-#include "MenuParser.h"
-#include "script_system.h"
+#include "scripts/script_system.h"
 
-#include "CEccoScriptExecutor.h"
-#include "CEccoBackExecutor.h"
+#include "menu/MenuParser.h"
+#include "menu/executor/CEccoScriptExecutor.h"
+#include "menu/executor/CEccoBackExecutor.h"
 
 CEccoTextMenuExecutor* g_pRootMenuExecutor = nullptr;
 std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;

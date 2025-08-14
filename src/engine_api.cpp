@@ -36,7 +36,7 @@
 
 #include "enginedef.h"
 
-#include "CEccoTextMenuExecutor.h"
+#include "menu/executor/CEccoTextMenuExecutor.h"
 
 #pragma region PreHooks
 static void MessageBegin (int msg_dest, int msg_type, const float* pOrigin, edict_t* ed) {

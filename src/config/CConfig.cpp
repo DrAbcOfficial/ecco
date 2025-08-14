@@ -5,7 +5,7 @@
 #include <meta_api.h>
 
 #include "meta_utility.h"
-#include "CConfig.h"
+#include "config/CConfig.h"
 
 static CEccoConfig s_pEccoConfig;
 

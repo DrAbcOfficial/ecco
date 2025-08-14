@@ -1,7 +1,7 @@
 #ifdef _GAME_SVENCOOP
 #include <extdll.h>
-#include "angelscript.hpp"
 #include <meta_api.h>
+#include "angelscript/angelscript.hpp"
 
 angelhook_t g_AngelHook;
 

@@ -3,7 +3,7 @@
 #include <extdll.h>
 #include <meta_api.h>
 
-#include "CEccoScriptItem.h"
+#include "scripts/CEccoScriptItem.h"
 
 CEccoScriptItem::CEccoScriptItem(std::string path){
 	try {

@@ -5,7 +5,7 @@
 
 #include "meta_utility.h"
 
-#include "script_system.h"
+#include "scripts/script_system.h"
 
 std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
 

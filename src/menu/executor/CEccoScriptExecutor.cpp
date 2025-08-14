@@ -1,4 +1,4 @@
-#include "CEccoScriptExecutor.h"
+#include "menu/executor/CEccoScriptExecutor.h"
 
 void CEccoScriptExecutor::Excute(edict_t* pPlayer, int selection){
 }

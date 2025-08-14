@@ -2,7 +2,7 @@
 #ifndef __ECCO_SCRIPT_SYS
 #define __ECCO_SCRIPT_SYS
 #include <vector>
-#include "CEccoScriptItem.h"
+#include "scripts/CEccoScriptItem.h"
 
 extern void ResetEccoScriptItems();
 extern bool LoadEccoScriptItems();

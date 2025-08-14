@@ -13,6 +13,8 @@ public:
 	void AddCredits(int64 ulCredits);
 
 	void SaveData();
+
+	void ScoreToCredits(int newScore);
 public:
 	struct save_data_t  // Size: 0x88
 	{
@@ -22,6 +24,8 @@ public:
 	save_data_t m_saveData{};
 
 	edict_t* m_pPlayer;
+
+	int m_iScore;
 private:
 	void ReadData();
 	std::string m_szStoragePath;

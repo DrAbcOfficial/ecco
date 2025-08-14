@@ -4,7 +4,7 @@
 #define __ANGELSCRIPT_API_HEADER
 
 #include "asext_api.h"
-#include "angelscriptlib.h"
+#include "angelscript/angelscriptlib.h"
 
 #pragma region Template
 template <typename T>

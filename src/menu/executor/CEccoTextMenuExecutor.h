@@ -8,7 +8,7 @@
 #include <extdll.h>
 #include <meta_api.h>
 
-#include "CBaseEccoExecutor.h"
+#include "menu/executor/CBaseEccoExecutor.h"
 
 constexpr int MAX_MENU_OPTIONS = 10;
 constexpr int EXITOPTION_INDEX = 10;

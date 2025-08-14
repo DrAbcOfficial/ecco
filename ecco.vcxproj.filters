@@ -16,14 +16,8 @@
     <Filter Include="metamod">
       <UniqueIdentifier>{0dea28de-d923-48c1-b23e-01a6a0f9d40b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core\script">
-      <UniqueIdentifier>{b53f43ec-4d84-423b-8493-377d65a0a4a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="core\menu">
       <UniqueIdentifier>{6ef504f1-56b5-4cd7-b29e-59de9aec839b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="core\menu\parser">
-      <UniqueIdentifier>{1ffe3f11-540c-4736-984e-7203cefb2c3e}</UniqueIdentifier>
     </Filter>
     <Filter Include="core\config">
       <UniqueIdentifier>{7913e517-8707-4d4e-81f6-a875b520bca8}</UniqueIdentifier>
@@ -31,11 +25,17 @@
     <Filter Include="core\storage">
       <UniqueIdentifier>{c7d40998-3fb3-42d7-9999-7ffa0f187b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\timer">
+      <UniqueIdentifier>{3f7774a5-961c-414f-9561-b6359fef0381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\menu\executor">
+      <UniqueIdentifier>{7eeaf87e-7e95-4965-a987-32b160d4d51f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\scripts">
+      <UniqueIdentifier>{b53f43ec-4d84-423b-8493-377d65a0a4a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\angelscript.cpp">
-      <Filter>angelscript</Filter>
-    </ClCompile>
     <ClCompile Include="src\dllapi.cpp">
       <Filter>metamod</Filter>
     </ClCompile>
@@ -54,42 +54,48 @@
     <ClCompile Include="src\sdk_util.cpp">
       <Filter>metamod</Filter>
     </ClCompile>
-    <ClCompile Include="src\script_system.cpp">
-      <Filter>core\script</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CEccoScriptExecutor.cpp">
-      <Filter>core\menu</Filter>
-    </ClCompile>
     <ClCompile Include="src\meta_utility.cpp" />
-    <ClCompile Include="src\CEccoTextMenuExecutor.cpp">
-      <Filter>core\menu</Filter>
+    <ClCompile Include="mmlib\src\Scheduler.cpp">
+      <Filter>core\timer</Filter>
     </ClCompile>
-    <ClCompile Include="src\CBaseEccoExecutor.cpp">
-      <Filter>core\menu</Filter>
+    <ClCompile Include="src\angelscript\angelscript.cpp">
+      <Filter>angelscript</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuParser.cpp">
-      <Filter>core\menu\parser</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CConfig.cpp">
+    <ClCompile Include="src\config\CConfig.cpp">
       <Filter>core\config</Filter>
     </ClCompile>
-    <ClCompile Include="src\CEccoScriptItem.cpp">
-      <Filter>core\script</Filter>
+    <ClCompile Include="src\menu\executor\CBaseEccoExecutor.cpp">
+      <Filter>core\menu\executor</Filter>
     </ClCompile>
-    <ClCompile Include="src\CEccoBackExecutor.cpp">
+    <ClCompile Include="src\menu\executor\CEccoBackExecutor.cpp">
+      <Filter>core\menu\executor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu\executor\CEccoScriptExecutor.cpp">
+      <Filter>core\menu\executor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu\executor\CEccoTextMenuExecutor.cpp">
+      <Filter>core\menu\executor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu\MenuParser.cpp">
       <Filter>core\menu</Filter>
     </ClCompile>
-    <ClCompile Include="src\CPlayerStorageItem.cpp">
+    <ClCompile Include="src\timer\Timer.cpp">
+      <Filter>core\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripts\CEccoScriptItem.cpp">
+      <Filter>core\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripts\script_system.cpp">
+      <Filter>core\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\storage\CPlayerStorageItem.cpp">
       <Filter>core\storage</Filter>
     </ClCompile>
-    <ClCompile Include="src\Storage.cpp">
+    <ClCompile Include="src\storage\Storage.cpp">
       <Filter>core\storage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\angelscript.hpp">
-      <Filter>angelscript</Filter>
-    </ClInclude>
     <ClInclude Include="src\dlldef.h">
       <Filter>metamod</Filter>
     </ClInclude>
@@ -102,41 +108,50 @@
     <ClInclude Include="src\signatures.h">
       <Filter>metamod</Filter>
     </ClInclude>
-    <ClInclude Include="src\script_system.h">
-      <Filter>core\script</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CEccoScriptExecutor.h">
-      <Filter>core\menu</Filter>
-    </ClInclude>
     <ClInclude Include="src\sdk_api.hpp">
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_utility.h" />
-    <ClInclude Include="src\CBaseEccoExecutor.h">
-      <Filter>core\menu</Filter>
+    <ClInclude Include="mmlib\src\Scheduler.h">
+      <Filter>core\timer</Filter>
     </ClInclude>
-    <ClInclude Include="src\CEccoTextMenuExecutor.h">
-      <Filter>core\menu</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MenuParser.h">
-      <Filter>core\menu\parser</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CConfig.h">
-      <Filter>core\config</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CEccoScriptItem.h">
-      <Filter>core\script</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CEccoBackExecutor.h">
-      <Filter>core\menu</Filter>
-    </ClInclude>
-    <ClInclude Include="src\angelscriptlib.h">
+    <ClInclude Include="src\angelscript\angelscript.hpp">
       <Filter>angelscript</Filter>
     </ClInclude>
-    <ClInclude Include="src\CPlayerStorageItem.h">
+    <ClInclude Include="src\angelscript\angelscriptlib.h">
+      <Filter>angelscript</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config\CConfig.h">
+      <Filter>core\config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu\executor\CBaseEccoExecutor.h">
+      <Filter>core\menu\executor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu\executor\CEccoBackExecutor.h">
+      <Filter>core\menu\executor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu\executor\CEccoScriptExecutor.h">
+      <Filter>core\menu\executor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu\executor\CEccoTextMenuExecutor.h">
+      <Filter>core\menu\executor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu\MenuParser.h">
+      <Filter>core\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timer\Timer.h">
+      <Filter>core\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\CEccoScriptItem.h">
+      <Filter>core\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\script_system.h">
+      <Filter>core\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\storage\CPlayerStorageItem.h">
       <Filter>core\storage</Filter>
     </ClInclude>
-    <ClInclude Include="src\Storage.h">
+    <ClInclude Include="src\storage\Storage.h">
       <Filter>core\storage</Filter>
     </ClInclude>
   </ItemGroup>

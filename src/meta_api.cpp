@@ -42,9 +42,9 @@
 #include <meta_api.h>		// of course
 
 #include "signatures.h"
-#include "angelscript.hpp"
+#include "angelscript/angelscript.hpp"
 
-#include "CConfig.h"
+#include "config/CConfig.h"
 
 mBOOL dlclose_handle_invalid;
 
@@ -70,13 +70,13 @@ static META_FUNCTIONS gMetaFunctionTable = {
 
 // Description of plugin
 plugin_info_t Plugin_info = {
-	(char*)META_INTERFACE_VERSION,	// ifvers
-	(char*)"Ecco",	// name
-	(char*)"NOT READY FOR USE",	// version
-	(char*)"2025",	// date
-	(char*)"Dr.Abc",	// author
-	(char*)"https://github.com/DrAbcOfficial/ecco",	// url
-	(char*)"ECCO",	// logtag, all caps please
+	const_cast<char*>(META_INTERFACE_VERSION),	// ifvers
+	const_cast<char*>("Ecco"),	// name
+	const_cast<char*>("NOT READY FOR USE"),	// version
+	const_cast<char*>("2025"),	// date
+	const_cast<char*>("Dr.Abc"),	// author
+	const_cast<char*>("https://github.com/DrAbcOfficial/ecco"),	// url
+	const_cast<char*>("ECCO"),	// logtag, all caps please
 	PT_ANYTIME,	// (when) loadable
 	PT_STARTUP,	// (when) unloadable
 };

@@ -1,7 +1,7 @@
 // Shit, wootguy didnt finish TextMenu
 // Have to write by myself :(
 #include "meta_utility.h"
-#include "CEccoTextMenuExecutor.h"
+#include "menu/executor/CEccoTextMenuExecutor.h"
 
 std::array<CEccoTextMenuExecutor*, MAX_PLAYERS> g_aryTextMenus;
 

@@ -31,9 +31,9 @@
 #include <extdll.h>
 #include <meta_api.h>
 
-#include "script_system.h"
-#include "MenuParser.h"
-#include "Storage.h"
+#include "scripts/script_system.h"
+#include "menu/MenuParser.h"
+#include "storage/Storage.h"
 
 #include "dlldef.h"
 

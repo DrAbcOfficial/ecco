@@ -6,7 +6,7 @@
 #include <meta_api.h>
 
 #include "meta_utility.h"
-#include "CConfig.h"
+#include "config/CConfig.h"
 
 #undef read
 #undef close
@@ -31,6 +31,7 @@ CPlayerStorageItem::CPlayerStorageItem(edict_t* pent){
 			SaveData();
 		}
 	}
+	m_iScore = 0;
 	m_pPlayer = pent;
 }
 
@@ -56,6 +57,14 @@ void CPlayerStorageItem::SaveData(){
 	std::ofstream ofs(m_szStoragePath, std::ios::binary);
 	ofs.write(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));
 	ofs.close();
+}
+
+void CPlayerStorageItem::ScoreToCredits(int newScore){
+	if (m_iScore == newScore)
+		return;
+	AddCredits(static_cast<int64>((newScore - m_iScore) * GetEccoConfig()->ScoreToMoneyMultiplier));
+	m_iScore = newScore;
+	SaveData();
 }
 
 void CPlayerStorageItem::ReadData(){
