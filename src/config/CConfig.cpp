@@ -28,7 +28,6 @@ bool LoadEccoConfig(){
 		GET_VALUE_OR(Hud, RefreshHudInterv, 1.0f);
 		GET_VALUE_OR(Hud, MoneyChannel, 3);
 		GET_VALUE_OR(Hud, NotifyChannel, 4);
-		GET_VALUE_OR(Hud, IgnoreHUDZeroChange, true);
 
 		GET_VALUE_OR(Path, Data, "store");
 		GET_VALUE_OR(Path, BanMaps, "config/BannedMaps.txt");

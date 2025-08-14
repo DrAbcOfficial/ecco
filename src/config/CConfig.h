@@ -27,8 +27,6 @@ struct CEccoConfigHud {
 	int NotifyChannel;
 	//金钱HUD频道
 	int MoneyChannel;
-	//当增加0金钱时忽略变化
-	bool IgnoreHUDZeroChange;
 };
 
 struct CEccoConfigPath {

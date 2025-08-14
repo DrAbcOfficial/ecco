@@ -27,6 +27,7 @@ void InitHud(){
 	s_pCreditDisplay.m_iDefDigits = 1;
 	s_pCreditDisplay.m_iMaxDigits = 12;
 	s_pCreditDisplay.m_flHoldTime = INFINITY;
+	s_pCreditDisplay.m_szSpriteName = config->Path.MoneyIcon;
 
 	s_pNoticeDIsplay.m_iChannel = config->Hud.NotifyChannel;
 	s_pNoticeDIsplay.m_fX = config->Hud.NoticeHudPosX;
