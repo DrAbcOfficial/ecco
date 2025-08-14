@@ -67,6 +67,10 @@ void CPlayerStorageItem::ScoreToCredits(int newScore){
 	SaveData();
 }
 
+std::string CPlayerStorageItem::GetLang(){
+	return m_saveData.Lang;
+}
+
 void CPlayerStorageItem::ReadData(){
 	std::ifstream ifs(m_szStoragePath, std::ios::binary);
 	ifs.read(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));

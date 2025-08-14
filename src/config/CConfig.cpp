@@ -53,12 +53,7 @@ bool LoadEccoConfig(){
 		GET_ROOT_VALUE_OR(StorePlayerScore, 1);
 		GET_ROOT_VALUE_OR(PlayerStartScore, 0);
 		GET_ROOT_VALUE_OR(MoneyLimitePerMap, -1);
-
-		auto allow = toml["Ecco"]["AllowLanguages"].as_array();
-		for (auto iter = allow->begin(); iter != allow->end(); iter++) {
-			auto str = (*iter).value_or("");
-			s_pEccoConfig.AllowLanguages.push_back(str);
-		}
+		GET_ROOT_VALUE_OR(DefaultLang, "en");
 	}
 	catch (const toml::parse_error& err){
 		auto& src = err.source();

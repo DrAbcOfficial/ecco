@@ -11,3 +11,12 @@ extern void WRITE_RGBA(unsigned int rgba);
 extern std::string GetPlayerSteamId(edict_t* pent);
 extern bool IsValidPlayer(edict_t* pentPlayer);
 extern std::string_view& GetGameDir();
+
+enum class ClientPrintTarget {
+	Notify = 1,
+	Console = 2,
+	Talk = 3,
+	Center = 4
+};
+extern void ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text);
+extern void ClientPrintfAll(ClientPrintTarget hud, const char* text);

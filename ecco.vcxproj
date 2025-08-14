@@ -20,6 +20,7 @@
     <ClCompile Include="src\hud\CHudNumber.cpp" />
     <ClCompile Include="src\hud\hud.cpp" />
     <ClCompile Include="src\h_export.cpp" />
+    <ClCompile Include="src\lang\lang.cpp" />
     <ClCompile Include="src\menu\executor\CBaseEccoExecutor.cpp" />
     <ClCompile Include="src\menu\executor\CEccoBackExecutor.cpp" />
     <ClCompile Include="src\menu\executor\CEccoScriptExecutor.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="src\hud\CHudNumber.h" />
     <ClInclude Include="src\hud\hud.h" />
     <ClInclude Include="src\info_name.h" />
+    <ClInclude Include="src\lang\lang.h" />
     <ClInclude Include="src\menu\executor\CBaseEccoExecutor.h" />
     <ClInclude Include="src\menu\executor\CEccoBackExecutor.h" />
     <ClInclude Include="src\menu\executor\CEccoScriptExecutor.h" />

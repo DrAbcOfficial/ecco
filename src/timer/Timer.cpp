@@ -18,7 +18,7 @@ void AddPlayerScoreToCreditsTimer(edict_t* pent){
 		[pent]() {
 			CPlayerStorageItem* pItem = GetPlayerStorageItem(pent);
 			if (pItem)
-				pItem->ScoreToCredits(pent->v.frags);
+				pItem->ScoreToCredits((int)pent->v.frags);
 		},
 		0.7f,
 		-1 // infinite calls

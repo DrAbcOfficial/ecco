@@ -38,6 +38,7 @@
 #include "Scheduler.h"
 #include "timer/Timer.h"
 #include "hud/hud.h"
+#include "lang/lang.h"
 
 #include "dlldef.h"
 
@@ -46,6 +47,7 @@
 static void GameInit() {
 	InitScriptEngine();
 	InitHud();
+	LoadTranslations();
 }
 
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {

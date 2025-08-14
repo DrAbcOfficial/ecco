@@ -8,7 +8,6 @@ inline void WRITE_FLOAT(float value){
 }
 
 void WRITE_RGBA(unsigned int rgba){
-
 	unsigned char r = (rgba & 0xFF000000) >> 24;
 	unsigned char g = (rgba & 0xFF0000) >> 16;
 	unsigned char b = (rgba & 0xFF00) >> 8;
@@ -33,3 +32,21 @@ std::string_view& GetGameDir(){
 	static std::string_view dir = GET_GAME_INFO(PLID, GINFO_GAMEDIR);
 	return dir;
 }
+
+void ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text){
+	extern int g_msgTextMsg;
+	MESSAGE_BEGIN(MSG_ONE, g_msgTextMsg, nullptr, target);
+		WRITE_BYTE((int)hud);
+		WRITE_STRING(text);
+	MESSAGE_END();
+}
+
+void ClientPrintfAll(ClientPrintTarget hud, const char* text){
+	extern int g_msgTextMsg;
+	MESSAGE_BEGIN(MSG_BROADCAST, g_msgTextMsg);
+		WRITE_BYTE((int)hud);
+		WRITE_STRING(text);
+	MESSAGE_END();
+}
+
+

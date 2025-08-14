@@ -276,6 +276,7 @@ C_DLLEXPORT int GetEngineFunctions(enginefuncs_t* pengfuncsFromEngine,
 int g_msgShowMenu = -1;
 int g_msgNumDisplay = -1;
 int g_msgUpdateNum = -1;
+int g_msgTextMsg = -1;
 
 static int RegUserMsgPost(const char* pszName, int iSize) {
 	if (!strcmp(pszName, "ShowMenu")) {
@@ -288,6 +289,10 @@ static int RegUserMsgPost(const char* pszName, int iSize) {
 	}
 	if (!strcmp(pszName, "UpdateNum")) {
 		g_msgUpdateNum = META_RESULT_ORIG_RET(int);
+		RETURN_META_VALUE(MRES_HANDLED, 0);
+	}
+	if (!strcmp(pszName, "TextMsg")) {
+		g_msgTextMsg = META_RESULT_ORIG_RET(int);
 		RETURN_META_VALUE(MRES_HANDLED, 0);
 	}
 	RETURN_META_VALUE(MRES_IGNORED, 0);

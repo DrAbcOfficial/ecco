@@ -85,7 +85,8 @@ struct CEccoConfig{
 	//小于0为不限制
 	int MoneyLimitePerMap;
 
-	std::vector<std::string> AllowLanguages;
+	//默认的语言
+	std::string DefaultLang;
 };
 
 extern CEccoConfig* GetEccoConfig();

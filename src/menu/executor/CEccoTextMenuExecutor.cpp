@@ -1,7 +1,8 @@
 // Shit, wootguy didnt finish TextMenu
 // Have to write by myself :(
 #include "meta_utility.h"
-#include "menu/executor/CEccoTextMenuExecutor.h"
+#include "lang/lang.h"
+#include "CEccoTextMenuExecutor.h"
 
 std::array<CEccoTextMenuExecutor*, MAX_PLAYERS> g_aryTextMenus;
 
@@ -97,8 +98,8 @@ void CEccoTextMenuExecutor::AddItem(CBaseEccoExecutor* pItem) {
 
 std::string CEccoTextMenuExecutor::GetDisplayTitle(edict_t* pPlayer) {
 	if(m_szTitle.empty())
-		return m_szId;
-	return m_szTitle;
+		return GetTranslation(pPlayer, m_szId);
+	return GetTranslation(pPlayer, m_szTitle);
 }
 
 void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
