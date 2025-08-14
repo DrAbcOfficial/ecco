@@ -4,9 +4,16 @@
 #include <vector>
 #include <extdll.h>
 #include "scripts/CEccoScriptItem.h"
+#include "menu/executor/CEccoScriptExecutor.h"
 
 extern void InitScriptEngine();
-extern bool EvalScriptContent(edict_t* caller, std::string& content);
+
+enum class EvalResult {
+	Success,
+	Failure,
+	Error
+};
+extern EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* item);
 
 extern void ResetEccoScriptItems();
 extern bool LoadEccoScriptItems();

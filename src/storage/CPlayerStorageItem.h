@@ -6,11 +6,12 @@ class CPlayerStorageItem {
 public:
 	CPlayerStorageItem(edict_t* pent);
 
-	int64 GetCredits() const;
-	std::string_view GetSteamId() const;
+	int GetCredits() const;
+	std::string GetSteamId() const;
+	std::string GetName() const;
 
-	void SetCredits(int64 ulCredits);
-	void AddCredits(int64 ulCredits);
+	void SetCredits(int ulCredits);
+	void AddCredits(int ulCredits);
 
 	void SaveData();
 
@@ -23,7 +24,7 @@ private:
 	struct save_data_t
 	{
 		char SteamId[64]; // 0x40
-		int64 Credits; // 0x80
+		int Credits; // 0x80
 		char Lang[8]; // 0x88
 	};
 	save_data_t m_saveData{};

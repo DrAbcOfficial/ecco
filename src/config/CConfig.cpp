@@ -9,7 +9,7 @@
 
 static CEccoConfig s_pEccoConfig;
 
-CEccoConfig* GetEccoConfig(){
+inline CEccoConfig* GetEccoConfig(){
 	return &s_pEccoConfig;
 }
 
@@ -46,8 +46,7 @@ bool LoadEccoConfig(){
 		}
 		GET_VALUE_OR(BuyMenu, UseBlurMatchForCommand, true);
 		GET_VALUE_OR(BuyMenu, AllowDeathPlayerBuy, true);
-		GET_VALUE_OR(BuyMenu, AllowDuplicatedBuy, true);
-		GET_VALUE_OR(BuyMenu, GenerateDuplicated, true);
+		GET_VALUE_OR(BuyMenu, ReOpenMenuAfterBuy, true);
 
 		GET_ROOT_VALUE_OR(ScoreToMoneyMultiplier, 1.0f);
 		GET_ROOT_VALUE_OR(StorePlayerScore, 1);

@@ -1,5 +1,7 @@
 #include "basescriptmethods.h"
+
 #include <meta_api.h>
+#include "meta_utility.h"
 
 static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName)
 {
@@ -18,10 +20,18 @@ static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName)
 	return pent;
 }
 
-void EccoBaseScriptMethods::give(CChaiPlayer* player, std::string name){
-	edict_t* pev = (edict_t*)player->m_pEdict;
+void EccoBaseScriptMethods::give(CPlayerStorageItem* player, std::string name){
+	edict_t* pev = player->m_pPlayer;
 	edict_t* pent = GiveNamedItem_Common(pev, name.c_str());
 	if (!pent)
 		return;
 	MDLL_Touch(pent, pev);
+}
+
+void EccoBaseScriptMethods::saytext(CPlayerStorageItem* player, std::string content){
+	ClientPrintf(player->m_pPlayer, ClientPrintTarget::Talk, content.c_str());
+}
+
+void EccoBaseScriptMethods::saytextall(std::string content){
+	ClientPrintfAll(ClientPrintTarget::Talk, content.c_str());
 }

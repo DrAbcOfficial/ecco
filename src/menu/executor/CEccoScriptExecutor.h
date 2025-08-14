@@ -1,7 +1,9 @@
 #pragma once
 #include <bitset>
 
-#include "menu/executor/CBaseEccoExecutor.h"
+#include "CBaseEccoExecutor.h"
+
+#include "storage/CPlayerStorageItem.h"
 
 enum MenuItemFlag {
 	NONE = 0,
@@ -13,6 +15,8 @@ public:
 	virtual void Excute(edict_t* pPlayer, int selection) override;
 
 	virtual std::string GetDisplayName(edict_t* pPlyaer) override;
+
+	std::string GetDisplayNameForChai(CPlayerStorageItem* chaiPlayer);
 public:
 	std::bitset<32> m_bitFlags;
 	std::string m_szScript;

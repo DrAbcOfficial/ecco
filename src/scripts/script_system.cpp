@@ -7,7 +7,7 @@
 
 #include "meta_utility.h"
 
-#include "obj/CChaiPlayer.h"
+#include "storage/Storage.h"
 
 #include "basescriptmethods.h"
 
@@ -15,35 +15,76 @@
 
 std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
 
-static std::array<CChaiPlayer, 32> s_aryCallerWrappers;
 static chaiscript::ChaiScript g_ScriptEngine;
 void InitScriptEngine(){
 	chaiscript::ModulePtr m = chaiscript::ModulePtr(new chaiscript::Module());
-	chaiscript::utility::add_class<CChaiPlayer>(*m,
-		"CChaiPlayer", 
+	chaiscript::utility::add_class<CPlayerStorageItem>(*m,
+		"CEccoPlayer", 
 		{
 		}, 
 		{
-			{chaiscript::fun(&CChaiPlayer::m_szName), "m_szName"},
-			{chaiscript::fun(&CChaiPlayer::m_szSteamId), "m_szSteamId"}
+			{chaiscript::fun(&CPlayerStorageItem::GetSteamId), "GetSteamId"},
+			{chaiscript::fun(&CPlayerStorageItem::GetCredits), "GetCredits"},
+			{chaiscript::fun(&CPlayerStorageItem::GetName), "GetName"},
+			{chaiscript::fun(&CPlayerStorageItem::GetLang), "GetLang"},
+			{chaiscript::fun(&CPlayerStorageItem::SetCredits), "SetCredits"},
+			{chaiscript::fun(&CPlayerStorageItem::AddCredits), "AddCredits"},
+			{chaiscript::fun(&CPlayerStorageItem::m_iScore), "m_iScore"}
+		}
+	);
+	chaiscript::utility::add_class<CEccoScriptExecutor>(*m,
+		"CEccoBuyItem",
+		{
+		},
+		{
+			{chaiscript::fun(&CEccoScriptExecutor::m_iCost), "m_iCost"},
+			{chaiscript::fun(&CEccoScriptExecutor::m_bitFlags), "m_bitFlags"},
+			{chaiscript::fun(&CEccoScriptExecutor::m_szId), "m_szId"},
+			{chaiscript::fun(&CEccoScriptExecutor::GetDisplayNameForChai), "GetDisplayName"},
 		}
 	);
 	g_ScriptEngine.add(m);
 
-	g_ScriptEngine.add(chaiscript::fun(&EccoBaseScriptMethods::give), "give");
+#define ADD_METHOD(method) g_ScriptEngine.add(chaiscript::fun(&EccoBaseScriptMethods::method), #method)
+	ADD_METHOD(give);
+	ADD_METHOD(saytext);
+	ADD_METHOD(saytextall);
 }
 
-bool EvalScriptContent(edict_t* caller, std::string& content){
-	int index = ENTINDEX(caller) - 1;
-	CChaiPlayer* player = &s_aryCallerWrappers[index];
-	player->m_pEdict = caller;
-	player->m_szName = STRING(VARS(caller)->netname);
-	player->m_szSteamId = GetPlayerSteamId(caller);
+EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){
 	std::map<std::string, chaiscript::Boxed_Value> locals;
-	locals["caller"] = chaiscript::var(player);
+	locals["caller"] = chaiscript::var(GetPlayerStorageItem(caller));
+	locals["buy_item"] = chaiscript::var(pexcuter);
+	locals["ret"] = chaiscript::var(false); // Default return value
 	g_ScriptEngine.set_locals(locals);
-	g_ScriptEngine.eval(content);
-	return true;
+	try {
+		g_ScriptEngine.eval(pexcuter->m_szScript);
+	}
+	catch (const chaiscript::exception::eval_error& e) {
+		std::string error_msg = "ChaiScript ";
+		error_msg += pexcuter->m_szId;
+		error_msg += " eval error:\n";
+		error_msg += e.detail.c_str();
+		LOG_ERROR(PLID, error_msg.c_str());
+		return EvalResult::Error;
+	}
+	catch (const std::exception& e) {
+		std::string error_msg = "ChaiScript ";
+		error_msg += pexcuter->m_szId;
+		error_msg += " exception: \t";
+		error_msg += e.what();
+		LOG_ERROR(PLID, error_msg.c_str());
+		return EvalResult::Error;
+	}
+	catch (...) {
+		std::string error_msg = "ChaiScript ";
+		error_msg += pexcuter->m_szId;
+		error_msg += " unknown exception occurred.";
+		LOG_ERROR(PLID, error_msg.c_str());
+		return EvalResult::Error;
+	}
+	bool ret = chaiscript::boxed_cast<bool>(g_ScriptEngine.get_locals()["ret"]);
+	return ret ? EvalResult::Success : EvalResult::Failure;
 }
 
 void ResetEccoScriptItems(){

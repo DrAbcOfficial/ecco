@@ -48,6 +48,7 @@ static void GameInit() {
 	InitScriptEngine();
 	InitHud();
 	LoadTranslations();
+	SET_META_RESULT(MRES_HANDLED);
 }
 
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {

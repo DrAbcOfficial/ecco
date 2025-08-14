@@ -55,7 +55,6 @@
     <ClInclude Include="src\meta_utility.h" />
     <ClInclude Include="src\scripts\basescriptmethods.h" />
     <ClInclude Include="src\scripts\CEccoScriptItem.h" />
-    <ClInclude Include="src\scripts\obj\CChaiPlayer.h" />
     <ClInclude Include="src\scripts\script_system.h" />
     <ClInclude Include="src\signatures.h" />
     <ClInclude Include="src\sdk_api.hpp" />

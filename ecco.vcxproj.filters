@@ -37,11 +37,11 @@
     <Filter Include="core\hud">
       <UniqueIdentifier>{74adda33-8e49-406b-b5c2-46d3ed8e6f0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core\scripts\obj">
-      <UniqueIdentifier>{798b7aa1-7c62-4a0b-9b11-07da11ebad01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="core\lang">
       <UniqueIdentifier>{c336b52f-947a-4744-9eb8-6a7aeb2d8b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\command">
+      <UniqueIdentifier>{250fbd8b-fc6b-402c-9983-136a31eb0205}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,9 +183,6 @@
     </ClInclude>
     <ClInclude Include="src\scripts\basescriptmethods.h">
       <Filter>core\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scripts\obj\CChaiPlayer.h">
-      <Filter>core\scripts\obj</Filter>
     </ClInclude>
     <ClInclude Include="src\lang\lang.h">
       <Filter>core\lang</Filter>

@@ -35,20 +35,24 @@ CPlayerStorageItem::CPlayerStorageItem(edict_t* pent){
 	m_pPlayer = pent;
 }
 
-int64 CPlayerStorageItem::GetCredits() const{
+int CPlayerStorageItem::GetCredits() const{
 	return m_saveData.Credits;
 }
 
-std::string_view CPlayerStorageItem::GetSteamId() const{
+std::string CPlayerStorageItem::GetSteamId() const{
 	return m_saveData.SteamId;
 }
 
-void CPlayerStorageItem::SetCredits(int64 ulCredits){
+std::string CPlayerStorageItem::GetName() const{
+	return STRING(VARS(m_pPlayer)->netname);
+}
+
+void CPlayerStorageItem::SetCredits(int ulCredits){
 	m_saveData.Credits = ulCredits;
 	SaveData();
 }
 
-void CPlayerStorageItem::AddCredits(int64 ulCredits){
+void CPlayerStorageItem::AddCredits(int ulCredits){
 	m_saveData.Credits += ulCredits;
 	SaveData();
 }
@@ -62,7 +66,7 @@ void CPlayerStorageItem::SaveData(){
 void CPlayerStorageItem::ScoreToCredits(int newScore){
 	if (m_iScore == newScore)
 		return;
-	AddCredits(static_cast<int64>((newScore - m_iScore) * GetEccoConfig()->ScoreToMoneyMultiplier));
+	AddCredits(static_cast<int>((newScore - m_iScore) * GetEccoConfig()->ScoreToMoneyMultiplier));
 	m_iScore = newScore;
 	SaveData();
 }

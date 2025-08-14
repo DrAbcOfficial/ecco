@@ -54,10 +54,8 @@ struct CEccoConfigBuyMenu {
 	bool UseBlurMatchForCommand;
 	//是否允许死亡玩家购买
 	bool AllowDeathPlayerBuy;
-	//是否允许购买已有物品
-	bool AllowDuplicatedBuy;
-	//若允许购买已有物品, 购买时是否生成复制品
-	bool GenerateDuplicated;
+	//购买后重新打开菜单
+	bool ReOpenMenuAfterBuy;
 };
 struct CEccoConfig{
 	//Hud
@@ -89,5 +87,5 @@ struct CEccoConfig{
 	std::string DefaultLang;
 };
 
-extern CEccoConfig* GetEccoConfig();
+extern inline CEccoConfig* GetEccoConfig();
 extern bool LoadEccoConfig();
