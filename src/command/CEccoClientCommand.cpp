@@ -47,24 +47,32 @@ bool ClientSayCommandHandler(edict_t* caller) {
             command = cmd.substr(1);
             args = "";
         }
-
-
-        auto item = s_mapRegistedClientCmdMap.find(command);
-        if (item != s_mapRegistedClientCmdMap.end()) {
-            std::vector<std::string> result;
-            std::istringstream iss(args);
-            std::string token;
-            while (iss >> token) {
-                result.push_back(token);
+        if (command.starts_with(ECCO_CMD_PREFIX)) {
+            auto item = s_mapRegistedClientCmdMap.find(command.substr(ECCO_CMD_PREFIX_LEN));
+            if (item != s_mapRegistedClientCmdMap.end()) {
+                std::vector<std::string> result;
+                std::istringstream iss(args);
+                std::string token;
+                while (iss >> token) {
+                    result.push_back(token);
+                }
+                return item->second->DirectCall(caller, true, result);
             }
-            return item->second->DirectCall(caller, true, result);
         }
         else {
             auto& trigger = GetEccoConfig()->BuyMenu.OpenShopTriggers;
             auto it = std::find(trigger.begin(), trigger.end(), command);
             if (it != trigger.end()) {
-                std::string buf = "ecco_buy " + args;
-                FakeClientCommand(caller, buf.c_str());
+                auto item = s_mapRegistedClientCmdMap.find("buy");
+                if (item != s_mapRegistedClientCmdMap.end()) {
+                    std::vector<std::string> result;
+                    std::istringstream iss(args);
+                    std::string token;
+                    while (iss >> token) {
+                        result.push_back(token);
+                    }
+                    return item->second->DirectCall(caller, true, result);
+                }
                 return true;
             }
         }
