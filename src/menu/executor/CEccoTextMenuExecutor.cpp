@@ -96,10 +96,22 @@ void CEccoTextMenuExecutor::AddItem(CBaseEccoExecutor* pItem) {
 	m_iSize++;
 }
 
-std::string CEccoTextMenuExecutor::GetDisplayTitle(edict_t* pPlayer) {
+std::string CEccoTextMenuExecutor::GetDisplayTitle(edict_t* pPlayer) const {
 	if(m_szTitle.empty())
 		return GetTranslation(pPlayer, m_szId);
 	return GetTranslation(pPlayer, m_szTitle);
+}
+
+void CEccoTextMenuExecutor::Close(edict_t* pent) {
+	if (pent)
+		SetPlayerViewing(pent, false);
+	else {
+		m_iViewers.reset();
+		for (size_t i = 0; i < m_iViewers.size(); i++) {
+			if(m_iViewers.test(i))
+				g_aryTextMenus[i] = nullptr;
+		}
+	}
 }
 
 void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {

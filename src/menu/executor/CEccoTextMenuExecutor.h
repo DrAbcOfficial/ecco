@@ -27,8 +27,10 @@ public:
 
 	// set player to NULL to send to all players.
 	virtual void Excute(edict_t* pPlayer, int selection) override;
+	// set player to NULL to send to all players.
+	void Close(edict_t* pent);
 
-	std::string GetDisplayTitle(edict_t* pPlayer);
+	std::string GetDisplayTitle(edict_t* pPlayer) const;
 
 	bool IsPlayerViewing(edict_t* ent);
 	void SetPlayerViewing(edict_t* ent, bool view);

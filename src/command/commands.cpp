@@ -16,10 +16,12 @@ static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, [](edic
 	return true;
 	});
 static CEccoClientCommand reset("reload", "reload all script", ADMIN_LEVEL::ADMIN, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
+    pThis->PrintMessageByFrom(caller, talk, "Reloading scripts and menus.");
+    ReseAllMenus();
 	ResetEccoScriptItems();
 	LoadEccoScriptItems();
-	ReseAllMenus();
 	ParseRootMenu();
+    pThis->PrintMessageByFrom(caller, talk, "Scripts and menus reloaded.");
 	return true;
 });
 constexpr char HELP_FORMAT[] = "|{:<12}|{:<24}|{:<48}|";

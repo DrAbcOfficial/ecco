@@ -12,11 +12,12 @@ public:
 	template <typename... Strings>
 	bool Call(edict_t* caller, bool from_talk, Strings&&... args){
 		std::vector<std::string> args_list = { std::forward<Strings>(args)... };
-		return PrivateCall(caller, from_talk, args_list);
+		return DirectCall(caller, from_talk, args_list);
 	}
+
+	bool DirectCall(edict_t* caller, bool from_talk, const std::vector<std::string>& args);
 private:
 	std::function<bool(edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args)> m_pfnCallback;
 	ADMIN_LEVEL m_iPrivilege;
-	bool PrivateCall(edict_t* caller, bool from_talk, const std::vector<std::string>& args);
 };
 

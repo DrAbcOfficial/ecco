@@ -1,11 +1,11 @@
 #include <unordered_map>
+#include <sstream>
 #include <algorithm>
 
 #include "CEccoClientCommand.h"
 #include "storage/Storage.h"
 #include "lang/lang.h"
 #include "config/CConfig.h"
-#include "menu/MenuParser.h"
 
 #include <meta_api.h>
 #include "meta_utility.h"
@@ -40,18 +40,33 @@ bool ClientSayCommandHandler(edict_t* caller) {
         std::string command;
         std::string args;
         if (space_pos != std::string::npos) {
-            command = cmd.substr(0, space_pos);
+            command = cmd.substr(1, space_pos);
             args = cmd.substr(space_pos);
         }
         else {
-            command = cmd;
+            command = cmd.substr(1);
             args = "";
         }
-        auto& trigger = GetEccoConfig()->BuyMenu.OpenShopTriggers;
-        auto it = std::find(trigger.begin(), trigger.end(), command.substr(1));
-        if (it != trigger.end()) {
-            g_pRootMenuExecutor->Excute(caller, 0);
-            return true;
+
+
+        auto item = s_mapRegistedClientCmdMap.find(command);
+        if (item != s_mapRegistedClientCmdMap.end()) {
+            std::vector<std::string> result;
+            std::istringstream iss(args);
+            std::string token;
+            while (iss >> token) {
+                result.push_back(token);
+            }
+            return item->second->DirectCall(caller, true, result);
+        }
+        else {
+            auto& trigger = GetEccoConfig()->BuyMenu.OpenShopTriggers;
+            auto it = std::find(trigger.begin(), trigger.end(), command);
+            if (it != trigger.end()) {
+                std::string buf = "ecco_buy " + args;
+                FakeClientCommand(caller, buf.c_str());
+                return true;
+            }
         }
     }
     return false;
@@ -82,10 +97,10 @@ bool CEccoClientCommand::Call(edict_t* caller, bool from_talk){
     for (int i = 1; i < argc; i++) {
         args.push_back(CMD_ARGV(i));
     }
-	return PrivateCall(caller, from_talk, args);
+	return DirectCall(caller, from_talk, args);
 }
 
-bool CEccoClientCommand::PrivateCall(edict_t* caller, bool from_talk, const std::vector<std::string>& args){
+bool CEccoClientCommand::DirectCall(edict_t* caller, bool from_talk, const std::vector<std::string>& args){
     if (!m_pfnCallback)
         return false;
     if(CheckArgs(args)){

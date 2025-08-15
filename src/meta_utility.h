@@ -12,6 +12,7 @@ extern std::string GetPlayerSteamId(edict_t* pent);
 extern edict_t* GetPlayerBySteamId(const char* steamid);
 extern bool IsValidPlayer(edict_t* pentPlayer);
 extern std::string_view& GetGameDir();
+extern void FakeClientCommand(edict_t* pent, const char* cmd);
 
 enum class ClientPrintTarget {
 	Notify = 1,

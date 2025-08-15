@@ -148,6 +148,10 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 }
 
 void ReseAllMenus() {
+	extern std::array<CEccoTextMenuExecutor*, MAX_PLAYERS> g_aryTextMenus;
+	for (size_t i = 0; i < g_aryTextMenus.size(); i++) {
+		g_aryTextMenus[i] = nullptr;
+	}
 	for(auto& executor : g_aryEccoMenuExecutors) {
 		delete executor;
 	}

@@ -46,6 +46,13 @@ std::string_view& GetGameDir(){
 	return dir;
 }
 
+void FakeClientCommand(edict_t* pent, const char* cmd){
+	//SVC_STUFFTEXT
+	MESSAGE_BEGIN(MSG_ONE, 9, nullptr, pent);
+		WRITE_STRING(cmd);
+	MESSAGE_END();
+}
+
 void ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text){
 	extern int g_msgTextMsg;
 	std::string temp = text;
