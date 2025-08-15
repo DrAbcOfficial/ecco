@@ -1,3 +1,6 @@
+#include <unordered_map>
+#include <format>
+
 #include "CEccoClientCommand.h"
 #include "CEccoServerCommand.h"
 #include "menu/Menuparser.h"
@@ -8,21 +11,33 @@
 #include <charconv>
 
 #pragma region Client
-static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, [](edict_t* caller, const std::vector<std::string>& args) -> bool {
+static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
 	g_pRootMenuExecutor->Excute(caller, 0);
 	return true;
 	});
-static CEccoClientCommand reset("reload", "reload all script", ADMIN_LEVEL::ADMIN, [](edict_t* caller, const std::vector<std::string>& args) -> bool {
+static CEccoClientCommand reset("reload", "reload all script", ADMIN_LEVEL::ADMIN, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
 	ResetEccoScriptItems();
 	LoadEccoScriptItems();
 	ReseAllMenus();
 	ParseRootMenu();
 	return true;
 });
+constexpr char HELP_FORMAT[] = "|{:<12}|{:<24}|{:<48}|";
+extern std::unordered_map<std::string, CEccoClientCommand*> s_mapRegistedClientCmdMap;
+static CEccoClientCommand help("help", "list all commands", ADMIN_LEVEL::NONE, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
+    std::string buffer = std::format(HELP_FORMAT, "Command", "Description", "Usage");
+    pThis->PrintMessageByFrom(caller, talk, buffer.c_str());
+    for (auto& cmd : s_mapRegistedClientCmdMap) {
+        auto& item = cmd.second;
+        buffer = std::format(HELP_FORMAT, item->m_szCmd, item->m_szDescription, item->GetUsage());
+        pThis->PrintMessageByFrom(caller, talk, buffer.c_str());
+    }
+    return true;
+});
 #pragma endregion
 
 #pragma region Server
-static CEccoServerCommand setadmin("set_admin", "set a player as admin", { CEccoCmdArgSet("SteamId"), CEccoCmdArgSet("AdminLevel")}, [](const std::vector<std::string>& args)->bool {
+static CEccoServerCommand setadmin("set_admin", "set a player as admin", { CEccoCmdArgSet("SteamId64"), CEccoCmdArgSet("AdminLevel")}, [](CEccoServerCommand* pThis, const std::vector<std::string>& args)->bool {
     auto str_to_adminlevel = [](const std::string& s) -> short {
         if (s.empty())
             return 0;
@@ -54,5 +69,16 @@ static CEccoServerCommand setadmin("set_admin", "set a player as admin", { CEcco
     else
         LOG_CONSOLE(PLID, "Set ADMIN_LEVEL %d to %s, but Player is NULL!", result, id);
     return false;
+});
+extern std::unordered_map<std::string, CEccoServerCommand*> s_mapRegistedServerCmdMap;
+static CEccoServerCommand help_s("help", "list all commands", [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {
+    std::string buffer = std::format(HELP_FORMAT, "Command", "Description", "Usage");
+    LOG_CONSOLE(PLID, buffer.c_str());
+    for (auto& cmd : s_mapRegistedServerCmdMap) {
+        auto& item = cmd.second;
+        buffer = std::format(HELP_FORMAT, item->m_szCmd, item->m_szDescription, item->GetUsage());
+        LOG_CONSOLE(PLID, buffer.c_str());
+    }
+    return true;
 });
 #pragma endregion

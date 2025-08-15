@@ -22,6 +22,7 @@ public:
 	std::string m_szDescription;
 
 	bool CheckArgs(const std::vector<std::string>& args);
+	std::string GetUsage();
 
 	static void PrintMessageByFrom(edict_t* caller, bool from_talk, const char* message);
 protected:

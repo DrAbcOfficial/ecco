@@ -3,9 +3,9 @@
 class CEccoServerCommand : public CEccoBaseCommand{
 public:
 	CEccoServerCommand(const char* cmd, const char* description,
-		std::function<bool(const std::vector<std::string>& args)> callback);
+		std::function<bool(CEccoServerCommand* pThis, const std::vector<std::string>& args)> callback);
 	CEccoServerCommand(const char* cmd, const char* description, std::vector<CEccoCmdArgSet> arglist,
-		std::function<bool(const std::vector<std::string>& args)> callback);
+		std::function<bool(CEccoServerCommand* pThis, const std::vector<std::string>& args)> callback);
 	bool Call();
 	template <typename... Strings>
 	bool Call(Strings&&... args) {
@@ -13,7 +13,7 @@ public:
 		return PrivateCall(args_list);
 	}
 private:
-	std::function<bool(const std::vector<std::string>& args)> m_pfnCallback;
+	std::function<bool(CEccoServerCommand* pThis, const std::vector<std::string>& args)> m_pfnCallback;
 	bool PrivateCall(const std::vector<std::string>& args);
 };
 

@@ -12,6 +12,17 @@ bool CEccoBaseCommand::CheckArgs(const std::vector<std::string>& args){
     return neededArgs > args.size();
 }
 
+std::string CEccoBaseCommand::GetUsage(){
+    std::string buffer = m_szCmd + " ";
+    for (const auto& arg_set : m_aryArgList) {
+        if (!arg_set.m_bIsOptional)
+            buffer += "[" + arg_set.m_szName + "] ";
+        else
+            buffer += "<" + arg_set.m_szName + "> ";
+    }
+    return buffer;
+}
+
 void CEccoBaseCommand::PrintMessageByFrom(edict_t* caller, bool from_talk, const char* message) {
     ClientPrintf(caller, from_talk ? ClientPrintTarget::Talk : ClientPrintTarget::Console, message);
 }

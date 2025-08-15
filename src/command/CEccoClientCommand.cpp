@@ -1,4 +1,4 @@
-#include <map>
+#include <unordered_map>
 #include <algorithm>
 
 #include "CEccoClientCommand.h"
@@ -10,7 +10,7 @@
 #include <meta_api.h>
 #include "meta_utility.h"
 
-static std::map<std::string, CEccoClientCommand*> s_mapRegistedCommandMap;
+std::unordered_map<std::string, CEccoClientCommand*> s_mapRegistedClientCmdMap;
 
 bool ClientCommandHandler(edict_t* caller) {
     if (!caller || !IsValidPlayer(caller)) 
@@ -19,8 +19,8 @@ bool ClientCommandHandler(edict_t* caller) {
     if (argc < 1) 
         return false;
     std::string cmd = CMD_ARGV(0);
-    auto it = s_mapRegistedCommandMap.find(cmd.substr(5));
-    if (it == s_mapRegistedCommandMap.end()) 
+    auto it = s_mapRegistedClientCmdMap.find(cmd.substr(5));
+    if (it == s_mapRegistedClientCmdMap.end()) 
         return false;
     CEccoClientCommand* command = it->second;
     if (!command) 
@@ -58,22 +58,22 @@ bool ClientSayCommandHandler(edict_t* caller) {
 }
 
 CEccoClientCommand::CEccoClientCommand(const char* cmd, const char* description, ADMIN_LEVEL prv, 
-    std::function<bool(edict_t* caller, const std::vector<std::string>& args)> callback){
+    std::function<bool(edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args)> callback){
 	m_szCmd = cmd;
 	m_szDescription = description;
     m_iPrivilege = prv;
 	m_pfnCallback = std::move(callback);
-	s_mapRegistedCommandMap.emplace(cmd, this);
+	s_mapRegistedClientCmdMap.emplace(cmd, this);
 }
 
 CEccoClientCommand::CEccoClientCommand(const char* cmd, const char* description, ADMIN_LEVEL prv,
-    std::vector<CEccoCmdArgSet> arglist, std::function<bool(edict_t* caller, const std::vector<std::string>& args)> callback){
+    std::vector<CEccoCmdArgSet> arglist, std::function<bool(edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args)> callback){
 	m_aryArgList = std::move(arglist);
     m_szCmd = cmd;
     m_szDescription = description;
     m_iPrivilege = prv;
     m_pfnCallback = std::move(callback);
-    s_mapRegistedCommandMap.emplace(cmd, this);
+    s_mapRegistedClientCmdMap.emplace(cmd, this);
 }
 
 bool CEccoClientCommand::Call(edict_t* caller, bool from_talk){
@@ -90,13 +90,7 @@ bool CEccoClientCommand::PrivateCall(edict_t* caller, bool from_talk, const std:
         return false;
     if(CheckArgs(args)){
 		std::string errorMsg = m_szDescription;
-        errorMsg += "\n    Usage: \n    " + m_szCmd + " ";
-        for (const auto& arg_set : m_aryArgList) {
-            if (!arg_set.m_bIsOptional)
-                errorMsg += "[" + arg_set.m_szName + "] ";
-            else
-				errorMsg += "<" + arg_set.m_szName + "> ";
-		}
+        errorMsg += "\n    Usage: \n    " + GetUsage();
         PrintMessageByFrom(caller, from_talk, errorMsg.c_str());
         return true;
 	}
@@ -107,5 +101,5 @@ bool CEccoClientCommand::PrivateCall(edict_t* caller, bool from_talk, const std:
         PrintMessageByFrom(caller, from_talk, GetTranslation(caller, "ecco_cmd_access_deny").c_str());
         return true;
     }
-    return m_pfnCallback(caller, args);
+    return m_pfnCallback(caller, this, from_talk, args);
 }
