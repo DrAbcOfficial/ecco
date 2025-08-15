@@ -24,6 +24,7 @@ public:
 	bool CheckArgs(const std::vector<std::string>& args);
 	std::string GetUsage();
 
+	static void PrintTranslatedMessageByFrom(edict_t* caller, bool from_talk, const char* key);
 	static void PrintMessageByFrom(edict_t* caller, bool from_talk, const char* message);
 protected:
 	std::vector<CEccoCmdArgSet> m_aryArgList;

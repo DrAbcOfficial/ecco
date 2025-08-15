@@ -1,5 +1,7 @@
 #include "CEccoBaseCommand.h"
 
+#include "lang/lang.h"
+
 #include <meta_api.h>
 #include "meta_utility.h"
 
@@ -21,6 +23,11 @@ std::string CEccoBaseCommand::GetUsage(){
             buffer += "<" + arg_set.m_szName + "> ";
     }
     return buffer;
+}
+
+void CEccoBaseCommand::PrintTranslatedMessageByFrom(edict_t* caller, bool from_talk, const char* key){
+    std::string translated = GetTranslation(caller, key);
+    PrintMessageByFrom(caller, from_talk, translated.c_str());
 }
 
 void CEccoBaseCommand::PrintMessageByFrom(edict_t* caller, bool from_talk, const char* message) {

@@ -105,7 +105,7 @@ bool CEccoClientCommand::DirectCall(edict_t* caller, bool from_talk, const std::
         return false;
     if(CheckArgs(args)){
 		std::string errorMsg = m_szDescription;
-        errorMsg += "\n    Usage: \n    " + GetUsage();
+        errorMsg += "\n   " + GetTranslation(caller, "ecco_cmd_usage") + " \n    " + GetUsage();
         PrintMessageByFrom(caller, from_talk, errorMsg.c_str());
         return true;
 	}
@@ -113,7 +113,7 @@ bool CEccoClientCommand::DirectCall(edict_t* caller, bool from_talk, const std::
     if (!item)
         return false;
     if (item->GetAdminLevel() < m_iPrivilege) {
-        PrintMessageByFrom(caller, from_talk, GetTranslation(caller, "ecco_cmd_access_deny").c_str());
+        PrintTranslatedMessageByFrom(caller, from_talk,"ecco_cmd_access_deny");
         return true;
     }
     return m_pfnCallback(caller, this, from_talk, args);
