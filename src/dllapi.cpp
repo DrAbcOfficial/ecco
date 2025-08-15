@@ -49,6 +49,7 @@
 static void GameInit() {
 	InitScriptEngine();
 	InitHud();
+	ResetTranslations();
 	LoadTranslations();
 	RegistServerCommandToEngine();
 	SET_META_RESULT(MRES_HANDLED);

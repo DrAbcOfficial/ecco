@@ -6,6 +6,7 @@
 #include "menu/Menuparser.h"
 #include "scripts/script_system.h"
 #include "storage/Storage.h"
+#include "lang/lang.h"
 
 #include "meta_utility.h"
 
@@ -18,6 +19,8 @@ static CEccoClientCommand reset("reload", "reload all script", ADMIN_LEVEL::ADMI
     pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_scripts_reloading");
     ReseAllMenus();
 	ResetEccoScriptItems();
+    ResetTranslations();
+    LoadTranslations();
 	LoadEccoScriptItems();
 	ParseRootMenu();
     pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_scripts_reloaded");

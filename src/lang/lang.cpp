@@ -1,6 +1,6 @@
 #include <format>
 #include <filesystem>
-#include <map>
+#include <unordered_map>
 #include <tomlplusplus/toml.hpp>
 
 #include "storage/Storage.h"
@@ -16,28 +16,58 @@ using lang_pair_t = struct lang_pair_s{
     std::string translation;
 };
 
-static std::map<std::string, std::vector<lang_pair_t*>> s_mapTranslations;
+static std::unordered_map<std::string, std::vector<lang_pair_t*>> s_mapTranslations;
+static std::unordered_map<std::string, std::vector<lang_pair_t*>> s_mapUserTranslations;
 
 std::string& GetTranslation(edict_t* player, std::string key){
 	std::string player_lang = GetPlayerStorageItem(player)->GetLang();
+    auto user_it = s_mapUserTranslations.find(player_lang);
+    if (user_it == s_mapUserTranslations.end())
+        user_it = s_mapUserTranslations.find(GetEccoConfig()->DefaultLang);
+    if (user_it == s_mapUserTranslations.end())
+        user_it = s_mapUserTranslations.begin();
+
 	auto it = s_mapTranslations.find(player_lang);
     if (it == s_mapTranslations.end())
         it = s_mapTranslations.find(GetEccoConfig()->DefaultLang);
     if (it == s_mapTranslations.end())
         it = s_mapTranslations.begin();
-    auto trans_it = std::find_if(it->second.begin(), it->second.end(),
-        [&key](const lang_pair_t* pair) { return pair->key == key; });
-    if (trans_it != it->second.end())
-        return (*trans_it)->translation;
+
+    std::unordered_map<std::string, lang_pair_t*> pair_map;
+    for (lang_pair_t* pair : it->second) {
+        if (pair)
+            pair_map[pair->key] = pair;
+    }
+    for (lang_pair_t* pair : user_it->second) {
+        if (pair)
+            pair_map[pair->key] = pair;
+    }
+    auto target = pair_map.find(key);
+    if (target != pair_map.end())
+        return target->second->translation;
     static std::string temp = key;
     return temp;
 }
 
+void ResetTranslations() {
+    for (auto& trans: s_mapTranslations) {
+        for (auto& p : trans.second) {
+            delete p;
+        }
+    }
+    s_mapTranslations.clear();
+    for (auto& trans : s_mapUserTranslations) {
+        for (auto& p : trans.second) {
+            delete p;
+        }
+    }
+    s_mapUserTranslations.clear();
+}
 void LoadTranslations(){
     std::filesystem::path p(GetGameDir());
 	p.append("addons/ecco/lang");
     if (!std::filesystem::exists(p)) {
-        LOG_CONSOLE(PLID, "Ecco language directory does not exist: %s", p.string().c_str());
+        LOG_ERROR(PLID, "Ecco language directory does not exist: %s", p.string().c_str());
         return;
     }
     
@@ -46,12 +76,26 @@ void LoadTranslations(){
             try {
 				std::string lang_name = entry.path().stem().string();
                 auto config = toml::parse_file(entry.path().string());
-                auto terverse = config["Lang"].as_table();
-                for (auto iter = terverse->begin(); iter != terverse->end(); iter++) {
-                    lang_pair_t* lang_pair = new lang_pair_t();
-					lang_pair->key = iter->first;
-                    lang_pair->translation = iter->second.value_or("");
-					s_mapTranslations[lang_name].push_back(lang_pair);
+                if (lang_name == "user_setting") {
+                    for (auto tb = config.begin(); tb != config.end(); tb++) {
+                        std::string key(tb->first);
+                        auto terverse = config[key].as_table();
+                        for (auto iter = terverse->begin(); iter != terverse->end(); iter++) {
+                            lang_pair_t* lang_pair = new lang_pair_t();
+                            lang_pair->key = iter->first;
+                            lang_pair->translation = iter->second.value_or("");
+                            s_mapUserTranslations[key].push_back(lang_pair);
+                        }
+                    }
+                }
+                else {
+                    auto terverse = config["Lang"].as_table();
+                    for (auto iter = terverse->begin(); iter != terverse->end(); iter++) {
+                        lang_pair_t* lang_pair = new lang_pair_t();
+                        lang_pair->key = iter->first;
+                        lang_pair->translation = iter->second.value_or("");
+                        s_mapTranslations[lang_name].push_back(lang_pair);
+                    }
                 }
             } 
             catch (const toml::parse_error& err) {
