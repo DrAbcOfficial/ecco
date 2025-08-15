@@ -1,0 +1,12 @@
+# 这是用户自定义的翻译，节名为语言
+# 当与默认翻译文件有相同键名时，优先使用本文件的翻译，如ecco_menu_exit
+
+[cn]
+ecco_menu_exit="麻利的离开"
+TestCategory="大洞"
+TestItem="大屌"
+
+[en]
+ecco_menu_exit="Geet ooout!"
+TestCategory="Hole"
+TestItem="Dick"

@@ -1,0 +1,15 @@
+# 不要直接修改本文件！
+# 在user_setting.toml创建相同名称的键值对替换！
+
+[Lang]
+not_enough_credits="{0}需要{1}元，你只有{2}元。"
+ecco_menu_back="返回上一级"
+ecco_menu_prev_page="上一页"
+ecco_menu_next_page="下一页"
+ecco_menu_exit="退出"
+ecco_menu_root="\\w[\\yEcco购买商店\\w]\n\\c============"
+ecco_eval_exception="在购买{0}时发生了一个错误，请截图告知管理员"
+ecco_cmd_access_deny="你不能使用这个命令！"
+ecco_scripts_reloading="正在重载脚本、语言及菜单……"
+ecco_scripts_reloaded="重载完毕！"
+ecco_cmd_usage="用法:"
