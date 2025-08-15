@@ -39,6 +39,7 @@
 #include "timer/Timer.h"
 #include "hud/hud.h"
 #include "lang/lang.h"
+#include "command/CEccoBaseCommand.h"
 #include "command/command_system.h"
 
 #include "dlldef.h"
@@ -64,7 +65,10 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 }
 
 static void	 ClientCommand (edict_t* pEntity) {
-	if (!_strnicmp(CMD_ARGV(0), ECCO_CMD_PREFIX, ECCO_CMD_PREFIX_LEN))
+	const char* cmd = CMD_ARGV(0);
+	if (!strncmp(cmd, "say", 3))
+		RETURN_META(ClientSayCommandHandler(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
+	if (!_strnicmp(cmd, ECCO_CMD_PREFIX, ECCO_CMD_PREFIX_LEN))
 		SET_META_RESULT(ClientCommandHandler(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 	else
 		SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);

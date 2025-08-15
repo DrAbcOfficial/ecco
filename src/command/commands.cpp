@@ -18,7 +18,7 @@ static CEccoClientCommand reset("reload", "reload all script", ADMIN_LEVEL::ADMI
 	ReseAllMenus();
 	ParseRootMenu();
 	return true;
-	});
+});
 #pragma endregion
 
 #pragma region Server

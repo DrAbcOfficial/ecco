@@ -1,8 +1,11 @@
 #include <map>
+#include <algorithm>
 
 #include "CEccoClientCommand.h"
 #include "storage/Storage.h"
 #include "lang/lang.h"
+#include "config/CConfig.h"
+#include "menu/MenuParser.h"
 
 #include <meta_api.h>
 #include "meta_utility.h"
@@ -23,6 +26,35 @@ bool ClientCommandHandler(edict_t* caller) {
     if (!command) 
         return false;
 	return command->Call(caller, false);
+}
+
+bool ClientSayCommandHandler(edict_t* caller) {
+    if (!caller || !IsValidPlayer(caller))
+        return false;
+    int argc = CMD_ARGC();
+    if (argc <= 1)
+        return false;
+    std::string cmd = CMD_ARGV(1);
+    if (cmd[0] == '!' || cmd[0] == '/') {
+        size_t space_pos = cmd.find_first_of(' ');
+        std::string command;
+        std::string args;
+        if (space_pos != std::string::npos) {
+            command = cmd.substr(0, space_pos);
+            args = cmd.substr(space_pos);
+        }
+        else {
+            command = cmd;
+            args = "";
+        }
+        auto& trigger = GetEccoConfig()->BuyMenu.OpenShopTriggers;
+        auto it = std::find(trigger.begin(), trigger.end(), command.substr(1));
+        if (it != trigger.end()) {
+            g_pRootMenuExecutor->Excute(caller, 0);
+            return true;
+        }
+    }
+    return false;
 }
 
 CEccoClientCommand::CEccoClientCommand(const char* cmd, const char* description, ADMIN_LEVEL prv, 
