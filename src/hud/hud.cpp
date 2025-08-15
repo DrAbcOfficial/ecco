@@ -4,7 +4,6 @@
 
 #include "CHudNumber.h"
 
-#include "sdk_api.hpp"
 #include "Scheduler.h"
 #include "meta_utility.h"
 

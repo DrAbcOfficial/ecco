@@ -53,8 +53,10 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 
 	auto add_back = [&](CEccoTextMenuExecutor* pMenu) {
 		//返回
-		if (root)
+		if (root) {
+			pMenu->AddItem(nullptr);
 			return;
+		}
 		CEccoBackExecutor* pBackExecutor = new CEccoBackExecutor();
 		g_aryEccoMenuExecutors.push_back(pBackExecutor);
 		pBackExecutor->m_szId = "ecco_menu_back";
