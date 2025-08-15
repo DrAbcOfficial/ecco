@@ -2,12 +2,22 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <MetamodIncludePath>./metamod/metamod/</MetamodIncludePath>
-    <Svencoop>_GAME_SVENCOOP</Svencoop>
+	<DebugProgram>{{DEBUG_PROGRAM}}</DebugProgram>
+	<DebugPath>{{DEBUG_PATH}}</DebugPath>
+    <MetamodIncludePath>{{META_INCLUDE}}</MetamodIncludePath>
+    <Svencoop>{{GAME_DEFINE}}</Svencoop>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
   <ItemGroup>
+	<BuildMacro Include="DebugProgram">
+      <Value>$(DebugProgram)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="DebugPath">
+      <Value>$(DebugPath)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
     <BuildMacro Include="MetamodIncludePath">
       <Value>$(MetamodIncludePath)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
