@@ -141,9 +141,6 @@
     <ClInclude Include="src\signatures.h">
       <Filter>metamod</Filter>
     </ClInclude>
-    <ClInclude Include="src\sdk_api.hpp">
-      <Filter>core</Filter>
-    </ClInclude>
     <ClInclude Include="src\meta_utility.h" />
     <ClInclude Include="mmlib\src\Scheduler.h">
       <Filter>core\timer</Filter>
