@@ -75,6 +75,14 @@ std::string CPlayerStorageItem::GetLang(){
 	return m_saveData.Lang;
 }
 
+ADMIN_LEVEL CPlayerStorageItem::GetAdminLevel() const{
+	return ADMIN_LEVEL(m_saveData.Admin);
+}
+
+void CPlayerStorageItem::SetAdminLevel(ADMIN_LEVEL level){
+	m_saveData.Admin = static_cast<int>(level);
+}
+
 void CPlayerStorageItem::ReadData(){
 	std::ifstream ifs(m_szStoragePath, std::ios::binary);
 	ifs.read(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));

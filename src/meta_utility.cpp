@@ -24,6 +24,19 @@ std::string GetPlayerSteamId(edict_t* pent){
 	return id;
 }
 
+edict_t* GetPlayerBySteamId(const char* steamid) {
+	for (int i = 1; i < 33; i++) {
+		edict_t* pent = INDEXENT(i);
+		if (IsValidPlayer(pent)) {
+			const char* infobuffer = GET_INFOKEYBUFFER(pent);
+			const char* id = INFOKEY_VALUE(const_cast<char*>(infobuffer), const_cast<char*>("*sid"));
+			if (!strcmp(id, steamid))
+				return pent;
+		}
+	}
+	return nullptr;
+}
+
 bool IsValidPlayer(edict_t* pentPlayer) {
 	return pentPlayer && (pentPlayer->v.flags & FL_CLIENT) != 0 && (pentPlayer->v.flags & FL_PROXY) == 0 && STRING(pentPlayer->v.netname)[0] != '\0';
 }
@@ -35,17 +48,21 @@ std::string_view& GetGameDir(){
 
 void ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text){
 	extern int g_msgTextMsg;
+	std::string temp = text;
+	temp += '\n';
 	MESSAGE_BEGIN(MSG_ONE, g_msgTextMsg, nullptr, target);
 		WRITE_BYTE((int)hud);
-		WRITE_STRING(text);
+		WRITE_STRING(temp.c_str());
 	MESSAGE_END();
 }
 
 void ClientPrintfAll(ClientPrintTarget hud, const char* text){
 	extern int g_msgTextMsg;
+	std::string temp = text;
+	temp += '\n';
 	MESSAGE_BEGIN(MSG_BROADCAST, g_msgTextMsg);
 		WRITE_BYTE((int)hud);
-		WRITE_STRING(text);
+		WRITE_STRING(temp.c_str());
 	MESSAGE_END();
 }
 

@@ -3,38 +3,38 @@
 #include <vector>
 
 struct CEccoConfigHud {
-	//0 Ϊ����ʾ
-	//1 Ϊ��ʾȫ��
-	//2 Ϊ����ʾ��Ǯ����ʾ��Ǯ�仯
-	//3 Ϊ����ʾ��Ǯ�仯����ʾ��Ǯ
-	//��ʾ��Ǯ HUD �ķ�ʽ
+	//0 为不显示
+	//1 为显示全部
+	//2 为仅显示金钱不显示金钱变化
+	//3 为仅显示金钱变化不显示金钱
+	//显示金钱 HUD 的方式
 	int ShowMoneyHUD;
-	//��ǮHUD��ʾλ��
-	//��Χ��-1��1��
-	//-1��0��������
+	//金钱HUD显示位置
+	//范围（-1，1）
+	//-1和0代表居中
 	float MainHudPosX;
 	float MainHudPosY;
 
-	//�Ӽ�HUD��ʾλ��
-	//��Χ��-1��1��
-	//-1��0��������
+	//加减HUD显示位置
+	//范围（-1，1）
+	//-1和0代表居中
 	float NoticeHudPosX;
 	float NoticeHudPosY;
-	//ˢ��HUD���
+	//刷新HUD间隔
 	float RefreshHudInterv;
 
-	//��Ǯ���HUDƵ��
+	//金钱变更HUD频道
 	int NotifyChannel;
-	//��ǮHUDƵ��
+	//金钱HUD频道
 	int MoneyChannel;
 };
 
 struct CEccoConfigPath {
-	//���ݴ���λ��
+	//数据储存位置
 	std::string Data;
-	//���õ�ͼ�ļ�·��
+	//禁用地图文件路径
 	std::string BanMaps;
-	//���ͼ��
+	//金币图标
 	std::string MoneyIcon;
 };
 
@@ -46,15 +46,15 @@ struct CEccoConfigColor {
 };
 
 struct CEccoConfigBuyMenu {
-	//��������Triggerǰ׺
+	//允许无视Trigger前缀
 	bool AllowIgnoreBuyPrefix;
-	//����ָ��Trigger
+	//购买指令Trigger
 	std::vector<std::string> OpenShopTriggers;
-	//����ֱ�ӹ�����Ʒʱ�Ƿ�ʹ��ģ��ƥ��
+	//命令直接购买物品时是否使用模糊匹配
 	bool UseBlurMatchForCommand;
-	//�Ƿ�����������ҹ���
+	//是否允许死亡玩家购买
 	bool AllowDeathPlayerBuy;
-	//��������´򿪲˵�
+	//购买后重新打开菜单
 	bool ReOpenMenuAfterBuy;
 };
 struct CEccoConfig{
@@ -67,23 +67,23 @@ struct CEccoConfig{
 	//BuyMenu
 	CEccoConfigBuyMenu BuyMenu;
 
-	//��һ�õķ���ת��Ϊ��Ǯ�ı���
+	//玩家获得的分数转化为金钱的倍数
 	float ScoreToMoneyMultiplier;
 
-	//�Ƿ񴢴���ҽ�Ǯ
-	//0 ������
-	//1 ֻ��ϵ�е�ͼ����
-	//2 ����
+	//是否储存玩家金钱
+	//0 不储存
+	//1 只有系列地图储存
+	//2 储存
 	int StorePlayerScore;
 
-	//���������Ǯ�����������ʼ�ʽ�
+	//若不储存金钱，设置玩家起始资金
 	int	PlayerStartScore;
 
-	//���ŵ�ͼ���ɻ�ý�Ǯ��Ŀ
-	//С��0Ϊ������
+	//单张地图最大可获得金钱数目
+	//小于0为不限制
 	int MoneyLimitePerMap;
 
-	//Ĭ�ϵ�����
+	//默认的语言
 	std::string DefaultLang;
 };
 

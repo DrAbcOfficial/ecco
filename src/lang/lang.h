@@ -6,7 +6,7 @@
 #include <meta_api.h>
 #include "meta_utility.h"
 
-extern std::string& GetTranslation(edict_t* player, std::string& key);
+extern std::string& GetTranslation(edict_t* player, std::string key);
 extern void LoadTranslations();
 
 std::u8string StringToU8String(std::string str);

@@ -1,6 +1,8 @@
 #include <map>
 
 #include "CEccoClientCommand.h"
+#include "storage/Storage.h"
+#include "lang/lang.h"
 
 #include <meta_api.h>
 #include "meta_utility.h"
@@ -23,17 +25,21 @@ bool ClientCommandHandler(edict_t* caller) {
 	return command->Call(caller, false);
 }
 
-CEccoClientCommand::CEccoClientCommand(const char* cmd, const char* description, std::function<bool(edict_t* caller, const std::vector<std::string>& args)> callback){
+CEccoClientCommand::CEccoClientCommand(const char* cmd, const char* description, ADMIN_LEVEL prv, 
+    std::function<bool(edict_t* caller, const std::vector<std::string>& args)> callback){
 	m_szCmd = cmd;
 	m_szDescription = description;
+    m_iPrivilege = prv;
 	m_pfnCallback = std::move(callback);
 	s_mapRegistedCommandMap.emplace(cmd, this);
 }
 
-CEccoClientCommand::CEccoClientCommand(const char* cmd, const char* description, std::vector<CEccoClientCommandArgSet> arglist, std::function<bool(edict_t* caller, const std::vector<std::string>& args)> callback){
+CEccoClientCommand::CEccoClientCommand(const char* cmd, const char* description, ADMIN_LEVEL prv,
+    std::vector<CEccoCmdArgSet> arglist, std::function<bool(edict_t* caller, const std::vector<std::string>& args)> callback){
 	m_aryArgList = std::move(arglist);
     m_szCmd = cmd;
     m_szDescription = description;
+    m_iPrivilege = prv;
     m_pfnCallback = std::move(callback);
     s_mapRegistedCommandMap.emplace(cmd, this);
 }
@@ -47,21 +53,12 @@ bool CEccoClientCommand::Call(edict_t* caller, bool from_talk){
 	return PrivateCall(caller, from_talk, args);
 }
 
-void CEccoClientCommand::PrintMessageByFrom(edict_t* caller, bool from_talk, const char* message){
-    ClientPrintf(caller, from_talk ? ClientPrintTarget::Talk : ClientPrintTarget::Console, message);
-}
-
 bool CEccoClientCommand::PrivateCall(edict_t* caller, bool from_talk, const std::vector<std::string>& args){
     if (!m_pfnCallback)
         return false;
-    size_t neededArgs = 0;
-    for (const auto& arg_set : m_aryArgList) {
-        if (!arg_set.m_bIsOptional)
-            neededArgs++;
-    }
-    if(neededArgs > args.size()){
+    if(CheckArgs(args)){
 		std::string errorMsg = m_szDescription;
-        errorMsg += "    Usage: " + m_szCmd + " ";
+        errorMsg += "\n    Usage: \n    " + m_szCmd + " ";
         for (const auto& arg_set : m_aryArgList) {
             if (!arg_set.m_bIsOptional)
                 errorMsg += "[" + arg_set.m_szName + "] ";
@@ -69,7 +66,14 @@ bool CEccoClientCommand::PrivateCall(edict_t* caller, bool from_talk, const std:
 				errorMsg += "<" + arg_set.m_szName + "> ";
 		}
         PrintMessageByFrom(caller, from_talk, errorMsg.c_str());
-        return false;
+        return true;
 	}
+    auto item = GetPlayerStorageItem(caller);
+    if (!item)
+        return false;
+    if (item->GetAdminLevel() < m_iPrivilege) {
+        PrintMessageByFrom(caller, from_talk, GetTranslation(caller, "ecco_cmd_access_deny").c_str());
+        return true;
+    }
     return m_pfnCallback(caller, args);
 }

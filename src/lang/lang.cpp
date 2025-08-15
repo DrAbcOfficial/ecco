@@ -18,7 +18,7 @@ using lang_pair_t = struct lang_pair_s{
 
 static std::map<std::string, std::vector<lang_pair_t*>> s_mapTranslations;
 
-std::string& GetTranslation(edict_t* player, std::string& key){
+std::string& GetTranslation(edict_t* player, std::string key){
 	std::string player_lang = GetPlayerStorageItem(player)->GetLang();
 	auto it = s_mapTranslations.find(player_lang);
     if (it == s_mapTranslations.end())

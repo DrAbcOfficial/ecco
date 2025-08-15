@@ -118,10 +118,13 @@
     <ClCompile Include="src\command\CEccoClientCommand.cpp">
       <Filter>core\command</Filter>
     </ClCompile>
-    <ClCompile Include="src\command\command_system.cpp">
+    <ClCompile Include="src\command\commands.cpp">
       <Filter>core\command</Filter>
     </ClCompile>
-    <ClCompile Include="src\command\commands.cpp">
+    <ClCompile Include="src\command\CEccoBaseCommand.cpp">
+      <Filter>core\command</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\CEccoServerCommand.cpp">
       <Filter>core\command</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,6 +203,12 @@
       <Filter>core\command</Filter>
     </ClInclude>
     <ClInclude Include="src\command\command_system.h">
+      <Filter>core\command</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command\CEccoBaseCommand.h">
+      <Filter>core\command</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command\CEccoServerCommand.h">
       <Filter>core\command</Filter>
     </ClInclude>
   </ItemGroup>

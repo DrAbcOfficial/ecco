@@ -49,6 +49,7 @@ static void GameInit() {
 	InitScriptEngine();
 	InitHud();
 	LoadTranslations();
+	RegistServerCommandToEngine();
 	SET_META_RESULT(MRES_HANDLED);
 }
 
@@ -63,7 +64,7 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 }
 
 static void	 ClientCommand (edict_t* pEntity) {
-	if (!_strnicmp(CMD_ARGV(0), "ecco_", 5)) 
+	if (!_strnicmp(CMD_ARGV(0), ECCO_CMD_PREFIX, ECCO_CMD_PREFIX_LEN))
 		SET_META_RESULT(ClientCommandHandler(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 	else
 		SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);

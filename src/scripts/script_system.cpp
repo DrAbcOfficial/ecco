@@ -64,7 +64,7 @@ EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){
 		std::string error_msg = "ChaiScript ";
 		error_msg += pexcuter->m_szId;
 		error_msg += " eval error:\n";
-		error_msg += e.detail.c_str();
+		error_msg += e.pretty_print().c_str();
 		LOG_ERROR(PLID, error_msg.c_str());
 		return EvalResult::Error;
 	}
