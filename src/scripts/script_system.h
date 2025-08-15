@@ -17,6 +17,7 @@ extern EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* item);
 
 extern void ResetEccoScriptItems();
 extern bool LoadEccoScriptItems();
+extern void PrecacheAllScriptItems();
 
 extern std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
 

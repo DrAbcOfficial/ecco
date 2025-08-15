@@ -13,6 +13,9 @@
   <ItemGroup>
     <ClCompile Include="mmlib\src\Scheduler.cpp" />
     <ClCompile Include="src\angelscript\angelscript.cpp" />
+    <ClCompile Include="src\command\CEccoClientCommand.cpp" />
+    <ClCompile Include="src\command\commands.cpp" />
+    <ClCompile Include="src\command\command_system.cpp" />
     <ClCompile Include="src\config\CConfig.cpp" />
     <ClCompile Include="src\dllapi.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
@@ -40,6 +43,8 @@
     <ClInclude Include="mmlib\src\Scheduler.h" />
     <ClInclude Include="src\angelscript\angelscript.hpp" />
     <ClInclude Include="src\angelscript\angelscriptlib.h" />
+    <ClInclude Include="src\command\CEccoClientCommand.h" />
+    <ClInclude Include="src\command\command_system.h" />
     <ClInclude Include="src\config\CConfig.h" />
     <ClInclude Include="src\dlldef.h" />
     <ClInclude Include="src\enginedef.h" />

@@ -7,8 +7,6 @@
 #include "menu/executor/CEccoBackExecutor.h"
 
 CEccoTextMenuExecutor* g_pRootMenuExecutor = nullptr;
-std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
-
 using ecco_parser_item_t = struct ecco_parser_item_s {
 	std::string szId;
 	ecco_parser_item_s* pParent;
@@ -17,6 +15,7 @@ using ecco_parser_item_t = struct ecco_parser_item_s {
 };
 
 static std::vector<ecco_parser_item_t*> s_aryPentToDelete;
+static std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
 
 static void ParseItem(ecco_parser_item_s* pParent, CEccoScriptItem* pItem, std::string& name) {
 	size_t pos = name.find('.');
@@ -53,7 +52,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 	int page = 0;
 
 	auto add_back = [&](CEccoTextMenuExecutor* pMenu) {
-		//·µ»Ø
+		//è¿”å›
 		if (root)
 			return;
 		CEccoBackExecutor* pBackExecutor = new CEccoBackExecutor();
@@ -63,7 +62,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 		pMenu->AddItem(pBackExecutor);
 	};
 	auto add_prev = [&](CEccoTextMenuExecutor* pMenu) {
-		//ÉÏÒ»Ò³
+		//ä¸Šä¸€é¡µ
 		if (page > 0) {
 			CEccoBackExecutor* pPrevPageExecutor = new CEccoBackExecutor();
 			g_aryEccoMenuExecutors.push_back(pPrevPageExecutor);
@@ -75,7 +74,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 			pMenu->AddItem(nullptr);
 	};
 	auto add_exit = [](CEccoTextMenuExecutor* pMenu) {
-		//¹Ø±Õ
+		//å…³é—­
 		CBaseEccoExecutor* pExitExecutor = new CBaseEccoExecutor();
 		pExitExecutor->m_szId = "ecco_menu_exit";
 		pMenu->AddItem(pExitExecutor);
@@ -83,14 +82,14 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 	CEccoTextMenuExecutor* pMenu = pParentExecutor;
 	for (auto& child : pParserItem->aryChild) {
 		if (page > 0 && counter == 0) {
-			//ÏÂÒ»Ò³
+			//ä¸‹ä¸€é¡µ
 			CEccoTextMenuExecutor* pNextPageMenu = new CEccoTextMenuExecutor();
 			g_aryEccoMenuExecutors.push_back(pNextPageMenu);
 			pNextPageMenu->m_szTitle = pMenu->m_szTitle;
 			pNextPageMenu->m_szId = "ecco_menu_next_page";
 			pNextPageMenu->m_pParent = pMenu;
 			pMenu->AddItem(pNextPageMenu);
-			//¹Ø±Õ
+			//å…³é—­
 			add_exit(pMenu);
 			pMenu = pNextPageMenu;
 		}
@@ -124,21 +123,21 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 	int result = pParserItem->aryChild.size() % 6;
 	if (page > 0) {
 		if (result != 0) {
-			//Ìî³ä¿Õ°×
+			//å¡«å……ç©ºç™½
 			for (int i = result; i < 6; i++) {
 				pMenu->AddItem(nullptr);
 			}
-			//·µ»ØºÍÉÏÒ»Ò³
+			//è¿”å›å’Œä¸Šä¸€é¡µ
 			add_back(pMenu);
 			add_prev(pMenu);
 			pMenu->AddItem(nullptr);
-			//¹Ø±Õ
+			//å…³é—­
 			add_exit(pMenu);
 		}
 	}
 	else {
 		if (pParserItem->aryChild.size() % 8 != 0) {
-			//Ìî³ä¿Õ°×
+			//å¡«å……ç©ºç™½
 			for (int i = result; i < 8; i++) {
 				pMenu->AddItem(nullptr);
 			}
@@ -156,7 +155,7 @@ void ReseAllMenus() {
 }
 
 void ParseRootMenu(){
-	//¹¹½¨³õ¼¶Ê÷
+	//æ„å»ºåˆçº§æ ‘
 	ecco_parser_item_t* pRootParserItem = new ecco_parser_item_t();
 	s_aryPentToDelete.push_back(pRootParserItem);
 	for(auto iter = g_aryEccoScriptItems.begin(); iter != g_aryEccoScriptItems.end(); iter++){
@@ -167,16 +166,16 @@ void ParseRootMenu(){
 		}
 		ParseItem(pRootParserItem, pItem, pItem->m_szName);
 	}
-	//¹¹½¨²Ëµ¥Ö´ĞĞÆ÷
+	//æ„å»ºèœå•æ‰§è¡Œå™¨
 	CEccoTextMenuExecutor* pRootExecutor = new CEccoTextMenuExecutor();
 	g_aryEccoMenuExecutors.push_back(pRootExecutor);
 	pRootExecutor->m_szId = "ecco_menu_root";
 	ParseMenu(pRootExecutor, pRootParserItem, true);
-	//ÇåÀíÁÙÊ±Êı¾İ
+	//æ¸…ç†ä¸´æ—¶æ•°æ®
 	for (auto& pent : s_aryPentToDelete) {
 		delete pent;
 	}
 	s_aryPentToDelete.clear();
-	//ÉèÖÃÈ«¾Ö¸ù²Ëµ¥Ö´ĞĞÆ÷
+	//è®¾ç½®å…¨å±€æ ¹èœå•æ‰§è¡Œå™¨
 	g_pRootMenuExecutor = pRootExecutor;
 }

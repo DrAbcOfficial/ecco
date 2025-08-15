@@ -107,3 +107,14 @@ bool LoadEccoScriptItems(){
 	}
 	return true;
 }
+
+void PrecacheAllScriptItems(){
+	for (auto& item : g_aryEccoScriptItems) {
+		for (auto& str : item->m_aryPrecaches) {
+			PRECACHE_MODEL(const_cast<char*>(str.c_str()));
+		}
+		for (auto& str : item->m_arySoundPrecaches) {
+			PRECACHE_SOUND(const_cast<char*>(str.c_str()));
+		}
+	}
+}

@@ -3,13 +3,10 @@
 #include <meta_api.h>
 #include "meta_utility.h"
 
-static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName)
-{
+static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName){
 	int istr = MAKE_STRING(pszName);
-
 	edict_t* pent = CREATE_NAMED_ENTITY(istr);
-	if (FNullEnt(pent))
-	{
+	if (FNullEnt(pent)){
 		ALERT(at_console, "NULL Ent in GiveNamedItem!\n");
 		return nullptr;
 	}

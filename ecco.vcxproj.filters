@@ -115,6 +115,15 @@
     <ClCompile Include="src\lang\lang.cpp">
       <Filter>core\lang</Filter>
     </ClCompile>
+    <ClCompile Include="src\command\CEccoClientCommand.cpp">
+      <Filter>core\command</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\command_system.cpp">
+      <Filter>core\command</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\commands.cpp">
+      <Filter>core\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dlldef.h">
@@ -186,6 +195,12 @@
     </ClInclude>
     <ClInclude Include="src\lang\lang.h">
       <Filter>core\lang</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command\CEccoClientCommand.h">
+      <Filter>core\command</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command\command_system.h">
+      <Filter>core\command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

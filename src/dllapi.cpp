@@ -39,6 +39,7 @@
 #include "timer/Timer.h"
 #include "hud/hud.h"
 #include "lang/lang.h"
+#include "command/command_system.h"
 
 #include "dlldef.h"
 
@@ -57,18 +58,15 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	LoadEccoScriptItems();
 	ReseAllMenus();
 	ParseRootMenu();
+	PrecacheAllScriptItems();
 	SET_META_RESULT(MRES_HANDLED);
 }
 
 static void	 ClientCommand (edict_t* pEntity) {
-	//test code
-	if (!_stricmp(CMD_ARGV(0), "ecco_ttss")) {
-		if (g_pRootMenuExecutor)
-			g_pRootMenuExecutor->Excute(pEntity, 0);
-		SET_META_RESULT(MRES_SUPERCEDE);
-	}
+	if (!_strnicmp(CMD_ARGV(0), "ecco_", 5)) 
+		SET_META_RESULT(ClientCommandHandler(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 	else
-	SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
+		SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 }
 
 static void ClientDisconnect(edict_t* pEntity) {

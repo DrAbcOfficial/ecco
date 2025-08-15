@@ -4,6 +4,6 @@
     <LocalDebuggerCommand>$(DebugProgram)</LocalDebuggerCommand>
     <LocalDebuggerWorkingDirectory>$(DebugPath)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>-console</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-console +map stadium4</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

@@ -22,6 +22,13 @@ CEccoScriptItem::CEccoScriptItem(std::string path){
 				m_aryPrecaches.push_back((*iter).value_or(""));
 			}
 		}
+
+		auto sound_precache = toml["Ecoo"]["sound_precaches"].as_array();
+		if (sound_precache) {
+			for (auto iter = sound_precache->begin(); iter != sound_precache->end(); iter++) {
+				m_arySoundPrecaches.push_back((*iter).value_or(""));
+			}
+		}
 	}
 	catch (const toml::parse_error& err) {
 		auto& src = err.source();
