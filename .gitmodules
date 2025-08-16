@@ -1,12 +1,12 @@
-[submodule "metamod"]
-	path = ecco/metamod
-	url = https://github.com/hzqst/metamod-fallguys
-[submodule "mmlib"]
-	path = ecco/mmlib
-	url = https://github.com/wootguy/mmlib
-[submodule "tomlplusplus"]
-	path = ecco/tomlplusplus
-	url = https://github.com/marzer/tomlplusplus
-[submodule "ChaiScript"]
+[submodule "ecco/ChaiScript"]
 	path = ecco/ChaiScript
 	url = https://github.com/ChaiScript/ChaiScript
+[submodule "ecco/metamod"]
+	path = ecco/metamod
+	url = https://github.com/hzqst/metamod-fallguys
+[submodule "ecco/mmlib"]
+	path = ecco/mmlib
+	url = https://github.com/wootguy/mmlib
+[submodule "ecco/tomlplusplus"]
+	path = ecco/tomlplusplus
+	url = https://github.com/marzer/tomlplusplus
