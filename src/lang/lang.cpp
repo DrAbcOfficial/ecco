@@ -19,6 +19,25 @@ using lang_pair_t = struct lang_pair_s{
 static std::unordered_map<std::string, std::vector<lang_pair_t*>> s_mapTranslations;
 static std::unordered_map<std::string, std::vector<lang_pair_t*>> s_mapUserTranslations;
 
+
+std::vector<std::string>& GetAvaliableLangs() {
+    static std::vector<std::string> langs;
+    if (langs.empty()) {
+        langs.reserve(s_mapTranslations.size() + s_mapUserTranslations.size());
+        for (const auto& pair : s_mapTranslations) {
+            langs.push_back(pair.first);
+        }
+        for (const auto& pair : s_mapUserTranslations) {
+            langs.push_back(pair.first);
+        }
+        //合并重复项
+        std::sort(langs.begin(), langs.end());
+        langs.erase(std::unique(langs.begin(), langs.end()), langs.end());
+    }
+    return langs;
+}
+
+
 std::string& GetTranslation(edict_t* player, std::string key){
 	std::string player_lang = GetPlayerStorageItem(player)->GetLang();
     auto user_it = s_mapUserTranslations.find(player_lang);

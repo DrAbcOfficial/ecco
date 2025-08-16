@@ -75,6 +75,10 @@ std::string CPlayerStorageItem::GetLang(){
 	return m_saveData.Lang;
 }
 
+void CPlayerStorageItem::SetLang(const char* lang){
+	strncpy(m_saveData.Lang, lang, sizeof(m_saveData.Lang));
+}
+
 ADMIN_LEVEL CPlayerStorageItem::GetAdminLevel() const{
 	return ADMIN_LEVEL(m_saveData.Admin);
 }

@@ -9,6 +9,7 @@
 extern std::string& GetTranslation(edict_t* player, std::string key);
 extern void ResetTranslations();
 extern void LoadTranslations();
+extern std::vector<std::string>& GetAvaliableLangs();
 
 std::u8string StringToU8String(std::string str);
 std::string U8StringToString(std::u8string str);

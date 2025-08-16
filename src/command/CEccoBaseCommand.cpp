@@ -15,7 +15,7 @@ bool CEccoBaseCommand::CheckArgs(const std::vector<std::string>& args){
 }
 
 std::string CEccoBaseCommand::GetUsage(){
-    std::string buffer = m_szCmd + " ";
+    std::string buffer = ECCO_CMD_PREFIX + m_szCmd + " ";
     for (const auto& arg_set : m_aryArgList) {
         if (!arg_set.m_bIsOptional)
             buffer += "[" + arg_set.m_szName + "] ";

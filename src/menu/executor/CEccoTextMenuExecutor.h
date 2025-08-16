@@ -42,6 +42,7 @@ public:
 
 	CBaseEccoExecutor* m_pParent = nullptr; // parent menu, if any
 
+	CBaseEccoExecutor* GetOption(size_t index);
 	std::string m_szTitle;
 private:
 	int m_iDuration = 255; // how long the menu shuold be displayed for

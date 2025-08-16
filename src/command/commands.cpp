@@ -11,11 +11,35 @@
 #include "meta_utility.h"
 
 #pragma region Client
-static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
-	g_pRootMenuExecutor->Excute(caller, 0);
-	return true;
-	});
-static CEccoClientCommand reset("reload", "reload all script", ADMIN_LEVEL::ADMIN, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
+static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, { CEccoCmdArgSet("pages", true) }, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
+    if (args.size() > 0) {
+        CEccoTextMenuExecutor* pExecutor = g_pRootMenuExecutor;
+        for (auto& s : args) {
+            int input = StringToInterger(s) - 1;
+            size_t chose = static_cast<size_t>(input < 0 ? 9 : input);
+            if (chose >= MAX_MENU_OPTIONS)
+                return false;
+            auto script = dynamic_cast<CEccoScriptExecutor*>(pExecutor->GetOption(chose));
+            if (script) {
+                script->Excute(caller, 0);
+                return true;
+            }
+            pExecutor = dynamic_cast<CEccoTextMenuExecutor*>(pExecutor->GetOption(chose));
+            if (!pExecutor)
+                return false;
+        }
+        if (pExecutor != nullptr && pExecutor != g_pRootMenuExecutor) {
+            pExecutor->Excute(caller, 0);
+            return true;
+        }
+        return false;
+    }
+    else {
+        g_pRootMenuExecutor->Excute(caller, 0);
+        return true;
+    }  
+});
+static CEccoClientCommand reload("reload", "reload all script", ADMIN_LEVEL::ADMIN, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
     pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_scripts_reloading");
     ReseAllMenus();
 	ResetEccoScriptItems();
@@ -25,6 +49,23 @@ static CEccoClientCommand reset("reload", "reload all script", ADMIN_LEVEL::ADMI
 	ParseRootMenu();
     pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_scripts_reloaded");
 	return true;
+});
+static CEccoClientCommand setlang("lang", "set language", ADMIN_LEVEL::NONE, { CEccoCmdArgSet("language") }, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
+	auto& target_lang = args[0];
+    auto& langs = GetAvaliableLangs();
+    if (target_lang.empty() || std::find(langs.begin(), langs.end(), target_lang) == langs.end()) {
+        pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_lang_invalid");
+        std::string buffer = "";
+        for (auto& l : langs) {
+            buffer += l + " ";
+        }
+        pThis->PrintMessageByFrom(caller, talk, buffer.c_str());
+        return false;
+	}
+    auto item = GetPlayerStorageItem(caller);
+    item->SetLang(target_lang.c_str());
+    pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_lang_success");
+    return true;
 });
 constexpr char HELP_FORMAT[] = "|{:<12}|{:<24}|{:<48}|";
 extern std::unordered_map<std::string, CEccoClientCommand*> s_mapRegistedClientCmdMap;
@@ -42,26 +83,8 @@ static CEccoClientCommand help("help", "list all commands", ADMIN_LEVEL::NONE, [
 
 #pragma region Server
 static CEccoServerCommand setadmin("set_admin", "set a player as admin", { CEccoCmdArgSet("SteamId64"), CEccoCmdArgSet("AdminLevel")}, [](CEccoServerCommand* pThis, const std::vector<std::string>& args)->bool {
-    auto str_to_adminlevel = [](const std::string& s) -> short {
-        if (s.empty())
-            return 0;
-        size_t start = 0;
-        while (start < s.size() && std::isspace(static_cast<unsigned char>(s[start]))) {
-            ++start;
-        }
-        if (start == s.size())
-            return 0;
-        short value = 0;
-        const char* first = s.data() + start;
-        const char* last = s.data() + s.size();
-        auto [ptr, ec] = std::from_chars(first, last, value);
-        if (ec == std::errc() && ptr == last)
-            return value;
-        else
-            return 0;
-    };
 
-    short result = str_to_adminlevel(args[1]);
+    short result = StringToInterger(args[1]);
     ADMIN_LEVEL level = result < 0 ? ADMIN_LEVEL::NONE : (result > (short)ADMIN_LEVEL::OWNER ? ADMIN_LEVEL::OWNER : static_cast<ADMIN_LEVEL>(result));
     const char* id = args[0].c_str();
 	edict_t* pent = GetPlayerBySteamId(id);

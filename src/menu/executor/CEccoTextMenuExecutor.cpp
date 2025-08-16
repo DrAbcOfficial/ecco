@@ -87,6 +87,10 @@ void CEccoTextMenuExecutor::HandleMenuselectCmd(edict_t* pEntity, int selection)
 	}
 }
 
+CBaseEccoExecutor* CEccoTextMenuExecutor::GetOption(size_t index){
+	return m_aryOption[index];
+}
+
 void CEccoTextMenuExecutor::AddItem(CBaseEccoExecutor* pItem) {
 	if(m_iSize >= MAX_MENU_OPTIONS) {
 		LOG_MESSAGE(PLID, "Cannot add more than %d items to a text menu", MAX_MENU_OPTIONS);

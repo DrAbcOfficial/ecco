@@ -48,7 +48,8 @@ bool ClientSayCommandHandler(edict_t* caller) {
             args = "";
         }
         if (command.starts_with(ECCO_CMD_PREFIX)) {
-            auto item = s_mapRegistedClientCmdMap.find(command.substr(ECCO_CMD_PREFIX_LEN));
+            auto substr = TrimString(command.substr(ECCO_CMD_PREFIX_LEN));
+            auto item = s_mapRegistedClientCmdMap.find(substr);
             if (item != s_mapRegistedClientCmdMap.end()) {
                 std::vector<std::string> result;
                 std::istringstream iss(args);

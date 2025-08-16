@@ -1,4 +1,7 @@
-//Copied from mmlib!
+//Copied from mmlib! some functions...
+
+#include <charconv>
+#include <ranges>
 
 #include "meta_utility.h"
 #include <meta_api.h>
@@ -73,4 +76,31 @@ void ClientPrintfAll(ClientPrintTarget hud, const char* text){
 	MESSAGE_END();
 }
 
-
+int StringToInterger(const std::string& s) {
+	if (s.empty())
+		return 0;
+	size_t start = 0;
+	while (start < s.size() && std::isspace(static_cast<unsigned char>(s[start]))) {
+		++start;
+	}
+	if (start == s.size())
+		return 0;
+	int value = 0;
+	const char* first = s.data() + start;
+	const char* last = s.data() + s.size();
+	auto [ptr, ec] = std::from_chars(first, last, value);
+	if (ec == std::errc() && ptr == last)
+		return value;
+	else
+		return 0;
+	};
+std::string TrimString(const std::string& s) {
+	auto is_space = [](char c) {
+		return std::isspace(static_cast<unsigned char>(c)) != 0;
+	};
+	auto trimmed_view = s | std::views::drop_while(is_space)
+		| std::views::reverse
+		| std::views::drop_while(is_space)
+		| std::views::reverse;
+	return std::string(trimmed_view.begin(), trimmed_view.end());
+}

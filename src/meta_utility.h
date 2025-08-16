@@ -22,3 +22,5 @@ enum class ClientPrintTarget {
 };
 extern void ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text);
 extern void ClientPrintfAll(ClientPrintTarget hud, const char* text);
+extern int StringToInterger(const std::string& s);
+extern std::string TrimString(const std::string& s);

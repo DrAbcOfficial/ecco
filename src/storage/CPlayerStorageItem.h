@@ -24,6 +24,7 @@ public:
 	void ScoreToCredits(int newScore);
 
 	std::string GetLang();
+	void SetLang(const char* lang);
 
 	ADMIN_LEVEL GetAdminLevel() const;
 	void SetAdminLevel(ADMIN_LEVEL level);
