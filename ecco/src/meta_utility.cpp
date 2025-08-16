@@ -6,11 +6,13 @@
 #include "meta_utility.h"
 #include <meta_api.h>
 
-inline void WRITE_FLOAT(float value){
+extern int g_msgTextMsg;
+
+inline void EccoMetaUtility::WriteFloat(float value){
 	WRITE_LONG(*reinterpret_cast<int*>(&value));
 }
 
-void WRITE_RGBA(unsigned int rgba){
+void EccoMetaUtility::WriteRGBA(unsigned int rgba){
 	unsigned char r = (rgba & 0xFF000000) >> 24;
 	unsigned char g = (rgba & 0xFF0000) >> 16;
 	unsigned char b = (rgba & 0xFF00) >> 8;
@@ -21,13 +23,13 @@ void WRITE_RGBA(unsigned int rgba){
 	WRITE_BYTE(a);
 }
 
-std::string GetPlayerSteamId(edict_t* pent){
+std::string EccoMetaUtility::GetPlayerSteamId(edict_t* pent){
 	const char* infobuffer = GET_INFOKEYBUFFER(pent);
 	const char* id = INFOKEY_VALUE(const_cast<char*>(infobuffer), const_cast<char*>("*sid"));
 	return id;
 }
 
-edict_t* GetPlayerBySteamId(const char* steamid) {
+edict_t* EccoMetaUtility::GetPlayerBySteamId(const char* steamid) {
 	for (int i = 1; i < 33; i++) {
 		edict_t* pent = INDEXENT(i);
 		if (IsValidPlayer(pent)) {
@@ -40,24 +42,23 @@ edict_t* GetPlayerBySteamId(const char* steamid) {
 	return nullptr;
 }
 
-bool IsValidPlayer(edict_t* pentPlayer) {
+bool EccoMetaUtility::IsValidPlayer(edict_t* pentPlayer) {
 	return pentPlayer && (pentPlayer->v.flags & FL_CLIENT) != 0 && (pentPlayer->v.flags & FL_PROXY) == 0 && STRING(pentPlayer->v.netname)[0] != '\0';
 }
 
-std::string_view& GetGameDir(){
+std::string_view& EccoMetaUtility::GetGameDir(){
 	static std::string_view dir = GET_GAME_INFO(PLID, GINFO_GAMEDIR);
 	return dir;
 }
 
-void FakeClientCommand(edict_t* pent, const char* cmd){
+void EccoMetaUtility::FakeClientCommand(edict_t* pent, const char* cmd){
 	//SVC_STUFFTEXT
 	MESSAGE_BEGIN(MSG_ONE, 9, nullptr, pent);
 		WRITE_STRING(cmd);
 	MESSAGE_END();
 }
 
-void ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text){
-	extern int g_msgTextMsg;
+void EccoMetaUtility::ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text){
 	std::string temp = text;
 	temp += '\n';
 	MESSAGE_BEGIN(MSG_ONE, g_msgTextMsg, nullptr, target);
@@ -66,8 +67,7 @@ void ClientPrintf(edict_t* target, ClientPrintTarget hud, const char* text){
 	MESSAGE_END();
 }
 
-void ClientPrintfAll(ClientPrintTarget hud, const char* text){
-	extern int g_msgTextMsg;
+void EccoMetaUtility::ClientPrintfAll(ClientPrintTarget hud, const char* text){
 	std::string temp = text;
 	temp += '\n';
 	MESSAGE_BEGIN(MSG_BROADCAST, g_msgTextMsg);
@@ -76,7 +76,7 @@ void ClientPrintfAll(ClientPrintTarget hud, const char* text){
 	MESSAGE_END();
 }
 
-int StringToInterger(const std::string& s) {
+int EccoMetaUtility::StringToInterger(const std::string& s) {
 	if (s.empty())
 		return 0;
 	size_t start = 0;
@@ -94,7 +94,7 @@ int StringToInterger(const std::string& s) {
 	else
 		return 0;
 	};
-std::string TrimString(const std::string& s) {
+std::string EccoMetaUtility::TrimString(const std::string& s) {
 	auto is_space = [](char c) {
 		return std::isspace(static_cast<unsigned char>(c)) != 0;
 	};

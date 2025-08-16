@@ -5,6 +5,8 @@
 
 #include "CEccoScriptExecutor.h"
 
+using namespace EccoMetaUtility;
+
 void CEccoScriptExecutor::Excute(edict_t* pPlayer, int selection){
     if (GetEccoConfig()->BuyMenu.ReOpenMenuAfterBuy)
         m_pParent->Excute(pPlayer, selection);

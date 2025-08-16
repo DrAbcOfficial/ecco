@@ -1,33 +1,29 @@
 #pragma once
 #include <string>
-#include <extdll.h>
+#include "api/IPlayerStorageItem.h"
 
-enum class ADMIN_LEVEL {
-	NONE,
-	ADMIN,
-	OWNER
-};
-
-class CPlayerStorageItem {
+class CPlayerStorageItem : public IPlayerStorageItem {
 public:
 	CPlayerStorageItem(edict_t* pent);
 
-	int GetCredits() const;
-	std::string GetSteamId() const;
-	std::string GetName() const;
+	virtual int GetCredits() const;
+	virtual const char* GetSteamId() const;
+	virtual const char* GetName() const;
 
-	void SetCredits(int ulCredits);
-	void AddCredits(int ulCredits);
+	virtual void SetCredits(int ulCredits);
+	virtual void AddCredits(int ulCredits);
 
-	void SaveData();
+	virtual const char* GetLang();
+	virtual void SetLang(const char* lang);
+
+	virtual ADMIN_LEVEL GetAdminLevel() const;
+	virtual void SetAdminLevel(ADMIN_LEVEL level);
+
+	virtual edict_t* GetPlayer() const;
+
+	virtual void SaveData();
 
 	void ScoreToCredits(int newScore);
-
-	std::string GetLang();
-	void SetLang(const char* lang);
-
-	ADMIN_LEVEL GetAdminLevel() const;
-	void SetAdminLevel(ADMIN_LEVEL level);
 private:
 	std::string m_szStoragePath;
 

@@ -17,6 +17,8 @@ static CHudNumber s_pNoticeDIsplay;
 static std::array<float, 32> s_aryPlayerLastCredit{};
 static std::unordered_map<edict_t*, ScheduledFunction> s_mapHudUpdateTimers;
 
+using namespace EccoMetaUtility;
+
 void InitHud(){
 	auto config = GetEccoConfig();
 	s_pCreditDisplay.m_iChannel = config->Hud.MoneyChannel;

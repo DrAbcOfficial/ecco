@@ -10,6 +10,8 @@
 
 #include "meta_utility.h"
 
+using namespace EccoMetaUtility;
+
 #pragma region Client
 static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, { CEccoCmdArgSet("pages", true) }, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
     if (args.size() > 0) {

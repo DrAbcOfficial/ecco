@@ -10,6 +10,7 @@
 #include "lang.h"
 
 #include <meta_api.h>
+using namespace EccoMetaUtility;
 
 using lang_pair_t = struct lang_pair_s{
     std::string key;

@@ -10,9 +10,6 @@
     <Filter Include="api">
       <UniqueIdentifier>{26932d62-6696-46f2-9fdf-65d49caa5fc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="interface">
-      <UniqueIdentifier>{479a1262-b65b-41f0-af63-48fbb0dc0c6c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="metamod">
       <UniqueIdentifier>{0dea28de-d923-48c1-b23e-01a6a0f9d40b}</UniqueIdentifier>
     </Filter>
@@ -109,9 +106,6 @@
     <ClCompile Include="src\hud\CHudNumber.cpp">
       <Filter>core\hud</Filter>
     </ClCompile>
-    <ClCompile Include="src\scripts\basescriptmethods.cpp">
-      <Filter>core\scripts</Filter>
-    </ClCompile>
     <ClCompile Include="src\lang\lang.cpp">
       <Filter>core\lang</Filter>
     </ClCompile>
@@ -126,6 +120,12 @@
     </ClCompile>
     <ClCompile Include="src\command\CEccoServerCommand.cpp">
       <Filter>core\command</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripts\CEccoScriptSystem.cpp">
+      <Filter>core\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CEccoFuncs.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,9 +190,6 @@
     <ClInclude Include="src\hud\CHudNumber.h">
       <Filter>core\hud</Filter>
     </ClInclude>
-    <ClInclude Include="src\scripts\basescriptmethods.h">
-      <Filter>core\scripts</Filter>
-    </ClInclude>
     <ClInclude Include="src\lang\lang.h">
       <Filter>core\lang</Filter>
     </ClInclude>
@@ -207,6 +204,24 @@
     </ClInclude>
     <ClInclude Include="src\command\CEccoServerCommand.h">
       <Filter>core\command</Filter>
+    </ClInclude>
+    <ClInclude Include="include\api\IPlayerStorageItem.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\CEccoScriptSystem.h">
+      <Filter>core\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="include\api\IEccoScriptSystem.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="include\api\IEccoPlugin.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="include\api\IEccoFuncs.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEccoFuncs.h">
+      <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

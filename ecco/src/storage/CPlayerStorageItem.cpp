@@ -12,6 +12,8 @@
 #undef close
 #undef write
 
+using namespace EccoMetaUtility;
+
 CPlayerStorageItem::CPlayerStorageItem(edict_t* pent){
 	if (pent) {
 		std::string id = GetPlayerSteamId(pent);
@@ -39,11 +41,11 @@ int CPlayerStorageItem::GetCredits() const{
 	return m_saveData.Credits;
 }
 
-std::string CPlayerStorageItem::GetSteamId() const{
+const char* CPlayerStorageItem::GetSteamId() const{
 	return m_saveData.SteamId;
 }
 
-std::string CPlayerStorageItem::GetName() const{
+const char* CPlayerStorageItem::GetName() const{
 	return STRING(VARS(m_pPlayer)->netname);
 }
 
@@ -71,7 +73,7 @@ void CPlayerStorageItem::ScoreToCredits(int newScore){
 	SaveData();
 }
 
-std::string CPlayerStorageItem::GetLang(){
+const char* CPlayerStorageItem::GetLang(){
 	return m_saveData.Lang;
 }
 
@@ -85,6 +87,10 @@ ADMIN_LEVEL CPlayerStorageItem::GetAdminLevel() const{
 
 void CPlayerStorageItem::SetAdminLevel(ADMIN_LEVEL level){
 	m_saveData.Admin = static_cast<int>(level);
+}
+
+edict_t* CPlayerStorageItem::GetPlayer() const{
+	return m_pPlayer;
 }
 
 void CPlayerStorageItem::ReadData(){

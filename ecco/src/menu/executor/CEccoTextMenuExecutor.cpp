@@ -7,6 +7,7 @@
 std::array<CEccoTextMenuExecutor*, MAX_PLAYERS> g_aryTextMenus;
 
 extern int g_msgShowMenu;
+using namespace EccoMetaUtility;
 
 // listen for any other functions/plugins opening menus, so that TextMenu knows if it's the active menu
 void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, edict_t* ed) {

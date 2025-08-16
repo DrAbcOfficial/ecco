@@ -14,7 +14,7 @@ inline CEccoConfig* GetEccoConfig(){
 }
 
 bool LoadEccoConfig(){
-	std::filesystem::path gamedir(GetGameDir());
+	std::filesystem::path gamedir(EccoMetaUtility::GetGameDir());
 	gamedir.append("addons/ecco/Config.toml");
 	try{
 		auto toml = toml::parse_file(gamedir.string());

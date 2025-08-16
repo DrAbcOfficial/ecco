@@ -9,6 +9,7 @@
 
 #include <meta_api.h>
 #include "meta_utility.h"
+using namespace EccoMetaUtility;
 
 std::unordered_map<std::string, CEccoClientCommand*> s_mapRegistedClientCmdMap;
 

@@ -6,6 +6,8 @@
 
 #include "Storage.h"
 
+using namespace EccoMetaUtility;
+
 static std::map<std::string, CPlayerStorageItem*> s_mapPlayerStorage;
 
 void StorageClientPutinServerHandle(edict_t* pent){

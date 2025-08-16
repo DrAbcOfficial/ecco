@@ -4,6 +4,7 @@
 
 #include <meta_api.h>
 #include "meta_utility.h"
+using namespace EccoMetaUtility;
 
 bool CEccoBaseCommand::CheckArgs(const std::vector<std::string>& args){
     size_t neededArgs = 0;
