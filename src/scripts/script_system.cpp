@@ -49,6 +49,13 @@ void InitScriptEngine(){
 	ADD_METHOD(give);
 	ADD_METHOD(saytext);
 	ADD_METHOD(saytextall);
+	ADD_METHOD(addmoney);
+	ADD_METHOD(setmoney);
+	ADD_METHOD(getmoney);
+	ADD_METHOD(maxhealth);
+	ADD_METHOD(maxarmor);
+	ADD_METHOD(maxspeed);
+	ADD_METHOD(gravity);
 }
 
 EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){

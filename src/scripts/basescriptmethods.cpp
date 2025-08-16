@@ -32,3 +32,28 @@ void EccoBaseScriptMethods::saytext(CPlayerStorageItem* player, std::string cont
 void EccoBaseScriptMethods::saytextall(std::string content){
 	ClientPrintfAll(ClientPrintTarget::Talk, content.c_str());
 }
+
+void EccoBaseScriptMethods::addmoney(CPlayerStorageItem* player, int money) {
+	player->AddCredits(money);
+}
+void EccoBaseScriptMethods::setmoney(CPlayerStorageItem* player, int money){
+	player->SetCredits(money);
+}
+int EccoBaseScriptMethods::getmoney(CPlayerStorageItem* player){
+	return player->GetCredits();
+}
+void EccoBaseScriptMethods::maxhealth(CPlayerStorageItem* player, int value){
+	player->m_pPlayer->v.max_health = static_cast<float>(value);
+}
+
+void EccoBaseScriptMethods::maxarmor(CPlayerStorageItem* player, int value){
+	player->m_pPlayer->v.armortype = static_cast<float>(value);
+}
+
+void EccoBaseScriptMethods::maxspeed(CPlayerStorageItem* player, int value){
+	player->m_pPlayer->v.maxspeed = static_cast<float>(value);
+}
+
+void EccoBaseScriptMethods::gravity(CPlayerStorageItem* player, int value){
+	player->m_pPlayer->v.gravity = (value);
+}
