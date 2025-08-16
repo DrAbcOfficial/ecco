@@ -7,6 +7,7 @@
 #include "scripts/script_system.h"
 #include "storage/Storage.h"
 #include "lang/lang.h"
+#include "api/IEccoPlugin.h"
 
 #include "meta_utility.h"
 
@@ -98,6 +99,17 @@ static CEccoServerCommand setadmin("set_admin", "set a player as admin", { CEcco
     else
         LOG_CONSOLE(PLID, "Set ADMIN_LEVEL %d to %s, but Player is NULL!", result, id);
     return false;
+});
+constexpr char PLUGIN_FORMAT[] = "|{:<8}|{:<16}|{:<16}|";
+static CEccoServerCommand list_plugins("listplugins", "list all plugins", [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {
+    std::string buffer = std::format(PLUGIN_FORMAT, "Name", "Version", "Author");
+    LOG_CONSOLE(PLID, buffer.c_str());
+    extern std::vector<IEccoPlugin*> g_aryPlugins;
+    for (auto& ext : g_aryPlugins) {
+        buffer = std::format(PLUGIN_FORMAT, ext->GetName(), ext->GetAuthor(), ext->GetVersion());
+        LOG_CONSOLE(PLID, buffer.c_str());
+    }
+    return true;
 });
 extern std::unordered_map<std::string, CEccoServerCommand*> s_mapRegistedServerCmdMap;
 static CEccoServerCommand help_s("help", "list all commands", [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {

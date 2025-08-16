@@ -32,3 +32,5 @@ void CEccoFuncs::ClientPrintf(edict_t* target, unsigned int hud, const char* tex
 void CEccoFuncs::ClientPrintfAll(unsigned int hud, const char* text){
 	EccoMetaUtility::ClientPrintfAll(static_cast<EccoMetaUtility::ClientPrintTarget>(hud), text);
 }
+
+CEccoFuncs g_pEccoFuncs;

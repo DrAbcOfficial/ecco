@@ -41,6 +41,7 @@
 #include "lang/lang.h"
 #include "command/CEccoBaseCommand.h"
 #include "command/command_system.h"
+#include "plugin/plugin_system.h"
 
 #include "dlldef.h"
 
@@ -52,6 +53,7 @@ static void GameInit() {
 	ResetTranslations();
 	LoadTranslations();
 	RegistServerCommandToEngine();
+	CallPluginInit();
 	SET_META_RESULT(MRES_HANDLED);
 }
 

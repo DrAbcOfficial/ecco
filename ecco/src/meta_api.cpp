@@ -45,6 +45,7 @@
 #include "angelscript/angelscript.hpp"
 
 #include "config/CConfig.h"
+#include "plugin/plugin_system.h"
 
 mBOOL dlclose_handle_invalid;
 
@@ -148,7 +149,8 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 		RegisterAngelScriptMethods();
 		RegisterAngelScriptHooks();
 #endif
-
+	// Load all plugins
+	LoadPlugins();
 	return TRUE;
 }
 
@@ -157,5 +159,6 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 // reason	(given) why detaching (refresh, console unload, forced unload, etc)
 C_DLLEXPORT int Meta_Detach(PLUG_LOADTIME /* now */,
 	PL_UNLOAD_REASON /* reason */){
+	UnloadPlugins();
 	return TRUE;
 }

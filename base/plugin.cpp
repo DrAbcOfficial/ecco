@@ -62,9 +62,9 @@ static void gravity(IPlayerStorageItem* player, int value) {
 }
 
 class CEccoPlugin : public IEccoPlugin {
-	virtual const char* GetPluginName() const { return "Base"; };
-	virtual const char* GetPluginVersion() const { return "1.0"; };
-	virtual const char* GetPluginAuthor() const { return "Dr.Abc"; };
+	virtual const char* GetName() const { return "Base"; };
+	virtual const char* GetVersion() const { return "1.0"; };
+	virtual const char* GetAuthor() const { return "Dr.Abc"; };
 
 	void RegisteMethods() {
 		auto chai_engine = g_pScriptSystem->GetScriptEngine();
@@ -97,3 +97,7 @@ class CEccoPlugin : public IEccoPlugin {
 	virtual void Shutdown() {};
 };
 static CEccoPlugin s_EccoPluginInstance;
+
+ECCO_API IEccoPlugin* GetEccoPluginInstance() {
+	return &s_EccoPluginInstance;
+}

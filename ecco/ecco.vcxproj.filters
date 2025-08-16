@@ -40,6 +40,9 @@
     <Filter Include="core\command">
       <UniqueIdentifier>{250fbd8b-fc6b-402c-9983-136a31eb0205}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\plugin">
+      <UniqueIdentifier>{eb37391e-83c7-4790-8eeb-f1a3e8c5b2ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllapi.cpp">
@@ -126,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="src\CEccoFuncs.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\plugin\plugin_system.cpp">
+      <Filter>core\plugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +228,9 @@
     </ClInclude>
     <ClInclude Include="src\CEccoFuncs.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\plugin\plugin_system.h">
+      <Filter>core\plugin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
