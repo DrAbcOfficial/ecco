@@ -123,6 +123,7 @@ static bool get_player_origin(IPlayerStorageItem* player, float* x, float* y, fl
 	*x = pent->v.origin[0];
 	*y = pent->v.origin[1];
 	*z = pent->v.origin[2];
+	return true;
 }
 static bool get_entity_origin(int index, float* x, float* y, float* z) {
 	auto pent = INDEXENT(index);
@@ -133,6 +134,7 @@ static bool get_entity_origin(int index, float* x, float* y, float* z) {
 	*x = pent->v.origin[0];
 	*y = pent->v.origin[1];
 	*z = pent->v.origin[2];
+	v
 }
 
 #define PLUGIN_VERSION __DATE__ "T" __TIME__
