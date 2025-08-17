@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="plugin.h" />
+    <ClInclude Include="sdk_api.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -86,7 +87,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./metamod;./hlsdk/engine;./hlsdk/dlls;./hlsdk/pm_shared;./hlsdk/common;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./mmlib/include;./mmlib/include/metamod;./mmlib/include/hlsdk/engine;./mmlib/include/hlsdk/dlls;./mmlib/include/hlsdk/pm_shared;./mmlib/include/hlsdk/common;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

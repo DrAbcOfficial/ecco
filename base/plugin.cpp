@@ -1,3 +1,4 @@
+#include "sdk_api.h"
 #include "plugin.h"
 
 //Ecco
@@ -67,6 +68,27 @@ static bool gravity(IPlayerStorageItem* player, int value) {
 	player->GetPlayer()->v.gravity = static_cast<float>(value);
 	return true;
 }
+static bool heal(IPlayerStorageItem* player, int value) {
+	CBasePlayer* pPlayer = static_cast<CBasePlayer*>(player->GetPlayer()->pvPrivateData);
+	if (!pPlayer)
+		return false;
+	pPlayer->TakeHealth(static_cast<float>(value), DMG_MEDKITHEAL, 0);
+	return true;
+}
+static bool armor(IPlayerStorageItem* player, int value) {
+	CBasePlayer* pPlayer = static_cast<CBasePlayer*>(player->GetPlayer()->pvPrivateData);
+	if (!pPlayer)
+		return false;
+	pPlayer->TakeArmor(static_cast<float>(value), DMG_MEDKITHEAL, 0);
+	return true;
+}
+static bool hurt(IPlayerStorageItem* player, int value) {
+	CBasePlayer* pPlayer = static_cast<CBasePlayer*>(player->GetPlayer()->pvPrivateData);
+	if (!pPlayer)
+		return false;
+	pPlayer->TakeDamage(nullptr, nullptr, static_cast<float>(value), DMG_GENERIC);
+	return true;
+}
 
 class CEccoPlugin : public IEccoPlugin {
 	virtual const char* GetName() const { return "Base"; };
@@ -84,6 +106,9 @@ class CEccoPlugin : public IEccoPlugin {
 		g_pScriptSystem->AddMethod("maxspeed", &maxspeed);
 		g_pScriptSystem->AddMethod("setmoney", &setmoney);
 		g_pScriptSystem->AddMethod("gravity", &gravity);
+		g_pScriptSystem->AddMethod("heal", &heal);
+		g_pScriptSystem->AddMethod("armor", &armor);
+		g_pScriptSystem->AddMethod("hurt", &hurt);
 	}
 
 	virtual void Initialize(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,
