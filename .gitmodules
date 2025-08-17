@@ -10,3 +10,6 @@
 [submodule "ecco/tomlplusplus"]
 	path = ecco/tomlplusplus
 	url = https://github.com/marzer/tomlplusplus
+[submodule "base/mmlib"]
+	path = base/mmlib
+	url = https://github.com/wootguy/mmlib
