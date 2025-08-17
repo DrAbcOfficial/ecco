@@ -6,10 +6,10 @@
 	url = https://github.com/hzqst/metamod-fallguys
 [submodule "ecco/mmlib"]
 	path = ecco/mmlib
-	url = https://github.com/wootguy/mmlib
+	url = https://github.com/DrAbcOfficial/mmlib
 [submodule "ecco/tomlplusplus"]
 	path = ecco/tomlplusplus
 	url = https://github.com/marzer/tomlplusplus
 [submodule "base/mmlib"]
 	path = base/mmlib
-	url = https://github.com/wootguy/mmlib
+	url = https://github.com/DrAbcOfficial/mmlib
