@@ -14,19 +14,28 @@ std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
 CEccoScriptSystem g_ScriptSystem;
 
 void InitScriptEngine(){
+	auto engine = g_ScriptSystem.GetScriptEngine();
+	engine->add(chaiscript::type_conversion<const char*, std::string>());
 	chaiscript::ModulePtr m = chaiscript::ModulePtr(new chaiscript::Module());
-	chaiscript::utility::add_class<CPlayerStorageItem>(*m,
+	chaiscript::utility::add_class<IPlayerStorageItem>(*m,
 		"CEccoPlayer", 
 		{
 		}, 
 		{
-			{chaiscript::fun(&CPlayerStorageItem::GetSteamId), "GetSteamId"},
-			{chaiscript::fun(&CPlayerStorageItem::GetCredits), "GetCredits"},
-			{chaiscript::fun(&CPlayerStorageItem::GetName), "GetName"},
-			{chaiscript::fun(&CPlayerStorageItem::GetLang), "GetLang"},
-			{chaiscript::fun(&CPlayerStorageItem::SetCredits), "SetCredits"},
-			{chaiscript::fun(&CPlayerStorageItem::AddCredits), "AddCredits"},
-			{chaiscript::fun(&CPlayerStorageItem::m_iScore), "m_iScore"}
+			{chaiscript::fun(&IPlayerStorageItem::GetName), "GetName"},
+			{chaiscript::fun(&IPlayerStorageItem::GetSteamId), "GetSteamId"},
+
+			{chaiscript::fun(&IPlayerStorageItem::GetCredits), "GetCredits"},
+			{chaiscript::fun(&IPlayerStorageItem::SetCredits), "SetCredits"},
+			{chaiscript::fun(&IPlayerStorageItem::AddCredits), "AddCredits"},
+
+			{chaiscript::fun(&IPlayerStorageItem::GetAdminLevel), "GetAdminLevel"},
+			{chaiscript::fun(&IPlayerStorageItem::SetAdminLevel), "SetAdminLevel"},
+
+			{chaiscript::fun(&IPlayerStorageItem::GetLang), "GetLang"},
+			{chaiscript::fun(&IPlayerStorageItem::SetLang), "SetLang"}
+
+			
 		}
 	);
 	chaiscript::utility::add_class<CEccoScriptExecutor>(*m,
@@ -40,13 +49,13 @@ void InitScriptEngine(){
 			{chaiscript::fun(&CEccoScriptExecutor::GetDisplayNameForChai), "GetDisplayName"},
 		}
 	);
-	g_ScriptSystem.GetScriptEngine()->add(m);
+	engine->add(m);
 }
 
 EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){
 	auto engine = g_ScriptSystem.GetScriptEngine();
 	std::map<std::string, chaiscript::Boxed_Value> locals;
-	locals["caller"] = chaiscript::var(GetPlayerStorageItem(caller));
+	locals["caller"] = chaiscript::var((IPlayerStorageItem*)GetPlayerStorageItem(caller));
 	locals["buy_item"] = chaiscript::var(pexcuter);
 	locals["ret"] = chaiscript::var(false); // Default return value
 	engine->set_locals(locals);
