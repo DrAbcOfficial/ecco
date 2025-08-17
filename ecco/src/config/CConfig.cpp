@@ -53,6 +53,7 @@ bool LoadEccoConfig(){
 		GET_ROOT_VALUE_OR(PlayerStartScore, 0);
 		GET_ROOT_VALUE_OR(MoneyLimitePerMap, -1);
 		GET_ROOT_VALUE_OR(DefaultLang, "en");
+		GET_ROOT_VALUE_OR(ExportToAngelScript, false);
 	}
 	catch (const toml::parse_error& err){
 		auto& src = err.source();

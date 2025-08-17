@@ -85,6 +85,9 @@ struct CEccoConfig{
 
 	//默认的语言
 	std::string DefaultLang;
+
+	//导出到AngelScript
+	bool ExportToAngelScript;
 };
 
 extern inline CEccoConfig* GetEccoConfig();

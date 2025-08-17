@@ -2,6 +2,8 @@
 #include <string>
 #include "api/IPlayerStorageItem.h"
 
+#include "angelscript/angelscript.hpp"
+
 class CPlayerStorageItem : public IPlayerStorageItem {
 public:
 	CPlayerStorageItem(edict_t* pent);
@@ -22,6 +24,11 @@ public:
 	virtual edict_t* GetPlayer() const;
 
 	virtual void SaveData();
+
+#ifdef _GAME_SVENCOOP
+	void GetLangAS(CString* out);
+	void SetLangAS(CString* in);
+#endif
 
 	void ScoreToCredits(int newScore);
 private:

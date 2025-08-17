@@ -133,6 +133,7 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 
 	gpGamedllFuncs = pGamedllFuncs;
 
+	if (GetEccoConfig()->ExportToAngelScript) {
 #ifdef _GAME_SVENCOOP
 		void* asextHandle = nullptr;
 #ifdef _WIN32
@@ -149,6 +150,7 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 		RegisterAngelScriptMethods();
 		RegisterAngelScriptHooks();
 #endif
+	}
 	// Load all plugins
 	LoadPlugins();
 	return TRUE;

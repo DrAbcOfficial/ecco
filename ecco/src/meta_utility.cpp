@@ -104,3 +104,13 @@ std::string EccoMetaUtility::TrimString(const std::string& s) {
 		| std::views::reverse;
 	return std::string(trimmed_view.begin(), trimmed_view.end());
 }
+
+constexpr auto OFFSET_ENTVAR = 4;
+edict_t* EccoMetaUtility::PrivateToEdict(void* PrivateData) {
+	if (PrivateData == nullptr)
+		return nullptr;
+	entvars_t* pev = *((entvars_t**)((char*)PrivateData + OFFSET_ENTVAR));
+	if (pev == nullptr)
+		return nullptr;
+	return pev->pContainingEntity;
+};
