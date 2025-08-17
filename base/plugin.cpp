@@ -1,4 +1,3 @@
-#include <string>
 #include "plugin.h"
 
 //Ecco
@@ -11,7 +10,6 @@ globalvars_t* gpGlobals;
 meta_globals_t* gpMetaGlobals;		// metamod globals
 gamedll_funcs_t* gpGamedllFuncs;	// gameDLL function tables
 mutil_funcs_t* gpMetaUtilFuncs;		// metamod utility functions
-
 
 static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName) {
 	int istr = MAKE_STRING(pszName);
@@ -26,39 +24,48 @@ static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName) {
 	MDLL_Spawn(pent);
 	return pent;
 }
-static void give(IPlayerStorageItem* player, std::string name) {
+static bool give(IPlayerStorageItem* player, const char* name) {
 	edict_t* pev = player->GetPlayer();
-	edict_t* pent = GiveNamedItem_Common(pev, name.c_str());
+	edict_t* pent = GiveNamedItem_Common(pev, name);
 	if (!pent)
-		return;
+		return false;
 	MDLL_Touch(pent, pev);
+	return true;
 }
-static void saytext(IPlayerStorageItem* player, std::string content) {
-	g_pEccoFuncs->ClientPrintf(player->GetPlayer(), 3, content.c_str());
+static bool saytext(IPlayerStorageItem* player, const char* content) {
+	g_pEccoFuncs->ClientPrintf(player->GetPlayer(), 3, content);
+	return true;
 }
-static void saytextall(std::string content) {
-	g_pEccoFuncs->ClientPrintfAll(3, content.c_str());
+static bool saytextall(const char* content) {
+	g_pEccoFuncs->ClientPrintfAll(3, content);
+	return true;
 }
-static void addmoney(IPlayerStorageItem* player, int money) {
+static bool addmoney(IPlayerStorageItem* player, int money) {
 	player->AddCredits(money);
+	return true;
 }
-static void setmoney(IPlayerStorageItem* player, int money) {
+static bool setmoney(IPlayerStorageItem* player, int money) {
 	player->SetCredits(money);
+	return true;
 }
 static int getmoney(IPlayerStorageItem* player) {
 	return player->GetCredits();
 }
-static void maxhealth(IPlayerStorageItem* player, int value) {
+static bool maxhealth(IPlayerStorageItem* player, int value) {
 	player->GetPlayer()->v.max_health = static_cast<float>(value);
+	return true;
 }
-static void maxarmor(IPlayerStorageItem* player, int value) {
+static bool maxarmor(IPlayerStorageItem* player, int value) {
 	player->GetPlayer()->v.armortype = static_cast<float>(value);
+	return true;
 }
-static void maxspeed(IPlayerStorageItem* player, int value) {
+static bool maxspeed(IPlayerStorageItem* player, int value) {
 	player->GetPlayer()->v.maxspeed = static_cast<float>(value);
+	return true;
 }
-static void gravity(IPlayerStorageItem* player, int value) {
+static bool gravity(IPlayerStorageItem* player, int value) {
 	player->GetPlayer()->v.gravity = static_cast<float>(value);
+	return true;
 }
 
 class CEccoPlugin : public IEccoPlugin {
@@ -67,17 +74,16 @@ class CEccoPlugin : public IEccoPlugin {
 	virtual const char* GetAuthor() const { return "Dr.Abc"; };
 
 	void RegisteMethods() {
-		auto chai_engine = g_pScriptSystem->GetScriptEngine();
-		chai_engine->add(chaiscript::fun(&give), "give");
-		chai_engine->add(chaiscript::fun(&saytext), "saytext");
-		chai_engine->add(chaiscript::fun(&saytextall), "saytextall");
-		chai_engine->add(chaiscript::fun(&addmoney), "addmoney");
-		chai_engine->add(chaiscript::fun(&setmoney), "setmoney");
-		chai_engine->add(chaiscript::fun(&getmoney), "getmoney");
-		chai_engine->add(chaiscript::fun(&maxhealth), "maxhealth");
-		chai_engine->add(chaiscript::fun(&maxarmor), "maxarmor");
-		chai_engine->add(chaiscript::fun(&maxspeed), "maxspeed");
-		chai_engine->add(chaiscript::fun(&gravity), "gravity");
+		g_pScriptSystem->AddMethod("give", &give);
+		g_pScriptSystem->AddMethod("saytext", &saytext);
+		g_pScriptSystem->AddMethod("saytextall", &saytextall);
+		g_pScriptSystem->AddMethod("addmoney", &addmoney);
+		g_pScriptSystem->AddMethod("getmoney", &getmoney);
+		g_pScriptSystem->AddMethod("maxhealth", &maxhealth);
+		g_pScriptSystem->AddMethod("maxarmor", &maxarmor);
+		g_pScriptSystem->AddMethod("maxspeed", &maxspeed);
+		g_pScriptSystem->AddMethod("setmoney", &setmoney);
+		g_pScriptSystem->AddMethod("gravity", &gravity);
 	}
 
 	virtual void Initialize(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,

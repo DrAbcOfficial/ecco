@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <array>
 #include <extdll.h>
+#include <chaiscript/chaiscript.hpp>
 
 #include "storage/Storage.h"
 #include "script_system.h"
@@ -14,8 +15,13 @@ std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
 CEccoScriptSystem g_ScriptSystem;
 
 void InitScriptEngine(){
-	auto engine = g_ScriptSystem.GetScriptEngine();
+	chaiscript::ChaiScript* engine = static_cast<chaiscript::ChaiScript*>(g_ScriptSystem.GetScriptEngine());
 	engine->add(chaiscript::type_conversion<const char*, std::string>());
+	engine->add(chaiscript::type_conversion<std::string, const char*>(
+		[](const std::string& from) -> const char* {
+			return from.c_str();
+		}
+	));
 	chaiscript::ModulePtr m = chaiscript::ModulePtr(new chaiscript::Module());
 	chaiscript::utility::add_class<IPlayerStorageItem>(*m,
 		"CEccoPlayer", 
@@ -53,7 +59,7 @@ void InitScriptEngine(){
 }
 
 EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){
-	auto engine = g_ScriptSystem.GetScriptEngine();
+	chaiscript::ChaiScript* engine = static_cast<chaiscript::ChaiScript*>(g_ScriptSystem.GetScriptEngine());
 	std::map<std::string, chaiscript::Boxed_Value> locals;
 	locals["caller"] = chaiscript::var((IPlayerStorageItem*)GetPlayerStorageItem(caller));
 	locals["buy_item"] = chaiscript::var(pexcuter);
