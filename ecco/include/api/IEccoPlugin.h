@@ -8,8 +8,10 @@
 class IEccoPlugin {
 public:
 	virtual const char* GetName() const = 0;
+	virtual const char* GetDescription() const = 0;
 	virtual const char* GetVersion() const = 0;
 	virtual const char* GetAuthor() const = 0;
+
 	virtual void Initialize(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,
 		enginefuncs_t* pengfuncsFromEngine, globalvars_t* pGlobals,
 		meta_globals_t* penMetaGlobals, gamedll_funcs_t* penGamedllFuncs, mutil_funcs_t* penMetaUtilFuncs) = 0;

@@ -90,9 +90,12 @@ static bool hurt(IPlayerStorageItem* player, int value) {
 	return true;
 }
 
+#define PLUGIN_VERSION __DATE__ "T" __TIME__
+
 class CEccoPlugin : public IEccoPlugin {
 	virtual const char* GetName() const { return "Base"; };
-	virtual const char* GetVersion() const { return "1.0"; };
+	virtual const char* GetDescription() const { return "Core"; }
+	virtual const char* GetVersion() const { return PLUGIN_VERSION; };
 	virtual const char* GetAuthor() const { return "Dr.Abc"; };
 
 	void RegisteMethods() {

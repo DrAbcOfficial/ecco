@@ -100,14 +100,18 @@ static CEccoServerCommand setadmin("set_admin", "set a player as admin", { CEcco
         LOG_CONSOLE(PLID, "Set ADMIN_LEVEL %d to %s, but Player is NULL!", result, id);
     return false;
 });
-constexpr char PLUGIN_FORMAT[] = "|{:<8}|{:<16}|{:<16}|";
+constexpr char PLUGIN_FORMAT[] = "|{:<8}|{:<8}|{:<24}|{:<24}|";
 static CEccoServerCommand list_plugins("listplugins", "list all plugins", [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {
-    std::string buffer = std::format(PLUGIN_FORMAT, "Name", "Version", "Author");
-    LOG_CONSOLE(PLID, buffer.c_str());
-    extern std::vector<IEccoPlugin*> g_aryPlugins;
-    for (auto& ext : g_aryPlugins) {
-        buffer = std::format(PLUGIN_FORMAT, ext->GetName(), ext->GetAuthor(), ext->GetVersion());
-        LOG_CONSOLE(PLID, buffer.c_str());
+    static std::vector<std::string> buffers;
+    if (buffers.size() == 0) {
+        buffers.push_back(std::format(PLUGIN_FORMAT, "Name", "Author", "Version", "Description"));
+        extern std::vector<IEccoPlugin*> g_aryPlugins;
+        for (auto& ext : g_aryPlugins) {
+            buffers.push_back(std::format(PLUGIN_FORMAT, ext->GetName(), ext->GetAuthor(), ext->GetVersion(), ext->GetDescription()));
+        }
+    }
+    for (auto& str : buffers) {
+        LOG_CONSOLE(PLID, str.c_str());
     }
     return true;
 });
