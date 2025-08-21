@@ -43,6 +43,9 @@
     <Filter Include="core\plugin">
       <UniqueIdentifier>{eb37391e-83c7-4790-8eeb-f1a3e8c5b2ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\scripts\tcl">
+      <UniqueIdentifier>{9bb75d33-3ae7-41e0-b102-20eb1c4e3f8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllapi.cpp">
@@ -132,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="src\plugin\plugin_system.cpp">
       <Filter>core\plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripts\tcl_loader.cpp">
+      <Filter>core\scripts\tcl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +237,18 @@
     </ClInclude>
     <ClInclude Include="src\plugin\plugin_system.h">
       <Filter>core\plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="include\api\IEccoBaseExcutor.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\tcl_loader.h">
+      <Filter>core\scripts\tcl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\tclDecls_dynamic.h">
+      <Filter>core\scripts\tcl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripts\tcl_dynamic.h">
+      <Filter>core\scripts\tcl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

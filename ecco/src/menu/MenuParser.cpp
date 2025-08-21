@@ -15,7 +15,7 @@ using ecco_parser_item_t = struct ecco_parser_item_s {
 };
 
 static std::vector<ecco_parser_item_t*> s_aryPentToDelete;
-static std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
+std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
 
 static void ParseItem(ecco_parser_item_s* pParent, CEccoScriptItem* pItem, std::string& name) {
 	size_t pos = name.find('.');
@@ -58,6 +58,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 			return;
 		}
 		CEccoBackExecutor* pBackExecutor = new CEccoBackExecutor();
+		pBackExecutor->m_iIndex = g_aryEccoMenuExecutors.size();
 		g_aryEccoMenuExecutors.push_back(pBackExecutor);
 		pBackExecutor->m_szId = "ecco_menu_back";
 		pBackExecutor->m_pParentExecutor = pParentExecutor->m_pParent;
@@ -67,6 +68,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 		//上一页
 		if (page > 0) {
 			CEccoBackExecutor* pPrevPageExecutor = new CEccoBackExecutor();
+			pPrevPageExecutor->m_iIndex = g_aryEccoMenuExecutors.size();
 			g_aryEccoMenuExecutors.push_back(pPrevPageExecutor);
 			pPrevPageExecutor->m_szId = "ecco_menu_prev_page";
 			pPrevPageExecutor->m_pParentExecutor = pMenu->m_pParent;
@@ -86,6 +88,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 		if (page > 0 && counter == 0) {
 			//下一页
 			CEccoTextMenuExecutor* pNextPageMenu = new CEccoTextMenuExecutor();
+			pNextPageMenu->m_iIndex = g_aryEccoMenuExecutors.size();
 			g_aryEccoMenuExecutors.push_back(pNextPageMenu);
 			pNextPageMenu->m_szTitle = pMenu->m_szTitle;
 			pNextPageMenu->m_szId = "ecco_menu_next_page";
@@ -97,6 +100,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 		}
 		if (child->pScriptItem) {
 			CEccoScriptExecutor* pExecutor = new CEccoScriptExecutor();
+			pExecutor->m_iIndex = g_aryEccoMenuExecutors.size();
 			g_aryEccoMenuExecutors.push_back(pExecutor);
 			pExecutor->m_szId = child->pScriptItem->m_szId;
 			pExecutor->m_iCost = child->pScriptItem->m_iCost;
@@ -107,6 +111,7 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 		}
 		else {
 			CEccoTextMenuExecutor* pExecutor = new CEccoTextMenuExecutor();
+			pExecutor->m_iIndex = g_aryEccoMenuExecutors.size();
 			g_aryEccoMenuExecutors.push_back(pExecutor);
 			pExecutor->m_szId = child->szId;
 			pExecutor->m_szTitle = child->szId;
@@ -174,6 +179,7 @@ void ParseRootMenu(){
 	}
 	//构建菜单执行器
 	CEccoTextMenuExecutor* pRootExecutor = new CEccoTextMenuExecutor();
+	pRootExecutor->m_iIndex = g_aryEccoMenuExecutors.size();
 	g_aryEccoMenuExecutors.push_back(pRootExecutor);
 	pRootExecutor->m_szId = "ecco_menu_root";
 	ParseMenu(pRootExecutor, pRootParserItem, true);

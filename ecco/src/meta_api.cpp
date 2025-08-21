@@ -46,6 +46,10 @@
 
 #include "config/CConfig.h"
 #include "plugin/plugin_system.h"
+#include "scripts/tcl_loader.h"
+#include "scripts/script_system.h"
+
+#include "meta_utility.h"
 
 mBOOL dlclose_handle_invalid;
 
@@ -132,7 +136,10 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 	memcpy(pFunctionTable, &gMetaFunctionTable, sizeof(META_FUNCTIONS));
 
 	gpGamedllFuncs = pGamedllFuncs;
-
+	
+	if (!LoadTCLLibrary())
+		return FALSE;
+	InitializeScriptSystem();
 	if (GetEccoConfig()->ExportToAngelScript) {
 #ifdef _GAME_SVENCOOP
 		void* asextHandle = nullptr;
@@ -162,5 +169,6 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 C_DLLEXPORT int Meta_Detach(PLUG_LOADTIME /* now */,
 	PL_UNLOAD_REASON /* reason */){
 	UnloadPlugins();
+	UnloadTCLLibrary();
 	return TRUE;
 }

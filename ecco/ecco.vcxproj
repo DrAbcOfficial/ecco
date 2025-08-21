@@ -37,12 +37,14 @@
     <ClCompile Include="src\scripts\CEccoScriptItem.cpp" />
     <ClCompile Include="src\scripts\CEccoScriptSystem.cpp" />
     <ClCompile Include="src\scripts\script_system.cpp" />
+    <ClCompile Include="src\scripts\tcl_loader.cpp" />
     <ClCompile Include="src\sdk_util.cpp" />
     <ClCompile Include="src\storage\CPlayerStorageItem.cpp" />
     <ClCompile Include="src\storage\Storage.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\api\IEccoBaseExcutor.h" />
     <ClInclude Include="include\api\IEccoFuncs.h" />
     <ClInclude Include="include\api\IEccoPlugin.h" />
     <ClInclude Include="include\api\IEccoScriptSystem.h" />
@@ -72,6 +74,9 @@
     <ClInclude Include="src\scripts\CEccoScriptItem.h" />
     <ClInclude Include="src\scripts\CEccoScriptSystem.h" />
     <ClInclude Include="src\scripts\script_system.h" />
+    <ClInclude Include="src\scripts\tclDecls_dynamic.h" />
+    <ClInclude Include="src\scripts\tcl_dynamic.h" />
+    <ClInclude Include="src\scripts\tcl_loader.h" />
     <ClInclude Include="src\signatures.h" />
     <ClInclude Include="src\storage\CPlayerStorageItem.h" />
     <ClInclude Include="src\storage\Storage.h" />
@@ -148,14 +153,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;$(Svencoop);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/asext/include;./mmlib/src;./mmlib/include/sven;./ChaiScript/include;./include;./src;./;$(MetamodIncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/asext/include;./mmlib/src;./mmlib/include/sven;./tcl/build/include;./include;./src;./;$(MetamodIncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

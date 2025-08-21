@@ -2,6 +2,7 @@
 #include "IEccoScriptSystem.h"
 #include "IEccoFuncs.h"
 #include "IPlayerStorageItem.h"
+#include "IEccoBaseExcutor.h"
 #include <extdll.h>
 #include <meta_api.h>
 

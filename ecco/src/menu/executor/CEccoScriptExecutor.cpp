@@ -18,11 +18,11 @@ void CEccoScriptExecutor::Excute(edict_t* pPlayer, int selection){
             StringToU8String(GetTranslation(pPlayer, m_szId)), StringToU8String(std::to_string(m_iCost)), StringToU8String(std::to_string(remain)));
         return;
 	}
-    EvalResult ret = EvalScriptContent(pPlayer, this);
+    IEccoScriptSystem::Result ret = EvalScriptContent(pPlayer, this);
     switch (ret) {
-    case EvalResult::Success: storage->AddCredits(-m_iCost); break;
-    case EvalResult::Failure: break;
-    case EvalResult::Error: ClientPrintfTranslation(pPlayer, ClientPrintTarget::Talk, "ecco_eval_exception", StringToU8String(GetTranslation(pPlayer, m_szId)));break;
+    case IEccoScriptSystem::Result::OK: storage->AddCredits(-m_iCost); break;
+    case IEccoScriptSystem::Result::Error: ClientPrintfTranslation(pPlayer, ClientPrintTarget::Talk, "ecco_eval_exception", StringToU8String(GetTranslation(pPlayer, m_szId)));break;
+    default: break;
     }
 }
 

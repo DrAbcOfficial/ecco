@@ -1,7 +1,6 @@
 #include <filesystem>
 #include <array>
 #include <extdll.h>
-#include <chaiscript/chaiscript.hpp>
 
 #include "storage/Storage.h"
 #include "script_system.h"
@@ -12,87 +11,22 @@
 
 std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
 
-CEccoScriptSystem g_ScriptSystem;
+CEccoScriptSystem* g_ScriptSystem = nullptr;
 
-void InitScriptEngine(){
-	chaiscript::ChaiScript* engine = static_cast<chaiscript::ChaiScript*>(g_ScriptSystem.GetScriptEngine());
-	engine->add(chaiscript::type_conversion<const char*, std::string>());
-	engine->add(chaiscript::type_conversion<std::string, const char*>(
-		[](const std::string& from) -> const char* {
-			return from.c_str();
-		}
-	));
-	chaiscript::ModulePtr m = chaiscript::ModulePtr(new chaiscript::Module());
-	chaiscript::utility::add_class<IPlayerStorageItem>(*m,
-		"CEccoPlayer", 
-		{
-		}, 
-		{
-			{chaiscript::fun(&IPlayerStorageItem::GetName), "GetName"},
-			{chaiscript::fun(&IPlayerStorageItem::GetSteamId), "GetSteamId"},
-
-			{chaiscript::fun(&IPlayerStorageItem::GetCredits), "GetCredits"},
-			{chaiscript::fun(&IPlayerStorageItem::SetCredits), "SetCredits"},
-			{chaiscript::fun(&IPlayerStorageItem::AddCredits), "AddCredits"},
-
-			{chaiscript::fun(&IPlayerStorageItem::GetAdminLevel), "GetAdminLevel"},
-			{chaiscript::fun(&IPlayerStorageItem::SetAdminLevel), "SetAdminLevel"},
-
-			{chaiscript::fun(&IPlayerStorageItem::GetLang), "GetLang"},
-			{chaiscript::fun(&IPlayerStorageItem::SetLang), "SetLang"}
-
-			
-		}
-	);
-	chaiscript::utility::add_class<CEccoScriptExecutor>(*m,
-		"CEccoBuyItem",
-		{
-		},
-		{
-			{chaiscript::fun(&CEccoScriptExecutor::m_iCost), "m_iCost"},
-			{chaiscript::fun(&CEccoScriptExecutor::m_bitFlags), "m_bitFlags"},
-			{chaiscript::fun(&CEccoScriptExecutor::m_szId), "m_szId"},
-			{chaiscript::fun(&CEccoScriptExecutor::GetDisplayNameForChai), "GetDisplayName"},
-		}
-	);
-	engine->add(m);
+void InitializeScriptSystem(){
+	g_ScriptSystem = new CEccoScriptSystem();
 }
 
-EvalResult EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){
-	chaiscript::ChaiScript* engine = static_cast<chaiscript::ChaiScript*>(g_ScriptSystem.GetScriptEngine());
-	std::map<std::string, chaiscript::Boxed_Value> locals;
-	locals["caller"] = chaiscript::var((IPlayerStorageItem*)GetPlayerStorageItem(caller));
-	locals["buy_item"] = chaiscript::var(pexcuter);
-	locals["ret"] = chaiscript::var(false); // Default return value
-	engine->set_locals(locals);
-	try {
-		engine->eval(pexcuter->m_szScript);
-	}
-	catch (const chaiscript::exception::eval_error& e) {
-		std::string error_msg = "ChaiScript ";
-		error_msg += pexcuter->m_szId;
-		error_msg += " eval error:\n";
-		error_msg += e.pretty_print().c_str();
-		LOG_ERROR(PLID, error_msg.c_str());
-		return EvalResult::Error;
-	}
-	catch (const std::exception& e) {
-		std::string error_msg = "ChaiScript ";
-		error_msg += pexcuter->m_szId;
-		error_msg += " exception: \t";
-		error_msg += e.what();
-		LOG_ERROR(PLID, error_msg.c_str());
-		return EvalResult::Error;
-	}
-	catch (...) {
-		std::string error_msg = "ChaiScript ";
-		error_msg += pexcuter->m_szId;
-		error_msg += " unknown exception occurred.";
-		LOG_ERROR(PLID, error_msg.c_str());
-		return EvalResult::Error;
-	}
-	bool ret = chaiscript::boxed_cast<bool>(engine->get_locals()["ret"]);
-	return ret ? EvalResult::Success : EvalResult::Failure;
+IEccoScriptSystem::Result EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){
+	g_ScriptSystem->ResetEnviroment();
+	auto index = g_ScriptSystem->NewIntObject(ENTINDEX(caller));
+	g_ScriptSystem->SetValue("caller_index", index);
+	index = g_ScriptSystem->NewIntObject(pexcuter->m_iIndex);
+	g_ScriptSystem->SetValue("item_index", index);
+	auto ret = g_ScriptSystem->Eval(pexcuter->m_szScript.c_str());
+	g_ScriptSystem->UnsetValue("caller_index");
+	g_ScriptSystem->UnsetValue("item_index");
+	return ret;
 }
 
 void ResetEccoScriptItems(){
@@ -128,5 +62,5 @@ void PrecacheAllScriptItems(){
 }
 
 IEccoScriptSystem* GetEccoScriptSystem() {
-	return &g_ScriptSystem;
+	return g_ScriptSystem;
 }

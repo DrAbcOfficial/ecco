@@ -2,6 +2,7 @@
 #include <filesystem>
 
 #include "api/IEccoPlugin.h"
+#include "scripts/script_system.h"
 #include "scripts/CEccoScriptSystem.h"
 #include "CEccoFuncs.h"
 
@@ -16,9 +17,8 @@ static std::vector<void*> g_aryPluginHandles;
 
 void CallPluginInit() {
     extern CEccoFuncs g_pEccoFuncs;
-    extern CEccoScriptSystem g_ScriptSystem;
     for (IEccoPlugin* plugin : g_aryPlugins) {
-        plugin->Initialize(&g_ScriptSystem, &g_pEccoFuncs, &g_engfuncs, gpGlobals, gpMetaGlobals, gpGamedllFuncs, gpMetaUtilFuncs);
+        plugin->Initialize(GetEccoScriptSystem(), &g_pEccoFuncs, &g_engfuncs, gpGlobals, gpMetaGlobals, gpGamedllFuncs, gpMetaUtilFuncs);
     }
 }
 

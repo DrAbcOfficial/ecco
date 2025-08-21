@@ -1,5 +1,5 @@
 # 定义需要检测的文件夹
-$requiredFolders = @("ChaiScript", "tomlplusplus", "metamod", "mmlib")
+$requiredFolders = @("tcl", "tomlplusplus", "metamod", "mmlib")
 
 # 检查文件夹是否存在
 $foldersMissing = $false
@@ -25,6 +25,12 @@ if ($foldersMissing) {
     Write-Host "子模块更新完成"
 } else {
     Write-Host "所有必要的文件夹都已存在"
+}
+
+# 检测vswhere.exe是否存在
+if (-not(Test-Path -Path "./vswhere.exe")){
+	Write-Host "vswhere.exe不存在，从网络拉取"
+	Invoke-WebRequest -Uri "https://github.com/microsoft/vswhere/releases/download/3.1.7/vswhere.exe" -OutFile "./vswhere.exe"
 }
 
 # 提示用户选择版本

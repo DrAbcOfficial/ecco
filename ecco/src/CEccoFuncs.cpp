@@ -1,3 +1,8 @@
+#include <vector>
+#include "menu/executor/CBaseEccoExecutor.h"
+
+#include "storage/Storage.h"
+
 #include "CEccoFuncs.h"
 
 #include <meta_api.h>
@@ -23,6 +28,15 @@ const char* CEccoFuncs::GetGameDir(){
 
 void CEccoFuncs::FakeClientCommand(edict_t* pent, const char* cmd){
 	EccoMetaUtility::FakeClientCommand(pent, cmd);
+}
+
+IPlayerStorageItem* CEccoFuncs::GetPlayerItem(int index){
+	return GetPlayerStorageItem(INDEXENT(index));
+}
+
+IEccoBaseExcutor* CEccoFuncs::GetExcutor(int index){
+	extern std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
+	return g_aryEccoMenuExecutors[index];
 }
 
 void CEccoFuncs::ClientPrintf(edict_t* target, unsigned int hud, const char* text){

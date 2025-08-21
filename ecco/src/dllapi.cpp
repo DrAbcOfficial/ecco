@@ -48,7 +48,6 @@
 #pragma region PreHooks
 
 static void GameInit() {
-	InitScriptEngine();
 	InitHud();
 	ResetTranslations();
 	LoadTranslations();

@@ -1,4 +1,6 @@
 #pragma once
+#include "IPlayerStorageItem.h"
+#include "IEccoBaseExcutor.h"
 #include <extdll.h>
 
 class IEccoFuncs {
@@ -8,6 +10,9 @@ public:
 	virtual bool IsValidPlayer(edict_t* pentPlayer) = 0;
 	virtual const char* GetGameDir() = 0;
 	virtual void FakeClientCommand(edict_t* pent, const char* cmd) = 0;
+
+	virtual IPlayerStorageItem* GetPlayerItem(int index) = 0;
+	virtual IEccoBaseExcutor* GetExcutor(int index) = 0;
 
 	virtual void ClientPrintf(edict_t* target, unsigned int hud, const char* text) = 0;
 	virtual void ClientPrintfAll(unsigned int hud, const char* text) = 0;
