@@ -1,6 +1,3 @@
-[submodule "ecco/ChaiScript"]
-	path = ecco/ChaiScript
-	url = https://github.com/ChaiScript/ChaiScript
 [submodule "ecco/metamod"]
 	path = ecco/metamod
 	url = https://github.com/hzqst/metamod-fallguys
@@ -13,3 +10,6 @@
 [submodule "base/mmlib"]
 	path = base/mmlib
 	url = https://github.com/DrAbcOfficial/mmlib
+[submodule "ecco/tcl"]
+	path = ecco/tcl
+	url = https://github.com/tcltk/tcl
