@@ -98,7 +98,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 
 	Tcl_CreateCommand(s_pTclinterp, name, [](ClientData clientData, Tcl_Interp* interp, int argc, const char* argv[]) {
 		CScriptCmd* cmd = static_cast<CScriptCmd*>(clientData);
-		if (argc != (int)cmd->required_args.size()) {
+		if (argc - 1 != (int)cmd->required_args.size()) {
 			Tcl_SetErrorCode(s_pTclinterp, "arguments count not match", nullptr);
 			Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
 			Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
