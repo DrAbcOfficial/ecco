@@ -67,3 +67,5 @@ PlayerStartScore=0
 MoneyLimitePerMap=-1
 #默认的语言
 DefaultLang="cn"
+#导出到AngelScript
+ExportToAngelScript=true

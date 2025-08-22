@@ -5,28 +5,13 @@
 name="TestCategory.TestItem"
 #花费多少金钱
 cost=0
-#使用ChaiScript编写的脚本
-# 传入CEccoPlayer caller
-# CEccoPlayer
-#  |- string: GetSteamId()
-#  |- number: GetCredits()
-#  |- string: GetName()
-#  |- string: GetLang()
-#  |- void: SetCredits(number)
-#  |- void: AddCredits(number)
-#  |- number: m_iScore
-# 传入CEccoBuyItem buy_item
-# CEccoBuyItem
-#  |- number: m_iCost
-#  |- number: m_bitFlags
-#  |- string: m_szId
-#  |- string: GetDisplayName(CEccoPlayer)
-# 需要设置ret为true方可成功购买
+#使用tcl编写的脚本
+
 script="""
-give(caller, "weapon_9mmhandgun")
-saytext(caller, caller.GetName() + " 在小心的说悄悄话 " + caller.GetSteamId())
-saytext(caller, caller.GetLang() + caller.GetCredits().to_string())
-ret=true
+give $caller_index "weapon_9mmhandgun"
+set player_name [Player::GetName $caller_index]
+set player_id [Player::GetSteamId $caller_index]
+saytext $caller_index "${player_name} 在小心的说悄悄话 ${player_id}"
 """
 flags=0
 #需要Precache的那些资源
