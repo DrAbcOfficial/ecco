@@ -21,6 +21,7 @@ class CScriptCmd {
 public:
 	IEccoScriptSystem* interface;
 	const char* name;
+	const char* description;
 	std::vector<IEccoScriptSystem::ScriptArgType> required_args;
 	std::string args_str;
 	IEccoScriptSystem::fnFunc callback;
@@ -53,58 +54,63 @@ CEccoScriptSystem::CEccoScriptSystem(){
 	}
 }
 
-void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, fnFunc callback){
+void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback) {
 	CScriptCmd* cmd = new CScriptCmd();
 	cmd->interface = this;
 	cmd->name = name;
+	cmd->description = description;
 	cmd->callback = callback;
-	std::vector<std::string> split;
-	std::string symbolStr(symbol);
-	std::stringstream ss(symbolStr);
+	std::vector<std::string> split{};
+	std::stringstream ss(symbol);
 	std::string item;
 	while (std::getline(ss, item, ',')) {
 		size_t start = item.find_first_not_of(" \t");
 		size_t end = item.find_last_not_of(" \t");
 		if (start != std::string::npos && end != std::string::npos) {
 			std::string s = item.substr(start, end - start + 1);
-			split.push_back(s);
-			cmd->args_str += s + ", ";
+			size_t space = s.find(' ');
+			if (space != std::string::npos)
+				split.push_back(s.substr(0, space));
+			else
+				split.push_back(s);
+			cmd->args_str += *split.rbegin() + ", ";
 		}
 	}
 	if (!cmd->args_str.empty())
 		cmd->args_str = cmd->args_str.substr(0, cmd->args_str.size() - 2);
 	for(auto&s : split) {
-		if(s == "int") {
+		if(!strcmp(s.c_str(), "int"))
 			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::Int);
-		} else if (s == "string") {
+		else if (!strcmp(s.c_str(), "string"))
 			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::String);
-		} else if (s == "double") {
+		else if (!strcmp(s.c_str(), "double"))
 			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::Double);
-		} else if (s == "dict") {
-			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::Dict);
-		} else if (s == "bool") {
+		else if(!strcmp(s.c_str(), "float"))
+			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::Float);
+		else if (!strcmp(s.c_str(), "bool"))
 			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::Boolean);
-		} else if (s == "list") {
-			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::List);
-		} else {
-			LOG_ERROR(PLID, "Unknown script command argument type: %s", s.c_str());
+		else {
+			LOG_ERROR(PLID, "Unknown script command argument type: %s in command %s", s.c_str(), name);
 			delete cmd;
+			return;
 		}
 	}
 
 	Tcl_CreateCommand(s_pTclinterp, name, [](ClientData clientData, Tcl_Interp* interp, int argc, const char* argv[]) {
 		CScriptCmd* cmd = static_cast<CScriptCmd*>(clientData);
-		if (argc >= cmd->required_args.size()) {
-			Tcl_SetErrorCode(s_pTclinterp, "Too many arguments");
-			Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ", cmd->args_str.c_str());
+		if (argc - 1 != (int)cmd->required_args.size()) {
+			Tcl_SetErrorCode(s_pTclinterp, "9001");
+			Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+			Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 			return TCL_ERROR;
 		}
 		std::vector<IEccoScriptSystem::ScriptContent*> args{};
 		for (int i = 1; i < argc; i++) {
 			const char* arg = argv[i];
 			if (arg == nullptr) {
-				Tcl_SetErrorCode(s_pTclinterp, "Null argument");
-				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ", cmd->args_str.c_str());
+				Tcl_SetErrorCode(s_pTclinterp, "9002");
+				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+				Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 				return TCL_ERROR;
 			}
 			IEccoScriptSystem::ScriptArgType type = cmd->required_args[i - 1];
@@ -113,8 +119,9 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, fnFu
 				char* endptr = nullptr;
 				long val = strtol(arg, &endptr, 10);
 				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "Argument type mismatch");
-					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ", cmd->args_str.c_str());
+					Tcl_SetErrorCode(s_pTclinterp, "9003");
+					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 					return TCL_ERROR;
 				}
 				auto item = new IEccoScriptSystem::ScriptContent();
@@ -127,13 +134,29 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, fnFu
 				char* endptr = nullptr;
 				double val = strtod(arg, &endptr);
 				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "Argument type mismatch");
-					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ", cmd->args_str.c_str());
+					Tcl_SetErrorCode(s_pTclinterp, "9003");
+					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 					return TCL_ERROR;
 				}
 				auto item = new IEccoScriptSystem::ScriptContent();
 				item->type = IEccoScriptSystem::ScriptArgType::Double;
 				item->doubleValue = val;
+				args.push_back(item);
+				break;
+			}
+			case IEccoScriptSystem::ScriptArgType::Float: {
+				char* endptr = nullptr;
+				float val = strtof(arg, &endptr);
+				if (*endptr != '\0') {
+					Tcl_SetErrorCode(s_pTclinterp, "9003");
+					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
+					return TCL_ERROR;
+				}
+				auto item = new IEccoScriptSystem::ScriptContent();
+				item->type = IEccoScriptSystem::ScriptArgType::Float;
+				item->floatValue = val;
 				args.push_back(item);
 				break;
 			}
@@ -157,7 +180,8 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, fnFu
 			}
 			}
 		}
-		auto ret = cmd->callback(cmd->interface, args.size(), args.data());
+		IEccoScriptSystem::ScriptContent* const* argv2 = args.data();
+		auto ret = cmd->callback(cmd->interface, args.size(), argv2);
 		for (auto arg : args) {
 			delete arg;
 		}

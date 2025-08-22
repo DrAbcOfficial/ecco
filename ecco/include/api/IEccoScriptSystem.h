@@ -8,18 +8,23 @@ public:
 		Int,
 		String,
 		Double,
+		Float,
 		Boolean
 	};
-	using ScriptContent = struct {
+	using ScriptContent = struct script_content_s {
 		ScriptArgType type = ScriptArgType::Unknown;
 		union {
 			int intValue;
 			const char* strValue;
 			double doubleValue;
+			float floatValue;
 			bool boolValue;
-			Object* listValue;
-			Object* dictValue;
 		};
+		operator int() const { return type == ScriptArgType::Int ? intValue : 0; }
+		operator const char* () const { return type == ScriptArgType::String ? strValue : nullptr; }
+		operator double() const { return type == ScriptArgType::Double ? doubleValue : 0.0; }
+		operator float() const { return type == ScriptArgType::Float ? floatValue : 0.0f; }
+		operator bool() const { return type == ScriptArgType::Boolean ? boolValue : false; }
 	};
 	enum class Result {
 		OK = 0,
@@ -28,14 +33,14 @@ public:
 		Break,
 		Continue
 	};
-	typedef Result(*fnFunc)(IEccoScriptSystem* interp, int argc, const ScriptContent* argv[]);
+	typedef Result(*fnFunc)(IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv);
 	
 	/// <summary>
 	/// Create a command in the script engine
 	/// </summary>
 	/// <param name="name">command name</param>
 	/// <param name="callback">callback</param>
-	virtual void CreateCommand(const char* name, const char* symbol, fnFunc callback) = 0;
+	virtual void CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback) = 0;
 	/// <summary>
 	/// Eval a script content
 	/// </summary>
