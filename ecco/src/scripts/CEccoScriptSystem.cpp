@@ -98,8 +98,8 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 
 	Tcl_CreateCommand(s_pTclinterp, name, [](ClientData clientData, Tcl_Interp* interp, int argc, const char* argv[]) {
 		CScriptCmd* cmd = static_cast<CScriptCmd*>(clientData);
-		if (argc - 1 != (int)cmd->required_args.size()) {
-			Tcl_SetErrorCode(s_pTclinterp, "9001");
+		if (argc != (int)cmd->required_args.size()) {
+			Tcl_SetErrorCode(s_pTclinterp, "arguments count not match", nullptr);
 			Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
 			Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 			return TCL_ERROR;
@@ -108,7 +108,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 		for (int i = 1; i < argc; i++) {
 			const char* arg = argv[i];
 			if (arg == nullptr) {
-				Tcl_SetErrorCode(s_pTclinterp, "9002");
+				Tcl_SetErrorCode(s_pTclinterp, "Argument is NULL", nullptr);
 				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
 				Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 				return TCL_ERROR;
@@ -119,7 +119,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 				char* endptr = nullptr;
 				long val = strtol(arg, &endptr, 10);
 				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "9003");
+					Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
 					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
 					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 					return TCL_ERROR;
@@ -134,7 +134,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 				char* endptr = nullptr;
 				double val = strtod(arg, &endptr);
 				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "9003");
+					Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
 					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
 					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 					return TCL_ERROR;
@@ -149,7 +149,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 				char* endptr = nullptr;
 				float val = strtof(arg, &endptr);
 				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "9003");
+					Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
 					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
 					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
 					return TCL_ERROR;

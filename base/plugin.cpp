@@ -39,6 +39,10 @@ class CEccoPlugin : public IEccoPlugin {
 		g_pScriptSystem->CreateCommand("Player::GetCredits", "int ent_index", "Get player credits", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 			int index = argv[0]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if(!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			auto obj = interp->NewIntObject(player->GetCredits());
 			interp->SetObjectResult(obj);
 			return IEccoScriptSystem::Result::OK;
@@ -47,6 +51,10 @@ class CEccoPlugin : public IEccoPlugin {
 			int index = argv[0]->intValue;
 			int money = argv[1]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if (!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			player->AddCredits(money);
 			return IEccoScriptSystem::Result::OK;
 			});
@@ -54,12 +62,20 @@ class CEccoPlugin : public IEccoPlugin {
 			int index = argv[0]->intValue;
 			int money = argv[1]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if (!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			player->SetCredits(money);
 			return IEccoScriptSystem::Result::OK;
 		});
 		g_pScriptSystem->CreateCommand("Player::GetSteamId", "int ent_index", "Get player steamid", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 			int index = argv[0]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if (!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			auto obj = interp->NewStringObject(player->GetSteamId(), -1);
 			interp->SetObjectResult(obj);
 			return IEccoScriptSystem::Result::OK;
@@ -67,6 +83,10 @@ class CEccoPlugin : public IEccoPlugin {
 		g_pScriptSystem->CreateCommand("Player::GetLang", "int ent_index", "Get player's lang code", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 			int index = argv[0]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if (!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			auto obj = interp->NewStringObject(player->GetLang(), -1);
 			interp->SetObjectResult(obj);
 			return IEccoScriptSystem::Result::OK;
@@ -74,6 +94,10 @@ class CEccoPlugin : public IEccoPlugin {
 		g_pScriptSystem->CreateCommand("Player::GetName", "int ent_index", "Get player name", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 			int index = argv[0]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if (!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			auto obj = interp->NewStringObject(player->GetName(), -1);
 			interp->SetObjectResult(obj);
 			return IEccoScriptSystem::Result::OK;
@@ -81,6 +105,10 @@ class CEccoPlugin : public IEccoPlugin {
 		g_pScriptSystem->CreateCommand("Player::GetAdminLevel", "int ent_index", "Get player's admin level", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 			int index = argv[0]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if (!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			auto obj = interp->NewIntObject((int)player->GetAdminLevel());
 			interp->SetObjectResult(obj);
 			return IEccoScriptSystem::Result::OK;
@@ -89,6 +117,10 @@ class CEccoPlugin : public IEccoPlugin {
 			int index = argv[0]->intValue;
 			int admin = argv[1]->intValue;
 			auto player = g_pEccoFuncs->GetPlayerItem(index);
+			if (!player) {
+				interp->ThrowError("NULL player", "can not find player by ent index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			player->SetAdminLevel((ADMIN_LEVEL)admin);
 			return IEccoScriptSystem::Result::OK;
 			});
@@ -97,6 +129,10 @@ class CEccoPlugin : public IEccoPlugin {
 	g_pScriptSystem->CreateCommand("Menu::GetId", "int menu_index", "Get menu's Id", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 		int index = argv[0]->intValue;
 		auto menu = g_pEccoFuncs->GetExcutor(index);
+		if (!menu) {
+			interp->ThrowError("NULL menu", "can not find menu by menu index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		auto obj = interp->NewStringObject(menu->GetId(), -1);
 		interp->SetObjectResult(obj);
 		return IEccoScriptSystem::Result::OK;
@@ -104,6 +140,10 @@ class CEccoPlugin : public IEccoPlugin {
 	g_pScriptSystem->CreateCommand("Menu::GetIndex", "int menu_index", "Get menu's index", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 		int index = argv[0]->intValue;
 		auto menu = g_pEccoFuncs->GetExcutor(index);
+		if (!menu) {
+			interp->ThrowError("NULL menu", "can not find menu by menu index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		auto obj = interp->NewIntObject(menu->GetIndex());
 		interp->SetObjectResult(obj);
 		return IEccoScriptSystem::Result::OK;
@@ -113,6 +153,10 @@ class CEccoPlugin : public IEccoPlugin {
 		int plr = argv[1]->intValue;
 		auto pent = INDEXENT(plr);
 		auto menu = g_pEccoFuncs->GetExcutor(index);
+		if (!menu) {
+			interp->ThrowError("NULL menu", "can not find menu by menu index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		auto obj = interp->NewStringObject(menu->GetDisplayNameRaw(pent), -1);
 		interp->SetObjectResult(obj);
 		return IEccoScriptSystem::Result::OK;
@@ -124,8 +168,12 @@ class CEccoPlugin : public IEccoPlugin {
 			int index = argv[0]->intValue;
 			const char* name = argv[1]->strValue;
 			edict_t* pev = INDEXENT(index);
+			if (FNullEnt(pev)) {
+				interp->ThrowError("NULL ent", "can not find ent with gived index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			edict_t* pent = GiveNamedItem_Common(pev, name);
-			if (!pent) {
+			if (FNullEnt(pent)) {
 				interp->ThrowError("NULL give item", "NULL with give named item");
 				return IEccoScriptSystem::Result::Error;
 			}	
@@ -136,6 +184,10 @@ class CEccoPlugin : public IEccoPlugin {
 			int index = argv[0]->intValue;
 			const char* contetnt = argv[1]->strValue;
 			edict_t* pev = INDEXENT(index);
+			if (FNullEnt(pev)) {
+				interp->ThrowError("NULL ent", "can not find ent with gived index");
+				return IEccoScriptSystem::Result::Error;
+			}
 			g_pEccoFuncs->ClientPrintf(pev, 3, contetnt);
 			return IEccoScriptSystem::Result::OK;
 		});
@@ -153,6 +205,10 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		int value = argv[1]->intValue;
 		edict_t* pent = INDEXENT(index);
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "can not find ent with gived index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		pent->v.max_health = static_cast<float>(value);
 		return IEccoScriptSystem::Result::OK;
 		});
@@ -160,6 +216,10 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		int value = argv[1]->intValue;
 		edict_t* pent = INDEXENT(index);
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "can not find ent with gived index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		pent->v.armortype = static_cast<float>(value);
 		return IEccoScriptSystem::Result::OK;
 		});
@@ -167,6 +227,10 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		int value = argv[1]->intValue;
 		edict_t* pent = INDEXENT(index);
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "can not find ent with gived index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		pent->v.maxspeed = static_cast<float>(value);
 		return IEccoScriptSystem::Result::OK;
 		});
@@ -174,6 +238,10 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		float value = argv[1]->floatValue;
 		edict_t* pent = INDEXENT(index);
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "can not find ent with gived index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		pent->v.gravity = value;
 		return IEccoScriptSystem::Result::OK;
 	});
@@ -181,9 +249,15 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		int value = argv[1]->intValue;
 		edict_t* pent = INDEXENT(index);
-		CBaseEntity* pEntity = static_cast<CBasePlayer*>(pent->pvPrivateData);
-		if (!pEntity)
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "can not find ent with gived index");
 			return IEccoScriptSystem::Result::Error;
+		}
+		CBaseEntity* pEntity = static_cast<CBasePlayer*>(pent->pvPrivateData);
+		if (!pEntity) {
+			interp->ThrowError("NULL entity", "entity privateData is NULL with gived index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		pEntity->TakeHealth(static_cast<float>(value), DMG_MEDKITHEAL, 0);
 		return IEccoScriptSystem::Result::OK;
 		});
@@ -191,9 +265,15 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		int value = argv[1]->intValue;
 		edict_t* pent = INDEXENT(index);
-		CBaseEntity* pEntity = static_cast<CBasePlayer*>(pent->pvPrivateData);
-		if (!pEntity)
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "can not find ent with gived index");
 			return IEccoScriptSystem::Result::Error;
+		}
+		CBaseEntity* pEntity = static_cast<CBasePlayer*>(pent->pvPrivateData);
+		if (!pEntity) {
+			interp->ThrowError("NULL entity", "entity privateData is NULL with gived index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		pEntity->TakeArmor(static_cast<float>(value), DMG_MEDKITHEAL, 0);
 		return IEccoScriptSystem::Result::OK;
 		});
@@ -201,9 +281,15 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		int value = argv[1]->intValue;
 		edict_t* pent = INDEXENT(index);
-		CBaseEntity* pEntity = static_cast<CBasePlayer*>(pent->pvPrivateData);
-		if (!pEntity)
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "can not find ent with gived index");
 			return IEccoScriptSystem::Result::Error;
+		}
+		CBaseEntity* pEntity = static_cast<CBasePlayer*>(pent->pvPrivateData);
+		if (!pEntity) {
+			interp->ThrowError("NULL entity", "entity privateData is NULL with gived index");
+			return IEccoScriptSystem::Result::Error;
+		}
 		pEntity->TakeDamage(nullptr, nullptr, static_cast<float>(value), DMG_GENERIC);
 		return IEccoScriptSystem::Result::OK;
 		});
@@ -212,7 +298,7 @@ class CEccoPlugin : public IEccoPlugin {
 		int istr = MAKE_STRING(pszName);
 		edict_t* pent = CREATE_NAMED_ENTITY(istr);
 		if (FNullEnt(pent)) {
-			ALERT(at_console, "NULL Ent in CreateNamedEntity!\n");
+			interp->ThrowError("NULL ent", "NULL Ent in CreateNamedEntity!");
 			return IEccoScriptSystem::Result::Error;
 		}
 		auto obj = interp->NewIntObject(ENTINDEX(pent));
@@ -225,7 +311,7 @@ class CEccoPlugin : public IEccoPlugin {
 			return IEccoScriptSystem::Result::Error;
 		auto pent = INDEXENT(index);
 		if (FNullEnt(pent)) {
-			ALERT(at_console, "Try to Spawn a NULL ent!\n");
+			interp->ThrowError("NULL ent", "Try to Spawn a NULL ent!");
 			return IEccoScriptSystem::Result::Error;
 		}
 		MDLL_Spawn(pent);
@@ -237,7 +323,7 @@ class CEccoPlugin : public IEccoPlugin {
 			return IEccoScriptSystem::Result::Error;
 		auto pent = INDEXENT(index);
 		if (FNullEnt(pent)) {
-			ALERT(at_console, "Try to get origin a NULL entity!\n");
+			interp->ThrowError("NULL ent", "Try to get origin a NULL entity!");
 			return IEccoScriptSystem::Result::Error;
 		}
 		IEccoScriptSystem::Object* position[3] = {
