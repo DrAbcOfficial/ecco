@@ -115,6 +115,14 @@ static CEccoServerCommand list_plugins("listplugins", "list all plugins", [](CEc
     }
     return true;
 });
+static CEccoServerCommand dump_tcldocs("dump_tcldocs", "dump all tcl documents", [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {
+    extern std::vector<std::string> GetTCLCommandsDoc();
+	auto buffers = GetTCLCommandsDoc();
+    for (auto& str : buffers) {
+        LOG_CONSOLE(PLID, str.c_str());
+    }
+    return true;
+    });
 extern std::unordered_map<std::string, CEccoServerCommand*> s_mapRegistedServerCmdMap;
 static CEccoServerCommand help_s("help", "list all commands", [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {
     std::string buffer = std::format(HELP_FORMAT, "Command", "Description", "Usage");

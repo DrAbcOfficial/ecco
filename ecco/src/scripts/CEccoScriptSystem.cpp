@@ -1,6 +1,9 @@
+#include <format>
 #include <filesystem>
 #include <map>
 #include <string>
+#include <vector>
+#include <sstream>
 
 #include "tcl_dynamic.h"
 #undef DLLEXPORT
@@ -24,10 +27,22 @@ public:
 	const char* description;
 	std::vector<IEccoScriptSystem::ScriptArgType> required_args;
 	std::string args_str;
+	std::string symbol;
 	IEccoScriptSystem::fnFunc callback;
 };
 
-static std::map<const char*, CScriptCmd> s_mapCommands{};
+static std::map<const char*, CScriptCmd*> s_mapCommands{};
+
+std::vector<std::string> GetTCLCommandsDoc() {
+	std::vector<std::string> docs;
+	std::string buffer = std::format("|{:<24} | {:<36} | {:<48} ", "Command", "Args", "Description"); 
+	docs.push_back(buffer);
+	for (const auto& [name, cmd] : s_mapCommands) {
+		buffer = std::format("|{:<24} | {:<36} | {:<48}", name, cmd->symbol, cmd->description);
+		docs.push_back(buffer);
+	}
+	return docs;
+}
 
 CEccoScriptSystem::CEccoScriptSystem(){
 	if (s_pTclinterp)
@@ -59,6 +74,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 	cmd->interface = this;
 	cmd->name = name;
 	cmd->description = description;
+	cmd->symbol = symbol;
 	cmd->callback = callback;
 	std::vector<std::string> split{};
 	std::stringstream ss(symbol);
@@ -187,6 +203,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 		}
 		return (int)ret;
 	}, cmd, nullptr);
+	s_mapCommands.emplace(name, cmd);
 }
 CEccoScriptSystem::Result CEccoScriptSystem::Eval(const char* content){
 	auto result = Tcl_Eval(s_pTclinterp, content);
