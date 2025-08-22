@@ -34,7 +34,7 @@ IPlayerStorageItem* CEccoFuncs::GetPlayerItem(int index){
 	return GetPlayerStorageItem(INDEXENT(index));
 }
 
-IEccoBaseExcutor* CEccoFuncs::GetExcutor(int index){
+IEccoBaseExcutor* CEccoFuncs::GetMenuExcutor(int index){
 	extern std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
 	return g_aryEccoMenuExecutors[index];
 }

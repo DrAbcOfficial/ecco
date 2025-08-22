@@ -128,7 +128,7 @@ class CEccoPlugin : public IEccoPlugin {
 #pragma region Menu Item
 	g_pScriptSystem->CreateCommand("Menu::GetId", "int menu_index", "Get menu's Id", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 		int index = argv[0]->intValue;
-		auto menu = g_pEccoFuncs->GetExcutor(index);
+		auto menu = g_pEccoFuncs->GetMenuExcutor(index);
 		if (!menu) {
 			interp->ThrowError("NULL menu", "can not find menu by menu index");
 			return IEccoScriptSystem::Result::Error;
@@ -139,7 +139,7 @@ class CEccoPlugin : public IEccoPlugin {
 	});	
 	g_pScriptSystem->CreateCommand("Menu::GetIndex", "int menu_index", "Get menu's index", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 		int index = argv[0]->intValue;
-		auto menu = g_pEccoFuncs->GetExcutor(index);
+		auto menu = g_pEccoFuncs->GetMenuExcutor(index);
 		if (!menu) {
 			interp->ThrowError("NULL menu", "can not find menu by menu index");
 			return IEccoScriptSystem::Result::Error;
@@ -152,7 +152,7 @@ class CEccoPlugin : public IEccoPlugin {
 		int index = argv[0]->intValue;
 		int plr = argv[1]->intValue;
 		auto pent = INDEXENT(plr);
-		auto menu = g_pEccoFuncs->GetExcutor(index);
+		auto menu = g_pEccoFuncs->GetMenuExcutor(index);
 		if (!menu) {
 			interp->ThrowError("NULL menu", "can not find menu by menu index");
 			return IEccoScriptSystem::Result::Error;

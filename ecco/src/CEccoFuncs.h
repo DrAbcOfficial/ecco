@@ -9,7 +9,7 @@ public:
 	virtual void FakeClientCommand(edict_t* pent, const char* cmd);
 
 	virtual IPlayerStorageItem* GetPlayerItem(int index);
-	virtual IEccoBaseExcutor* GetExcutor(int index);
+	virtual IEccoBaseExcutor* GetMenuExcutor(int index);
 
 	virtual void ClientPrintf(edict_t* target, unsigned int hud, const char* text);
 	virtual void ClientPrintfAll(unsigned int hud, const char* text);
