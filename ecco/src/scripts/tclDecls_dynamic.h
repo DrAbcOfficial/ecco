@@ -40,393 +40,5246 @@
   * in the generic/tcl.decls script.
   */
 
-typedef void (*PFN_Tcl_Free)(void* ptr);
-extern PFN_Tcl_Free Tcl_Free;
-typedef void (*PFN_Tcl_DbCkfree)(void* ptr, const char* file, int line);
-extern PFN_Tcl_DbCkfree Tcl_DbCkfree;
-typedef void (*PFN_Tcl_DeleteFileHandler)(int fd);
-extern PFN_Tcl_DeleteFileHandler Tcl_DeleteFileHandler;
-typedef void (*PFN_Tcl_SetTimer)(const Tcl_Time* timePtr);
-extern PFN_Tcl_SetTimer Tcl_SetTimer;
-typedef void (*PFN_Tcl_Sleep)(int ms);
-extern PFN_Tcl_Sleep Tcl_Sleep;
-typedef int (*PFN_Tcl_WaitForEvent)(const Tcl_Time* timePtr);
-extern PFN_Tcl_WaitForEvent Tcl_WaitForEvent;
-typedef void (*PFN_Tcl_AppendStringsToObj)(Tcl_Obj* objPtr, ...);
-extern PFN_Tcl_AppendStringsToObj Tcl_AppendStringsToObj;
-typedef void (*PFN_TclFreeObj)(Tcl_Obj* objPtr);
-extern PFN_TclFreeObj TclFreeObj;
-typedef void (*PFN_Tcl_InvalidateStringRep)(Tcl_Obj* objPtr);
-extern PFN_Tcl_InvalidateStringRep Tcl_InvalidateStringRep;
-typedef void (*PFN_Tcl_SetDoubleObj)(Tcl_Obj* objPtr, double doubleValue);
-extern PFN_Tcl_SetDoubleObj Tcl_SetDoubleObj;
-typedef void (*PFN_Tcl_SetObjLength)(Tcl_Obj* objPtr, Tcl_Size length);
-extern PFN_Tcl_SetObjLength Tcl_SetObjLength;
-typedef void (*PFN_Tcl_AllowExceptions)(Tcl_Interp* interp);
-extern PFN_Tcl_AllowExceptions Tcl_AllowExceptions;
-typedef void (*PFN_Tcl_AppendResult)(Tcl_Interp* interp, ...);
-extern PFN_Tcl_AppendResult Tcl_AppendResult;
-typedef void (*PFN_Tcl_AsyncDelete)(Tcl_AsyncHandler async);
-extern PFN_Tcl_AsyncDelete Tcl_AsyncDelete;
-typedef int (*PFN_Tcl_AsyncInvoke)(Tcl_Interp* interp, int code);
-extern PFN_Tcl_AsyncInvoke Tcl_AsyncInvoke;
-typedef void (*PFN_Tcl_AsyncMark)(Tcl_AsyncHandler async);
-extern PFN_Tcl_AsyncMark Tcl_AsyncMark;
-typedef int (*PFN_Tcl_AsyncReady)(void);
-extern PFN_Tcl_AsyncReady Tcl_AsyncReady;
-typedef int (*PFN_Tcl_CommandComplete)(const char* cmd);
-extern PFN_Tcl_CommandComplete Tcl_CommandComplete;
-typedef void (*PFN_Tcl_DeleteHashEntry)(Tcl_HashEntry* entryPtr);
-extern PFN_Tcl_DeleteHashEntry Tcl_DeleteHashEntry;
-typedef void (*PFN_Tcl_DeleteHashTable)(Tcl_HashTable* tablePtr);
-extern PFN_Tcl_DeleteHashTable Tcl_DeleteHashTable;
-typedef void (*PFN_Tcl_DeleteInterp)(Tcl_Interp* interp);
-extern PFN_Tcl_DeleteInterp Tcl_DeleteInterp;
-typedef void (*PFN_Tcl_DetachPids)(Tcl_Size numPids, Tcl_Pid* pidPtr);
-extern PFN_Tcl_DetachPids Tcl_DetachPids;
-typedef void (*PFN_Tcl_DeleteTimerHandler)(Tcl_TimerToken token);
-extern PFN_Tcl_DeleteTimerHandler Tcl_DeleteTimerHandler;
-typedef void (*PFN_Tcl_DeleteTrace)(Tcl_Interp* interp, Tcl_Trace trace);
-extern PFN_Tcl_DeleteTrace Tcl_DeleteTrace;
-typedef int (*PFN_Tcl_DoOneEvent)(int flags);
-extern PFN_Tcl_DoOneEvent Tcl_DoOneEvent;
-typedef void (*PFN_Tcl_DoWhenIdle)(Tcl_IdleProc* proc, void* clientData);
-extern PFN_Tcl_DoWhenIdle Tcl_DoWhenIdle;
-typedef void (*PFN_Tcl_DStringEndSublist)(Tcl_DString* dsPtr);
-extern PFN_Tcl_DStringEndSublist Tcl_DStringEndSublist;
-typedef void (*PFN_Tcl_DStringFree)(Tcl_DString* dsPtr);
-extern PFN_Tcl_DStringFree Tcl_DStringFree;
-typedef void (*PFN_Tcl_DStringInit)(Tcl_DString* dsPtr);
-extern PFN_Tcl_DStringInit Tcl_DStringInit;
-typedef void (*PFN_Tcl_DStringStartSublist)(Tcl_DString* dsPtr);
-extern PFN_Tcl_DStringStartSublist Tcl_DStringStartSublist;
-typedef int (*PFN_Tcl_Eof)(Tcl_Channel chan);
-extern PFN_Tcl_Eof Tcl_Eof;
-typedef int (*PFN_Tcl_ExprString)(Tcl_Interp* interp, const char* expr);
-extern PFN_Tcl_ExprString Tcl_ExprString;
-typedef void (*PFN_Tcl_Finalize)(void);
-extern PFN_Tcl_Finalize Tcl_Finalize;
-typedef int (*PFN_Tcl_Flush)(Tcl_Channel chan);
-extern PFN_Tcl_Flush Tcl_Flush;
-typedef Tcl_Size(*PFN_Tcl_GetChannelBufferSize)(Tcl_Channel chan);
-extern PFN_Tcl_GetChannelBufferSize Tcl_GetChannelBufferSize;
-typedef int (*PFN_Tcl_GetChannelMode)(Tcl_Channel chan);
-extern PFN_Tcl_GetChannelMode Tcl_GetChannelMode;
-typedef int (*PFN_Tcl_GetErrno)(void);
-extern PFN_Tcl_GetErrno Tcl_GetErrno;
-typedef Tcl_PathType(*PFN_Tcl_GetPathType)(const char* path);
-extern PFN_Tcl_GetPathType Tcl_GetPathType;
-typedef Tcl_Size(*PFN_Tcl_Gets)(Tcl_Channel chan, Tcl_DString* dsPtr);
-extern PFN_Tcl_Gets Tcl_Gets;
-typedef Tcl_Size(*PFN_Tcl_GetsObj)(Tcl_Channel chan, Tcl_Obj* objPtr);
-extern PFN_Tcl_GetsObj Tcl_GetsObj;
-typedef int (*PFN_Tcl_GetServiceMode)(void);
-extern PFN_Tcl_GetServiceMode Tcl_GetServiceMode;
-typedef Tcl_Channel(*PFN_Tcl_GetStdChannel)(int type);
-extern PFN_Tcl_GetStdChannel Tcl_GetStdChannel;
-typedef int (*PFN_Tcl_Init)(Tcl_Interp* interp);
-extern PFN_Tcl_Init Tcl_Init;
-typedef int (*PFN_Tcl_InputBlocked)(Tcl_Channel chan);
-extern PFN_Tcl_InputBlocked Tcl_InputBlocked;
-typedef int (*PFN_Tcl_InputBuffered)(Tcl_Channel chan);
-extern PFN_Tcl_InputBuffered Tcl_InputBuffered;
-typedef int (*PFN_Tcl_InterpDeleted)(Tcl_Interp* interp);
-extern PFN_Tcl_InterpDeleted Tcl_InterpDeleted;
-typedef int (*PFN_Tcl_IsSafe)(Tcl_Interp* interp);
-extern PFN_Tcl_IsSafe Tcl_IsSafe;
-typedef Tcl_Channel(*PFN_Tcl_MakeFileChannel)(void* handle, int mode);
-extern PFN_Tcl_MakeFileChannel Tcl_MakeFileChannel;
-typedef Tcl_Channel(*PFN_Tcl_MakeTcpClientChannel)(void* tcpSocket);
-extern PFN_Tcl_MakeTcpClientChannel Tcl_MakeTcpClientChannel;
-typedef void (*PFN_Tcl_NotifyChannel)(Tcl_Channel channel, int mask);
-extern PFN_Tcl_NotifyChannel Tcl_NotifyChannel;
-typedef void (*PFN_Tcl_Preserve)(void* data);
-extern PFN_Tcl_Preserve Tcl_Preserve;
-typedef int (*PFN_Tcl_PutEnv)(const char* assignment);
-extern PFN_Tcl_PutEnv Tcl_PutEnv;
-typedef void (*PFN_Tcl_QueueEvent)(Tcl_Event* evPtr, int position);
-extern PFN_Tcl_QueueEvent Tcl_QueueEvent;
-typedef void (*PFN_Tcl_ReapDetachedProcs)(void);
-extern PFN_Tcl_ReapDetachedProcs Tcl_ReapDetachedProcs;
-typedef void (*PFN_Tcl_RegisterObjType)(const Tcl_ObjType* typePtr);
-extern PFN_Tcl_RegisterObjType Tcl_RegisterObjType;
-typedef void (*PFN_Tcl_Release)(void* clientData);
-extern PFN_Tcl_Release Tcl_Release;
-typedef void (*PFN_Tcl_ResetResult)(Tcl_Interp* interp);
-extern PFN_Tcl_ResetResult Tcl_ResetResult;
-typedef Tcl_Size(*PFN_Tcl_ScanElement)(const char* src, int* flagPtr);
-extern PFN_Tcl_ScanElement Tcl_ScanElement;
-typedef int (*PFN_Tcl_ServiceAll)(void);
-extern PFN_Tcl_ServiceAll Tcl_ServiceAll;
-typedef int (*PFN_Tcl_ServiceEvent)(int flags);
-extern PFN_Tcl_ServiceEvent Tcl_ServiceEvent;
-typedef void (*PFN_Tcl_SetErrno)(int err);
-extern PFN_Tcl_SetErrno Tcl_SetErrno;
-typedef void (*PFN_Tcl_SetErrorCode)(Tcl_Interp* interp, ...);
-extern PFN_Tcl_SetErrorCode Tcl_SetErrorCode;
-typedef void (*PFN_Tcl_SetMaxBlockTime)(const Tcl_Time* timePtr);
-extern PFN_Tcl_SetMaxBlockTime Tcl_SetMaxBlockTime;
-typedef int (*PFN_Tcl_SetServiceMode)(int mode);
-extern PFN_Tcl_SetServiceMode Tcl_SetServiceMode;
-typedef void (*PFN_Tcl_SetStdChannel)(Tcl_Channel channel, int type);
-extern PFN_Tcl_SetStdChannel Tcl_SetStdChannel;
-typedef void (*PFN_Tcl_SourceRCFile)(Tcl_Interp* interp);
-extern PFN_Tcl_SourceRCFile Tcl_SourceRCFile;
-typedef int (*PFN_Tcl_VarEval)(Tcl_Interp* interp, ...);
-extern PFN_Tcl_VarEval Tcl_VarEval;
-typedef int (*PFN_Tcl_DumpActiveMemory)(const char* fileName);
-extern PFN_Tcl_DumpActiveMemory Tcl_DumpActiveMemory;
-typedef void (*PFN_Tcl_ValidateAllMemory)(const char* file, int line);
-extern PFN_Tcl_ValidateAllMemory Tcl_ValidateAllMemory;
-typedef Tcl_Pid(*PFN_Tcl_WaitPid)(Tcl_Pid pid, int* statPtr, int options);
-extern PFN_Tcl_WaitPid Tcl_WaitPid;
-typedef void (*PFN_Tcl_InitMemory)(Tcl_Interp* interp);
-extern PFN_Tcl_InitMemory Tcl_InitMemory;
-typedef Tcl_Channel(*PFN_Tcl_GetStackedChannel)(Tcl_Channel chan);
-extern PFN_Tcl_GetStackedChannel Tcl_GetStackedChannel;
-typedef void (*PFN_Tcl_SetMainLoop)(Tcl_MainLoopProc* proc);
-extern PFN_Tcl_SetMainLoop Tcl_SetMainLoop;
-typedef Tcl_Encoding(*PFN_Tcl_CreateEncoding)(const Tcl_EncodingType* typePtr);
-extern PFN_Tcl_CreateEncoding Tcl_CreateEncoding;
-typedef void (*PFN_Tcl_FinalizeThread)(void);
-extern PFN_Tcl_FinalizeThread Tcl_FinalizeThread;
-typedef void (*PFN_Tcl_FinalizeNotifier)(void* clientData);
-extern PFN_Tcl_FinalizeNotifier Tcl_FinalizeNotifier;
-typedef void (*PFN_Tcl_FreeEncoding)(Tcl_Encoding encoding);
-extern PFN_Tcl_FreeEncoding Tcl_FreeEncoding;
-typedef Tcl_ThreadId(*PFN_Tcl_GetCurrentThread)(void);
-extern PFN_Tcl_GetCurrentThread Tcl_GetCurrentThread;
-typedef Tcl_Encoding(*PFN_Tcl_GetEncoding)(Tcl_Interp* interp, const char* name);
-extern PFN_Tcl_GetEncoding Tcl_GetEncoding;
-typedef void (*PFN_Tcl_GetEncodingNames)(Tcl_Interp* interp);
-extern PFN_Tcl_GetEncodingNames Tcl_GetEncodingNames;
-typedef void (*PFN_Tcl_MutexLock)(Tcl_Mutex* mutexPtr);
-extern PFN_Tcl_MutexLock Tcl_MutexLock;
-typedef void (*PFN_Tcl_MutexUnlock)(Tcl_Mutex* mutexPtr);
-extern PFN_Tcl_MutexUnlock Tcl_MutexUnlock;
-typedef void (*PFN_Tcl_ConditionNotify)(Tcl_Condition* condPtr);
-extern PFN_Tcl_ConditionNotify Tcl_ConditionNotify;
-typedef Tcl_Size(*PFN_TclNumUtfChars)(const char* src, Tcl_Size length);
-extern PFN_TclNumUtfChars TclNumUtfChars;
-typedef void (*PFN_Tcl_ThreadAlert)(Tcl_ThreadId threadId);
-extern PFN_Tcl_ThreadAlert Tcl_ThreadAlert;
-typedef int (*PFN_Tcl_UniCharAtIndex)(const char* src, Tcl_Size index);
-extern PFN_Tcl_UniCharAtIndex Tcl_UniCharAtIndex;
-typedef int (*PFN_Tcl_UniCharToLower)(int ch);
-extern PFN_Tcl_UniCharToLower Tcl_UniCharToLower;
-typedef int (*PFN_Tcl_UniCharToTitle)(int ch);
-extern PFN_Tcl_UniCharToTitle Tcl_UniCharToTitle;
-typedef int (*PFN_Tcl_UniCharToUpper)(int ch);
-extern PFN_Tcl_UniCharToUpper Tcl_UniCharToUpper;
-typedef Tcl_Size(*PFN_Tcl_UniCharToUtf)(int ch, char* buf);
-extern PFN_Tcl_UniCharToUtf Tcl_UniCharToUtf;
-typedef int (*PFN_TclUtfCharComplete)(const char* src, Tcl_Size length);
-extern PFN_TclUtfCharComplete TclUtfCharComplete;
-typedef Tcl_Size(*PFN_Tcl_UtfToLower)(char* src);
-extern PFN_Tcl_UtfToLower Tcl_UtfToLower;
-typedef Tcl_Size(*PFN_Tcl_UtfToTitle)(char* src);
-extern PFN_Tcl_UtfToTitle Tcl_UtfToTitle;
-typedef Tcl_Size(*PFN_Tcl_UtfToUpper)(char* src);
-extern PFN_Tcl_UtfToUpper Tcl_UtfToUpper;
-typedef Tcl_Size(*PFN_Tcl_WriteObj)(Tcl_Channel chan, Tcl_Obj* objPtr);
-extern PFN_Tcl_WriteObj Tcl_WriteObj;
-typedef void (*PFN_Tcl_AlertNotifier)(void* clientData);
-extern PFN_Tcl_AlertNotifier Tcl_AlertNotifier;
-typedef void (*PFN_Tcl_ServiceModeHook)(int mode);
-extern PFN_Tcl_ServiceModeHook Tcl_ServiceModeHook;
-typedef int (*PFN_Tcl_UniCharIsAlnum)(int ch);
-extern PFN_Tcl_UniCharIsAlnum Tcl_UniCharIsAlnum;
-typedef int (*PFN_Tcl_UniCharIsAlpha)(int ch);
-extern PFN_Tcl_UniCharIsAlpha Tcl_UniCharIsAlpha;
-typedef int (*PFN_Tcl_UniCharIsDigit)(int ch);
-extern PFN_Tcl_UniCharIsDigit Tcl_UniCharIsDigit;
-typedef int (*PFN_Tcl_UniCharIsLower)(int ch);
-extern PFN_Tcl_UniCharIsLower Tcl_UniCharIsLower;
-typedef int (*PFN_Tcl_UniCharIsSpace)(int ch);
-extern PFN_Tcl_UniCharIsSpace Tcl_UniCharIsSpace;
-typedef int (*PFN_Tcl_UniCharIsUpper)(int ch);
-extern PFN_Tcl_UniCharIsUpper Tcl_UniCharIsUpper;
-typedef int (*PFN_Tcl_UniCharIsWordChar)(int ch);
-extern PFN_Tcl_UniCharIsWordChar Tcl_UniCharIsWordChar;
-typedef Tcl_Size(*PFN_Tcl_Char16Len)(const unsigned short* uniStr);
-extern PFN_Tcl_Char16Len Tcl_Char16Len;
-typedef void (*PFN_Tcl_FreeParse)(Tcl_Parse* parsePtr);
-extern PFN_Tcl_FreeParse Tcl_FreeParse;
-typedef int (*PFN_Tcl_Chdir)(const char* dirName);
-extern PFN_Tcl_Chdir Tcl_Chdir;
-typedef int (*PFN_Tcl_Access)(const char* path, int mode);
-extern PFN_Tcl_Access Tcl_Access;
-typedef int (*PFN_Tcl_Stat)(const char* path, struct stat* bufPtr);
-extern PFN_Tcl_Stat Tcl_Stat;
-typedef int (*PFN_TclUtfNcmp)(const char* s1, const char* s2, size_t n);
-extern PFN_TclUtfNcmp TclUtfNcmp;
-typedef int (*PFN_Tcl_UniCharIsControl)(int ch);
-extern PFN_Tcl_UniCharIsControl Tcl_UniCharIsControl;
-typedef int (*PFN_Tcl_UniCharIsGraph)(int ch);
-extern PFN_Tcl_UniCharIsGraph Tcl_UniCharIsGraph;
-typedef int (*PFN_Tcl_UniCharIsPrint)(int ch);
-extern PFN_Tcl_UniCharIsPrint Tcl_UniCharIsPrint;
-typedef int (*PFN_Tcl_UniCharIsPunct)(int ch);
-extern PFN_Tcl_UniCharIsPunct Tcl_UniCharIsPunct;
-typedef Tcl_Size(*PFN_TclGetCharLength)(Tcl_Obj* objPtr);
-extern PFN_TclGetCharLength TclGetCharLength;
-typedef int (*PFN_TclGetUniChar)(Tcl_Obj* objPtr, Tcl_Size index);
-extern PFN_TclGetUniChar TclGetUniChar;
-typedef int (*PFN_Tcl_GetChannelNames)(Tcl_Interp* interp);
-extern PFN_Tcl_GetChannelNames Tcl_GetChannelNames;
-typedef void (*PFN_Tcl_ConditionFinalize)(Tcl_Condition* condPtr);
-extern PFN_Tcl_ConditionFinalize Tcl_ConditionFinalize;
-typedef void (*PFN_Tcl_MutexFinalize)(Tcl_Mutex* mutex);
-extern PFN_Tcl_MutexFinalize Tcl_MutexFinalize;
-typedef Tcl_Channel(*PFN_Tcl_GetTopChannel)(Tcl_Channel chan);
-extern PFN_Tcl_GetTopChannel Tcl_GetTopChannel;
-typedef int (*PFN_Tcl_ChannelBuffered)(Tcl_Channel chan);
-extern PFN_Tcl_ChannelBuffered Tcl_ChannelBuffered;
-typedef int (*PFN_Tcl_JoinThread)(Tcl_ThreadId threadId, int* result);
-extern PFN_Tcl_JoinThread Tcl_JoinThread;
-typedef int (*PFN_Tcl_IsChannelShared)(Tcl_Channel channel);
-extern PFN_Tcl_IsChannelShared Tcl_IsChannelShared;
-typedef void (*PFN_Tcl_CutChannel)(Tcl_Channel channel);
-extern PFN_Tcl_CutChannel Tcl_CutChannel;
-typedef void (*PFN_Tcl_SpliceChannel)(Tcl_Channel channel);
-extern PFN_Tcl_SpliceChannel Tcl_SpliceChannel;
-typedef void (*PFN_Tcl_ClearChannelHandlers)(Tcl_Channel channel);
-extern PFN_Tcl_ClearChannelHandlers Tcl_ClearChannelHandlers;
-typedef int (*PFN_Tcl_IsChannelExisting)(const char* channelName);
-extern PFN_Tcl_IsChannelExisting Tcl_IsChannelExisting;
-typedef void (*PFN_Tcl_InitObjHashTable)(Tcl_HashTable* tablePtr);
-extern PFN_Tcl_InitObjHashTable Tcl_InitObjHashTable;
-typedef Tcl_ThreadId(*PFN_Tcl_GetChannelThread)(Tcl_Channel channel);
-extern PFN_Tcl_GetChannelThread Tcl_GetChannelThread;
-typedef int (*PFN_Tcl_IsStandardChannel)(Tcl_Channel channel);
-extern PFN_Tcl_IsStandardChannel Tcl_IsStandardChannel;
-typedef int (*PFN_Tcl_FSCreateDirectory)(Tcl_Obj* pathPtr);
-extern PFN_Tcl_FSCreateDirectory Tcl_FSCreateDirectory;
-typedef int (*PFN_Tcl_FSDeleteFile)(Tcl_Obj* pathPtr);
-extern PFN_Tcl_FSDeleteFile Tcl_FSDeleteFile;
-typedef int (*PFN_Tcl_FSLstat)(Tcl_Obj* pathPtr, Tcl_StatBuf* buf);
-extern PFN_Tcl_FSLstat Tcl_FSLstat;
-typedef int (*PFN_Tcl_FSUtime)(Tcl_Obj* pathPtr, struct utimbuf* tval);
-extern PFN_Tcl_FSUtime Tcl_FSUtime;
-typedef int (*PFN_Tcl_FSStat)(Tcl_Obj* pathPtr, Tcl_StatBuf* buf);
-extern PFN_Tcl_FSStat Tcl_FSStat;
-typedef int (*PFN_Tcl_FSAccess)(Tcl_Obj* pathPtr, int mode);
-extern PFN_Tcl_FSAccess Tcl_FSAccess;
-typedef int (*PFN_Tcl_FSChdir)(Tcl_Obj* pathPtr);
-extern PFN_Tcl_FSChdir Tcl_FSChdir;
-typedef int (*PFN_Tcl_FSEvalFile)(Tcl_Interp* interp, Tcl_Obj* fileName);
-extern PFN_Tcl_FSEvalFile Tcl_FSEvalFile;
-typedef int (*PFN_Tcl_FSUnregister)(const Tcl_Filesystem* fsPtr);
-extern PFN_Tcl_FSUnregister Tcl_FSUnregister;
-typedef Tcl_PathType(*PFN_Tcl_FSGetPathType)(Tcl_Obj* pathPtr);
-extern PFN_Tcl_FSGetPathType Tcl_FSGetPathType;
-typedef int (*PFN_Tcl_OutputBuffered)(Tcl_Channel chan);
-extern PFN_Tcl_OutputBuffered Tcl_OutputBuffered;
-typedef void (*PFN_Tcl_FSMountsChanged)(const Tcl_Filesystem* fsPtr);
-extern PFN_Tcl_FSMountsChanged Tcl_FSMountsChanged;
-typedef void (*PFN_Tcl_GetTime)(Tcl_Time* timeBuf);
-extern PFN_Tcl_GetTime Tcl_GetTime;
-typedef void (*PFN_Tcl_DictObjDone)(Tcl_DictSearch* searchPtr);
-extern PFN_Tcl_DictObjDone Tcl_DictObjDone;
-typedef void (*PFN_Tcl_DeleteNamespace)(Tcl_Namespace* nsPtr);
-extern PFN_Tcl_DeleteNamespace Tcl_DeleteNamespace;
-typedef int (*PFN_Tcl_LimitReady)(Tcl_Interp* interp);
-extern PFN_Tcl_LimitReady Tcl_LimitReady;
-typedef int (*PFN_Tcl_LimitCheck)(Tcl_Interp* interp);
-extern PFN_Tcl_LimitCheck Tcl_LimitCheck;
-typedef int (*PFN_Tcl_LimitExceeded)(Tcl_Interp* interp);
-extern PFN_Tcl_LimitExceeded Tcl_LimitExceeded;
-typedef int (*PFN_Tcl_LimitTypeEnabled)(Tcl_Interp* interp, int type);
-extern PFN_Tcl_LimitTypeEnabled Tcl_LimitTypeEnabled;
-typedef int (*PFN_Tcl_LimitTypeExceeded)(Tcl_Interp* interp, int type);
-extern PFN_Tcl_LimitTypeExceeded Tcl_LimitTypeExceeded;
-typedef void (*PFN_Tcl_LimitTypeSet)(Tcl_Interp* interp, int type);
-extern PFN_Tcl_LimitTypeSet Tcl_LimitTypeSet;
-typedef void (*PFN_Tcl_LimitTypeReset)(Tcl_Interp* interp, int type);
-extern PFN_Tcl_LimitTypeReset Tcl_LimitTypeReset;
-typedef Tcl_Size(*PFN_Tcl_LimitGetCommands)(Tcl_Interp* interp);
-extern PFN_Tcl_LimitGetCommands Tcl_LimitGetCommands;
-typedef int (*PFN_Tcl_LimitGetGranularity)(Tcl_Interp* interp, int type);
-extern PFN_Tcl_LimitGetGranularity Tcl_LimitGetGranularity;
-typedef Tcl_InterpState(*PFN_Tcl_SaveInterpState)(Tcl_Interp* interp, int status);
-extern PFN_Tcl_SaveInterpState Tcl_SaveInterpState;
-typedef void (*PFN_Tcl_DiscardInterpState)(Tcl_InterpState state);
-extern PFN_Tcl_DiscardInterpState Tcl_DiscardInterpState;
-typedef int (*PFN_Tcl_IsEnsemble)(Tcl_Command token);
-extern PFN_Tcl_IsEnsemble Tcl_IsEnsemble;
-typedef void (*PFN_Tcl_SetBignumObj)(Tcl_Obj* obj, void* value);
-extern PFN_Tcl_SetBignumObj Tcl_SetBignumObj;
-typedef void (*PFN_Tcl_SetChannelError)(Tcl_Channel chan, Tcl_Obj* msg);
-extern PFN_Tcl_SetChannelError Tcl_SetChannelError;
-typedef void (*PFN_Tcl_GetChannelError)(Tcl_Channel chan, Tcl_Obj** msg);
-extern PFN_Tcl_GetChannelError Tcl_GetChannelError;
-typedef int (*PFN_Tcl_SetEncodingSearchPath)(Tcl_Obj* searchPath);
-extern PFN_Tcl_SetEncodingSearchPath Tcl_SetEncodingSearchPath;
-typedef int (*PFN_Tcl_Canceled)(Tcl_Interp* interp, int flags);
-extern PFN_Tcl_Canceled Tcl_Canceled;
-typedef unsigned (*PFN_Tcl_GetFSDeviceFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetFSDeviceFromStat Tcl_GetFSDeviceFromStat;
-typedef unsigned (*PFN_Tcl_GetFSInodeFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetFSInodeFromStat Tcl_GetFSInodeFromStat;
-typedef unsigned (*PFN_Tcl_GetModeFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetModeFromStat Tcl_GetModeFromStat;
-typedef int (*PFN_Tcl_GetLinkCountFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetLinkCountFromStat Tcl_GetLinkCountFromStat;
-typedef int (*PFN_Tcl_GetUserIdFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetUserIdFromStat Tcl_GetUserIdFromStat;
-typedef int (*PFN_Tcl_GetGroupIdFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetGroupIdFromStat Tcl_GetGroupIdFromStat;
-typedef int (*PFN_Tcl_GetDeviceTypeFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetDeviceTypeFromStat Tcl_GetDeviceTypeFromStat;
-typedef unsigned (*PFN_Tcl_GetBlockSizeFromStat)(const Tcl_StatBuf* statPtr);
-extern PFN_Tcl_GetBlockSizeFromStat Tcl_GetBlockSizeFromStat;
-typedef int (*PFN_Tcl_GetErrorLine)(Tcl_Interp* interp);
-extern PFN_Tcl_GetErrorLine Tcl_GetErrorLine;
-typedef void (*PFN_Tcl_SetErrorLine)(Tcl_Interp* interp, int lineNum);
-extern PFN_Tcl_SetErrorLine Tcl_SetErrorLine;
-typedef int (*PFN_Tcl_InterpActive)(Tcl_Interp* interp);
-extern PFN_Tcl_InterpActive Tcl_InterpActive;
-typedef void (*PFN_Tcl_BackgroundException)(Tcl_Interp* interp, int code);
-extern PFN_Tcl_BackgroundException Tcl_BackgroundException;
-typedef int (*PFN_Tcl_ZlibStreamEof)(Tcl_ZlibStream zshandle);
-extern PFN_Tcl_ZlibStreamEof Tcl_ZlibStreamEof;
-typedef int (*PFN_Tcl_ZlibStreamChecksum)(Tcl_ZlibStream zshandle);
-extern PFN_Tcl_ZlibStreamChecksum Tcl_ZlibStreamChecksum;
-typedef int (*PFN_Tcl_ZlibStreamClose)(Tcl_ZlibStream zshandle);
-extern PFN_Tcl_ZlibStreamClose Tcl_ZlibStreamClose;
-typedef int (*PFN_Tcl_ZlibStreamReset)(Tcl_ZlibStream zshandle);
-extern PFN_Tcl_ZlibStreamReset Tcl_ZlibStreamReset;
-typedef void (*PFN_Tcl_FreeInternalRep)(Tcl_Obj* objPtr);
-extern PFN_Tcl_FreeInternalRep Tcl_FreeInternalRep;
-typedef int (*PFN_Tcl_HasStringRep)(Tcl_Obj* objPtr);
-extern PFN_Tcl_HasStringRep Tcl_HasStringRep;
-typedef void (*PFN_Tcl_IncrRefCount)(Tcl_Obj* objPtr);
-extern PFN_Tcl_IncrRefCount Tcl_IncrRefCount;
-typedef void (*PFN_Tcl_DecrRefCount)(Tcl_Obj* objPtr);
-extern PFN_Tcl_DecrRefCount Tcl_DecrRefCount;
-typedef int (*PFN_Tcl_IsShared)(Tcl_Obj* objPtr);
-extern PFN_Tcl_IsShared Tcl_IsShared;
-typedef Tcl_Size(*PFN_Tcl_UtfToUniChar)(const char* src, int* chPtr);
-extern PFN_Tcl_UtfToUniChar Tcl_UtfToUniChar;
-typedef int (*PFN_Tcl_UtfCharComplete)(const char* src, Tcl_Size length);
-extern PFN_Tcl_UtfCharComplete Tcl_UtfCharComplete;
-typedef Tcl_Size(*PFN_Tcl_UniCharLen)(const int* uniStr);
-extern PFN_Tcl_UniCharLen Tcl_UniCharLen;
-typedef Tcl_Size(*PFN_Tcl_NumUtfChars)(const char* src, Tcl_Size length);
-extern PFN_Tcl_NumUtfChars Tcl_NumUtfChars;
-typedef Tcl_Size(*PFN_Tcl_GetCharLength)(Tcl_Obj* objPtr);
-extern PFN_Tcl_GetCharLength Tcl_GetCharLength;
-typedef int (*PFN_Tcl_GetUniChar)(Tcl_Obj* objPtr, Tcl_Size index);
-extern PFN_Tcl_GetUniChar Tcl_GetUniChar;
-typedef Tcl_Size(*PFN_Tcl_GetEncodingNulLength)(Tcl_Encoding encoding);
-extern PFN_Tcl_GetEncodingNulLength Tcl_GetEncodingNulLength;
-typedef int (*PFN_Tcl_UtfNcmp)(const char* s1, const char* s2, size_t n);
-extern PFN_Tcl_UtfNcmp Tcl_UtfNcmp;
-typedef int (*PFN_Tcl_IsEmpty)(Tcl_Obj* obj);
-extern PFN_Tcl_IsEmpty Tcl_IsEmpty;
-typedef void (*PFN_TclUnusedStubEntry)(void);
-extern PFN_TclUnusedStubEntry TclUnusedStubEntry;
+  /* !BEGIN!: Do not edit below this line. */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+	/*
+	 * Exported function declarations:
+	 */
+	 // Slot 0
+	typedef int (*PFN_Tcl_PkgProvideEx)(Tcl_Interp* interp,
+		const char* name, const char* version,
+		const void* clientData);
+
+	// Slot 1
+	typedef const char* (*PFN_Tcl_PkgRequireEx)(Tcl_Interp* interp,
+		const char* name, const char* version,
+		int exact, void* clientDataPtr);
+
+	// Slot 2
+	typedef void (*PFN_Tcl_Panic)(const char* format, ...) TCL_FORMAT_PRINTF(1, 2);
+
+	// Slot 3
+	typedef void* (*PFN_Tcl_Alloc)(size_t size);
+
+	// Slot 4
+	typedef void (*PFN_Tcl_Free)(void* ptr);
+
+	// Slot 5
+	typedef void* (*PFN_Tcl_Realloc)(void* ptr, size_t size);
+
+	// Slot 6
+	typedef void* (*PFN_Tcl_DbCkalloc)(size_t size, const char* file,
+		int line);
+
+	// Slot 7
+	typedef void (*PFN_Tcl_DbCkfree)(void* ptr, const char* file, int line);
+
+	// Slot 8
+	typedef void* (*PFN_Tcl_DbCkrealloc)(void* ptr, size_t size,
+		const char* file, int line);
+
+	// Slot 9
+	typedef void (*PFN_Tcl_CreateFileHandler)(int fd, int mask,
+		Tcl_FileProc* proc, void* clientData);
+
+	// Slot 10
+	typedef void (*PFN_Tcl_DeleteFileHandler)(int fd);
+
+	// Slot 11
+	typedef void (*PFN_Tcl_SetTimer)(const Tcl_Time* timePtr);
+
+	// Slot 12
+	typedef void (*PFN_Tcl_Sleep)(int ms);
+
+	// Slot 13
+	typedef int (*PFN_Tcl_WaitForEvent)(const Tcl_Time* timePtr);
+
+	// Slot 14
+	typedef int (*PFN_Tcl_AppendAllObjTypes)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr);
+
+	// Slot 15
+	typedef void (*PFN_Tcl_AppendStringsToObj)(Tcl_Obj* objPtr, ...);
+
+	// Slot 16
+	typedef void (*PFN_Tcl_AppendToObj)(Tcl_Obj* objPtr, const char* bytes,
+		Tcl_Size length);
+
+	// Slot 17
+	typedef Tcl_Obj* (*PFN_Tcl_ConcatObj)(Tcl_Size objc, Tcl_Obj* const objv[]);
+
+	// Slot 18
+	typedef int (*PFN_Tcl_ConvertToType)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, const Tcl_ObjType* typePtr);
+
+	// Slot 19
+	typedef void (*PFN_Tcl_DbDecrRefCount)(Tcl_Obj* objPtr, const char* file,
+		int line);
+
+	// Slot 20
+	typedef void (*PFN_Tcl_DbIncrRefCount)(Tcl_Obj* objPtr, const char* file,
+		int line);
+
+	// Slot 21
+	typedef int (*PFN_Tcl_DbIsShared)(Tcl_Obj* objPtr, const char* file,
+		int line);
+
+	// Slot 22 is reserved
+
+	// Slot 23
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewByteArrayObj)(const unsigned char* bytes,
+		Tcl_Size numBytes, const char* file,
+		int line);
+
+	// Slot 24
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewDoubleObj)(double doubleValue,
+		const char* file, int line);
+
+	// Slot 25
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewListObj)(Tcl_Size objc, Tcl_Obj* const* objv,
+		const char* file, int line);
+
+	// Slot 26 is reserved
+
+	// Slot 27
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewObj)(const char* file, int line);
+
+	// Slot 28
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewStringObj)(const char* bytes,
+		Tcl_Size length, const char* file, int line);
+
+	// Slot 29
+	typedef Tcl_Obj* (*PFN_Tcl_DuplicateObj)(Tcl_Obj* objPtr);
+
+	// Slot 30
+	typedef void (*PFN_TclFreeObj)(Tcl_Obj* objPtr);
+
+	// Slot 31 is reserved
+	// Slot 32 is reserved
+	// Slot 33 is reserved
+
+	// Slot 34
+	typedef int (*PFN_Tcl_GetDouble)(Tcl_Interp* interp, const char* src,
+		double* doublePtr);
+
+	// Slot 35
+	typedef int (*PFN_Tcl_GetDoubleFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, double* doublePtr);
+
+	// Slot 36 is reserved
+
+	// Slot 37
+	typedef int (*PFN_Tcl_GetInt)(Tcl_Interp* interp, const char* src,
+		int* intPtr);
+
+	// Slot 38
+	typedef int (*PFN_Tcl_GetIntFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, int* intPtr);
+
+	// Slot 39
+	typedef int (*PFN_Tcl_GetLongFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, long* longPtr);
+
+	// Slot 40
+	typedef const Tcl_ObjType* (*PFN_Tcl_GetObjType)(const char* typeName);
+
+	// Slot 41
+	typedef char* (*PFN_TclGetStringFromObj)(Tcl_Obj* objPtr, void* lengthPtr);
+
+	// Slot 42
+	typedef void (*PFN_Tcl_InvalidateStringRep)(Tcl_Obj* objPtr);
+
+	// Slot 43
+	typedef int (*PFN_Tcl_ListObjAppendList)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, Tcl_Obj* elemListPtr);
+
+	// Slot 44
+	typedef int (*PFN_Tcl_ListObjAppendElement)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, Tcl_Obj* objPtr);
+
+	// Slot 45
+	typedef int (*PFN_TclListObjGetElements)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, void* objcPtr,
+		Tcl_Obj*** objvPtr);
+
+	// Slot 46
+	typedef int (*PFN_Tcl_ListObjIndex)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, Tcl_Size index,
+		Tcl_Obj** objPtrPtr);
+
+	// Slot 47
+	typedef int (*PFN_TclListObjLength)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, void* lengthPtr);
+
+	// Slot 48
+	typedef int (*PFN_Tcl_ListObjReplace)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, Tcl_Size first,
+		Tcl_Size count, Tcl_Size objc,
+		Tcl_Obj* const objv[]);
+
+	// Slot 49 is reserved
+
+	// Slot 50
+	typedef Tcl_Obj* (*PFN_Tcl_NewByteArrayObj)(const unsigned char* bytes,
+		Tcl_Size numBytes);
+
+	// Slot 51
+	typedef Tcl_Obj* (*PFN_Tcl_NewDoubleObj)(double doubleValue);
+
+	// Slot 52 is reserved
+
+	// Slot 53
+	typedef Tcl_Obj* (*PFN_Tcl_NewListObj)(Tcl_Size objc, Tcl_Obj* const objv[]);
+
+	// Slot 54 is reserved
+
+	// Slot 55
+	typedef Tcl_Obj* (*PFN_Tcl_NewObj)(void);
+
+	// Slot 56
+	typedef Tcl_Obj* (*PFN_Tcl_NewStringObj)(const char* bytes, Tcl_Size length);
+
+	// Slot 57 is reserved
+
+	// Slot 58
+	typedef unsigned char* (*PFN_Tcl_SetByteArrayLength)(Tcl_Obj* objPtr,
+		Tcl_Size numBytes);
+
+	// Slot 59
+	typedef void (*PFN_Tcl_SetByteArrayObj)(Tcl_Obj* objPtr,
+		const unsigned char* bytes,
+		Tcl_Size numBytes);
+
+	// Slot 60
+	typedef void (*PFN_Tcl_SetDoubleObj)(Tcl_Obj* objPtr, double doubleValue);
+
+	// Slot 61 is reserved
+
+	// Slot 62
+	typedef void (*PFN_Tcl_SetListObj)(Tcl_Obj* objPtr, Tcl_Size objc,
+		Tcl_Obj* const objv[]);
+
+	// Slot 63 is reserved
+
+	// Slot 64
+	typedef void (*PFN_Tcl_SetObjLength)(Tcl_Obj* objPtr, Tcl_Size length);
+
+	// Slot 65
+	typedef void (*PFN_Tcl_SetStringObj)(Tcl_Obj* objPtr, const char* bytes,
+		Tcl_Size length);
+
+	// Slot 66 is reserved
+	// Slot 67 is reserved
+
+	// Slot 68
+	typedef void (*PFN_Tcl_AllowExceptions)(Tcl_Interp* interp);
+
+	// Slot 69
+	typedef void (*PFN_Tcl_AppendElement)(Tcl_Interp* interp,
+		const char* element);
+
+	// Slot 70
+	typedef void (*PFN_Tcl_AppendResult)(Tcl_Interp* interp, ...);
+
+	// Slot 71
+	typedef Tcl_AsyncHandler(*PFN_Tcl_AsyncCreate)(Tcl_AsyncProc* proc,
+		void* clientData);
+
+	// Slot 72
+	typedef void (*PFN_Tcl_AsyncDelete)(Tcl_AsyncHandler async);
+
+	// Slot 73
+	typedef int (*PFN_Tcl_AsyncInvoke)(Tcl_Interp* interp, int code);
+
+	// Slot 74
+	typedef void (*PFN_Tcl_AsyncMark)(Tcl_AsyncHandler async);
+
+	// Slot 75
+	typedef int (*PFN_Tcl_AsyncReady)(void);
+
+	// Slot 76 is reserved
+	// Slot 77 is reserved
+
+	// Slot 78
+	typedef int (*PFN_Tcl_BadChannelOption)(Tcl_Interp* interp,
+		const char* optionName,
+		const char* optionList);
+
+	// Slot 79
+	typedef void (*PFN_Tcl_CallWhenDeleted)(Tcl_Interp* interp,
+		Tcl_InterpDeleteProc* proc, void* clientData);
+
+	// Slot 80
+	typedef void (*PFN_Tcl_CancelIdleCall)(Tcl_IdleProc* idleProc,
+		void* clientData);
+
+	// Slot 81 is reserved
+
+	// Slot 82
+	typedef int (*PFN_Tcl_CommandComplete)(const char* cmd);
+
+	// Slot 83
+	typedef char* (*PFN_Tcl_Concat)(Tcl_Size argc, const char* const* argv);
+
+	// Slot 84
+	typedef Tcl_Size(*PFN_Tcl_ConvertElement)(const char* src, char* dst,
+		int flags);
+
+	// Slot 85
+	typedef Tcl_Size(*PFN_Tcl_ConvertCountedElement)(const char* src,
+		Tcl_Size length, char* dst, int flags);
+
+	// Slot 86
+	typedef int (*PFN_Tcl_CreateAlias)(Tcl_Interp* childInterp,
+		const char* childCmd, Tcl_Interp* target,
+		const char* targetCmd, Tcl_Size argc,
+		const char* const* argv);
+
+	// Slot 87
+	typedef int (*PFN_Tcl_CreateAliasObj)(Tcl_Interp* childInterp,
+		const char* childCmd, Tcl_Interp* target,
+		const char* targetCmd, Tcl_Size objc,
+		Tcl_Obj* const objv[]);
+
+	// Slot 88
+	typedef Tcl_Channel(*PFN_Tcl_CreateChannel)(const Tcl_ChannelType* typePtr,
+		const char* chanName, void* instanceData,
+		int mask);
+
+	// Slot 89
+	typedef void (*PFN_Tcl_CreateChannelHandler)(Tcl_Channel chan, int mask,
+		Tcl_ChannelProc* proc, void* clientData);
+
+	// Slot 90
+	typedef void (*PFN_Tcl_CreateCloseHandler)(Tcl_Channel chan,
+		Tcl_CloseProc* proc, void* clientData);
+
+	// Slot 91
+	typedef Tcl_Command(*PFN_Tcl_CreateCommand)(Tcl_Interp* interp,
+		const char* cmdName, Tcl_CmdProc* proc,
+		void* clientData,
+		Tcl_CmdDeleteProc* deleteProc);
+
+	// Slot 92
+	typedef void (*PFN_Tcl_CreateEventSource)(Tcl_EventSetupProc* setupProc,
+		Tcl_EventCheckProc* checkProc,
+		void* clientData);
+
+	// Slot 93
+	typedef void (*PFN_Tcl_CreateExitHandler)(Tcl_ExitProc* proc,
+		void* clientData);
+
+	// Slot 94
+	typedef Tcl_Interp* (*PFN_Tcl_CreateInterp)(void);
+
+	// Slot 95 is reserved
+
+	// Slot 96
+	typedef Tcl_Command(*PFN_Tcl_CreateObjCommand)(Tcl_Interp* interp,
+		const char* cmdName, Tcl_ObjCmdProc* proc,
+		void* clientData,
+		Tcl_CmdDeleteProc* deleteProc);
+
+	// Slot 97
+	typedef Tcl_Interp* (*PFN_Tcl_CreateChild)(Tcl_Interp* interp, const char* name,
+		int isSafe);
+
+	// Slot 98
+	typedef Tcl_TimerToken(*PFN_Tcl_CreateTimerHandler)(int milliseconds,
+		Tcl_TimerProc* proc, void* clientData);
+
+	// Slot 99
+	typedef Tcl_Trace(*PFN_Tcl_CreateTrace)(Tcl_Interp* interp, Tcl_Size level,
+		Tcl_CmdTraceProc* proc, void* clientData);
+
+	// Slot 100
+	typedef void (*PFN_Tcl_DeleteAssocData)(Tcl_Interp* interp,
+		const char* name);
+
+	// Slot 101
+	typedef void (*PFN_Tcl_DeleteChannelHandler)(Tcl_Channel chan,
+		Tcl_ChannelProc* proc, void* clientData);
+
+	// Slot 102
+	typedef void (*PFN_Tcl_DeleteCloseHandler)(Tcl_Channel chan,
+		Tcl_CloseProc* proc, void* clientData);
+
+	// Slot 103
+	typedef int (*PFN_Tcl_DeleteCommand)(Tcl_Interp* interp,
+		const char* cmdName);
+
+	// Slot 104
+	typedef int (*PFN_Tcl_DeleteCommandFromToken)(Tcl_Interp* interp,
+		Tcl_Command command);
+
+	// Slot 105
+	typedef void (*PFN_Tcl_DeleteEvents)(Tcl_EventDeleteProc* proc,
+		void* clientData);
+
+	// Slot 106
+	typedef void (*PFN_Tcl_DeleteEventSource)(Tcl_EventSetupProc* setupProc,
+		Tcl_EventCheckProc* checkProc,
+		void* clientData);
+
+	// Slot 107
+	typedef void (*PFN_Tcl_DeleteExitHandler)(Tcl_ExitProc* proc,
+		void* clientData);
+
+	// Slot 108
+	typedef void (*PFN_Tcl_DeleteHashEntry)(Tcl_HashEntry* entryPtr);
+
+	// Slot 109
+	typedef void (*PFN_Tcl_DeleteHashTable)(Tcl_HashTable* tablePtr);
+
+	// Slot 110
+	typedef void (*PFN_Tcl_DeleteInterp)(Tcl_Interp* interp);
+
+	// Slot 111
+	typedef void (*PFN_Tcl_DetachPids)(Tcl_Size numPids, Tcl_Pid* pidPtr);
+
+	// Slot 112
+	typedef void (*PFN_Tcl_DeleteTimerHandler)(Tcl_TimerToken token);
+
+	// Slot 113
+	typedef void (*PFN_Tcl_DeleteTrace)(Tcl_Interp* interp, Tcl_Trace trace);
+
+	// Slot 114
+	typedef void (*PFN_Tcl_DontCallWhenDeleted)(Tcl_Interp* interp,
+		Tcl_InterpDeleteProc* proc, void* clientData);
+
+	// Slot 115
+	typedef int (*PFN_Tcl_DoOneEvent)(int flags);
+
+	// Slot 116
+	typedef void (*PFN_Tcl_DoWhenIdle)(Tcl_IdleProc* proc, void* clientData);
+
+	// Slot 117
+	typedef char* (*PFN_Tcl_DStringAppend)(Tcl_DString* dsPtr,
+		const char* bytes, Tcl_Size length);
+
+	// Slot 118
+	typedef char* (*PFN_Tcl_DStringAppendElement)(Tcl_DString* dsPtr,
+		const char* element);
+
+	// Slot 119
+	typedef void (*PFN_Tcl_DStringEndSublist)(Tcl_DString* dsPtr);
+
+	// Slot 120
+	typedef void (*PFN_Tcl_DStringFree)(Tcl_DString* dsPtr);
+
+	// Slot 121
+	typedef void (*PFN_Tcl_DStringGetResult)(Tcl_Interp* interp,
+		Tcl_DString* dsPtr);
+
+	// Slot 122
+	typedef void (*PFN_Tcl_DStringInit)(Tcl_DString* dsPtr);
+
+	// Slot 123
+	typedef void (*PFN_Tcl_DStringResult)(Tcl_Interp* interp,
+		Tcl_DString* dsPtr);
+
+	// Slot 124
+	typedef void (*PFN_Tcl_DStringSetLength)(Tcl_DString* dsPtr,
+		Tcl_Size length);
+
+	// Slot 125
+	typedef void (*PFN_Tcl_DStringStartSublist)(Tcl_DString* dsPtr);
+
+	// Slot 126
+	typedef int (*PFN_Tcl_Eof)(Tcl_Channel chan);
+
+	// Slot 127
+	typedef const char* (*PFN_Tcl_ErrnoId)(void);
+
+	// Slot 128
+	typedef const char* (*PFN_Tcl_ErrnoMsg)(int err);
+
+	// Slot 129 is reserved
+
+	// Slot 130
+	typedef int (*PFN_Tcl_EvalFile)(Tcl_Interp* interp,
+		const char* fileName);
+
+	// Slot 131 is reserved
+
+	// Slot 132
+	typedef void (*PFN_Tcl_EventuallyFree)(void* clientData,
+		Tcl_FreeProc* freeProc);
+
+	// Slot 133
+	typedef void (*PFN_Tcl_Exit)(int status);
+
+	// Slot 134
+	typedef int (*PFN_Tcl_ExposeCommand)(Tcl_Interp* interp,
+		const char* hiddenCmdToken,
+		const char* cmdName);
+
+	// Slot 135
+	typedef int (*PFN_Tcl_ExprBoolean)(Tcl_Interp* interp, const char* expr,
+		int* ptr);
+
+	// Slot 136
+	typedef int (*PFN_Tcl_ExprBooleanObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, int* ptr);
+
+	// Slot 137
+	typedef int (*PFN_Tcl_ExprDouble)(Tcl_Interp* interp, const char* expr,
+		double* ptr);
+
+	// Slot 138
+	typedef int (*PFN_Tcl_ExprDoubleObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, double* ptr);
+
+	// Slot 139
+	typedef int (*PFN_Tcl_ExprLong)(Tcl_Interp* interp, const char* expr,
+		long* ptr);
+
+	// Slot 140
+	typedef int (*PFN_Tcl_ExprLongObj)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		long* ptr);
+
+	// Slot 141
+	typedef int (*PFN_Tcl_ExprObj)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		Tcl_Obj** resultPtrPtr);
+
+	// Slot 142
+	typedef int (*PFN_Tcl_ExprString)(Tcl_Interp* interp, const char* expr);
+
+	// Slot 143
+	typedef void (*PFN_Tcl_Finalize)(void);
+
+	// Slot 144 is reserved
+
+	// Slot 145
+	typedef Tcl_HashEntry* (*PFN_Tcl_FirstHashEntry)(Tcl_HashTable* tablePtr,
+		Tcl_HashSearch* searchPtr);
+
+	// Slot 146
+	typedef int (*PFN_Tcl_Flush)(Tcl_Channel chan);
+
+	// Slot 147 is reserved
+	// Slot 148 is reserved
+
+	// Slot 149
+	typedef int (*PFN_TclGetAliasObj)(Tcl_Interp* interp,
+		const char* childCmd,
+		Tcl_Interp** targetInterpPtr,
+		const char** targetCmdPtr, int* objcPtr,
+		Tcl_Obj*** objvPtr);
+
+	// Slot 150
+	typedef void* (*PFN_Tcl_GetAssocData)(Tcl_Interp* interp,
+		const char* name,
+		Tcl_InterpDeleteProc** procPtr);
+
+	// Slot 151
+	typedef Tcl_Channel(*PFN_Tcl_GetChannel)(Tcl_Interp* interp,
+		const char* chanName, int* modePtr);
+
+	// Slot 152
+	typedef Tcl_Size(*PFN_Tcl_GetChannelBufferSize)(Tcl_Channel chan);
+
+	// Slot 153
+	typedef int (*PFN_Tcl_GetChannelHandle)(Tcl_Channel chan, int direction,
+		void** handlePtr);
+
+	// Slot 154
+	typedef void* (*PFN_Tcl_GetChannelInstanceData)(Tcl_Channel chan);
+
+	// Slot 155
+	typedef int (*PFN_Tcl_GetChannelMode)(Tcl_Channel chan);
+
+	// Slot 156
+	typedef const char* (*PFN_Tcl_GetChannelName)(Tcl_Channel chan);
+
+	// Slot 157
+	typedef int (*PFN_Tcl_GetChannelOption)(Tcl_Interp* interp,
+		Tcl_Channel chan, const char* optionName,
+		Tcl_DString* dsPtr);
+
+	// Slot 158
+	typedef const Tcl_ChannelType* (*PFN_Tcl_GetChannelType)(Tcl_Channel chan);
+
+	// Slot 159
+	typedef int (*PFN_Tcl_GetCommandInfo)(Tcl_Interp* interp,
+		const char* cmdName, Tcl_CmdInfo* infoPtr);
+
+	// Slot 160
+	typedef const char* (*PFN_Tcl_GetCommandName)(Tcl_Interp* interp,
+		Tcl_Command command);
+
+	// Slot 161
+	typedef int (*PFN_Tcl_GetErrno)(void);
+
+	// Slot 162
+	typedef const char* (*PFN_Tcl_GetHostName)(void);
+
+	// Slot 163
+	typedef int (*PFN_Tcl_GetInterpPath)(Tcl_Interp* interp,
+		Tcl_Interp* childInterp);
+
+	// Slot 164
+	typedef Tcl_Interp* (*PFN_Tcl_GetParent)(Tcl_Interp* interp);
+
+	// Slot 165
+	typedef const char* (*PFN_Tcl_GetNameOfExecutable)(void);
+
+	// Slot 166
+	typedef Tcl_Obj* (*PFN_Tcl_GetObjResult)(Tcl_Interp* interp);
+
+	// Slot 167
+	typedef int (*PFN_Tcl_GetOpenFile)(Tcl_Interp* interp,
+		const char* chanID, int forWriting,
+		int checkUsage, void** filePtr);
+
+	// Slot 168
+	typedef Tcl_PathType(*PFN_Tcl_GetPathType)(const char* path);
+
+	// Slot 169
+	typedef Tcl_Size(*PFN_Tcl_Gets)(Tcl_Channel chan, Tcl_DString* dsPtr);
+
+	// Slot 170
+	typedef Tcl_Size(*PFN_Tcl_GetsObj)(Tcl_Channel chan, Tcl_Obj* objPtr);
+
+	// Slot 171
+	typedef int (*PFN_Tcl_GetServiceMode)(void);
+
+	// Slot 172
+	typedef Tcl_Interp* (*PFN_Tcl_GetChild)(Tcl_Interp* interp, const char* name);
+
+	// Slot 173
+	typedef Tcl_Channel(*PFN_Tcl_GetStdChannel)(int type);
+
+	// Slot 174 is reserved
+	// Slot 175 is reserved
+
+	// Slot 176
+	typedef const char* (*PFN_Tcl_GetVar2)(Tcl_Interp* interp, const char* part1,
+		const char* part2, int flags);
+
+	// Slot 177 is reserved
+	// Slot 178 is reserved
+
+	// Slot 179
+	typedef int (*PFN_Tcl_HideCommand)(Tcl_Interp* interp,
+		const char* cmdName,
+		const char* hiddenCmdToken);
+
+	// Slot 180
+	typedef int (*PFN_Tcl_Init)(Tcl_Interp* interp);
+
+	// Slot 181
+	typedef void (*PFN_Tcl_InitHashTable)(Tcl_HashTable* tablePtr,
+		int keyType);
+
+	// Slot 182
+	typedef int (*PFN_Tcl_InputBlocked)(Tcl_Channel chan);
+
+	// Slot 183
+	typedef int (*PFN_Tcl_InputBuffered)(Tcl_Channel chan);
+
+	// Slot 184
+	typedef int (*PFN_Tcl_InterpDeleted)(Tcl_Interp* interp);
+
+	// Slot 185
+	typedef int (*PFN_Tcl_IsSafe)(Tcl_Interp* interp);
+
+	// Slot 186
+	typedef char* (*PFN_Tcl_JoinPath)(Tcl_Size argc, const char* const* argv,
+		Tcl_DString* resultPtr);
+
+	// Slot 187
+	typedef int (*PFN_Tcl_LinkVar)(Tcl_Interp* interp, const char* varName,
+		void* addr, int type);
+
+	// Slot 188 is reserved
+
+	// Slot 189
+	typedef Tcl_Channel(*PFN_Tcl_MakeFileChannel)(void* handle, int mode);
+
+	// Slot 190 is reserved
+
+	// Slot 191
+	typedef Tcl_Channel(*PFN_Tcl_MakeTcpClientChannel)(void* tcpSocket);
+
+	// Slot 192
+	typedef char* (*PFN_Tcl_Merge)(Tcl_Size argc, const char* const* argv);
+
+	// Slot 193
+	typedef Tcl_HashEntry* (*PFN_Tcl_NextHashEntry)(Tcl_HashSearch* searchPtr);
+
+	// Slot 194
+	typedef void (*PFN_Tcl_NotifyChannel)(Tcl_Channel channel, int mask);
+
+	// Slot 195
+	typedef Tcl_Obj* (*PFN_Tcl_ObjGetVar2)(Tcl_Interp* interp, Tcl_Obj* part1Ptr,
+		Tcl_Obj* part2Ptr, int flags);
+
+	// Slot 196
+	typedef Tcl_Obj* (*PFN_Tcl_ObjSetVar2)(Tcl_Interp* interp, Tcl_Obj* part1Ptr,
+		Tcl_Obj* part2Ptr, Tcl_Obj* newValuePtr,
+		int flags);
+
+	// Slot 197
+	typedef Tcl_Channel(*PFN_Tcl_OpenCommandChannel)(Tcl_Interp* interp,
+		Tcl_Size argc, const char** argv, int flags);
+
+	// Slot 198
+	typedef Tcl_Channel(*PFN_Tcl_OpenFileChannel)(Tcl_Interp* interp,
+		const char* fileName, const char* modeString,
+		int permissions);
+
+	// Slot 199
+	typedef Tcl_Channel(*PFN_Tcl_OpenTcpClient)(Tcl_Interp* interp, int port,
+		const char* address, const char* myaddr,
+		int myport, int flags);
+
+	// Slot 200
+	typedef Tcl_Channel(*PFN_Tcl_OpenTcpServer)(Tcl_Interp* interp, int port,
+		const char* host,
+		Tcl_TcpAcceptProc* acceptProc,
+		void* callbackData);
+
+	// Slot 201
+	typedef void (*PFN_Tcl_Preserve)(void* data);
+
+	// Slot 202
+	typedef void (*PFN_Tcl_PrintDouble)(Tcl_Interp* interp, double value,
+		char* dst);
+
+	// Slot 203
+	typedef int (*PFN_Tcl_PutEnv)(const char* assignment);
+
+	// Slot 204
+	typedef const char* (*PFN_Tcl_PosixError)(Tcl_Interp* interp);
+
+	// Slot 205
+	typedef void (*PFN_Tcl_QueueEvent)(Tcl_Event* evPtr, int position);
+
+	// Slot 206
+	typedef Tcl_Size(*PFN_Tcl_Read)(Tcl_Channel chan, char* bufPtr,
+		Tcl_Size toRead);
+
+	// Slot 207
+	typedef void (*PFN_Tcl_ReapDetachedProcs)(void);
+
+	// Slot 208
+	typedef int (*PFN_Tcl_RecordAndEval)(Tcl_Interp* interp,
+		const char* cmd, int flags);
+
+	// Slot 209
+	typedef int (*PFN_Tcl_RecordAndEvalObj)(Tcl_Interp* interp,
+		Tcl_Obj* cmdPtr, int flags);
+
+	// Slot 210
+	typedef void (*PFN_Tcl_RegisterChannel)(Tcl_Interp* interp,
+		Tcl_Channel chan);
+
+	// Slot 211
+	typedef void (*PFN_Tcl_RegisterObjType)(const Tcl_ObjType* typePtr);
+
+	// Slot 212
+	typedef Tcl_RegExp(*PFN_Tcl_RegExpCompile)(Tcl_Interp* interp,
+		const char* pattern);
+
+	// Slot 213
+	typedef int (*PFN_Tcl_RegExpExec)(Tcl_Interp* interp, Tcl_RegExp regexp,
+		const char* text, const char* start);
+
+	// Slot 214
+	typedef int (*PFN_Tcl_RegExpMatch)(Tcl_Interp* interp, const char* text,
+		const char* pattern);
+
+	// Slot 215
+	typedef void (*PFN_Tcl_RegExpRange)(Tcl_RegExp regexp, Tcl_Size index,
+		const char** startPtr, const char** endPtr);
+
+	// Slot 216
+	typedef void (*PFN_Tcl_Release)(void* clientData);
+
+	// Slot 217
+	typedef void (*PFN_Tcl_ResetResult)(Tcl_Interp* interp);
+
+	// Slot 218
+	typedef Tcl_Size(*PFN_Tcl_ScanElement)(const char* src, int* flagPtr);
+
+	// Slot 219
+	typedef Tcl_Size(*PFN_Tcl_ScanCountedElement)(const char* src,
+		Tcl_Size length, int* flagPtr);
+
+	// Slot 220 is reserved
+
+	// Slot 221
+	typedef int (*PFN_Tcl_ServiceAll)(void);
+
+	// Slot 222
+	typedef int (*PFN_Tcl_ServiceEvent)(int flags);
+
+	// Slot 223
+	typedef void (*PFN_Tcl_SetAssocData)(Tcl_Interp* interp,
+		const char* name, Tcl_InterpDeleteProc* proc,
+		void* clientData);
+
+	// Slot 224
+	typedef void (*PFN_Tcl_SetChannelBufferSize)(Tcl_Channel chan,
+		Tcl_Size sz);
+
+	// Slot 225
+	typedef int (*PFN_Tcl_SetChannelOption)(Tcl_Interp* interp,
+		Tcl_Channel chan, const char* optionName,
+		const char* newValue);
+
+	// Slot 226
+	typedef int (*PFN_Tcl_SetCommandInfo)(Tcl_Interp* interp,
+		const char* cmdName,
+		const Tcl_CmdInfo* infoPtr);
+
+	// Slot 227
+	typedef void (*PFN_Tcl_SetErrno)(int err);
+
+	// Slot 228
+	typedef void (*PFN_Tcl_SetErrorCode)(Tcl_Interp* interp, ...);
+
+	// Slot 229
+	typedef void (*PFN_Tcl_SetMaxBlockTime)(const Tcl_Time* timePtr);
+
+	// Slot 230 is reserved
+
+	// Slot 231
+	typedef Tcl_Size(*PFN_Tcl_SetRecursionLimit)(Tcl_Interp* interp,
+		Tcl_Size depth);
+
+	// Slot 232 is reserved
+
+	// Slot 233
+	typedef int (*PFN_Tcl_SetServiceMode)(int mode);
+
+	// Slot 234
+	typedef void (*PFN_Tcl_SetObjErrorCode)(Tcl_Interp* interp,
+		Tcl_Obj* errorObjPtr);
+
+	// Slot 235
+	typedef void (*PFN_Tcl_SetObjResult)(Tcl_Interp* interp,
+		Tcl_Obj* resultObjPtr);
+
+	// Slot 236
+	typedef void (*PFN_Tcl_SetStdChannel)(Tcl_Channel channel, int type);
+
+	// Slot 237 is reserved
+
+	// Slot 238
+	typedef const char* (*PFN_Tcl_SetVar2)(Tcl_Interp* interp, const char* part1,
+		const char* part2, const char* newValue,
+		int flags);
+
+	// Slot 239
+	typedef const char* (*PFN_Tcl_SignalId)(int sig);
+
+	// Slot 240
+	typedef const char* (*PFN_Tcl_SignalMsg)(int sig);
+
+	// Slot 241
+	typedef void (*PFN_Tcl_SourceRCFile)(Tcl_Interp* interp);
+
+	// Slot 242
+	typedef int (*PFN_TclSplitList)(Tcl_Interp* interp, const char* listStr,
+		void* argcPtr, const char*** argvPtr);
+
+	// Slot 243
+	typedef void (*PFN_TclSplitPath)(const char* path, void* argcPtr,
+		const char*** argvPtr);
+
+	// Slot 244 is reserved
+	// Slot 245 is reserved
+	// Slot 246 is reserved
+	// Slot 247 is reserved
+
+	// Slot 248
+	typedef int (*PFN_Tcl_TraceVar2)(Tcl_Interp* interp, const char* part1,
+		const char* part2, int flags,
+		Tcl_VarTraceProc* proc, void* clientData);
+
+	// Slot 249
+	typedef char* (*PFN_Tcl_TranslateFileName)(Tcl_Interp* interp,
+		const char* name, Tcl_DString* bufferPtr);
+
+	// Slot 250
+	typedef Tcl_Size(*PFN_Tcl_Ungets)(Tcl_Channel chan, const char* str,
+		Tcl_Size len, int atHead);
+
+	// Slot 251
+	typedef void (*PFN_Tcl_UnlinkVar)(Tcl_Interp* interp,
+		const char* varName);
+
+	// Slot 252
+	typedef int (*PFN_Tcl_UnregisterChannel)(Tcl_Interp* interp,
+		Tcl_Channel chan);
+
+	// Slot 253 is reserved
+
+	// Slot 254
+	typedef int (*PFN_Tcl_UnsetVar2)(Tcl_Interp* interp, const char* part1,
+		const char* part2, int flags);
+
+	// Slot 255 is reserved
+
+	// Slot 256
+	typedef void (*PFN_Tcl_UntraceVar2)(Tcl_Interp* interp,
+		const char* part1, const char* part2,
+		int flags, Tcl_VarTraceProc* proc,
+		void* clientData);
+
+	// Slot 257
+	typedef void (*PFN_Tcl_UpdateLinkedVar)(Tcl_Interp* interp,
+		const char* varName);
+
+	// Slot 258 is reserved
+
+	// Slot 259
+	typedef int (*PFN_Tcl_UpVar2)(Tcl_Interp* interp, const char* frameName,
+		const char* part1, const char* part2,
+		const char* localName, int flags);
+
+	// Slot 260
+	typedef int (*PFN_Tcl_VarEval)(Tcl_Interp* interp, ...);
+
+	// Slot 261 is reserved
+
+	// Slot 262
+	typedef void* (*PFN_Tcl_VarTraceInfo2)(Tcl_Interp* interp,
+		const char* part1, const char* part2,
+		int flags, Tcl_VarTraceProc* procPtr,
+		void* prevClientData);
+
+	// Slot 263
+	typedef Tcl_Size(*PFN_Tcl_Write)(Tcl_Channel chan, const char* s,
+		Tcl_Size slen);
+
+	// Slot 264
+	typedef void (*PFN_Tcl_WrongNumArgs)(Tcl_Interp* interp, Tcl_Size objc,
+		Tcl_Obj* const objv[], const char* message);
+
+	// Slot 265
+	typedef int (*PFN_Tcl_DumpActiveMemory)(const char* fileName);
+
+	// Slot 266
+	typedef void (*PFN_Tcl_ValidateAllMemory)(const char* file, int line);
+
+	// Slot 267 is reserved
+	// Slot 268 is reserved
+
+	// Slot 269
+	typedef char* (*PFN_Tcl_HashStats)(Tcl_HashTable* tablePtr);
+
+	// Slot 270
+	typedef const char* (*PFN_Tcl_ParseVar)(Tcl_Interp* interp, const char* start,
+		const char** termPtr);
+
+	// Slot 271 is reserved
+
+	// Slot 272
+	typedef const char* (*PFN_Tcl_PkgPresentEx)(Tcl_Interp* interp,
+		const char* name, const char* version,
+		int exact, void* clientDataPtr);
+
+	// Slot 273 is reserved
+	// Slot 274 is reserved
+	// Slot 275 is reserved
+	// Slot 276 is reserved
+
+	// Slot 277
+	typedef Tcl_Pid(*PFN_Tcl_WaitPid)(Tcl_Pid pid, int* statPtr, int options);
+
+	// Slot 278 is reserved
+
+	// Slot 279
+	typedef void (*PFN_Tcl_GetVersion)(int* major, int* minor,
+		int* patchLevel, int* type);
+
+	// Slot 280
+	typedef void (*PFN_Tcl_InitMemory)(Tcl_Interp* interp);
+
+	// Slot 281
+	typedef Tcl_Channel(*PFN_Tcl_StackChannel)(Tcl_Interp* interp,
+		const Tcl_ChannelType* typePtr,
+		void* instanceData, int mask,
+		Tcl_Channel prevChan);
+
+	// Slot 282
+	typedef int (*PFN_Tcl_UnstackChannel)(Tcl_Interp* interp,
+		Tcl_Channel chan);
+
+	// Slot 283
+	typedef Tcl_Channel(*PFN_Tcl_GetStackedChannel)(Tcl_Channel chan);
+
+	// Slot 284
+	typedef void (*PFN_Tcl_SetMainLoop)(Tcl_MainLoopProc* proc);
+
+	// Slot 285
+	typedef int (*PFN_Tcl_GetAliasObj)(Tcl_Interp* interp,
+		const char* childCmd,
+		Tcl_Interp** targetInterpPtr,
+		const char** targetCmdPtr, Tcl_Size* objcPtr,
+		Tcl_Obj*** objvPtr);
+
+	// Slot 286
+	typedef void (*PFN_Tcl_AppendObjToObj)(Tcl_Obj* objPtr,
+		Tcl_Obj* appendObjPtr);
+
+	// Slot 287
+	typedef Tcl_Encoding(*PFN_Tcl_CreateEncoding)(const Tcl_EncodingType* typePtr);
+
+	// Slot 288
+	typedef void (*PFN_Tcl_CreateThreadExitHandler)(Tcl_ExitProc* proc,
+		void* clientData);
+
+	// Slot 289
+	typedef void (*PFN_Tcl_DeleteThreadExitHandler)(Tcl_ExitProc* proc,
+		void* clientData);
+
+	// Slot 290 is reserved
+
+	// Slot 291
+	typedef int (*PFN_Tcl_EvalEx)(Tcl_Interp* interp, const char* script,
+		Tcl_Size numBytes, int flags);
+
+	// Slot 292
+	typedef int (*PFN_Tcl_EvalObjv)(Tcl_Interp* interp, Tcl_Size objc,
+		Tcl_Obj* const objv[], int flags);
+
+	// Slot 293
+	typedef int (*PFN_Tcl_EvalObjEx)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		int flags);
+
+	// Slot 294
+	typedef void (*PFN_Tcl_ExitThread)(int status);
+
+	// Slot 295
+	typedef int (*PFN_Tcl_ExternalToUtf)(Tcl_Interp* interp,
+		Tcl_Encoding encoding, const char* src,
+		Tcl_Size srcLen, int flags,
+		Tcl_EncodingState* statePtr, char* dst,
+		Tcl_Size dstLen, int* srcReadPtr,
+		int* dstWrotePtr, int* dstCharsPtr);
+
+	// Slot 296
+	typedef char* (*PFN_Tcl_ExternalToUtfDString)(Tcl_Encoding encoding,
+		const char* src, Tcl_Size srcLen,
+		Tcl_DString* dsPtr);
+
+	// Slot 297
+	typedef void (*PFN_Tcl_FinalizeThread)(void);
+
+	// Slot 298
+	typedef void (*PFN_Tcl_FinalizeNotifier)(void* clientData);
+
+	// Slot 299
+	typedef void (*PFN_Tcl_FreeEncoding)(Tcl_Encoding encoding);
+
+	// Slot 300
+	typedef Tcl_ThreadId(*PFN_Tcl_GetCurrentThread)(void);
+
+	// Slot 301
+	typedef Tcl_Encoding(*PFN_Tcl_GetEncoding)(Tcl_Interp* interp, const char* name);
+
+	// Slot 302
+	typedef const char* (*PFN_Tcl_GetEncodingName)(Tcl_Encoding encoding);
+
+	// Slot 303
+	typedef void (*PFN_Tcl_GetEncodingNames)(Tcl_Interp* interp);
+
+	// Slot 304
+	typedef int (*PFN_Tcl_GetIndexFromObjStruct)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, const void* tablePtr,
+		Tcl_Size offset, const char* msg, int flags,
+		void* indexPtr);
+
+	// Slot 305
+	typedef void* (*PFN_Tcl_GetThreadData)(Tcl_ThreadDataKey* keyPtr,
+		Tcl_Size size);
+
+	// Slot 306
+	typedef Tcl_Obj* (*PFN_Tcl_GetVar2Ex)(Tcl_Interp* interp, const char* part1,
+		const char* part2, int flags);
+
+	// Slot 307
+	typedef void* (*PFN_Tcl_InitNotifier)(void);
+
+	// Slot 308
+	typedef void (*PFN_Tcl_MutexLock)(Tcl_Mutex* mutexPtr);
+
+	// Slot 309
+	typedef void (*PFN_Tcl_MutexUnlock)(Tcl_Mutex* mutexPtr);
+
+	// Slot 310
+	typedef void (*PFN_Tcl_ConditionNotify)(Tcl_Condition* condPtr);
+
+	// Slot 311
+	typedef void (*PFN_Tcl_ConditionWait)(Tcl_Condition* condPtr,
+		Tcl_Mutex* mutexPtr, const Tcl_Time* timePtr);
+
+	// Slot 312
+	typedef Tcl_Size(*PFN_TclNumUtfChars)(const char* src, Tcl_Size length);
+
+	// Slot 313
+	typedef Tcl_Size(*PFN_Tcl_ReadChars)(Tcl_Channel channel, Tcl_Obj* objPtr,
+		Tcl_Size charsToRead, int appendFlag);
+
+	// Slot 314 is reserved
+	// Slot 315 is reserved
+
+	// Slot 316
+	typedef int (*PFN_Tcl_SetSystemEncoding)(Tcl_Interp* interp,
+		const char* name);
+
+	// Slot 317
+	typedef Tcl_Obj* (*PFN_Tcl_SetVar2Ex)(Tcl_Interp* interp, const char* part1,
+		const char* part2, Tcl_Obj* newValuePtr,
+		int flags);
+
+	// Slot 318
+	typedef void (*PFN_Tcl_ThreadAlert)(Tcl_ThreadId threadId);
+
+	// Slot 319
+	typedef void (*PFN_Tcl_ThreadQueueEvent)(Tcl_ThreadId threadId,
+		Tcl_Event* evPtr, int position);
+
+	// Slot 320
+	typedef int (*PFN_Tcl_UniCharAtIndex)(const char* src, Tcl_Size index);
+
+	// Slot 321
+	typedef int (*PFN_Tcl_UniCharToLower)(int ch);
+
+	// Slot 322
+	typedef int (*PFN_Tcl_UniCharToTitle)(int ch);
+
+	// Slot 323
+	typedef int (*PFN_Tcl_UniCharToUpper)(int ch);
+
+	// Slot 324
+	typedef Tcl_Size(*PFN_Tcl_UniCharToUtf)(int ch, char* buf);
+
+	// Slot 325
+	typedef const char* (*PFN_TclUtfAtIndex)(const char* src, Tcl_Size index);
+
+	// Slot 326
+	typedef int (*PFN_TclUtfCharComplete)(const char* src, Tcl_Size length);
+
+	// Slot 327
+	typedef Tcl_Size(*PFN_Tcl_UtfBackslash)(const char* src, int* readPtr,
+		char* dst);
+
+	// Slot 328
+	typedef const char* (*PFN_Tcl_UtfFindFirst)(const char* src, int ch);
+
+	// Slot 329
+	typedef const char* (*PFN_Tcl_UtfFindLast)(const char* src, int ch);
+
+	// Slot 330
+	typedef const char* (*PFN_TclUtfNext)(const char* src);
+
+	// Slot 331
+	typedef const char* (*PFN_TclUtfPrev)(const char* src, const char* start);
+
+	// Slot 332
+	typedef int (*PFN_Tcl_UtfToExternal)(Tcl_Interp* interp,
+		Tcl_Encoding encoding, const char* src,
+		Tcl_Size srcLen, int flags,
+		Tcl_EncodingState* statePtr, char* dst,
+		Tcl_Size dstLen, int* srcReadPtr,
+		int* dstWrotePtr, int* dstCharsPtr);
+
+	// Slot 333
+	typedef char* (*PFN_Tcl_UtfToExternalDString)(Tcl_Encoding encoding,
+		const char* src, Tcl_Size srcLen,
+		Tcl_DString* dsPtr);
+
+	// Slot 334
+	typedef Tcl_Size(*PFN_Tcl_UtfToLower)(char* src);
+
+	// Slot 335
+	typedef Tcl_Size(*PFN_Tcl_UtfToTitle)(char* src);
+
+	// Slot 336
+	typedef Tcl_Size(*PFN_Tcl_UtfToChar16)(const char* src,
+		unsigned short* chPtr);
+
+	// Slot 337
+	typedef Tcl_Size(*PFN_Tcl_UtfToUpper)(char* src);
+
+	// Slot 338
+	typedef Tcl_Size(*PFN_Tcl_WriteChars)(Tcl_Channel chan, const char* src,
+		Tcl_Size srcLen);
+
+	// Slot 339
+	typedef Tcl_Size(*PFN_Tcl_WriteObj)(Tcl_Channel chan, Tcl_Obj* objPtr);
+
+	// Slot 340 is reserved
+	// Slot 341 is reserved
+	// Slot 342 is reserved
+
+	// Slot 343
+	typedef void (*PFN_Tcl_AlertNotifier)(void* clientData);
+
+	// Slot 344
+	typedef void (*PFN_Tcl_ServiceModeHook)(int mode);
+
+	// Slot 345
+	typedef int (*PFN_Tcl_UniCharIsAlnum)(int ch);
+
+	// Slot 346
+	typedef int (*PFN_Tcl_UniCharIsAlpha)(int ch);
+
+	// Slot 347
+	typedef int (*PFN_Tcl_UniCharIsDigit)(int ch);
+
+	// Slot 348
+	typedef int (*PFN_Tcl_UniCharIsLower)(int ch);
+
+	// Slot 349
+	typedef int (*PFN_Tcl_UniCharIsSpace)(int ch);
+
+	// Slot 350
+	typedef int (*PFN_Tcl_UniCharIsUpper)(int ch);
+
+	// Slot 351
+	typedef int (*PFN_Tcl_UniCharIsWordChar)(int ch);
+
+	// Slot 352
+	typedef Tcl_Size(*PFN_Tcl_Char16Len)(const unsigned short* uniStr);
+
+	// Slot 353 is reserved
+
+	// Slot 354
+	typedef char* (*PFN_Tcl_Char16ToUtfDString)(const unsigned short* uniStr,
+		Tcl_Size uniLength, Tcl_DString* dsPtr);
+
+	// Slot 355
+	typedef unsigned short* (*PFN_Tcl_UtfToChar16DString)(const char* src,
+		Tcl_Size length, Tcl_DString* dsPtr);
+
+	// Slot 356
+	typedef Tcl_RegExp(*PFN_Tcl_GetRegExpFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* patObj, int flags);
+
+	// Slot 357 is reserved
+
+	// Slot 358
+	typedef void (*PFN_Tcl_FreeParse)(Tcl_Parse* parsePtr);
+
+	// Slot 359
+	typedef void (*PFN_Tcl_LogCommandInfo)(Tcl_Interp* interp,
+		const char* script, const char* command,
+		Tcl_Size length);
+
+	// Slot 360
+	typedef int (*PFN_Tcl_ParseBraces)(Tcl_Interp* interp,
+		const char* start, Tcl_Size numBytes,
+		Tcl_Parse* parsePtr, int append,
+		const char** termPtr);
+
+	// Slot 361
+	typedef int (*PFN_Tcl_ParseCommand)(Tcl_Interp* interp,
+		const char* start, Tcl_Size numBytes,
+		int nested, Tcl_Parse* parsePtr);
+
+	// Slot 362
+	typedef int (*PFN_Tcl_ParseExpr)(Tcl_Interp* interp, const char* start,
+		Tcl_Size numBytes, Tcl_Parse* parsePtr);
+
+	// Slot 363
+	typedef int (*PFN_Tcl_ParseQuotedString)(Tcl_Interp* interp,
+		const char* start, Tcl_Size numBytes,
+		Tcl_Parse* parsePtr, int append,
+		const char** termPtr);
+
+	// Slot 364
+	typedef int (*PFN_Tcl_ParseVarName)(Tcl_Interp* interp,
+		const char* start, Tcl_Size numBytes,
+		Tcl_Parse* parsePtr, int append);
+
+	// Slot 365
+	typedef char* (*PFN_Tcl_GetCwd)(Tcl_Interp* interp, Tcl_DString* cwdPtr);
+
+	// Slot 366
+	typedef int (*PFN_Tcl_Chdir)(const char* dirName);
+
+	// Slot 367
+	typedef int (*PFN_Tcl_Access)(const char* path, int mode);
+
+	// Slot 368
+	typedef int (*PFN_Tcl_Stat)(const char* path, struct stat* bufPtr);
+
+	// Slot 369
+	typedef int (*PFN_TclUtfNcmp)(const char* s1, const char* s2, size_t n);
+
+	// Slot 370
+	typedef int (*PFN_TclUtfNcasecmp)(const char* s1, const char* s2,
+		size_t n);
+
+	// Slot 371
+	typedef int (*PFN_Tcl_StringCaseMatch)(const char* str,
+		const char* pattern, int nocase);
+
+	// Slot 372
+	typedef int (*PFN_Tcl_UniCharIsControl)(int ch);
+
+	// Slot 373
+	typedef int (*PFN_Tcl_UniCharIsGraph)(int ch);
+
+	// Slot 374
+	typedef int (*PFN_Tcl_UniCharIsPrint)(int ch);
+
+	// Slot 375
+	typedef int (*PFN_Tcl_UniCharIsPunct)(int ch);
+
+	// Slot 376
+	typedef int (*PFN_Tcl_RegExpExecObj)(Tcl_Interp* interp,
+		Tcl_RegExp regexp, Tcl_Obj* textObj,
+		Tcl_Size offset, Tcl_Size nmatches,
+		int flags);
+
+	// Slot 377
+	typedef void (*PFN_Tcl_RegExpGetInfo)(Tcl_RegExp regexp,
+		Tcl_RegExpInfo* infoPtr);
+
+	// Slot 378
+	typedef Tcl_Obj* (*PFN_Tcl_NewUnicodeObj)(const Tcl_UniChar* unicode,
+		Tcl_Size numChars);
+
+	// Slot 379
+	typedef void (*PFN_Tcl_SetUnicodeObj)(Tcl_Obj* objPtr,
+		const Tcl_UniChar* unicode,
+		Tcl_Size numChars);
+
+	// Slot 380
+	typedef Tcl_Size(*PFN_TclGetCharLength)(Tcl_Obj* objPtr);
+
+	// Slot 381
+	typedef int (*PFN_TclGetUniChar)(Tcl_Obj* objPtr, Tcl_Size index);
+
+	// Slot 382 is reserved
+
+	// Slot 383
+	typedef Tcl_Obj* (*PFN_TclGetRange)(Tcl_Obj* objPtr, Tcl_Size first,
+		Tcl_Size last);
+
+	// Slot 384
+	typedef void (*PFN_Tcl_AppendUnicodeToObj)(Tcl_Obj* objPtr,
+		const Tcl_UniChar* unicode, Tcl_Size length);
+
+	// Slot 385
+	typedef int (*PFN_Tcl_RegExpMatchObj)(Tcl_Interp* interp,
+		Tcl_Obj* textObj, Tcl_Obj* patternObj);
+
+	// Slot 386
+	typedef void (*PFN_Tcl_SetNotifier)(
+		const Tcl_NotifierProcs* notifierProcPtr);
+
+	// Slot 387
+	typedef Tcl_Mutex* (*PFN_Tcl_GetAllocMutex)(void);
+
+	// Slot 388
+	typedef int (*PFN_Tcl_GetChannelNames)(Tcl_Interp* interp);
+
+	// Slot 389
+	typedef int (*PFN_Tcl_GetChannelNamesEx)(Tcl_Interp* interp,
+		const char* pattern);
+
+	// Slot 390
+	typedef int (*PFN_Tcl_ProcObjCmd)(void* clientData, Tcl_Interp* interp,
+		Tcl_Size objc, Tcl_Obj* const objv[]);
+
+	// Slot 391
+	typedef void (*PFN_Tcl_ConditionFinalize)(Tcl_Condition* condPtr);
+
+	// Slot 392
+	typedef void (*PFN_Tcl_MutexFinalize)(Tcl_Mutex* mutex);
+
+	// Slot 393
+	typedef int (*PFN_Tcl_CreateThread)(Tcl_ThreadId* idPtr,
+		Tcl_ThreadCreateProc* proc, void* clientData,
+		size_t stackSize, int flags);
+
+	// Slot 394
+	typedef Tcl_Size(*PFN_Tcl_ReadRaw)(Tcl_Channel chan, char* dst,
+		Tcl_Size bytesToRead);
+
+	// Slot 395
+	typedef Tcl_Size(*PFN_Tcl_WriteRaw)(Tcl_Channel chan, const char* src,
+		Tcl_Size srcLen);
+
+	// Slot 396
+	typedef Tcl_Channel(*PFN_Tcl_GetTopChannel)(Tcl_Channel chan);
+
+	// Slot 397
+	typedef int (*PFN_Tcl_ChannelBuffered)(Tcl_Channel chan);
+
+	// Slot 398
+	typedef const char* (*PFN_Tcl_ChannelName)(const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 399
+	typedef Tcl_ChannelTypeVersion(*PFN_Tcl_ChannelVersion)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 400
+	typedef Tcl_DriverBlockModeProc* (*PFN_Tcl_ChannelBlockModeProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 401 is reserved
+
+	// Slot 402
+	typedef Tcl_DriverClose2Proc* (*PFN_Tcl_ChannelClose2Proc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 403
+	typedef Tcl_DriverInputProc* (*PFN_Tcl_ChannelInputProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 404
+	typedef Tcl_DriverOutputProc* (*PFN_Tcl_ChannelOutputProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 405 is reserved
+
+	// Slot 406
+	typedef Tcl_DriverSetOptionProc* (*PFN_Tcl_ChannelSetOptionProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 407
+	typedef Tcl_DriverGetOptionProc* (*PFN_Tcl_ChannelGetOptionProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 408
+	typedef Tcl_DriverWatchProc* (*PFN_Tcl_ChannelWatchProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 409
+	typedef Tcl_DriverGetHandleProc* (*PFN_Tcl_ChannelGetHandleProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 410
+	typedef Tcl_DriverFlushProc* (*PFN_Tcl_ChannelFlushProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 411
+	typedef Tcl_DriverHandlerProc* (*PFN_Tcl_ChannelHandlerProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 412
+	typedef int (*PFN_Tcl_JoinThread)(Tcl_ThreadId threadId, int* result);
+
+	// Slot 413
+	typedef int (*PFN_Tcl_IsChannelShared)(Tcl_Channel channel);
+
+	// Slot 414
+	typedef int (*PFN_Tcl_IsChannelRegistered)(Tcl_Interp* interp,
+		Tcl_Channel channel);
+
+	// Slot 415
+	typedef void (*PFN_Tcl_CutChannel)(Tcl_Channel channel);
+
+	// Slot 416
+	typedef void (*PFN_Tcl_SpliceChannel)(Tcl_Channel channel);
+
+	// Slot 417
+	typedef void (*PFN_Tcl_ClearChannelHandlers)(Tcl_Channel channel);
+
+	// Slot 418
+	typedef int (*PFN_Tcl_IsChannelExisting)(const char* channelName);
+
+	// Slot 419 is reserved
+	// Slot 420 is reserved
+
+	// Slot 421
+	typedef Tcl_HashEntry* (*PFN_Tcl_DbCreateHashEntry)(Tcl_HashTable* tablePtr,
+		const void* key, int* newPtr,
+		const char* file, int line);
+
+	// Slot 422
+	typedef Tcl_HashEntry* (*PFN_Tcl_CreateHashEntry)(Tcl_HashTable* tablePtr,
+		const void* key, int* newPtr);
+
+	// Slot 423
+	typedef void (*PFN_Tcl_InitCustomHashTable)(Tcl_HashTable* tablePtr,
+		int keyType, const Tcl_HashKeyType* typePtr);
+
+	// Slot 424
+	typedef void (*PFN_Tcl_InitObjHashTable)(Tcl_HashTable* tablePtr);
+
+	// Slot 425
+	typedef void* (*PFN_Tcl_CommandTraceInfo)(Tcl_Interp* interp,
+		const char* varName, int flags,
+		Tcl_CommandTraceProc* procPtr,
+		void* prevClientData);
+
+	// Slot 426
+	typedef int (*PFN_Tcl_TraceCommand)(Tcl_Interp* interp,
+		const char* varName, int flags,
+		Tcl_CommandTraceProc* proc, void* clientData);
+
+	// Slot 427
+	typedef void (*PFN_Tcl_UntraceCommand)(Tcl_Interp* interp,
+		const char* varName, int flags,
+		Tcl_CommandTraceProc* proc, void* clientData);
+
+	// Slot 428
+	typedef void* (*PFN_Tcl_AttemptAlloc)(size_t size);
+
+	// Slot 429
+	typedef void* (*PFN_Tcl_AttemptDbCkalloc)(size_t size, const char* file,
+		int line);
+
+	// Slot 430
+	typedef void* (*PFN_Tcl_AttemptRealloc)(void* ptr, size_t size);
+
+	// Slot 431
+	typedef void* (*PFN_Tcl_AttemptDbCkrealloc)(void* ptr, size_t size,
+		const char* file, int line);
+
+	// Slot 432
+	typedef int (*PFN_Tcl_AttemptSetObjLength)(Tcl_Obj* objPtr,
+		Tcl_Size length);
+
+	// Slot 433
+	typedef Tcl_ThreadId(*PFN_Tcl_GetChannelThread)(Tcl_Channel channel);
+
+	// Slot 434
+	typedef Tcl_UniChar* (*PFN_TclGetUnicodeFromObj)(Tcl_Obj* objPtr,
+		void* lengthPtr);
+
+	// Slot 435 is reserved
+	// Slot 436 is reserved
+
+	// Slot 437
+	typedef Tcl_Obj* (*PFN_Tcl_SubstObj)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		int flags);
+
+	// Slot 438
+	typedef int (*PFN_Tcl_DetachChannel)(Tcl_Interp* interp,
+		Tcl_Channel channel);
+
+	// Slot 439
+	typedef int (*PFN_Tcl_IsStandardChannel)(Tcl_Channel channel);
+
+	// Slot 440
+	typedef int (*PFN_Tcl_FSCopyFile)(Tcl_Obj* srcPathPtr,
+		Tcl_Obj* destPathPtr);
+
+	// Slot 441
+	typedef int (*PFN_Tcl_FSCopyDirectory)(Tcl_Obj* srcPathPtr,
+		Tcl_Obj* destPathPtr, Tcl_Obj** errorPtr);
+
+	// Slot 442
+	typedef int (*PFN_Tcl_FSCreateDirectory)(Tcl_Obj* pathPtr);
+
+	// Slot 443
+	typedef int (*PFN_Tcl_FSDeleteFile)(Tcl_Obj* pathPtr);
+
+	// Slot 444
+	typedef int (*PFN_Tcl_FSLoadFile)(Tcl_Interp* interp, Tcl_Obj* pathPtr,
+		const char* sym1, const char* sym2,
+		Tcl_LibraryInitProc** proc1Ptr,
+		Tcl_LibraryInitProc** proc2Ptr,
+		Tcl_LoadHandle* handlePtr,
+		Tcl_FSUnloadFileProc** unloadProcPtr);
+
+	// Slot 445
+	typedef int (*PFN_Tcl_FSMatchInDirectory)(Tcl_Interp* interp,
+		Tcl_Obj* result, Tcl_Obj* pathPtr,
+		const char* pattern, Tcl_GlobTypeData* types);
+
+	// Slot 446
+	typedef Tcl_Obj* (*PFN_Tcl_FSLink)(Tcl_Obj* pathPtr, Tcl_Obj* toPtr,
+		int linkAction);
+
+	// Slot 447
+	typedef int (*PFN_Tcl_FSRemoveDirectory)(Tcl_Obj* pathPtr,
+		int recursive, Tcl_Obj** errorPtr);
+
+	// Slot 448
+	typedef int (*PFN_Tcl_FSRenameFile)(Tcl_Obj* srcPathPtr,
+		Tcl_Obj* destPathPtr);
+
+	// Slot 449
+	typedef int (*PFN_Tcl_FSLstat)(Tcl_Obj* pathPtr, Tcl_StatBuf* buf);
+
+	// Slot 450
+	typedef int (*PFN_Tcl_FSUtime)(Tcl_Obj* pathPtr, struct utimbuf* tval);
+
+	// Slot 451
+	typedef int (*PFN_Tcl_FSFileAttrsGet)(Tcl_Interp* interp, int index,
+		Tcl_Obj* pathPtr, Tcl_Obj** objPtrRef);
+
+	// Slot 452
+	typedef int (*PFN_Tcl_FSFileAttrsSet)(Tcl_Interp* interp, int index,
+		Tcl_Obj* pathPtr, Tcl_Obj* objPtr);
+
+	// Slot 453
+	typedef const char* const* (*PFN_Tcl_FSFileAttrStrings)(Tcl_Obj* pathPtr,
+		Tcl_Obj** objPtrRef);
+
+	// Slot 454
+	typedef int (*PFN_Tcl_FSStat)(Tcl_Obj* pathPtr, Tcl_StatBuf* buf);
+
+	// Slot 455
+	typedef int (*PFN_Tcl_FSAccess)(Tcl_Obj* pathPtr, int mode);
+
+	// Slot 456
+	typedef Tcl_Channel(*PFN_Tcl_FSOpenFileChannel)(Tcl_Interp* interp,
+		Tcl_Obj* pathPtr, const char* modeString,
+		int permissions);
+
+	// Slot 457
+	typedef Tcl_Obj* (*PFN_Tcl_FSGetCwd)(Tcl_Interp* interp);
+
+	// Slot 458
+	typedef int (*PFN_Tcl_FSChdir)(Tcl_Obj* pathPtr);
+
+	// Slot 459
+	typedef int (*PFN_Tcl_FSConvertToPathType)(Tcl_Interp* interp,
+		Tcl_Obj* pathPtr);
+	// Slot 460
+	typedef Tcl_Obj* (*PFN_Tcl_FSJoinPath)(Tcl_Obj* listObj, Tcl_Size elements);
+
+	// Slot 461
+	typedef Tcl_Obj* (*PFN_TclFSSplitPath)(Tcl_Obj* pathPtr, void* lenPtr);
+
+	// Slot 462
+	typedef int (*PFN_Tcl_FSEqualPaths)(Tcl_Obj* firstPtr,
+		Tcl_Obj* secondPtr);
+
+	// Slot 463
+	typedef Tcl_Obj* (*PFN_Tcl_FSGetNormalizedPath)(Tcl_Interp* interp,
+		Tcl_Obj* pathPtr);
+
+	// Slot 464
+	typedef Tcl_Obj* (*PFN_Tcl_FSJoinToPath)(Tcl_Obj* pathPtr, Tcl_Size objc,
+		Tcl_Obj* const objv[]);
+
+	// Slot 465
+	typedef void* (*PFN_Tcl_FSGetInternalRep)(Tcl_Obj* pathPtr,
+		const Tcl_Filesystem* fsPtr);
+
+	// Slot 466
+	typedef Tcl_Obj* (*PFN_Tcl_FSGetTranslatedPath)(Tcl_Interp* interp,
+		Tcl_Obj* pathPtr);
+
+	// Slot 467
+	typedef int (*PFN_Tcl_FSEvalFile)(Tcl_Interp* interp, Tcl_Obj* fileName);
+
+	// Slot 468
+	typedef Tcl_Obj* (*PFN_Tcl_FSNewNativePath)(
+		const Tcl_Filesystem* fromFilesystem,
+		void* clientData);
+
+	// Slot 469
+	typedef const void* (*PFN_Tcl_FSGetNativePath)(Tcl_Obj* pathPtr);
+
+	// Slot 470
+	typedef Tcl_Obj* (*PFN_Tcl_FSFileSystemInfo)(Tcl_Obj* pathPtr);
+
+	// Slot 471
+	typedef Tcl_Obj* (*PFN_Tcl_FSPathSeparator)(Tcl_Obj* pathPtr);
+
+	// Slot 472
+	typedef Tcl_Obj* (*PFN_Tcl_FSListVolumes)(void);
+
+	// Slot 473
+	typedef int (*PFN_Tcl_FSRegister)(void* clientData,
+		const Tcl_Filesystem* fsPtr);
+
+	// Slot 474
+	typedef int (*PFN_Tcl_FSUnregister)(const Tcl_Filesystem* fsPtr);
+
+	// Slot 475
+	typedef void* (*PFN_Tcl_FSData)(const Tcl_Filesystem* fsPtr);
+
+	// Slot 476
+	typedef const char* (*PFN_Tcl_FSGetTranslatedStringPath)(Tcl_Interp* interp,
+		Tcl_Obj* pathPtr);
+
+	// Slot 477
+	typedef const Tcl_Filesystem* (*PFN_Tcl_FSGetFileSystemForPath)(Tcl_Obj* pathPtr);
+
+	// Slot 478
+	typedef Tcl_PathType(*PFN_Tcl_FSGetPathType)(Tcl_Obj* pathPtr);
+
+	// Slot 479
+	typedef int (*PFN_Tcl_OutputBuffered)(Tcl_Channel chan);
+
+	// Slot 480
+	typedef void (*PFN_Tcl_FSMountsChanged)(const Tcl_Filesystem* fsPtr);
+
+	// Slot 481
+	typedef int (*PFN_Tcl_EvalTokensStandard)(Tcl_Interp* interp,
+		Tcl_Token* tokenPtr, Tcl_Size count);
+
+	// Slot 482
+	typedef void (*PFN_Tcl_GetTime)(Tcl_Time* timeBuf);
+
+	// Slot 483
+	typedef Tcl_Trace(*PFN_Tcl_CreateObjTrace)(Tcl_Interp* interp,
+		Tcl_Size level, int flags,
+		Tcl_CmdObjTraceProc* objProc,
+		void* clientData,
+		Tcl_CmdObjTraceDeleteProc* delProc);
+
+	// Slot 484
+	typedef int (*PFN_Tcl_GetCommandInfoFromToken)(Tcl_Command token,
+		Tcl_CmdInfo* infoPtr);
+
+	// Slot 485
+	typedef int (*PFN_Tcl_SetCommandInfoFromToken)(Tcl_Command token,
+		const Tcl_CmdInfo* infoPtr);
+
+	// Slot 486
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewWideIntObj)(Tcl_WideInt wideValue,
+		const char* file, int line);
+
+	// Slot 487
+	typedef int (*PFN_Tcl_GetWideIntFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, Tcl_WideInt* widePtr);
+
+	// Slot 488
+	typedef Tcl_Obj* (*PFN_Tcl_NewWideIntObj)(Tcl_WideInt wideValue);
+
+	// Slot 489
+	typedef void (*PFN_Tcl_SetWideIntObj)(Tcl_Obj* objPtr,
+		Tcl_WideInt wideValue);
+
+	// Slot 490
+	typedef Tcl_StatBuf* (*PFN_Tcl_AllocStatBuf)(void);
+
+	// Slot 491
+	typedef long long (*PFN_Tcl_Seek)(Tcl_Channel chan, long long offset,
+		int mode);
+
+	// Slot 492
+	typedef long long (*PFN_Tcl_Tell)(Tcl_Channel chan);
+
+	// Slot 493
+	typedef Tcl_DriverWideSeekProc* (*PFN_Tcl_ChannelWideSeekProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 494
+	typedef int (*PFN_Tcl_DictObjPut)(Tcl_Interp* interp, Tcl_Obj* dictPtr,
+		Tcl_Obj* keyPtr, Tcl_Obj* valuePtr);
+
+	// Slot 495
+	typedef int (*PFN_Tcl_DictObjGet)(Tcl_Interp* interp, Tcl_Obj* dictPtr,
+		Tcl_Obj* keyPtr, Tcl_Obj** valuePtrPtr);
+
+	// Slot 496
+	typedef int (*PFN_Tcl_DictObjRemove)(Tcl_Interp* interp,
+		Tcl_Obj* dictPtr, Tcl_Obj* keyPtr);
+
+	// Slot 497
+	typedef int (*PFN_TclDictObjSize)(Tcl_Interp* interp, Tcl_Obj* dictPtr,
+		void* sizePtr);
+
+	// Slot 498
+	typedef int (*PFN_Tcl_DictObjFirst)(Tcl_Interp* interp,
+		Tcl_Obj* dictPtr, Tcl_DictSearch* searchPtr,
+		Tcl_Obj** keyPtrPtr, Tcl_Obj** valuePtrPtr,
+		int* donePtr);
+
+	// Slot 499
+	typedef void (*PFN_Tcl_DictObjNext)(Tcl_DictSearch* searchPtr,
+		Tcl_Obj** keyPtrPtr, Tcl_Obj** valuePtrPtr,
+		int* donePtr);
+
+	// Slot 500
+	typedef void (*PFN_Tcl_DictObjDone)(Tcl_DictSearch* searchPtr);
+
+	// Slot 501
+	typedef int (*PFN_Tcl_DictObjPutKeyList)(Tcl_Interp* interp,
+		Tcl_Obj* dictPtr, Tcl_Size keyc,
+		Tcl_Obj* const* keyv, Tcl_Obj* valuePtr);
+
+	// Slot 502
+	typedef int (*PFN_Tcl_DictObjRemoveKeyList)(Tcl_Interp* interp,
+		Tcl_Obj* dictPtr, Tcl_Size keyc,
+		Tcl_Obj* const* keyv);
+
+	// Slot 503
+	typedef Tcl_Obj* (*PFN_Tcl_NewDictObj)(void);
+
+	// Slot 504
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewDictObj)(const char* file, int line);
+
+	// Slot 505
+	typedef void (*PFN_Tcl_RegisterConfig)(Tcl_Interp* interp,
+		const char* pkgName,
+		const Tcl_Config* configuration,
+		const char* valEncoding);
+
+	// Slot 506
+	typedef Tcl_Namespace* (*PFN_Tcl_CreateNamespace)(Tcl_Interp* interp,
+		const char* name, void* clientData,
+		Tcl_NamespaceDeleteProc* deleteProc);
+
+	// Slot 507
+	typedef void (*PFN_Tcl_DeleteNamespace)(Tcl_Namespace* nsPtr);
+
+	// Slot 508
+	typedef int (*PFN_Tcl_AppendExportList)(Tcl_Interp* interp,
+		Tcl_Namespace* nsPtr, Tcl_Obj* objPtr);
+
+	// Slot 509
+	typedef int (*PFN_Tcl_Export)(Tcl_Interp* interp, Tcl_Namespace* nsPtr,
+		const char* pattern, int resetListFirst);
+
+	// Slot 510
+	typedef int (*PFN_Tcl_Import)(Tcl_Interp* interp, Tcl_Namespace* nsPtr,
+		const char* pattern, int allowOverwrite);
+
+	// Slot 511
+	typedef int (*PFN_Tcl_ForgetImport)(Tcl_Interp* interp,
+		Tcl_Namespace* nsPtr, const char* pattern);
+
+	// Slot 512
+	typedef Tcl_Namespace* (*PFN_Tcl_GetCurrentNamespace)(Tcl_Interp* interp);
+
+	// Slot 513
+	typedef Tcl_Namespace* (*PFN_Tcl_GetGlobalNamespace)(Tcl_Interp* interp);
+
+	// Slot 514
+	typedef Tcl_Namespace* (*PFN_Tcl_FindNamespace)(Tcl_Interp* interp,
+		const char* name,
+		Tcl_Namespace* contextNsPtr, int flags);
+
+	// Slot 515
+	typedef Tcl_Command(*PFN_Tcl_FindCommand)(Tcl_Interp* interp, const char* name,
+		Tcl_Namespace* contextNsPtr, int flags);
+
+	// Slot 516
+	typedef Tcl_Command(*PFN_Tcl_GetCommandFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr);
+
+	// Slot 517
+	typedef void (*PFN_Tcl_GetCommandFullName)(Tcl_Interp* interp,
+		Tcl_Command command, Tcl_Obj* objPtr);
+
+	// Slot 518
+	typedef int (*PFN_Tcl_FSEvalFileEx)(Tcl_Interp* interp,
+		Tcl_Obj* fileName, const char* encodingName);
+
+	// Slot 519 is reserved
+
+	// Slot 520
+	typedef void (*PFN_Tcl_LimitAddHandler)(Tcl_Interp* interp, int type,
+		Tcl_LimitHandlerProc* handlerProc,
+		void* clientData,
+		Tcl_LimitHandlerDeleteProc* deleteProc);
+
+	// Slot 521
+	typedef void (*PFN_Tcl_LimitRemoveHandler)(Tcl_Interp* interp, int type,
+		Tcl_LimitHandlerProc* handlerProc,
+		void* clientData);
+
+	// Slot 522
+	typedef int (*PFN_Tcl_LimitReady)(Tcl_Interp* interp);
+
+	// Slot 523
+	typedef int (*PFN_Tcl_LimitCheck)(Tcl_Interp* interp);
+
+	// Slot 524
+	typedef int (*PFN_Tcl_LimitExceeded)(Tcl_Interp* interp);
+
+	// Slot 525
+	typedef void (*PFN_Tcl_LimitSetCommands)(Tcl_Interp* interp,
+		Tcl_Size commandLimit);
+
+	// Slot 526
+	typedef void (*PFN_Tcl_LimitSetTime)(Tcl_Interp* interp,
+		Tcl_Time* timeLimitPtr);
+
+	// Slot 527
+	typedef void (*PFN_Tcl_LimitSetGranularity)(Tcl_Interp* interp, int type,
+		int granularity);
+
+	// Slot 528
+	typedef int (*PFN_Tcl_LimitTypeEnabled)(Tcl_Interp* interp, int type);
+
+	// Slot 529
+	typedef int (*PFN_Tcl_LimitTypeExceeded)(Tcl_Interp* interp, int type);
+
+	// Slot 530
+	typedef void (*PFN_Tcl_LimitTypeSet)(Tcl_Interp* interp, int type);
+
+	// Slot 531
+	typedef void (*PFN_Tcl_LimitTypeReset)(Tcl_Interp* interp, int type);
+
+	// Slot 532
+	typedef Tcl_Size(*PFN_Tcl_LimitGetCommands)(Tcl_Interp* interp);
+
+	// Slot 533
+	typedef void (*PFN_Tcl_LimitGetTime)(Tcl_Interp* interp,
+		Tcl_Time* timeLimitPtr);
+
+	// Slot 534
+	typedef int (*PFN_Tcl_LimitGetGranularity)(Tcl_Interp* interp, int type);
+
+	// Slot 535
+	typedef Tcl_InterpState(*PFN_Tcl_SaveInterpState)(Tcl_Interp* interp, int status);
+
+	// Slot 536
+	typedef int (*PFN_Tcl_RestoreInterpState)(Tcl_Interp* interp,
+		Tcl_InterpState state);
+
+	// Slot 537
+	typedef void (*PFN_Tcl_DiscardInterpState)(Tcl_InterpState state);
+
+	// Slot 538
+	typedef int (*PFN_Tcl_SetReturnOptions)(Tcl_Interp* interp,
+		Tcl_Obj* options);
+
+	// Slot 539
+	typedef Tcl_Obj* (*PFN_Tcl_GetReturnOptions)(Tcl_Interp* interp, int result);
+
+	// Slot 540
+	typedef int (*PFN_Tcl_IsEnsemble)(Tcl_Command token);
+
+	// Slot 541
+	typedef Tcl_Command(*PFN_Tcl_CreateEnsemble)(Tcl_Interp* interp,
+		const char* name,
+		Tcl_Namespace* namespacePtr, int flags);
+
+	// Slot 542
+	typedef Tcl_Command(*PFN_Tcl_FindEnsemble)(Tcl_Interp* interp,
+		Tcl_Obj* cmdNameObj, int flags);
+
+	// Slot 543
+	typedef int (*PFN_Tcl_SetEnsembleSubcommandList)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj* subcmdList);
+
+	// Slot 544
+	typedef int (*PFN_Tcl_SetEnsembleMappingDict)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj* mapDict);
+
+	// Slot 545
+	typedef int (*PFN_Tcl_SetEnsembleUnknownHandler)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj* unknownList);
+
+	// Slot 546
+	typedef int (*PFN_Tcl_SetEnsembleFlags)(Tcl_Interp* interp,
+		Tcl_Command token, int flags);
+
+	// Slot 547
+	typedef int (*PFN_Tcl_GetEnsembleSubcommandList)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj** subcmdListPtr);
+
+	// Slot 548
+	typedef int (*PFN_Tcl_GetEnsembleMappingDict)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj** mapDictPtr);
+
+	// Slot 549
+	typedef int (*PFN_Tcl_GetEnsembleUnknownHandler)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj** unknownListPtr);
+
+	// Slot 550
+	typedef int (*PFN_Tcl_GetEnsembleFlags)(Tcl_Interp* interp,
+		Tcl_Command token, int* flagsPtr);
+
+	// Slot 551
+	typedef int (*PFN_Tcl_GetEnsembleNamespace)(Tcl_Interp* interp,
+		Tcl_Command token,
+		Tcl_Namespace** namespacePtrPtr);
+
+	// Slot 552
+	typedef void (*PFN_Tcl_SetTimeProc)(Tcl_GetTimeProc* getProc,
+		Tcl_ScaleTimeProc* scaleProc,
+		void* clientData);
+
+	// Slot 553
+	typedef void (*PFN_Tcl_QueryTimeProc)(Tcl_GetTimeProc** getProc,
+		Tcl_ScaleTimeProc** scaleProc,
+		void** clientData);
+
+	// Slot 554
+	typedef Tcl_DriverThreadActionProc* (*PFN_Tcl_ChannelThreadActionProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 555
+	typedef Tcl_Obj* (*PFN_Tcl_NewBignumObj)(void* value);
+
+	// Slot 556
+	typedef Tcl_Obj* (*PFN_Tcl_DbNewBignumObj)(void* value, const char* file,
+		int line);
+
+	// Slot 557
+	typedef void (*PFN_Tcl_SetBignumObj)(Tcl_Obj* obj, void* value);
+
+	// Slot 558
+	typedef int (*PFN_Tcl_GetBignumFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* obj, void* value);
+
+	// Slot 559
+	typedef int (*PFN_Tcl_TakeBignumFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* obj, void* value);
+
+	// Slot 560
+	typedef int (*PFN_Tcl_TruncateChannel)(Tcl_Channel chan,
+		long long length);
+
+	// Slot 561
+	typedef Tcl_DriverTruncateProc* (*PFN_Tcl_ChannelTruncateProc)(
+		const Tcl_ChannelType* chanTypePtr);
+
+	// Slot 562
+	typedef void (*PFN_Tcl_SetChannelErrorInterp)(Tcl_Interp* interp,
+		Tcl_Obj* msg);
+
+	// Slot 563
+	typedef void (*PFN_Tcl_GetChannelErrorInterp)(Tcl_Interp* interp,
+		Tcl_Obj** msg);
+
+	// Slot 564
+	typedef void (*PFN_Tcl_SetChannelError)(Tcl_Channel chan, Tcl_Obj* msg);
+
+	// Slot 565
+	typedef void (*PFN_Tcl_GetChannelError)(Tcl_Channel chan, Tcl_Obj** msg);
+
+	// Slot 566
+	typedef int (*PFN_Tcl_InitBignumFromDouble)(Tcl_Interp* interp,
+		double initval, void* toInit);
+
+	// Slot 567
+	typedef Tcl_Obj* (*PFN_Tcl_GetNamespaceUnknownHandler)(Tcl_Interp* interp,
+		Tcl_Namespace* nsPtr);
+
+	// Slot 568
+	typedef int (*PFN_Tcl_SetNamespaceUnknownHandler)(Tcl_Interp* interp,
+		Tcl_Namespace* nsPtr, Tcl_Obj* handlerPtr);
+
+	// Slot 569
+	typedef int (*PFN_Tcl_GetEncodingFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, Tcl_Encoding* encodingPtr);
+
+	// Slot 570
+	typedef Tcl_Obj* (*PFN_Tcl_GetEncodingSearchPath)(void);
+
+	// Slot 571
+	typedef int (*PFN_Tcl_SetEncodingSearchPath)(Tcl_Obj* searchPath);
+
+	// Slot 572
+	typedef const char* (*PFN_Tcl_GetEncodingNameFromEnvironment)(
+		Tcl_DString* bufPtr);
+
+	// Slot 573
+	typedef int (*PFN_Tcl_PkgRequireProc)(Tcl_Interp* interp,
+		const char* name, Tcl_Size objc,
+		Tcl_Obj* const objv[], void* clientDataPtr);
+
+	// Slot 574
+	typedef void (*PFN_Tcl_AppendObjToErrorInfo)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr);
+
+	// Slot 575
+	typedef void (*PFN_Tcl_AppendLimitedToObj)(Tcl_Obj* objPtr,
+		const char* bytes, Tcl_Size length,
+		Tcl_Size limit, const char* ellipsis);
+
+	// Slot 576
+	typedef Tcl_Obj* (*PFN_Tcl_Format)(Tcl_Interp* interp, const char* format,
+		Tcl_Size objc, Tcl_Obj* const objv[]);
+
+	// Slot 577
+	typedef int (*PFN_Tcl_AppendFormatToObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, const char* format,
+		Tcl_Size objc, Tcl_Obj* const objv[]);
+
+	// Slot 578
+	typedef Tcl_Obj* (*PFN_Tcl_ObjPrintf)(const char* format, ...) TCL_FORMAT_PRINTF(1, 2);
+
+	// Slot 579
+	typedef void (*PFN_Tcl_AppendPrintfToObj)(Tcl_Obj* objPtr,
+		const char* format, ...) TCL_FORMAT_PRINTF(2, 3);
+
+	// Slot 580
+	typedef int (*PFN_Tcl_CancelEval)(Tcl_Interp* interp,
+		Tcl_Obj* resultObjPtr, void* clientData,
+		int flags);
+
+	// Slot 581
+	typedef int (*PFN_Tcl_Canceled)(Tcl_Interp* interp, int flags);
+
+	// Slot 582
+	typedef int (*PFN_Tcl_CreatePipe)(Tcl_Interp* interp,
+		Tcl_Channel* rchan, Tcl_Channel* wchan,
+		int flags);
+
+	// Slot 583
+	typedef Tcl_Command(*PFN_Tcl_NRCreateCommand)(Tcl_Interp* interp,
+		const char* cmdName, Tcl_ObjCmdProc* proc,
+		Tcl_ObjCmdProc* nreProc, void* clientData,
+		Tcl_CmdDeleteProc* deleteProc);
+
+	// Slot 584
+	typedef int (*PFN_Tcl_NREvalObj)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		int flags);
+
+	// Slot 585
+	typedef int (*PFN_Tcl_NREvalObjv)(Tcl_Interp* interp, Tcl_Size objc,
+		Tcl_Obj* const objv[], int flags);
+
+	// Slot 586
+	typedef int (*PFN_Tcl_NRCmdSwap)(Tcl_Interp* interp, Tcl_Command cmd,
+		Tcl_Size objc, Tcl_Obj* const objv[],
+		int flags);
+
+	// Slot 587
+	typedef void (*PFN_Tcl_NRAddCallback)(Tcl_Interp* interp,
+		Tcl_NRPostProc* postProcPtr, void* data0,
+		void* data1, void* data2, void* data3);
+
+	// Slot 588
+	typedef int (*PFN_Tcl_NRCallObjProc)(Tcl_Interp* interp,
+		Tcl_ObjCmdProc* objProc, void* clientData,
+		Tcl_Size objc, Tcl_Obj* const objv[]);
+
+	// Slot 589
+	typedef unsigned (*PFN_Tcl_GetFSDeviceFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 590
+	typedef unsigned (*PFN_Tcl_GetFSInodeFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 591
+	typedef unsigned (*PFN_Tcl_GetModeFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 592
+	typedef int (*PFN_Tcl_GetLinkCountFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 593
+	typedef int (*PFN_Tcl_GetUserIdFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 594
+	typedef int (*PFN_Tcl_GetGroupIdFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 595
+	typedef int (*PFN_Tcl_GetDeviceTypeFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 596
+	typedef long long (*PFN_Tcl_GetAccessTimeFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 597
+	typedef long long (*PFN_Tcl_GetModificationTimeFromStat)(
+		const Tcl_StatBuf* statPtr);
+
+	// Slot 598
+	typedef long long (*PFN_Tcl_GetChangeTimeFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 599
+	typedef unsigned long long (*PFN_Tcl_GetSizeFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 600
+	typedef unsigned long long (*PFN_Tcl_GetBlocksFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 601
+	typedef unsigned (*PFN_Tcl_GetBlockSizeFromStat)(const Tcl_StatBuf* statPtr);
+
+	// Slot 602
+	typedef int (*PFN_Tcl_SetEnsembleParameterList)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj* paramList);
+
+	// Slot 603
+	typedef int (*PFN_Tcl_GetEnsembleParameterList)(Tcl_Interp* interp,
+		Tcl_Command token, Tcl_Obj** paramListPtr);
+
+	// Slot 604
+	typedef int (*PFN_TclParseArgsObjv)(Tcl_Interp* interp,
+		const Tcl_ArgvInfo* argTable, void* objcPtr,
+		Tcl_Obj* const* objv, Tcl_Obj*** remObjv);
+
+	// Slot 605
+	typedef int (*PFN_Tcl_GetErrorLine)(Tcl_Interp* interp);
+
+	// Slot 606
+	typedef void (*PFN_Tcl_SetErrorLine)(Tcl_Interp* interp, int lineNum);
+
+	// Slot 607
+	typedef void (*PFN_Tcl_TransferResult)(Tcl_Interp* sourceInterp,
+		int code, Tcl_Interp* targetInterp);
+
+	// Slot 608
+	typedef int (*PFN_Tcl_InterpActive)(Tcl_Interp* interp);
+
+	// Slot 609
+	typedef void (*PFN_Tcl_BackgroundException)(Tcl_Interp* interp, int code);
+
+	// Slot 610
+	typedef int (*PFN_Tcl_ZlibDeflate)(Tcl_Interp* interp, int format,
+		Tcl_Obj* data, int level,
+		Tcl_Obj* gzipHeaderDictObj);
+
+	// Slot 611
+	typedef int (*PFN_Tcl_ZlibInflate)(Tcl_Interp* interp, int format,
+		Tcl_Obj* data, Tcl_Size buffersize,
+		Tcl_Obj* gzipHeaderDictObj);
+
+	// Slot 612
+	typedef unsigned int (*PFN_Tcl_ZlibCRC32)(unsigned int crc,
+		const unsigned char* buf, Tcl_Size len);
+
+	// Slot 613
+	typedef unsigned int (*PFN_Tcl_ZlibAdler32)(unsigned int adler,
+		const unsigned char* buf, Tcl_Size len);
+
+	// Slot 614
+	typedef int (*PFN_Tcl_ZlibStreamInit)(Tcl_Interp* interp, int mode,
+		int format, int level, Tcl_Obj* dictObj,
+		Tcl_ZlibStream* zshandle);
+
+	// Slot 615
+	typedef Tcl_Obj* (*PFN_Tcl_ZlibStreamGetCommandName)(Tcl_ZlibStream zshandle);
+
+	// Slot 616
+	typedef int (*PFN_Tcl_ZlibStreamEof)(Tcl_ZlibStream zshandle);
+
+	// Slot 617
+	typedef int (*PFN_Tcl_ZlibStreamChecksum)(Tcl_ZlibStream zshandle);
+
+	// Slot 618
+	typedef int (*PFN_Tcl_ZlibStreamPut)(Tcl_ZlibStream zshandle,
+		Tcl_Obj* data, int flush);
+
+	// Slot 619
+	typedef int (*PFN_Tcl_ZlibStreamGet)(Tcl_ZlibStream zshandle,
+		Tcl_Obj* data, Tcl_Size count);
+
+	// Slot 620
+	typedef int (*PFN_Tcl_ZlibStreamClose)(Tcl_ZlibStream zshandle);
+
+	// Slot 621
+	typedef int (*PFN_Tcl_ZlibStreamReset)(Tcl_ZlibStream zshandle);
+
+	// Slot 622
+	typedef void (*PFN_Tcl_SetStartupScript)(Tcl_Obj* path,
+		const char* encoding);
+
+	// Slot 623
+	typedef Tcl_Obj* (*PFN_Tcl_GetStartupScript)(const char** encodingPtr);
+
+	// Slot 624
+	typedef int (*PFN_Tcl_CloseEx)(Tcl_Interp* interp, Tcl_Channel chan,
+		int flags);
+
+	// Slot 625
+	typedef int (*PFN_Tcl_NRExprObj)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		Tcl_Obj* resultPtr);
+
+	// Slot 626
+	typedef int (*PFN_Tcl_NRSubstObj)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		int flags);
+
+	// Slot 627
+	typedef int (*PFN_Tcl_LoadFile)(Tcl_Interp* interp, Tcl_Obj* pathPtr,
+		const char* const symv[], int flags,
+		void* procPtrs, Tcl_LoadHandle* handlePtr);
+
+	// Slot 628
+	typedef void* (*PFN_Tcl_FindSymbol)(Tcl_Interp* interp,
+		Tcl_LoadHandle handle, const char* symbol);
+
+	// Slot 629
+	typedef int (*PFN_Tcl_FSUnloadFile)(Tcl_Interp* interp,
+		Tcl_LoadHandle handlePtr);
+
+	// Slot 630
+	typedef void (*PFN_Tcl_ZlibStreamSetCompressionDictionary)(
+		Tcl_ZlibStream zhandle,
+		Tcl_Obj* compressionDictionaryObj);
+
+	// Slot 631
+	typedef Tcl_Channel(*PFN_Tcl_OpenTcpServerEx)(Tcl_Interp* interp,
+		const char* service, const char* host,
+		unsigned int flags, int backlog,
+		Tcl_TcpAcceptProc* acceptProc,
+		void* callbackData);
+
+	// Slot 632
+	typedef int (*PFN_TclZipfs_Mount)(Tcl_Interp* interp,
+		const char* zipname, const char* mountPoint,
+		const char* passwd);
+
+	// Slot 633
+	typedef int (*PFN_TclZipfs_Unmount)(Tcl_Interp* interp,
+		const char* mountPoint);
+
+	// Slot 634
+	typedef Tcl_Obj* (*PFN_TclZipfs_TclLibrary)(void);
+
+	// Slot 635
+	typedef int (*PFN_TclZipfs_MountBuffer)(Tcl_Interp* interp,
+		const void* data, size_t datalen,
+		const char* mountPoint, int copy);
+
+	// Slot 636
+	typedef void (*PFN_Tcl_FreeInternalRep)(Tcl_Obj* objPtr);
+
+	// Slot 637
+	typedef char* (*PFN_Tcl_InitStringRep)(Tcl_Obj* objPtr, const char* bytes,
+		size_t numBytes);
+
+	// Slot 638
+	typedef Tcl_ObjInternalRep* (*PFN_Tcl_FetchInternalRep)(Tcl_Obj* objPtr,
+		const Tcl_ObjType* typePtr);
+
+	// Slot 639
+	typedef void (*PFN_Tcl_StoreInternalRep)(Tcl_Obj* objPtr,
+		const Tcl_ObjType* typePtr,
+		const Tcl_ObjInternalRep* irPtr);
+
+	// Slot 640
+	typedef int (*PFN_Tcl_HasStringRep)(Tcl_Obj* objPtr);
+
+	// Slot 641
+	typedef void (*PFN_Tcl_IncrRefCount)(Tcl_Obj* objPtr);
+
+	// Slot 642
+	typedef void (*PFN_Tcl_DecrRefCount)(Tcl_Obj* objPtr);
+
+	// Slot 643
+	typedef int (*PFN_Tcl_IsShared)(Tcl_Obj* objPtr);
+
+	// Slot 644
+	typedef int (*PFN_Tcl_LinkArray)(Tcl_Interp* interp,
+		const char* varName, void* addr, int type,
+		Tcl_Size size);
+
+	// Slot 645
+	typedef int (*PFN_Tcl_GetIntForIndex)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, Tcl_Size endValue,
+		Tcl_Size* indexPtr);
+
+	// Slot 646
+	typedef Tcl_Size(*PFN_Tcl_UtfToUniChar)(const char* src, int* chPtr);
+
+	// Slot 647
+	typedef char* (*PFN_Tcl_UniCharToUtfDString)(const int* uniStr,
+		Tcl_Size uniLength, Tcl_DString* dsPtr);
+
+	// Slot 648
+	typedef int* (*PFN_Tcl_UtfToUniCharDString)(const char* src,
+		Tcl_Size length, Tcl_DString* dsPtr);
+
+	// Slot 649
+	typedef unsigned char* (*PFN_TclGetBytesFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, void* numBytesPtr);
+
+	// Slot 650
+	typedef unsigned char* (*PFN_Tcl_GetBytesFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, Tcl_Size* numBytesPtr);
+
+	// Slot 651
+	typedef char* (*PFN_Tcl_GetStringFromObj)(Tcl_Obj* objPtr,
+		Tcl_Size* lengthPtr);
+
+	// Slot 652
+	typedef Tcl_UniChar* (*PFN_Tcl_GetUnicodeFromObj)(Tcl_Obj* objPtr,
+		Tcl_Size* lengthPtr);
+
+	// Slot 653
+	typedef int (*PFN_Tcl_GetSizeIntFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, Tcl_Size* sizePtr);
+
+	// Slot 654
+	typedef int (*PFN_Tcl_UtfCharComplete)(const char* src, Tcl_Size length);
+
+	// Slot 655
+	typedef const char* (*PFN_Tcl_UtfNext)(const char* src);
+
+	// Slot 656
+	typedef const char* (*PFN_Tcl_UtfPrev)(const char* src, const char* start);
+
+	// Slot 657
+	typedef int (*PFN_Tcl_FSTildeExpand)(Tcl_Interp* interp,
+		const char* path, Tcl_DString* dsPtr);
+
+	// Slot 658
+	typedef int (*PFN_Tcl_ExternalToUtfDStringEx)(Tcl_Interp* interp,
+		Tcl_Encoding encoding, const char* src,
+		Tcl_Size srcLen, int flags,
+		Tcl_DString* dsPtr,
+		Tcl_Size* errorLocationPtr);
+
+	// Slot 659
+	typedef int (*PFN_Tcl_UtfToExternalDStringEx)(Tcl_Interp* interp,
+		Tcl_Encoding encoding, const char* src,
+		Tcl_Size srcLen, int flags,
+		Tcl_DString* dsPtr,
+		Tcl_Size* errorLocationPtr);
+
+	// Slot 660
+	typedef int (*PFN_Tcl_AsyncMarkFromSignal)(Tcl_AsyncHandler async,
+		int sigNumber);
+
+	// Slot 661
+	typedef int (*PFN_Tcl_ListObjGetElements)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, Tcl_Size* objcPtr,
+		Tcl_Obj*** objvPtr);
+
+	// Slot 662
+	typedef int (*PFN_Tcl_ListObjLength)(Tcl_Interp* interp,
+		Tcl_Obj* listPtr, Tcl_Size* lengthPtr);
+
+	// Slot 663
+	typedef int (*PFN_Tcl_DictObjSize)(Tcl_Interp* interp, Tcl_Obj* dictPtr,
+		Tcl_Size* sizePtr);
+
+	// Slot 664
+	typedef int (*PFN_Tcl_SplitList)(Tcl_Interp* interp,
+		const char* listStr, Tcl_Size* argcPtr,
+		const char*** argvPtr);
+
+	// Slot 665
+	typedef void (*PFN_Tcl_SplitPath)(const char* path, Tcl_Size* argcPtr,
+		const char*** argvPtr);
+
+	// Slot 666
+	typedef Tcl_Obj* (*PFN_Tcl_FSSplitPath)(Tcl_Obj* pathPtr, Tcl_Size* lenPtr);
+
+	// Slot 667
+	typedef int (*PFN_Tcl_ParseArgsObjv)(Tcl_Interp* interp,
+		const Tcl_ArgvInfo* argTable,
+		Tcl_Size* objcPtr, Tcl_Obj* const* objv,
+		Tcl_Obj*** remObjv);
+
+	// Slot 668
+	typedef Tcl_Size(*PFN_Tcl_UniCharLen)(const int* uniStr);
+
+	// Slot 669
+	typedef Tcl_Size(*PFN_Tcl_NumUtfChars)(const char* src, Tcl_Size length);
+
+	// Slot 670
+	typedef Tcl_Size(*PFN_Tcl_GetCharLength)(Tcl_Obj* objPtr);
+
+	// Slot 671
+	typedef const char* (*PFN_Tcl_UtfAtIndex)(const char* src, Tcl_Size index);
+
+	// Slot 672
+	typedef Tcl_Obj* (*PFN_Tcl_GetRange)(Tcl_Obj* objPtr, Tcl_Size first,
+		Tcl_Size last);
+
+	// Slot 673
+	typedef int (*PFN_Tcl_GetUniChar)(Tcl_Obj* objPtr, Tcl_Size index);
+
+	// Slot 674
+	typedef int (*PFN_Tcl_GetBool)(Tcl_Interp* interp, const char* src,
+		int flags, char* charPtr);
+
+	// Slot 675
+	typedef int (*PFN_Tcl_GetBoolFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, int flags, char* charPtr);
+
+	// Slot 676
+	typedef Tcl_Command(*PFN_Tcl_CreateObjCommand2)(Tcl_Interp* interp,
+		const char* cmdName, Tcl_ObjCmdProc2* proc2,
+		void* clientData,
+		Tcl_CmdDeleteProc* deleteProc);
+
+	// Slot 677
+	typedef Tcl_Trace(*PFN_Tcl_CreateObjTrace2)(Tcl_Interp* interp,
+		Tcl_Size level, int flags,
+		Tcl_CmdObjTraceProc2* objProc2,
+		void* clientData,
+		Tcl_CmdObjTraceDeleteProc* delProc);
+
+	// Slot 678
+	typedef Tcl_Command(*PFN_Tcl_NRCreateCommand2)(Tcl_Interp* interp,
+		const char* cmdName, Tcl_ObjCmdProc2* proc,
+		Tcl_ObjCmdProc2* nreProc2, void* clientData,
+		Tcl_CmdDeleteProc* deleteProc);
+
+	// Slot 679
+	typedef int (*PFN_Tcl_NRCallObjProc2)(Tcl_Interp* interp,
+		Tcl_ObjCmdProc2* objProc2, void* clientData,
+		Tcl_Size objc, Tcl_Obj* const objv[]);
+
+	// Slot 680
+	typedef int (*PFN_Tcl_GetNumberFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, void** clientDataPtr,
+		int* typePtr);
+
+	// Slot 681
+	typedef int (*PFN_Tcl_GetNumber)(Tcl_Interp* interp, const char* bytes,
+		Tcl_Size numBytes, void** clientDataPtr,
+		int* typePtr);
+
+	// Slot 682
+	typedef int (*PFN_Tcl_RemoveChannelMode)(Tcl_Interp* interp,
+		Tcl_Channel chan, int mode);
+
+	// Slot 683
+	typedef Tcl_Size(*PFN_Tcl_GetEncodingNulLength)(Tcl_Encoding encoding);
+
+	// Slot 684
+	typedef int (*PFN_Tcl_GetWideUIntFromObj)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, Tcl_WideUInt* uwidePtr);
+
+	// Slot 685
+	typedef Tcl_Obj* (*PFN_Tcl_DStringToObj)(Tcl_DString* dsPtr);
+
+	// Slot 686
+	typedef int (*PFN_Tcl_UtfNcmp)(const char* s1, const char* s2, size_t n);
+
+	// Slot 687
+	typedef int (*PFN_Tcl_UtfNcasecmp)(const char* s1, const char* s2,
+		size_t n);
+
+	// Slot 688
+	typedef Tcl_Obj* (*PFN_Tcl_NewWideUIntObj)(Tcl_WideUInt wideValue);
+
+	// Slot 689
+	typedef void (*PFN_Tcl_SetWideUIntObj)(Tcl_Obj* objPtr,
+		Tcl_WideUInt uwideValue);
+
+	// Slot 690
+	typedef int (*PFN_Tcl_IsEmpty)(Tcl_Obj* obj);
+
+	// Slot 691
+	typedef const char* (*PFN_Tcl_GetEncodingNameForUser)(Tcl_DString* bufPtr);
+
+	// Slot 692
+	typedef int (*PFN_Tcl_ListObjReverse)(Tcl_Interp* interp,
+		Tcl_Obj* objPtr, Tcl_Obj** resultPtrPtr);
+
+	// Slot 693
+	typedef int (*PFN_Tcl_ListObjRepeat)(Tcl_Interp* interp,
+		Tcl_Size repeatCount, Tcl_Size objc,
+		Tcl_Obj* const objv[],
+		Tcl_Obj** resultPtrPtr);
+
+	// Slot 694
+	typedef int (*PFN_Tcl_ListObjRange)(Tcl_Interp* interp, Tcl_Obj* objPtr,
+		Tcl_Size start, Tcl_Size end,
+		Tcl_Obj** resultPtrPtr);
+
+	// Slot 695
+	typedef void (*PFN_TclUnusedStubEntry)(void);
+
+	// Slot 0
+	extern PFN_Tcl_PkgProvideEx Tcl_PkgProvideEx;
+
+	// Slot 1
+	extern PFN_Tcl_PkgRequireEx Tcl_PkgRequireEx;
+
+	// Slot 2
+	extern PFN_Tcl_Panic Tcl_Panic;
+
+	// Slot 3
+	extern PFN_Tcl_Alloc Tcl_Alloc;
+
+	// Slot 4
+	extern PFN_Tcl_Free Tcl_Free;
+
+	// Slot 5
+	extern PFN_Tcl_Realloc Tcl_Realloc;
+
+	// Slot 6
+	extern PFN_Tcl_DbCkalloc Tcl_DbCkalloc;
+
+	// Slot 7
+	extern PFN_Tcl_DbCkfree Tcl_DbCkfree;
+
+	// Slot 8
+	extern PFN_Tcl_DbCkrealloc Tcl_DbCkrealloc;
+
+	// Slot 9
+	extern PFN_Tcl_CreateFileHandler Tcl_CreateFileHandler;
+
+	// Slot 10
+	extern PFN_Tcl_DeleteFileHandler Tcl_DeleteFileHandler;
+
+	// Slot 11
+	extern PFN_Tcl_SetTimer Tcl_SetTimer;
+
+	// Slot 12
+	extern PFN_Tcl_Sleep Tcl_Sleep;
+
+	// Slot 13
+	extern PFN_Tcl_WaitForEvent Tcl_WaitForEvent;
+
+	// Slot 14
+	extern PFN_Tcl_AppendAllObjTypes Tcl_AppendAllObjTypes;
+
+	// Slot 15
+	extern PFN_Tcl_AppendStringsToObj Tcl_AppendStringsToObj;
+
+	// Slot 16
+	extern PFN_Tcl_AppendToObj Tcl_AppendToObj;
+
+	// Slot 17
+	extern PFN_Tcl_ConcatObj Tcl_ConcatObj;
+
+	// Slot 18
+	extern PFN_Tcl_ConvertToType Tcl_ConvertToType;
+
+	// Slot 19
+	extern PFN_Tcl_DbDecrRefCount Tcl_DbDecrRefCount;
+
+	// Slot 20
+	extern PFN_Tcl_DbIncrRefCount Tcl_DbIncrRefCount;
+
+	// Slot 21
+	extern PFN_Tcl_DbIsShared Tcl_DbIsShared;
+
+	// Slot 22 is reserved
+
+	// Slot 23
+	extern PFN_Tcl_DbNewByteArrayObj Tcl_DbNewByteArrayObj;
+
+	// Slot 24
+	extern PFN_Tcl_DbNewDoubleObj Tcl_DbNewDoubleObj;
+
+	// Slot 25
+	extern PFN_Tcl_DbNewListObj Tcl_DbNewListObj;
+
+	// Slot 26 is reserved
+
+	// Slot 27
+	extern PFN_Tcl_DbNewObj Tcl_DbNewObj;
+
+	// Slot 28
+	extern PFN_Tcl_DbNewStringObj Tcl_DbNewStringObj;
+
+	// Slot 29
+	extern PFN_Tcl_DuplicateObj Tcl_DuplicateObj;
+
+	// Slot 30
+	extern PFN_TclFreeObj TclFreeObj;
+
+	// Slot 31 is reserved
+	// Slot 32 is reserved
+	// Slot 33 is reserved
+
+	// Slot 34
+	extern PFN_Tcl_GetDouble Tcl_GetDouble;
+
+	// Slot 35
+	extern PFN_Tcl_GetDoubleFromObj Tcl_GetDoubleFromObj;
+
+	// Slot 36 is reserved
+
+	// Slot 37
+	extern PFN_Tcl_GetInt Tcl_GetInt;
+
+	// Slot 38
+	extern PFN_Tcl_GetIntFromObj Tcl_GetIntFromObj;
+
+	// Slot 39
+	extern PFN_Tcl_GetLongFromObj Tcl_GetLongFromObj;
+
+	// Slot 40
+	extern PFN_Tcl_GetObjType Tcl_GetObjType;
+
+	// Slot 41
+	extern PFN_TclGetStringFromObj TclGetStringFromObj;
+
+	// Slot 42
+	extern PFN_Tcl_InvalidateStringRep Tcl_InvalidateStringRep;
+
+	// Slot 43
+	extern PFN_Tcl_ListObjAppendList Tcl_ListObjAppendList;
+
+	// Slot 44
+	extern PFN_Tcl_ListObjAppendElement Tcl_ListObjAppendElement;
+
+	// Slot 45
+	extern PFN_TclListObjGetElements TclListObjGetElements;
+
+	// Slot 46
+	extern PFN_Tcl_ListObjIndex Tcl_ListObjIndex;
+
+	// Slot 47
+	extern PFN_TclListObjLength TclListObjLength;
+
+	// Slot 48
+	extern PFN_Tcl_ListObjReplace Tcl_ListObjReplace;
+
+	// Slot 49 is reserved
+
+	// Slot 50
+	extern PFN_Tcl_NewByteArrayObj Tcl_NewByteArrayObj;
+
+	// Slot 51
+	extern PFN_Tcl_NewDoubleObj Tcl_NewDoubleObj;
+
+	// Slot 52 is reserved
+
+	// Slot 53
+	extern PFN_Tcl_NewListObj Tcl_NewListObj;
+
+	// Slot 54 is reserved
+
+	// Slot 55
+	extern PFN_Tcl_NewObj Tcl_NewObj;
+
+	// Slot 56
+	extern PFN_Tcl_NewStringObj Tcl_NewStringObj;
+
+	// Slot 57 is reserved
+
+	// Slot 58
+	extern PFN_Tcl_SetByteArrayLength Tcl_SetByteArrayLength;
+
+	// Slot 59
+	extern PFN_Tcl_SetByteArrayObj Tcl_SetByteArrayObj;
+
+	// Slot 60
+	extern PFN_Tcl_SetDoubleObj Tcl_SetDoubleObj;
+
+	// Slot 61 is reserved
+
+	// Slot 62
+	extern PFN_Tcl_SetListObj Tcl_SetListObj;
+
+	// Slot 63 is reserved
+
+	// Slot 64
+	extern PFN_Tcl_SetObjLength Tcl_SetObjLength;
+
+	// Slot 65
+	extern PFN_Tcl_SetStringObj Tcl_SetStringObj;
+
+	// Slot 66 is reserved
+	// Slot 67 is reserved
+
+	// Slot 68
+	extern PFN_Tcl_AllowExceptions Tcl_AllowExceptions;
+
+	// Slot 69
+	extern PFN_Tcl_AppendElement Tcl_AppendElement;
+
+	// Slot 70
+	extern PFN_Tcl_AppendResult Tcl_AppendResult;
+
+	// Slot 71
+	extern PFN_Tcl_AsyncCreate Tcl_AsyncCreate;
+
+	// Slot 72
+	extern PFN_Tcl_AsyncDelete Tcl_AsyncDelete;
+
+	// Slot 73
+	extern PFN_Tcl_AsyncInvoke Tcl_AsyncInvoke;
+
+	// Slot 74
+	extern PFN_Tcl_AsyncMark Tcl_AsyncMark;
+
+	// Slot 75
+	extern PFN_Tcl_AsyncReady Tcl_AsyncReady;
+
+	// Slot 76 is reserved
+	// Slot 77 is reserved
+
+	// Slot 78
+	extern PFN_Tcl_BadChannelOption Tcl_BadChannelOption;
+
+	// Slot 79
+	extern PFN_Tcl_CallWhenDeleted Tcl_CallWhenDeleted;
+
+	// Slot 80
+	extern PFN_Tcl_CancelIdleCall Tcl_CancelIdleCall;
+
+	// Slot 81 is reserved
+
+	// Slot 82
+	extern PFN_Tcl_CommandComplete Tcl_CommandComplete;
+
+	// Slot 83
+	extern PFN_Tcl_Concat Tcl_Concat;
+
+	// Slot 84
+	extern PFN_Tcl_ConvertElement Tcl_ConvertElement;
+
+	// Slot 85
+	extern PFN_Tcl_ConvertCountedElement Tcl_ConvertCountedElement;
+
+	// Slot 86
+	extern PFN_Tcl_CreateAlias Tcl_CreateAlias;
+
+	// Slot 87
+	extern PFN_Tcl_CreateAliasObj Tcl_CreateAliasObj;
+
+	// Slot 88
+	extern PFN_Tcl_CreateChannel Tcl_CreateChannel;
+
+	// Slot 89
+	extern PFN_Tcl_CreateChannelHandler Tcl_CreateChannelHandler;
+
+	// Slot 90
+	extern PFN_Tcl_CreateCloseHandler Tcl_CreateCloseHandler;
+
+	// Slot 91
+	extern PFN_Tcl_CreateCommand Tcl_CreateCommand;
+
+	// Slot 92
+	extern PFN_Tcl_CreateEventSource Tcl_CreateEventSource;
+
+	// Slot 93
+	extern PFN_Tcl_CreateExitHandler Tcl_CreateExitHandler;
+
+	// Slot 94
+	extern PFN_Tcl_CreateInterp Tcl_CreateInterp;
+
+	// Slot 95 is reserved
+
+	// Slot 96
+	extern PFN_Tcl_CreateObjCommand Tcl_CreateObjCommand;
+
+	// Slot 97
+	extern PFN_Tcl_CreateChild Tcl_CreateChild;
+
+	// Slot 98
+	extern PFN_Tcl_CreateTimerHandler Tcl_CreateTimerHandler;
+
+	// Slot 99
+	extern PFN_Tcl_CreateTrace Tcl_CreateTrace;
+
+	// Slot 100
+	extern PFN_Tcl_DeleteAssocData Tcl_DeleteAssocData;
+
+	// Slot 101
+	extern PFN_Tcl_DeleteChannelHandler Tcl_DeleteChannelHandler;
+
+	// Slot 102
+	extern PFN_Tcl_DeleteCloseHandler Tcl_DeleteCloseHandler;
+
+	// Slot 103
+	extern PFN_Tcl_DeleteCommand Tcl_DeleteCommand;
+
+	// Slot 104
+	extern PFN_Tcl_DeleteCommandFromToken Tcl_DeleteCommandFromToken;
+
+	// Slot 105
+	extern PFN_Tcl_DeleteEvents Tcl_DeleteEvents;
+
+	// Slot 106
+	extern PFN_Tcl_DeleteEventSource Tcl_DeleteEventSource;
+
+	// Slot 107
+	extern PFN_Tcl_DeleteExitHandler Tcl_DeleteExitHandler;
+
+	// Slot 108
+	extern PFN_Tcl_DeleteHashEntry Tcl_DeleteHashEntry;
+
+	// Slot 109
+	extern PFN_Tcl_DeleteHashTable Tcl_DeleteHashTable;
+
+	// Slot 110
+	extern PFN_Tcl_DeleteInterp Tcl_DeleteInterp;
+
+	// Slot 111
+	extern PFN_Tcl_DetachPids Tcl_DetachPids;
+
+	// Slot 112
+	extern PFN_Tcl_DeleteTimerHandler Tcl_DeleteTimerHandler;
+
+	// Slot 113
+	extern PFN_Tcl_DeleteTrace Tcl_DeleteTrace;
+
+	// Slot 114
+	extern PFN_Tcl_DontCallWhenDeleted Tcl_DontCallWhenDeleted;
+
+	// Slot 115
+	extern PFN_Tcl_DoOneEvent Tcl_DoOneEvent;
+
+	// Slot 116
+	extern PFN_Tcl_DoWhenIdle Tcl_DoWhenIdle;
+
+	// Slot 117
+	extern PFN_Tcl_DStringAppend Tcl_DStringAppend;
+
+	// Slot 118
+	extern PFN_Tcl_DStringAppendElement Tcl_DStringAppendElement;
+
+	// Slot 119
+	extern PFN_Tcl_DStringEndSublist Tcl_DStringEndSublist;
+
+	// Slot 120
+	extern PFN_Tcl_DStringFree Tcl_DStringFree;
+
+	// Slot 121
+	extern PFN_Tcl_DStringGetResult Tcl_DStringGetResult;
+
+	// Slot 122
+	extern PFN_Tcl_DStringInit Tcl_DStringInit;
+
+	// Slot 123
+	extern PFN_Tcl_DStringResult Tcl_DStringResult;
+
+	// Slot 124
+	extern PFN_Tcl_DStringSetLength Tcl_DStringSetLength;
+
+	// Slot 125
+	extern PFN_Tcl_DStringStartSublist Tcl_DStringStartSublist;
+
+	// Slot 126
+	extern PFN_Tcl_Eof Tcl_Eof;
+
+	// Slot 127
+	extern PFN_Tcl_ErrnoId Tcl_ErrnoId;
+
+	// Slot 128
+	extern PFN_Tcl_ErrnoMsg Tcl_ErrnoMsg;
+
+	// Slot 129 is reserved
+
+	// Slot 130
+	extern PFN_Tcl_EvalFile Tcl_EvalFile;
+
+	// Slot 131 is reserved
+
+	// Slot 132
+	extern PFN_Tcl_EventuallyFree Tcl_EventuallyFree;
+
+	// Slot 133
+	extern PFN_Tcl_Exit Tcl_Exit;
+
+	// Slot 134
+	extern PFN_Tcl_ExposeCommand Tcl_ExposeCommand;
+
+	// Slot 135
+	extern PFN_Tcl_ExprBoolean Tcl_ExprBoolean;
+
+	// Slot 136
+	extern PFN_Tcl_ExprBooleanObj Tcl_ExprBooleanObj;
+
+	// Slot 137
+	extern PFN_Tcl_ExprDouble Tcl_ExprDouble;
+
+	// Slot 138
+	extern PFN_Tcl_ExprDoubleObj Tcl_ExprDoubleObj;
+
+	// Slot 139
+	extern PFN_Tcl_ExprLong Tcl_ExprLong;
+
+	// Slot 140
+	extern PFN_Tcl_ExprLongObj Tcl_ExprLongObj;
+
+	// Slot 141
+	extern PFN_Tcl_ExprObj Tcl_ExprObj;
+
+	// Slot 142
+	extern PFN_Tcl_ExprString Tcl_ExprString;
+
+	// Slot 143
+	extern PFN_Tcl_Finalize Tcl_Finalize;
+
+	// Slot 144 is reserved
+
+	// Slot 145
+	extern PFN_Tcl_FirstHashEntry Tcl_FirstHashEntry;
+
+	// Slot 146
+	extern PFN_Tcl_Flush Tcl_Flush;
+
+	// Slot 147 is reserved
+	// Slot 148 is reserved
+
+	// Slot 149
+	extern PFN_TclGetAliasObj TclGetAliasObj;
+
+	// Slot 150
+	extern PFN_Tcl_GetAssocData Tcl_GetAssocData;
+
+	// Slot 151
+	extern PFN_Tcl_GetChannel Tcl_GetChannel;
+
+	// Slot 152
+	extern PFN_Tcl_GetChannelBufferSize Tcl_GetChannelBufferSize;
+
+	// Slot 153
+	extern PFN_Tcl_GetChannelHandle Tcl_GetChannelHandle;
+
+	// Slot 154
+	extern PFN_Tcl_GetChannelInstanceData Tcl_GetChannelInstanceData;
+
+	// Slot 155
+	extern PFN_Tcl_GetChannelMode Tcl_GetChannelMode;
+
+	// Slot 156
+	extern PFN_Tcl_GetChannelName Tcl_GetChannelName;
+
+	// Slot 157
+	extern PFN_Tcl_GetChannelOption Tcl_GetChannelOption;
+
+	// Slot 158
+	extern PFN_Tcl_GetChannelType Tcl_GetChannelType;
+
+	// Slot 159
+	extern PFN_Tcl_GetCommandInfo Tcl_GetCommandInfo;
+
+	// Slot 160
+	extern PFN_Tcl_GetCommandName Tcl_GetCommandName;
+
+	// Slot 161
+	extern PFN_Tcl_GetErrno Tcl_GetErrno;
+
+	// Slot 162
+	extern PFN_Tcl_GetHostName Tcl_GetHostName;
+
+	// Slot 163
+	extern PFN_Tcl_GetInterpPath Tcl_GetInterpPath;
+
+	// Slot 164
+	extern PFN_Tcl_GetParent Tcl_GetParent;
+
+	// Slot 165
+	extern PFN_Tcl_GetNameOfExecutable Tcl_GetNameOfExecutable;
+
+	// Slot 166
+	extern PFN_Tcl_GetObjResult Tcl_GetObjResult;
+
+	// Slot 167
+	extern PFN_Tcl_GetOpenFile Tcl_GetOpenFile;
+
+	// Slot 168
+	extern PFN_Tcl_GetPathType Tcl_GetPathType;
+
+	// Slot 169
+	extern PFN_Tcl_Gets Tcl_Gets;
+
+	// Slot 170
+	extern PFN_Tcl_GetsObj Tcl_GetsObj;
+
+	// Slot 171
+	extern PFN_Tcl_GetServiceMode Tcl_GetServiceMode;
+
+	// Slot 172
+	extern PFN_Tcl_GetChild Tcl_GetChild;
+
+	// Slot 173
+	extern PFN_Tcl_GetStdChannel Tcl_GetStdChannel;
+
+	// Slot 174 is reserved
+	// Slot 175 is reserved
+
+	// Slot 176
+	extern PFN_Tcl_GetVar2 Tcl_GetVar2;
+
+	// Slot 177 is reserved
+	// Slot 178 is reserved
+
+	// Slot 179
+	extern PFN_Tcl_HideCommand Tcl_HideCommand;
+
+	// Slot 180
+	extern PFN_Tcl_Init Tcl_Init;
+
+	// Slot 181
+	extern PFN_Tcl_InitHashTable Tcl_InitHashTable;
+
+	// Slot 182
+	extern PFN_Tcl_InputBlocked Tcl_InputBlocked;
+
+	// Slot 183
+	extern PFN_Tcl_InputBuffered Tcl_InputBuffered;
+
+	// Slot 184
+	extern PFN_Tcl_InterpDeleted Tcl_InterpDeleted;
+
+	// Slot 185
+	extern PFN_Tcl_IsSafe Tcl_IsSafe;
+
+	// Slot 186
+	extern PFN_Tcl_JoinPath Tcl_JoinPath;
+
+	// Slot 187
+	extern PFN_Tcl_LinkVar Tcl_LinkVar;
+
+	// Slot 188 is reserved
+
+	// Slot 189
+	extern PFN_Tcl_MakeFileChannel Tcl_MakeFileChannel;
+
+	// Slot 190 is reserved
+
+	// Slot 191
+	extern PFN_Tcl_MakeTcpClientChannel Tcl_MakeTcpClientChannel;
+
+	// Slot 192
+	extern PFN_Tcl_Merge Tcl_Merge;
+
+	// Slot 193
+	extern PFN_Tcl_NextHashEntry Tcl_NextHashEntry;
+
+	// Slot 194
+	extern PFN_Tcl_NotifyChannel Tcl_NotifyChannel;
+
+	// Slot 195
+	extern PFN_Tcl_ObjGetVar2 Tcl_ObjGetVar2;
+
+	// Slot 196
+	extern PFN_Tcl_ObjSetVar2 Tcl_ObjSetVar2;
+
+	// Slot 197
+	extern PFN_Tcl_OpenCommandChannel Tcl_OpenCommandChannel;
+
+	// Slot 198
+	extern PFN_Tcl_OpenFileChannel Tcl_OpenFileChannel;
+
+	// Slot 199
+	extern PFN_Tcl_OpenTcpClient Tcl_OpenTcpClient;
+
+	// Slot 200
+	extern PFN_Tcl_OpenTcpServer Tcl_OpenTcpServer;
+
+	// Slot 201
+	extern PFN_Tcl_Preserve Tcl_Preserve;
+
+	// Slot 202
+	extern PFN_Tcl_PrintDouble Tcl_PrintDouble;
+
+	// Slot 203
+	extern PFN_Tcl_PutEnv Tcl_PutEnv;
+
+	// Slot 204
+	extern PFN_Tcl_PosixError Tcl_PosixError;
+
+	// Slot 205
+	extern PFN_Tcl_QueueEvent Tcl_QueueEvent;
+
+	// Slot 206
+	extern PFN_Tcl_Read Tcl_Read;
+
+	// Slot 207
+	extern PFN_Tcl_ReapDetachedProcs Tcl_ReapDetachedProcs;
+
+	// Slot 208
+	extern PFN_Tcl_RecordAndEval Tcl_RecordAndEval;
+
+	// Slot 209
+	extern PFN_Tcl_RecordAndEvalObj Tcl_RecordAndEvalObj;
+
+	// Slot 210
+	extern PFN_Tcl_RegisterChannel Tcl_RegisterChannel;
+
+	// Slot 211
+	extern PFN_Tcl_RegisterObjType Tcl_RegisterObjType;
+
+	// Slot 212
+	extern PFN_Tcl_RegExpCompile Tcl_RegExpCompile;
+
+	// Slot 213
+	extern PFN_Tcl_RegExpExec Tcl_RegExpExec;
+
+	// Slot 214
+	extern PFN_Tcl_RegExpMatch Tcl_RegExpMatch;
+
+	// Slot 215
+	extern PFN_Tcl_RegExpRange Tcl_RegExpRange;
+
+	// Slot 216
+	extern PFN_Tcl_Release Tcl_Release;
+
+	// Slot 217
+	extern PFN_Tcl_ResetResult Tcl_ResetResult;
+
+	// Slot 218
+	extern PFN_Tcl_ScanElement Tcl_ScanElement;
+
+	// Slot 219
+	extern PFN_Tcl_ScanCountedElement Tcl_ScanCountedElement;
+
+	// Slot 220 is reserved
+
+	// Slot 221
+	extern PFN_Tcl_ServiceAll Tcl_ServiceAll;
+
+	// Slot 222
+	extern PFN_Tcl_ServiceEvent Tcl_ServiceEvent;
+
+	// Slot 223
+	extern PFN_Tcl_SetAssocData Tcl_SetAssocData;
+
+	// Slot 224
+	extern PFN_Tcl_SetChannelBufferSize Tcl_SetChannelBufferSize;
+
+	// Slot 225
+	extern PFN_Tcl_SetChannelOption Tcl_SetChannelOption;
+
+	// Slot 226
+	extern PFN_Tcl_SetCommandInfo Tcl_SetCommandInfo;
+
+	// Slot 227
+	extern PFN_Tcl_SetErrno Tcl_SetErrno;
+
+	// Slot 228
+	extern PFN_Tcl_SetErrorCode Tcl_SetErrorCode;
+
+	// Slot 229
+	extern PFN_Tcl_SetMaxBlockTime Tcl_SetMaxBlockTime;
+
+	// Slot 230 is reserved
+
+	// Slot 231
+	extern PFN_Tcl_SetRecursionLimit Tcl_SetRecursionLimit;
+
+	// Slot 232 is reserved
+
+	// Slot 233
+	extern PFN_Tcl_SetServiceMode Tcl_SetServiceMode;
+
+	// Slot 234
+	extern PFN_Tcl_SetObjErrorCode Tcl_SetObjErrorCode;
+
+	// Slot 235
+	extern PFN_Tcl_SetObjResult Tcl_SetObjResult;
+
+	// Slot 236
+	extern PFN_Tcl_SetStdChannel Tcl_SetStdChannel;
+
+	// Slot 237 is reserved
+
+	// Slot 238
+	extern PFN_Tcl_SetVar2 Tcl_SetVar2;
+
+	// Slot 239
+	extern PFN_Tcl_SignalId Tcl_SignalId;
+
+	// Slot 240
+	extern PFN_Tcl_SignalMsg Tcl_SignalMsg;
+
+	// Slot 241
+	extern PFN_Tcl_SourceRCFile Tcl_SourceRCFile;
+
+	// Slot 242
+	extern PFN_TclSplitList TclSplitList;
+
+	// Slot 243
+	extern PFN_TclSplitPath TclSplitPath;
+
+	// Slot 244 is reserved
+	// Slot 245 is reserved
+	// Slot 246 is reserved
+	// Slot 247 is reserved
+
+	// Slot 248
+	extern PFN_Tcl_TraceVar2 Tcl_TraceVar2;
+
+	// Slot 249
+	extern PFN_Tcl_TranslateFileName Tcl_TranslateFileName;
+
+	// Slot 250
+	extern PFN_Tcl_Ungets Tcl_Ungets;
+
+	// Slot 251
+	extern PFN_Tcl_UnlinkVar Tcl_UnlinkVar;
+
+	// Slot 252
+	extern PFN_Tcl_UnregisterChannel Tcl_UnregisterChannel;
+
+	// Slot 253 is reserved
+
+	// Slot 254
+	extern PFN_Tcl_UnsetVar2 Tcl_UnsetVar2;
+
+	// Slot 255 is reserved
+
+	// Slot 256
+	extern PFN_Tcl_UntraceVar2 Tcl_UntraceVar2;
+
+	// Slot 257
+	extern PFN_Tcl_UpdateLinkedVar Tcl_UpdateLinkedVar;
+
+	// Slot 258 is reserved
+
+	// Slot 259
+	extern PFN_Tcl_UpVar2 Tcl_UpVar2;
+
+	// Slot 260
+	extern PFN_Tcl_VarEval Tcl_VarEval;
+
+	// Slot 261 is reserved
+
+	// Slot 262
+	extern PFN_Tcl_VarTraceInfo2 Tcl_VarTraceInfo2;
+
+	// Slot 263
+	extern PFN_Tcl_Write Tcl_Write;
+
+	// Slot 264
+	extern PFN_Tcl_WrongNumArgs Tcl_WrongNumArgs;
+
+	// Slot 265
+	extern PFN_Tcl_DumpActiveMemory Tcl_DumpActiveMemory;
+
+	// Slot 266
+	extern PFN_Tcl_ValidateAllMemory Tcl_ValidateAllMemory;
+
+	// Slot 267 is reserved
+	// Slot 268 is reserved
+
+	// Slot 269
+	extern PFN_Tcl_HashStats Tcl_HashStats;
+
+	// Slot 270
+	extern PFN_Tcl_ParseVar Tcl_ParseVar;
+
+	// Slot 271 is reserved
+
+	// Slot 272
+	extern PFN_Tcl_PkgPresentEx Tcl_PkgPresentEx;
+
+	// Slot 273 is reserved
+	// Slot 274 is reserved
+	// Slot 275 is reserved
+	// Slot 276 is reserved
+
+	// Slot 277
+	extern PFN_Tcl_WaitPid Tcl_WaitPid;
+
+	// Slot 278 is reserved
+
+	// Slot 279
+	extern PFN_Tcl_GetVersion Tcl_GetVersion;
+
+	// Slot 280
+	extern PFN_Tcl_InitMemory Tcl_InitMemory;
+
+	// Slot 281
+	extern PFN_Tcl_StackChannel Tcl_StackChannel;
+
+	// Slot 282
+	extern PFN_Tcl_UnstackChannel Tcl_UnstackChannel;
+
+	// Slot 283
+	extern PFN_Tcl_GetStackedChannel Tcl_GetStackedChannel;
+
+	// Slot 284
+	extern PFN_Tcl_SetMainLoop Tcl_SetMainLoop;
+
+	// Slot 285
+	extern PFN_Tcl_GetAliasObj Tcl_GetAliasObj;
+
+	// Slot 286
+	extern PFN_Tcl_AppendObjToObj Tcl_AppendObjToObj;
+
+	// Slot 287
+	extern PFN_Tcl_CreateEncoding Tcl_CreateEncoding;
+
+	// Slot 288
+	extern PFN_Tcl_CreateThreadExitHandler Tcl_CreateThreadExitHandler;
+
+	// Slot 289
+	extern PFN_Tcl_DeleteThreadExitHandler Tcl_DeleteThreadExitHandler;
+
+	// Slot 290 is reserved
+
+	// Slot 291
+	extern PFN_Tcl_EvalEx Tcl_EvalEx;
+
+	// Slot 292
+	extern PFN_Tcl_EvalObjv Tcl_EvalObjv;
+
+	// Slot 293
+	extern PFN_Tcl_EvalObjEx Tcl_EvalObjEx;
+
+	// Slot 294
+	extern PFN_Tcl_ExitThread Tcl_ExitThread;
+
+	// Slot 295
+	extern PFN_Tcl_ExternalToUtf Tcl_ExternalToUtf;
+
+	// Slot 296
+	extern PFN_Tcl_ExternalToUtfDString Tcl_ExternalToUtfDString;
+
+	// Slot 297
+	extern PFN_Tcl_FinalizeThread Tcl_FinalizeThread;
+
+	// Slot 298
+	extern PFN_Tcl_FinalizeNotifier Tcl_FinalizeNotifier;
+
+	// Slot 299
+	extern PFN_Tcl_FreeEncoding Tcl_FreeEncoding;
+
+	// Slot 300
+	extern PFN_Tcl_GetCurrentThread Tcl_GetCurrentThread;
+
+	// Slot 301
+	extern PFN_Tcl_GetEncoding Tcl_GetEncoding;
+
+	// Slot 302
+	extern PFN_Tcl_GetEncodingName Tcl_GetEncodingName;
+
+	// Slot 303
+	extern PFN_Tcl_GetEncodingNames Tcl_GetEncodingNames;
+
+	// Slot 304
+	extern PFN_Tcl_GetIndexFromObjStruct Tcl_GetIndexFromObjStruct;
+
+	// Slot 305
+	extern PFN_Tcl_GetThreadData Tcl_GetThreadData;
+
+	// Slot 306
+	extern PFN_Tcl_GetVar2Ex Tcl_GetVar2Ex;
+
+	// Slot 307
+	extern PFN_Tcl_InitNotifier Tcl_InitNotifier;
+
+	// Slot 308
+	extern PFN_Tcl_MutexLock Tcl_MutexLock;
+
+	// Slot 309
+	extern PFN_Tcl_MutexUnlock Tcl_MutexUnlock;
+
+	// Slot 310
+	extern PFN_Tcl_ConditionNotify Tcl_ConditionNotify;
+
+	// Slot 311
+	extern PFN_Tcl_ConditionWait Tcl_ConditionWait;
+
+	// Slot 312
+	extern PFN_TclNumUtfChars TclNumUtfChars;
+
+	// Slot 313
+	extern PFN_Tcl_ReadChars Tcl_ReadChars;
+
+	// Slot 314 is reserved
+	// Slot 315 is reserved
+
+	// Slot 316
+	extern PFN_Tcl_SetSystemEncoding Tcl_SetSystemEncoding;
+
+	// Slot 317
+	extern PFN_Tcl_SetVar2Ex Tcl_SetVar2Ex;
+
+	// Slot 318
+	extern PFN_Tcl_ThreadAlert Tcl_ThreadAlert;
+
+	// Slot 319
+	extern PFN_Tcl_ThreadQueueEvent Tcl_ThreadQueueEvent;
+
+	// Slot 320
+	extern PFN_Tcl_UniCharAtIndex Tcl_UniCharAtIndex;
+
+	// Slot 321
+	extern PFN_Tcl_UniCharToLower Tcl_UniCharToLower;
+
+	// Slot 322
+	extern PFN_Tcl_UniCharToTitle Tcl_UniCharToTitle;
+
+	// Slot 323
+	extern PFN_Tcl_UniCharToUpper Tcl_UniCharToUpper;
+
+	// Slot 324
+	extern PFN_Tcl_UniCharToUtf Tcl_UniCharToUtf;
+
+	// Slot 325
+	extern PFN_TclUtfAtIndex TclUtfAtIndex;
+
+	// Slot 326
+	extern PFN_TclUtfCharComplete TclUtfCharComplete;
+
+	// Slot 327
+	extern PFN_Tcl_UtfBackslash Tcl_UtfBackslash;
+
+	// Slot 328
+	extern PFN_Tcl_UtfFindFirst Tcl_UtfFindFirst;
+
+	// Slot 329
+	extern PFN_Tcl_UtfFindLast Tcl_UtfFindLast;
+
+	// Slot 330
+	extern PFN_TclUtfNext TclUtfNext;
+
+	// Slot 331
+	extern PFN_TclUtfPrev TclUtfPrev;
+
+	// Slot 332
+	extern PFN_Tcl_UtfToExternal Tcl_UtfToExternal;
+
+	// Slot 333
+	extern PFN_Tcl_UtfToExternalDString Tcl_UtfToExternalDString;
+
+	// Slot 334
+	extern PFN_Tcl_UtfToLower Tcl_UtfToLower;
+
+	// Slot 335
+	extern PFN_Tcl_UtfToTitle Tcl_UtfToTitle;
+
+	// Slot 336
+	extern PFN_Tcl_UtfToChar16 Tcl_UtfToChar16;
+
+	// Slot 337
+	extern PFN_Tcl_UtfToUpper Tcl_UtfToUpper;
+
+	// Slot 338
+	extern PFN_Tcl_WriteChars Tcl_WriteChars;
+
+	// Slot 339
+	extern PFN_Tcl_WriteObj Tcl_WriteObj;
+
+	// Slot 340 is reserved
+	// Slot 341 is reserved
+	// Slot 342 is reserved
+
+	// Slot 343
+	extern PFN_Tcl_AlertNotifier Tcl_AlertNotifier;
+
+	// Slot 344
+	extern PFN_Tcl_ServiceModeHook Tcl_ServiceModeHook;
+
+	// Slot 345
+	extern PFN_Tcl_UniCharIsAlnum Tcl_UniCharIsAlnum;
+
+	// Slot 346
+	extern PFN_Tcl_UniCharIsAlpha Tcl_UniCharIsAlpha;
+
+	// Slot 347
+	extern PFN_Tcl_UniCharIsDigit Tcl_UniCharIsDigit;
+
+	// Slot 348
+	extern PFN_Tcl_UniCharIsLower Tcl_UniCharIsLower;
+
+	// Slot 349
+	extern PFN_Tcl_UniCharIsSpace Tcl_UniCharIsSpace;
+
+	// Slot 350
+	extern PFN_Tcl_UniCharIsUpper Tcl_UniCharIsUpper;
+
+	// Slot 351
+	extern PFN_Tcl_UniCharIsWordChar Tcl_UniCharIsWordChar;
+
+	// Slot 352
+	extern PFN_Tcl_Char16Len Tcl_Char16Len;
+
+	// Slot 353 is reserved
+
+	// Slot 354
+	extern PFN_Tcl_Char16ToUtfDString Tcl_Char16ToUtfDString;
+
+	// Slot 355
+	extern PFN_Tcl_UtfToChar16DString Tcl_UtfToChar16DString;
+
+	// Slot 356
+	extern PFN_Tcl_GetRegExpFromObj Tcl_GetRegExpFromObj;
+
+	// Slot 357 is reserved
+
+	// Slot 358
+	extern PFN_Tcl_FreeParse Tcl_FreeParse;
+
+	// Slot 359
+	extern PFN_Tcl_LogCommandInfo Tcl_LogCommandInfo;
+
+	// Slot 360
+	extern PFN_Tcl_ParseBraces Tcl_ParseBraces;
+
+	// Slot 361
+	extern PFN_Tcl_ParseCommand Tcl_ParseCommand;
+
+	// Slot 362
+	extern PFN_Tcl_ParseExpr Tcl_ParseExpr;
+
+	// Slot 363
+	extern PFN_Tcl_ParseQuotedString Tcl_ParseQuotedString;
+
+	// Slot 364
+	extern PFN_Tcl_ParseVarName Tcl_ParseVarName;
+
+	// Slot 365
+	extern PFN_Tcl_GetCwd Tcl_GetCwd;
+
+	// Slot 366
+	extern PFN_Tcl_Chdir Tcl_Chdir;
+
+	// Slot 367
+	extern PFN_Tcl_Access Tcl_Access;
+
+	// Slot 368
+	extern PFN_Tcl_Stat Tcl_Stat;
+
+	// Slot 369
+	extern PFN_TclUtfNcmp TclUtfNcmp;
+
+	// Slot 370
+	extern PFN_TclUtfNcasecmp TclUtfNcasecmp;
+
+	// Slot 371
+	extern PFN_Tcl_StringCaseMatch Tcl_StringCaseMatch;
+
+	// Slot 372
+	extern PFN_Tcl_UniCharIsControl Tcl_UniCharIsControl;
+
+	// Slot 373
+	extern PFN_Tcl_UniCharIsGraph Tcl_UniCharIsGraph;
+
+	// Slot 374
+	extern PFN_Tcl_UniCharIsPrint Tcl_UniCharIsPrint;
+
+	// Slot 375
+	extern PFN_Tcl_UniCharIsPunct Tcl_UniCharIsPunct;
+
+	// Slot 376
+	extern PFN_Tcl_RegExpExecObj Tcl_RegExpExecObj;
+
+	// Slot 377
+	extern PFN_Tcl_RegExpGetInfo Tcl_RegExpGetInfo;
+
+	// Slot 378
+	extern PFN_Tcl_NewUnicodeObj Tcl_NewUnicodeObj;
+
+	// Slot 379
+	extern PFN_Tcl_SetUnicodeObj Tcl_SetUnicodeObj;
+
+	// Slot 380
+	extern PFN_TclGetCharLength TclGetCharLength;
+
+	// Slot 381
+	extern PFN_TclGetUniChar TclGetUniChar;
+
+	// Slot 382 is reserved
+
+	// Slot 383
+	extern PFN_TclGetRange TclGetRange;
+
+	// Slot 384
+	extern PFN_Tcl_AppendUnicodeToObj Tcl_AppendUnicodeToObj;
+
+	// Slot 385
+	extern PFN_Tcl_RegExpMatchObj Tcl_RegExpMatchObj;
+
+	// Slot 386
+	extern PFN_Tcl_SetNotifier Tcl_SetNotifier;
+
+	// Slot 387
+	extern PFN_Tcl_GetAllocMutex Tcl_GetAllocMutex;
+
+	// Slot 388
+	extern PFN_Tcl_GetChannelNames Tcl_GetChannelNames;
+
+	// Slot 389
+	extern PFN_Tcl_GetChannelNamesEx Tcl_GetChannelNamesEx;
+
+	// Slot 390
+	extern PFN_Tcl_ProcObjCmd Tcl_ProcObjCmd;
+
+	// Slot 391
+	extern PFN_Tcl_ConditionFinalize Tcl_ConditionFinalize;
+
+	// Slot 392
+	extern PFN_Tcl_MutexFinalize Tcl_MutexFinalize;
+
+	// Slot 393
+	extern PFN_Tcl_CreateThread Tcl_CreateThread;
+
+	// Slot 394
+	extern PFN_Tcl_ReadRaw Tcl_ReadRaw;
+
+	// Slot 395
+	extern PFN_Tcl_WriteRaw Tcl_WriteRaw;
+
+	// Slot 396
+	extern PFN_Tcl_GetTopChannel Tcl_GetTopChannel;
+
+	// Slot 397
+	extern PFN_Tcl_ChannelBuffered Tcl_ChannelBuffered;
+
+	// Slot 398
+	extern PFN_Tcl_ChannelName Tcl_ChannelName;
+
+	// Slot 399
+	extern PFN_Tcl_ChannelVersion Tcl_ChannelVersion;
+
+	// Slot 400
+	extern PFN_Tcl_ChannelBlockModeProc Tcl_ChannelBlockModeProc;
+
+	// Slot 401 is reserved
+
+	// Slot 402
+	extern PFN_Tcl_ChannelClose2Proc Tcl_ChannelClose2Proc;
+
+	// Slot 403
+	extern PFN_Tcl_ChannelInputProc Tcl_ChannelInputProc;
+
+	// Slot 404
+	extern PFN_Tcl_ChannelOutputProc Tcl_ChannelOutputProc;
+
+	// Slot 405 is reserved
+
+	// Slot 406
+	extern PFN_Tcl_ChannelSetOptionProc Tcl_ChannelSetOptionProc;
+
+	// Slot 407
+	extern PFN_Tcl_ChannelGetOptionProc Tcl_ChannelGetOptionProc;
+
+	// Slot 408
+	extern PFN_Tcl_ChannelWatchProc Tcl_ChannelWatchProc;
+
+	// Slot 409
+	extern PFN_Tcl_ChannelGetHandleProc Tcl_ChannelGetHandleProc;
+
+	// Slot 410
+	extern PFN_Tcl_ChannelFlushProc Tcl_ChannelFlushProc;
+
+	// Slot 411
+	extern PFN_Tcl_ChannelHandlerProc Tcl_ChannelHandlerProc;
+
+	// Slot 412
+	extern PFN_Tcl_JoinThread Tcl_JoinThread;
+
+	// Slot 413
+	extern PFN_Tcl_IsChannelShared Tcl_IsChannelShared;
+
+	// Slot 414
+	extern PFN_Tcl_IsChannelRegistered Tcl_IsChannelRegistered;
+
+	// Slot 415
+	extern PFN_Tcl_CutChannel Tcl_CutChannel;
+
+	// Slot 416
+	extern PFN_Tcl_SpliceChannel Tcl_SpliceChannel;
+
+	// Slot 417
+	extern PFN_Tcl_ClearChannelHandlers Tcl_ClearChannelHandlers;
+
+	// Slot 418
+	extern PFN_Tcl_IsChannelExisting Tcl_IsChannelExisting;
+
+	// Slot 419 is reserved
+	// Slot 420 is reserved
+
+	// Slot 421
+	extern PFN_Tcl_DbCreateHashEntry Tcl_DbCreateHashEntry;
+
+	// Slot 422
+	extern PFN_Tcl_CreateHashEntry Tcl_CreateHashEntry;
+
+	// Slot 423
+	extern PFN_Tcl_InitCustomHashTable Tcl_InitCustomHashTable;
+
+	// Slot 424
+	extern PFN_Tcl_InitObjHashTable Tcl_InitObjHashTable;
+
+	// Slot 425
+	extern PFN_Tcl_CommandTraceInfo Tcl_CommandTraceInfo;
+
+	// Slot 426
+	extern PFN_Tcl_TraceCommand Tcl_TraceCommand;
+
+	// Slot 427
+	extern PFN_Tcl_UntraceCommand Tcl_UntraceCommand;
+
+	// Slot 428
+	extern PFN_Tcl_AttemptAlloc Tcl_AttemptAlloc;
+
+	// Slot 429
+	extern PFN_Tcl_AttemptDbCkalloc Tcl_AttemptDbCkalloc;
+
+	// Slot 430
+	extern PFN_Tcl_AttemptRealloc Tcl_AttemptRealloc;
+
+	// Slot 431
+	extern PFN_Tcl_AttemptDbCkrealloc Tcl_AttemptDbCkrealloc;
+
+	// Slot 432
+	extern PFN_Tcl_AttemptSetObjLength Tcl_AttemptSetObjLength;
+
+	// Slot 433
+	extern PFN_Tcl_GetChannelThread Tcl_GetChannelThread;
+
+	// Slot 434
+	extern PFN_TclGetUnicodeFromObj TclGetUnicodeFromObj;
+
+	// Slot 435 is reserved
+	// Slot 436 is reserved
+
+	// Slot 437
+	extern PFN_Tcl_SubstObj Tcl_SubstObj;
+
+	// Slot 438
+	extern PFN_Tcl_DetachChannel Tcl_DetachChannel;
+
+	// Slot 439
+	extern PFN_Tcl_IsStandardChannel Tcl_IsStandardChannel;
+
+	// Slot 440
+	extern PFN_Tcl_FSCopyFile Tcl_FSCopyFile;
+
+	// Slot 441
+	extern PFN_Tcl_FSCopyDirectory Tcl_FSCopyDirectory;
+
+	// Slot 442
+	extern PFN_Tcl_FSCreateDirectory Tcl_FSCreateDirectory;
+
+	// Slot 443
+	extern PFN_Tcl_FSDeleteFile Tcl_FSDeleteFile;
+
+	// Slot 444
+	extern PFN_Tcl_FSLoadFile Tcl_FSLoadFile;
+
+	// Slot 445
+	extern PFN_Tcl_FSMatchInDirectory Tcl_FSMatchInDirectory;
+
+	// Slot 446
+	extern PFN_Tcl_FSLink Tcl_FSLink;
+
+	// Slot 447
+	extern PFN_Tcl_FSRemoveDirectory Tcl_FSRemoveDirectory;
+
+	// Slot 448
+	extern PFN_Tcl_FSRenameFile Tcl_FSRenameFile;
+
+	// Slot 449
+	extern PFN_Tcl_FSLstat Tcl_FSLstat;
+
+	// Slot 450
+	extern PFN_Tcl_FSUtime Tcl_FSUtime;
+
+	// Slot 451
+	extern PFN_Tcl_FSFileAttrsGet Tcl_FSFileAttrsGet;
+
+	// Slot 452
+	extern PFN_Tcl_FSFileAttrsSet Tcl_FSFileAttrsSet;
+
+	// Slot 453
+	extern PFN_Tcl_FSFileAttrStrings Tcl_FSFileAttrStrings;
+
+	// Slot 454
+	extern PFN_Tcl_FSStat Tcl_FSStat;
+
+	// Slot 455
+	extern PFN_Tcl_FSAccess Tcl_FSAccess;
+
+	// Slot 456
+	extern PFN_Tcl_FSOpenFileChannel Tcl_FSOpenFileChannel;
+
+	// Slot 457
+	extern PFN_Tcl_FSGetCwd Tcl_FSGetCwd;
+
+	// Slot 458
+	extern PFN_Tcl_FSChdir Tcl_FSChdir;
+
+	// Slot 459
+	extern PFN_Tcl_FSConvertToPathType Tcl_FSConvertToPathType;
+
+	// Slot 460
+	extern PFN_Tcl_FSJoinPath Tcl_FSJoinPath;
+
+	// Slot 461
+	extern PFN_TclFSSplitPath TclFSSplitPath;
+
+	// Slot 462
+	extern PFN_Tcl_FSEqualPaths Tcl_FSEqualPaths;
+
+	// Slot 463
+	extern PFN_Tcl_FSGetNormalizedPath Tcl_FSGetNormalizedPath;
+
+	// Slot 464
+	extern PFN_Tcl_FSJoinToPath Tcl_FSJoinToPath;
+
+	// Slot 465
+	extern PFN_Tcl_FSGetInternalRep Tcl_FSGetInternalRep;
+
+	// Slot 466
+	extern PFN_Tcl_FSGetTranslatedPath Tcl_FSGetTranslatedPath;
+
+	// Slot 467
+	extern PFN_Tcl_FSEvalFile Tcl_FSEvalFile;
+
+	// Slot 468
+	extern PFN_Tcl_FSNewNativePath Tcl_FSNewNativePath;
+
+	// Slot 469
+	extern PFN_Tcl_FSGetNativePath Tcl_FSGetNativePath;
+
+	// Slot 470
+	extern PFN_Tcl_FSFileSystemInfo Tcl_FSFileSystemInfo;
+
+	// Slot 471
+	extern PFN_Tcl_FSPathSeparator Tcl_FSPathSeparator;
+
+	// Slot 472
+	extern PFN_Tcl_FSListVolumes Tcl_FSListVolumes;
+
+	// Slot 473
+	extern PFN_Tcl_FSRegister Tcl_FSRegister;
+
+	// Slot 474
+	extern PFN_Tcl_FSUnregister Tcl_FSUnregister;
+
+	// Slot 475
+	extern PFN_Tcl_FSData Tcl_FSData;
+
+	// Slot 476
+	extern PFN_Tcl_FSGetTranslatedStringPath Tcl_FSGetTranslatedStringPath;
+
+	// Slot 477
+	extern PFN_Tcl_FSGetFileSystemForPath Tcl_FSGetFileSystemForPath;
+
+	// Slot 478
+	extern PFN_Tcl_FSGetPathType Tcl_FSGetPathType;
+
+	// Slot 479
+	extern PFN_Tcl_OutputBuffered Tcl_OutputBuffered;
+
+	// Slot 480
+	extern PFN_Tcl_FSMountsChanged Tcl_FSMountsChanged;
+
+	// Slot 481
+	extern PFN_Tcl_EvalTokensStandard Tcl_EvalTokensStandard;
+
+	// Slot 482
+	extern PFN_Tcl_GetTime Tcl_GetTime;
+
+	// Slot 483
+	extern PFN_Tcl_CreateObjTrace Tcl_CreateObjTrace;
+
+	// Slot 484
+	extern PFN_Tcl_GetCommandInfoFromToken Tcl_GetCommandInfoFromToken;
+
+	// Slot 485
+	extern PFN_Tcl_SetCommandInfoFromToken Tcl_SetCommandInfoFromToken;
+
+	// Slot 486
+	extern PFN_Tcl_DbNewWideIntObj Tcl_DbNewWideIntObj;
+
+	// Slot 487
+	extern PFN_Tcl_GetWideIntFromObj Tcl_GetWideIntFromObj;
+
+	// Slot 488
+	extern PFN_Tcl_NewWideIntObj Tcl_NewWideIntObj;
+
+	// Slot 489
+	extern PFN_Tcl_SetWideIntObj Tcl_SetWideIntObj;
+
+	// Slot 490
+	extern PFN_Tcl_AllocStatBuf Tcl_AllocStatBuf;
+
+	// Slot 491
+	extern PFN_Tcl_Seek Tcl_Seek;
+
+	// Slot 492
+	extern PFN_Tcl_Tell Tcl_Tell;
+
+	// Slot 493
+	extern PFN_Tcl_ChannelWideSeekProc Tcl_ChannelWideSeekProc;
+
+	// Slot 494
+	extern PFN_Tcl_DictObjPut Tcl_DictObjPut;
+
+	// Slot 495
+	extern PFN_Tcl_DictObjGet Tcl_DictObjGet;
+
+	// Slot 496
+	extern PFN_Tcl_DictObjRemove Tcl_DictObjRemove;
+
+	// Slot 497
+	extern PFN_TclDictObjSize TclDictObjSize;
+
+	// Slot 498
+	extern PFN_Tcl_DictObjFirst Tcl_DictObjFirst;
+
+	// Slot 499
+	extern PFN_Tcl_DictObjNext Tcl_DictObjNext;
+
+	// Slot 500
+	extern PFN_Tcl_DictObjDone Tcl_DictObjDone;
+
+	// Slot 501
+	extern PFN_Tcl_DictObjPutKeyList Tcl_DictObjPutKeyList;
+
+	// Slot 502
+	extern PFN_Tcl_DictObjRemoveKeyList Tcl_DictObjRemoveKeyList;
+
+	// Slot 503
+	extern PFN_Tcl_NewDictObj Tcl_NewDictObj;
+
+	// Slot 504
+	extern PFN_Tcl_DbNewDictObj Tcl_DbNewDictObj;
+
+	// Slot 505
+	extern PFN_Tcl_RegisterConfig Tcl_RegisterConfig;
+
+	// Slot 506
+	extern PFN_Tcl_CreateNamespace Tcl_CreateNamespace;
+
+	// Slot 507
+	extern PFN_Tcl_DeleteNamespace Tcl_DeleteNamespace;
+
+	// Slot 508
+	extern PFN_Tcl_AppendExportList Tcl_AppendExportList;
+
+	// Slot 509
+	extern PFN_Tcl_Export Tcl_Export;
+
+	// Slot 510
+	extern PFN_Tcl_Import Tcl_Import;
+
+	// Slot 511
+	extern PFN_Tcl_ForgetImport Tcl_ForgetImport;
+
+	// Slot 512
+	extern PFN_Tcl_GetCurrentNamespace Tcl_GetCurrentNamespace;
+
+	// Slot 513
+	extern PFN_Tcl_GetGlobalNamespace Tcl_GetGlobalNamespace;
+
+	// Slot 514
+	extern PFN_Tcl_FindNamespace Tcl_FindNamespace;
+
+	// Slot 515
+	extern PFN_Tcl_FindCommand Tcl_FindCommand;
+
+	// Slot 516
+	extern PFN_Tcl_GetCommandFromObj Tcl_GetCommandFromObj;
+
+	// Slot 517
+	extern PFN_Tcl_GetCommandFullName Tcl_GetCommandFullName;
+
+	// Slot 518
+	extern PFN_Tcl_FSEvalFileEx Tcl_FSEvalFileEx;
+
+	// Slot 519 is reserved
+
+	// Slot 520
+	extern PFN_Tcl_LimitAddHandler Tcl_LimitAddHandler;
+
+	// Slot 521
+	extern PFN_Tcl_LimitRemoveHandler Tcl_LimitRemoveHandler;
+
+	// Slot 522
+	extern PFN_Tcl_LimitReady Tcl_LimitReady;
+
+	// Slot 523
+	extern PFN_Tcl_LimitCheck Tcl_LimitCheck;
+
+	// Slot 524
+	extern PFN_Tcl_LimitExceeded Tcl_LimitExceeded;
+
+	// Slot 525
+	extern PFN_Tcl_LimitSetCommands Tcl_LimitSetCommands;
+
+	// Slot 526
+	extern PFN_Tcl_LimitSetTime Tcl_LimitSetTime;
+
+	// Slot 527
+	extern PFN_Tcl_LimitSetGranularity Tcl_LimitSetGranularity;
+
+	// Slot 528
+	extern PFN_Tcl_LimitTypeEnabled Tcl_LimitTypeEnabled;
+
+	// Slot 529
+	extern PFN_Tcl_LimitTypeExceeded Tcl_LimitTypeExceeded;
+
+	// Slot 530
+	extern PFN_Tcl_LimitTypeSet Tcl_LimitTypeSet;
+
+	// Slot 531
+	extern PFN_Tcl_LimitTypeReset Tcl_LimitTypeReset;
+
+	// Slot 532
+	extern PFN_Tcl_LimitGetCommands Tcl_LimitGetCommands;
+
+	// Slot 533
+	extern PFN_Tcl_LimitGetTime Tcl_LimitGetTime;
+
+	// Slot 534
+	extern PFN_Tcl_LimitGetGranularity Tcl_LimitGetGranularity;
+
+	// Slot 535
+	extern PFN_Tcl_SaveInterpState Tcl_SaveInterpState;
+
+	// Slot 536
+	extern PFN_Tcl_RestoreInterpState Tcl_RestoreInterpState;
+
+	// Slot 537
+	extern PFN_Tcl_DiscardInterpState Tcl_DiscardInterpState;
+
+	// Slot 538
+	extern PFN_Tcl_SetReturnOptions Tcl_SetReturnOptions;
+
+	// Slot 539
+	extern PFN_Tcl_GetReturnOptions Tcl_GetReturnOptions;
+
+	// Slot 540
+	extern PFN_Tcl_IsEnsemble Tcl_IsEnsemble;
+
+	// Slot 541
+	extern PFN_Tcl_CreateEnsemble Tcl_CreateEnsemble;
+
+	// Slot 542
+	extern PFN_Tcl_FindEnsemble Tcl_FindEnsemble;
+
+	// Slot 543
+	extern PFN_Tcl_SetEnsembleSubcommandList Tcl_SetEnsembleSubcommandList;
+
+	// Slot 544
+	extern PFN_Tcl_SetEnsembleMappingDict Tcl_SetEnsembleMappingDict;
+
+	// Slot 545
+	extern PFN_Tcl_SetEnsembleUnknownHandler Tcl_SetEnsembleUnknownHandler;
+
+	// Slot 546
+	extern PFN_Tcl_SetEnsembleFlags Tcl_SetEnsembleFlags;
+
+	// Slot 547
+	extern PFN_Tcl_GetEnsembleSubcommandList Tcl_GetEnsembleSubcommandList;
+
+	// Slot 548
+	extern PFN_Tcl_GetEnsembleMappingDict Tcl_GetEnsembleMappingDict;
+
+	// Slot 549
+	extern PFN_Tcl_GetEnsembleUnknownHandler Tcl_GetEnsembleUnknownHandler;
+
+	// Slot 550
+	extern PFN_Tcl_GetEnsembleFlags Tcl_GetEnsembleFlags;
+
+	// Slot 551
+	extern PFN_Tcl_GetEnsembleNamespace Tcl_GetEnsembleNamespace;
+
+	// Slot 552
+	extern PFN_Tcl_SetTimeProc Tcl_SetTimeProc;
+
+	// Slot 553
+	extern PFN_Tcl_QueryTimeProc Tcl_QueryTimeProc;
+
+	// Slot 554
+	extern PFN_Tcl_ChannelThreadActionProc Tcl_ChannelThreadActionProc;
+
+	// Slot 555
+	extern PFN_Tcl_NewBignumObj Tcl_NewBignumObj;
+
+	// Slot 556
+	extern PFN_Tcl_DbNewBignumObj Tcl_DbNewBignumObj;
+
+	// Slot 557
+	extern PFN_Tcl_SetBignumObj Tcl_SetBignumObj;
+
+	// Slot 558
+	extern PFN_Tcl_GetBignumFromObj Tcl_GetBignumFromObj;
+
+	// Slot 559
+	extern PFN_Tcl_TakeBignumFromObj Tcl_TakeBignumFromObj;
+
+	// Slot 560
+	extern PFN_Tcl_TruncateChannel Tcl_TruncateChannel;
+
+	// Slot 561
+	extern PFN_Tcl_ChannelTruncateProc Tcl_ChannelTruncateProc;
+
+	// Slot 562
+	extern PFN_Tcl_SetChannelErrorInterp Tcl_SetChannelErrorInterp;
+
+	// Slot 563
+	extern PFN_Tcl_GetChannelErrorInterp Tcl_GetChannelErrorInterp;
+
+	// Slot 564
+	extern PFN_Tcl_SetChannelError Tcl_SetChannelError;
+
+	// Slot 565
+	extern PFN_Tcl_GetChannelError Tcl_GetChannelError;
+
+	// Slot 566
+	extern PFN_Tcl_InitBignumFromDouble Tcl_InitBignumFromDouble;
+
+	// Slot 567
+	extern PFN_Tcl_GetNamespaceUnknownHandler Tcl_GetNamespaceUnknownHandler;
+
+	// Slot 568
+	extern PFN_Tcl_SetNamespaceUnknownHandler Tcl_SetNamespaceUnknownHandler;
+
+	// Slot 569
+	extern PFN_Tcl_GetEncodingFromObj Tcl_GetEncodingFromObj;
+
+	// Slot 570
+	extern PFN_Tcl_GetEncodingSearchPath Tcl_GetEncodingSearchPath;
+
+	// Slot 571
+	extern PFN_Tcl_SetEncodingSearchPath Tcl_SetEncodingSearchPath;
+
+	// Slot 572
+	extern PFN_Tcl_GetEncodingNameFromEnvironment Tcl_GetEncodingNameFromEnvironment;
+
+	// Slot 573
+	extern PFN_Tcl_PkgRequireProc Tcl_PkgRequireProc;
+
+	// Slot 574
+	extern PFN_Tcl_AppendObjToErrorInfo Tcl_AppendObjToErrorInfo;
+
+	// Slot 575
+	extern PFN_Tcl_AppendLimitedToObj Tcl_AppendLimitedToObj;
+
+	// Slot 576
+	extern PFN_Tcl_Format Tcl_Format;
+
+	// Slot 577
+	extern PFN_Tcl_AppendFormatToObj Tcl_AppendFormatToObj;
+
+	// Slot 578
+	extern PFN_Tcl_ObjPrintf Tcl_ObjPrintf;
+
+	// Slot 579
+	extern PFN_Tcl_AppendPrintfToObj Tcl_AppendPrintfToObj;
+
+	// Slot 580
+	extern PFN_Tcl_CancelEval Tcl_CancelEval;
+
+	// Slot 581
+	extern PFN_Tcl_Canceled Tcl_Canceled;
+
+	// Slot 582
+	extern PFN_Tcl_CreatePipe Tcl_CreatePipe;
+
+	// Slot 583
+	extern PFN_Tcl_NRCreateCommand Tcl_NRCreateCommand;
+
+	// Slot 584
+	extern PFN_Tcl_NREvalObj Tcl_NREvalObj;
+
+	// Slot 585
+	extern PFN_Tcl_NREvalObjv Tcl_NREvalObjv;
+
+	// Slot 586
+	extern PFN_Tcl_NRCmdSwap Tcl_NRCmdSwap;
+
+	// Slot 587
+	extern PFN_Tcl_NRAddCallback Tcl_NRAddCallback;
+
+	// Slot 588
+	extern PFN_Tcl_NRCallObjProc Tcl_NRCallObjProc;
+
+	// Slot 589
+	extern PFN_Tcl_GetFSDeviceFromStat Tcl_GetFSDeviceFromStat;
+
+	// Slot 590
+	extern PFN_Tcl_GetFSInodeFromStat Tcl_GetFSInodeFromStat;
+
+	// Slot 591
+	extern PFN_Tcl_GetModeFromStat Tcl_GetModeFromStat;
+
+	// Slot 592
+	extern PFN_Tcl_GetLinkCountFromStat Tcl_GetLinkCountFromStat;
+
+	// Slot 593
+	extern PFN_Tcl_GetUserIdFromStat Tcl_GetUserIdFromStat;
+
+	// Slot 594
+	extern PFN_Tcl_GetGroupIdFromStat Tcl_GetGroupIdFromStat;
+
+	// Slot 595
+	extern PFN_Tcl_GetDeviceTypeFromStat Tcl_GetDeviceTypeFromStat;
+
+	// Slot 596
+	extern PFN_Tcl_GetAccessTimeFromStat Tcl_GetAccessTimeFromStat;
+
+	// Slot 597
+	extern PFN_Tcl_GetModificationTimeFromStat Tcl_GetModificationTimeFromStat;
+
+	// Slot 598
+	extern PFN_Tcl_GetChangeTimeFromStat Tcl_GetChangeTimeFromStat;
+
+	// Slot 599
+	extern PFN_Tcl_GetSizeFromStat Tcl_GetSizeFromStat;
+
+	// Slot 600
+	extern PFN_Tcl_GetBlocksFromStat Tcl_GetBlocksFromStat;
+
+	// Slot 601
+	extern PFN_Tcl_GetBlockSizeFromStat Tcl_GetBlockSizeFromStat;
+
+	// Slot 602
+	extern PFN_Tcl_SetEnsembleParameterList Tcl_SetEnsembleParameterList;
+
+	// Slot 603
+	extern PFN_Tcl_GetEnsembleParameterList Tcl_GetEnsembleParameterList;
+
+	// Slot 604
+	extern PFN_TclParseArgsObjv TclParseArgsObjv;
+
+	// Slot 605
+	extern PFN_Tcl_GetErrorLine Tcl_GetErrorLine;
+
+	// Slot 606
+	extern PFN_Tcl_SetErrorLine Tcl_SetErrorLine;
+
+	// Slot 607
+	extern PFN_Tcl_TransferResult Tcl_TransferResult;
+
+	// Slot 608
+	extern PFN_Tcl_InterpActive Tcl_InterpActive;
+
+	// Slot 609
+	extern PFN_Tcl_BackgroundException Tcl_BackgroundException;
+
+	// Slot 610
+	extern PFN_Tcl_ZlibDeflate Tcl_ZlibDeflate;
+
+	// Slot 611
+	extern PFN_Tcl_ZlibInflate Tcl_ZlibInflate;
+
+	// Slot 612
+	extern PFN_Tcl_ZlibCRC32 Tcl_ZlibCRC32;
+
+	// Slot 613
+	extern PFN_Tcl_ZlibAdler32 Tcl_ZlibAdler32;
+
+	// Slot 614
+	extern PFN_Tcl_ZlibStreamInit Tcl_ZlibStreamInit;
+
+	// Slot 615
+	extern PFN_Tcl_ZlibStreamGetCommandName Tcl_ZlibStreamGetCommandName;
+
+	// Slot 616
+	extern PFN_Tcl_ZlibStreamEof Tcl_ZlibStreamEof;
+
+	// Slot 617
+	extern PFN_Tcl_ZlibStreamChecksum Tcl_ZlibStreamChecksum;
+
+	// Slot 618
+	extern PFN_Tcl_ZlibStreamPut Tcl_ZlibStreamPut;
+
+	// Slot 619
+	extern PFN_Tcl_ZlibStreamGet Tcl_ZlibStreamGet;
+
+	// Slot 620
+	extern PFN_Tcl_ZlibStreamClose Tcl_ZlibStreamClose;
+
+	// Slot 621
+	extern PFN_Tcl_ZlibStreamReset Tcl_ZlibStreamReset;
+
+	// Slot 622
+	extern PFN_Tcl_SetStartupScript Tcl_SetStartupScript;
+
+	// Slot 623
+	extern PFN_Tcl_GetStartupScript Tcl_GetStartupScript;
+
+	// Slot 624
+	extern PFN_Tcl_CloseEx Tcl_CloseEx;
+
+	// Slot 625
+	extern PFN_Tcl_NRExprObj Tcl_NRExprObj;
+
+	// Slot 626
+	extern PFN_Tcl_NRSubstObj Tcl_NRSubstObj;
+
+	// Slot 627
+	extern PFN_Tcl_LoadFile Tcl_LoadFile;
+
+	// Slot 628
+	extern PFN_Tcl_FindSymbol Tcl_FindSymbol;
+
+	// Slot 629
+	extern PFN_Tcl_FSUnloadFile Tcl_FSUnloadFile;
+
+	// Slot 630
+	extern PFN_Tcl_ZlibStreamSetCompressionDictionary Tcl_ZlibStreamSetCompressionDictionary;
+
+	// Slot 631
+	extern PFN_Tcl_OpenTcpServerEx Tcl_OpenTcpServerEx;
+
+	// Slot 632
+	extern PFN_TclZipfs_Mount TclZipfs_Mount;
+
+	// Slot 633
+	extern PFN_TclZipfs_Unmount TclZipfs_Unmount;
+
+	// Slot 634
+	extern PFN_TclZipfs_TclLibrary TclZipfs_TclLibrary;
+
+	// Slot 635
+	extern PFN_TclZipfs_MountBuffer TclZipfs_MountBuffer;
+
+	// Slot 636
+	extern PFN_Tcl_FreeInternalRep Tcl_FreeInternalRep;
+
+	// Slot 637
+	extern PFN_Tcl_InitStringRep Tcl_InitStringRep;
+
+	// Slot 638
+	extern PFN_Tcl_FetchInternalRep Tcl_FetchInternalRep;
+
+	// Slot 639
+	extern PFN_Tcl_StoreInternalRep Tcl_StoreInternalRep;
+
+	// Slot 640
+	extern PFN_Tcl_HasStringRep Tcl_HasStringRep;
+
+	// Slot 641
+	extern PFN_Tcl_IncrRefCount Tcl_IncrRefCount;
+
+	// Slot 642
+	extern PFN_Tcl_DecrRefCount Tcl_DecrRefCount;
+
+	// Slot 643
+	extern PFN_Tcl_IsShared Tcl_IsShared;
+
+	// Slot 644
+	extern PFN_Tcl_LinkArray Tcl_LinkArray;
+
+	// Slot 645
+	extern PFN_Tcl_GetIntForIndex Tcl_GetIntForIndex;
+
+	// Slot 646
+	extern PFN_Tcl_UtfToUniChar Tcl_UtfToUniChar;
+
+	// Slot 647
+	extern PFN_Tcl_UniCharToUtfDString Tcl_UniCharToUtfDString;
+
+	// Slot 648
+	extern PFN_Tcl_UtfToUniCharDString Tcl_UtfToUniCharDString;
+
+	// Slot 649
+	extern PFN_TclGetBytesFromObj TclGetBytesFromObj;
+
+	// Slot 650
+	extern PFN_Tcl_GetBytesFromObj Tcl_GetBytesFromObj;
+
+	// Slot 651
+	extern PFN_Tcl_GetStringFromObj Tcl_GetStringFromObj;
+
+	// Slot 652
+	extern PFN_Tcl_GetUnicodeFromObj Tcl_GetUnicodeFromObj;
+
+	// Slot 653
+	extern PFN_Tcl_GetSizeIntFromObj Tcl_GetSizeIntFromObj;
+
+	// Slot 654
+	extern PFN_Tcl_UtfCharComplete Tcl_UtfCharComplete;
+
+	// Slot 655
+	extern PFN_Tcl_UtfNext Tcl_UtfNext;
+
+	// Slot 656
+	extern PFN_Tcl_UtfPrev Tcl_UtfPrev;
+
+	// Slot 657
+	extern PFN_Tcl_FSTildeExpand Tcl_FSTildeExpand;
+
+	// Slot 658
+	extern PFN_Tcl_ExternalToUtfDStringEx Tcl_ExternalToUtfDStringEx;
+
+	// Slot 659
+	extern PFN_Tcl_UtfToExternalDStringEx Tcl_UtfToExternalDStringEx;
+
+	// Slot 660
+	extern PFN_Tcl_AsyncMarkFromSignal Tcl_AsyncMarkFromSignal;
+
+	// Slot 661
+	extern PFN_Tcl_ListObjGetElements Tcl_ListObjGetElements;
+
+	// Slot 662
+	extern PFN_Tcl_ListObjLength Tcl_ListObjLength;
+
+	// Slot 663
+	extern PFN_Tcl_DictObjSize Tcl_DictObjSize;
+
+	// Slot 664
+	extern PFN_Tcl_SplitList Tcl_SplitList;
+
+	// Slot 665
+	extern PFN_Tcl_SplitPath Tcl_SplitPath;
+
+	// Slot 666
+	extern PFN_Tcl_FSSplitPath Tcl_FSSplitPath;
+
+	// Slot 667
+	extern PFN_Tcl_ParseArgsObjv Tcl_ParseArgsObjv;
+
+	// Slot 668
+	extern PFN_Tcl_UniCharLen Tcl_UniCharLen;
+
+	// Slot 669
+	extern PFN_Tcl_NumUtfChars Tcl_NumUtfChars;
+
+	// Slot 670
+	extern PFN_Tcl_GetCharLength Tcl_GetCharLength;
+
+	// Slot 671
+	extern PFN_Tcl_UtfAtIndex Tcl_UtfAtIndex;
+
+	// Slot 672
+	extern PFN_Tcl_GetRange Tcl_GetRange;
+
+	// Slot 673
+	extern PFN_Tcl_GetUniChar Tcl_GetUniChar;
+
+	// Slot 674
+	extern PFN_Tcl_GetBool Tcl_GetBool;
+
+	// Slot 675
+	extern PFN_Tcl_GetBoolFromObj Tcl_GetBoolFromObj;
+
+	// Slot 676
+	extern PFN_Tcl_CreateObjCommand2 Tcl_CreateObjCommand2;
+
+	// Slot 677
+	extern PFN_Tcl_CreateObjTrace2 Tcl_CreateObjTrace2;
+
+	// Slot 678
+	extern PFN_Tcl_NRCreateCommand2 Tcl_NRCreateCommand2;
+
+	// Slot 679
+	extern PFN_Tcl_NRCallObjProc2 Tcl_NRCallObjProc2;
+
+	// Slot 680
+	extern PFN_Tcl_GetNumberFromObj Tcl_GetNumberFromObj;
+
+	// Slot 681
+	extern PFN_Tcl_GetNumber Tcl_GetNumber;
+
+	// Slot 682
+	extern PFN_Tcl_RemoveChannelMode Tcl_RemoveChannelMode;
+
+	// Slot 683
+	extern PFN_Tcl_GetEncodingNulLength Tcl_GetEncodingNulLength;
+
+	// Slot 684
+	extern PFN_Tcl_GetWideUIntFromObj Tcl_GetWideUIntFromObj;
+
+	// Slot 685
+	extern PFN_Tcl_DStringToObj Tcl_DStringToObj;
+
+	// Slot 686
+	extern PFN_Tcl_UtfNcmp Tcl_UtfNcmp;
+
+	// Slot 687
+	extern PFN_Tcl_UtfNcasecmp Tcl_UtfNcasecmp;
+
+	// Slot 688
+	extern PFN_Tcl_NewWideUIntObj Tcl_NewWideUIntObj;
+
+	// Slot 689
+	extern PFN_Tcl_SetWideUIntObj Tcl_SetWideUIntObj;
+
+	// Slot 690
+	extern PFN_Tcl_IsEmpty Tcl_IsEmpty;
+
+	// Slot 691
+	extern PFN_Tcl_GetEncodingNameForUser Tcl_GetEncodingNameForUser;
+
+	// Slot 692
+	extern PFN_Tcl_ListObjReverse Tcl_ListObjReverse;
+
+	// Slot 693
+	extern PFN_Tcl_ListObjRepeat Tcl_ListObjRepeat;
+
+	// Slot 694
+	extern PFN_Tcl_ListObjRange Tcl_ListObjRange;
+
+	// Slot 695
+	extern PFN_TclUnusedStubEntry TclUnusedStubEntry;
+
+	typedef struct {
+		const struct TclPlatStubs* tclPlatStubs;
+		const struct TclIntStubs* tclIntStubs;
+		const struct TclIntPlatStubs* tclIntPlatStubs;
+	} TclStubHooks;
+
+	typedef struct TclStubs {
+		int magic;
+		const TclStubHooks* hooks;
+
+		int (*tcl_PkgProvideEx) (Tcl_Interp* interp, const char* name, const char* version, const void* clientData); /* 0 */
+		const char* (*tcl_PkgRequireEx) (Tcl_Interp* interp, const char* name, const char* version, int exact, void* clientDataPtr); /* 1 */
+		TCL_NORETURN1 void (*tcl_Panic) (const char* format, ...) TCL_FORMAT_PRINTF(1, 2); /* 2 */
+		void* (*tcl_Alloc) (size_t size); /* 3 */
+		void (*tcl_Free) (void* ptr); /* 4 */
+		void* (*tcl_Realloc) (void* ptr, size_t size); /* 5 */
+		void* (*tcl_DbCkalloc) (size_t size, const char* file, int line); /* 6 */
+		void (*tcl_DbCkfree) (void* ptr, const char* file, int line); /* 7 */
+		void* (*tcl_DbCkrealloc) (void* ptr, size_t size, const char* file, int line); /* 8 */
+		void (*tcl_CreateFileHandler) (int fd, int mask, Tcl_FileProc* proc, void* clientData); /* 9 */
+		void (*tcl_DeleteFileHandler) (int fd); /* 10 */
+		void (*tcl_SetTimer) (const Tcl_Time* timePtr); /* 11 */
+		void (*tcl_Sleep) (int ms); /* 12 */
+		int (*tcl_WaitForEvent) (const Tcl_Time* timePtr); /* 13 */
+		int (*tcl_AppendAllObjTypes) (Tcl_Interp* interp, Tcl_Obj* objPtr); /* 14 */
+		void (*tcl_AppendStringsToObj) (Tcl_Obj* objPtr, ...); /* 15 */
+		void (*tcl_AppendToObj) (Tcl_Obj* objPtr, const char* bytes, Tcl_Size length); /* 16 */
+		Tcl_Obj* (*tcl_ConcatObj) (Tcl_Size objc, Tcl_Obj* const objv[]); /* 17 */
+		int (*tcl_ConvertToType) (Tcl_Interp* interp, Tcl_Obj* objPtr, const Tcl_ObjType* typePtr); /* 18 */
+		void (*tcl_DbDecrRefCount) (Tcl_Obj* objPtr, const char* file, int line); /* 19 */
+		void (*tcl_DbIncrRefCount) (Tcl_Obj* objPtr, const char* file, int line); /* 20 */
+		int (*tcl_DbIsShared) (Tcl_Obj* objPtr, const char* file, int line); /* 21 */
+		void (*reserved22)(void);
+		Tcl_Obj* (*tcl_DbNewByteArrayObj) (const unsigned char* bytes, Tcl_Size numBytes, const char* file, int line); /* 23 */
+		Tcl_Obj* (*tcl_DbNewDoubleObj) (double doubleValue, const char* file, int line); /* 24 */
+		Tcl_Obj* (*tcl_DbNewListObj) (Tcl_Size objc, Tcl_Obj* const* objv, const char* file, int line); /* 25 */
+		void (*reserved26)(void);
+		Tcl_Obj* (*tcl_DbNewObj) (const char* file, int line); /* 27 */
+		Tcl_Obj* (*tcl_DbNewStringObj) (const char* bytes, Tcl_Size length, const char* file, int line); /* 28 */
+		Tcl_Obj* (*tcl_DuplicateObj) (Tcl_Obj* objPtr); /* 29 */
+		void (*tclFreeObj) (Tcl_Obj* objPtr); /* 30 */
+		void (*reserved31)(void);
+		void (*reserved32)(void);
+		void (*reserved33)(void);
+		int (*tcl_GetDouble) (Tcl_Interp* interp, const char* src, double* doublePtr); /* 34 */
+		int (*tcl_GetDoubleFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, double* doublePtr); /* 35 */
+		void (*reserved36)(void);
+		int (*tcl_GetInt) (Tcl_Interp* interp, const char* src, int* intPtr); /* 37 */
+		int (*tcl_GetIntFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, int* intPtr); /* 38 */
+		int (*tcl_GetLongFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, long* longPtr); /* 39 */
+		const Tcl_ObjType* (*tcl_GetObjType) (const char* typeName); /* 40 */
+		char* (*tclGetStringFromObj) (Tcl_Obj* objPtr, void* lengthPtr); /* 41 */
+		void (*tcl_InvalidateStringRep) (Tcl_Obj* objPtr); /* 42 */
+		int (*tcl_ListObjAppendList) (Tcl_Interp* interp, Tcl_Obj* listPtr, Tcl_Obj* elemListPtr); /* 43 */
+		int (*tcl_ListObjAppendElement) (Tcl_Interp* interp, Tcl_Obj* listPtr, Tcl_Obj* objPtr); /* 44 */
+		int (*tclListObjGetElements) (Tcl_Interp* interp, Tcl_Obj* listPtr, void* objcPtr, Tcl_Obj*** objvPtr); /* 45 */
+		int (*tcl_ListObjIndex) (Tcl_Interp* interp, Tcl_Obj* listPtr, Tcl_Size index, Tcl_Obj** objPtrPtr); /* 46 */
+		int (*tclListObjLength) (Tcl_Interp* interp, Tcl_Obj* listPtr, void* lengthPtr); /* 47 */
+		int (*tcl_ListObjReplace) (Tcl_Interp* interp, Tcl_Obj* listPtr, Tcl_Size first, Tcl_Size count, Tcl_Size objc, Tcl_Obj* const objv[]); /* 48 */
+		void (*reserved49)(void);
+		Tcl_Obj* (*tcl_NewByteArrayObj) (const unsigned char* bytes, Tcl_Size numBytes); /* 50 */
+		Tcl_Obj* (*tcl_NewDoubleObj) (double doubleValue); /* 51 */
+		void (*reserved52)(void);
+		Tcl_Obj* (*tcl_NewListObj) (Tcl_Size objc, Tcl_Obj* const objv[]); /* 53 */
+		void (*reserved54)(void);
+		Tcl_Obj* (*tcl_NewObj) (void); /* 55 */
+		Tcl_Obj* (*tcl_NewStringObj) (const char* bytes, Tcl_Size length); /* 56 */
+		void (*reserved57)(void);
+		unsigned char* (*tcl_SetByteArrayLength) (Tcl_Obj* objPtr, Tcl_Size numBytes); /* 58 */
+		void (*tcl_SetByteArrayObj) (Tcl_Obj* objPtr, const unsigned char* bytes, Tcl_Size numBytes); /* 59 */
+		void (*tcl_SetDoubleObj) (Tcl_Obj* objPtr, double doubleValue); /* 60 */
+		void (*reserved61)(void);
+		void (*tcl_SetListObj) (Tcl_Obj* objPtr, Tcl_Size objc, Tcl_Obj* const objv[]); /* 62 */
+		void (*reserved63)(void);
+		void (*tcl_SetObjLength) (Tcl_Obj* objPtr, Tcl_Size length); /* 64 */
+		void (*tcl_SetStringObj) (Tcl_Obj* objPtr, const char* bytes, Tcl_Size length); /* 65 */
+		void (*reserved66)(void);
+		void (*reserved67)(void);
+		void (*tcl_AllowExceptions) (Tcl_Interp* interp); /* 68 */
+		void (*tcl_AppendElement) (Tcl_Interp* interp, const char* element); /* 69 */
+		void (*tcl_AppendResult) (Tcl_Interp* interp, ...); /* 70 */
+		Tcl_AsyncHandler(*tcl_AsyncCreate) (Tcl_AsyncProc* proc, void* clientData); /* 71 */
+		void (*tcl_AsyncDelete) (Tcl_AsyncHandler async); /* 72 */
+		int (*tcl_AsyncInvoke) (Tcl_Interp* interp, int code); /* 73 */
+		void (*tcl_AsyncMark) (Tcl_AsyncHandler async); /* 74 */
+		int (*tcl_AsyncReady) (void); /* 75 */
+		void (*reserved76)(void);
+		void (*reserved77)(void);
+		int (*tcl_BadChannelOption) (Tcl_Interp* interp, const char* optionName, const char* optionList); /* 78 */
+		void (*tcl_CallWhenDeleted) (Tcl_Interp* interp, Tcl_InterpDeleteProc* proc, void* clientData); /* 79 */
+		void (*tcl_CancelIdleCall) (Tcl_IdleProc* idleProc, void* clientData); /* 80 */
+		void (*reserved81)(void);
+		int (*tcl_CommandComplete) (const char* cmd); /* 82 */
+		char* (*tcl_Concat) (Tcl_Size argc, const char* const* argv); /* 83 */
+		Tcl_Size(*tcl_ConvertElement) (const char* src, char* dst, int flags); /* 84 */
+		Tcl_Size(*tcl_ConvertCountedElement) (const char* src, Tcl_Size length, char* dst, int flags); /* 85 */
+		int (*tcl_CreateAlias) (Tcl_Interp* childInterp, const char* childCmd, Tcl_Interp* target, const char* targetCmd, Tcl_Size argc, const char* const* argv); /* 86 */
+		int (*tcl_CreateAliasObj) (Tcl_Interp* childInterp, const char* childCmd, Tcl_Interp* target, const char* targetCmd, Tcl_Size objc, Tcl_Obj* const objv[]); /* 87 */
+		Tcl_Channel(*tcl_CreateChannel) (const Tcl_ChannelType* typePtr, const char* chanName, void* instanceData, int mask); /* 88 */
+		void (*tcl_CreateChannelHandler) (Tcl_Channel chan, int mask, Tcl_ChannelProc* proc, void* clientData); /* 89 */
+		void (*tcl_CreateCloseHandler) (Tcl_Channel chan, Tcl_CloseProc* proc, void* clientData); /* 90 */
+		Tcl_Command(*tcl_CreateCommand) (Tcl_Interp* interp, const char* cmdName, Tcl_CmdProc* proc, void* clientData, Tcl_CmdDeleteProc* deleteProc); /* 91 */
+		void (*tcl_CreateEventSource) (Tcl_EventSetupProc* setupProc, Tcl_EventCheckProc* checkProc, void* clientData); /* 92 */
+		void (*tcl_CreateExitHandler) (Tcl_ExitProc* proc, void* clientData); /* 93 */
+		Tcl_Interp* (*tcl_CreateInterp) (void); /* 94 */
+		void (*reserved95)(void);
+		Tcl_Command(*tcl_CreateObjCommand) (Tcl_Interp* interp, const char* cmdName, Tcl_ObjCmdProc* proc, void* clientData, Tcl_CmdDeleteProc* deleteProc); /* 96 */
+		Tcl_Interp* (*tcl_CreateChild) (Tcl_Interp* interp, const char* name, int isSafe); /* 97 */
+		Tcl_TimerToken(*tcl_CreateTimerHandler) (int milliseconds, Tcl_TimerProc* proc, void* clientData); /* 98 */
+		Tcl_Trace(*tcl_CreateTrace) (Tcl_Interp* interp, Tcl_Size level, Tcl_CmdTraceProc* proc, void* clientData); /* 99 */
+		void (*tcl_DeleteAssocData) (Tcl_Interp* interp, const char* name); /* 100 */
+		void (*tcl_DeleteChannelHandler) (Tcl_Channel chan, Tcl_ChannelProc* proc, void* clientData); /* 101 */
+		void (*tcl_DeleteCloseHandler) (Tcl_Channel chan, Tcl_CloseProc* proc, void* clientData); /* 102 */
+		int (*tcl_DeleteCommand) (Tcl_Interp* interp, const char* cmdName); /* 103 */
+		int (*tcl_DeleteCommandFromToken) (Tcl_Interp* interp, Tcl_Command command); /* 104 */
+		void (*tcl_DeleteEvents) (Tcl_EventDeleteProc* proc, void* clientData); /* 105 */
+		void (*tcl_DeleteEventSource) (Tcl_EventSetupProc* setupProc, Tcl_EventCheckProc* checkProc, void* clientData); /* 106 */
+		void (*tcl_DeleteExitHandler) (Tcl_ExitProc* proc, void* clientData); /* 107 */
+		void (*tcl_DeleteHashEntry) (Tcl_HashEntry* entryPtr); /* 108 */
+		void (*tcl_DeleteHashTable) (Tcl_HashTable* tablePtr); /* 109 */
+		void (*tcl_DeleteInterp) (Tcl_Interp* interp); /* 110 */
+		void (*tcl_DetachPids) (Tcl_Size numPids, Tcl_Pid* pidPtr); /* 111 */
+		void (*tcl_DeleteTimerHandler) (Tcl_TimerToken token); /* 112 */
+		void (*tcl_DeleteTrace) (Tcl_Interp* interp, Tcl_Trace trace); /* 113 */
+		void (*tcl_DontCallWhenDeleted) (Tcl_Interp* interp, Tcl_InterpDeleteProc* proc, void* clientData); /* 114 */
+		int (*tcl_DoOneEvent) (int flags); /* 115 */
+		void (*tcl_DoWhenIdle) (Tcl_IdleProc* proc, void* clientData); /* 116 */
+		char* (*tcl_DStringAppend) (Tcl_DString* dsPtr, const char* bytes, Tcl_Size length); /* 117 */
+		char* (*tcl_DStringAppendElement) (Tcl_DString* dsPtr, const char* element); /* 118 */
+		void (*tcl_DStringEndSublist) (Tcl_DString* dsPtr); /* 119 */
+		void (*tcl_DStringFree) (Tcl_DString* dsPtr); /* 120 */
+		void (*tcl_DStringGetResult) (Tcl_Interp* interp, Tcl_DString* dsPtr); /* 121 */
+		void (*tcl_DStringInit) (Tcl_DString* dsPtr); /* 122 */
+		void (*tcl_DStringResult) (Tcl_Interp* interp, Tcl_DString* dsPtr); /* 123 */
+		void (*tcl_DStringSetLength) (Tcl_DString* dsPtr, Tcl_Size length); /* 124 */
+		void (*tcl_DStringStartSublist) (Tcl_DString* dsPtr); /* 125 */
+		int (*tcl_Eof) (Tcl_Channel chan); /* 126 */
+		const char* (*tcl_ErrnoId) (void); /* 127 */
+		const char* (*tcl_ErrnoMsg) (int err); /* 128 */
+		void (*reserved129)(void);
+		int (*tcl_EvalFile) (Tcl_Interp* interp, const char* fileName); /* 130 */
+		void (*reserved131)(void);
+		void (*tcl_EventuallyFree) (void* clientData, Tcl_FreeProc* freeProc); /* 132 */
+		TCL_NORETURN1 void (*tcl_Exit) (int status); /* 133 */
+		int (*tcl_ExposeCommand) (Tcl_Interp* interp, const char* hiddenCmdToken, const char* cmdName); /* 134 */
+		int (*tcl_ExprBoolean) (Tcl_Interp* interp, const char* expr, int* ptr); /* 135 */
+		int (*tcl_ExprBooleanObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, int* ptr); /* 136 */
+		int (*tcl_ExprDouble) (Tcl_Interp* interp, const char* expr, double* ptr); /* 137 */
+		int (*tcl_ExprDoubleObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, double* ptr); /* 138 */
+		int (*tcl_ExprLong) (Tcl_Interp* interp, const char* expr, long* ptr); /* 139 */
+		int (*tcl_ExprLongObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, long* ptr); /* 140 */
+		int (*tcl_ExprObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Obj** resultPtrPtr); /* 141 */
+		int (*tcl_ExprString) (Tcl_Interp* interp, const char* expr); /* 142 */
+		void (*tcl_Finalize) (void); /* 143 */
+		void (*reserved144)(void);
+		Tcl_HashEntry* (*tcl_FirstHashEntry) (Tcl_HashTable* tablePtr, Tcl_HashSearch* searchPtr); /* 145 */
+		int (*tcl_Flush) (Tcl_Channel chan); /* 146 */
+		void (*reserved147)(void);
+		void (*reserved148)(void);
+		int (*tclGetAliasObj) (Tcl_Interp* interp, const char* childCmd, Tcl_Interp** targetInterpPtr, const char** targetCmdPtr, int* objcPtr, Tcl_Obj*** objvPtr); /* 149 */
+		void* (*tcl_GetAssocData) (Tcl_Interp* interp, const char* name, Tcl_InterpDeleteProc** procPtr); /* 150 */
+		Tcl_Channel(*tcl_GetChannel) (Tcl_Interp* interp, const char* chanName, int* modePtr); /* 151 */
+		Tcl_Size(*tcl_GetChannelBufferSize) (Tcl_Channel chan); /* 152 */
+		int (*tcl_GetChannelHandle) (Tcl_Channel chan, int direction, void** handlePtr); /* 153 */
+		void* (*tcl_GetChannelInstanceData) (Tcl_Channel chan); /* 154 */
+		int (*tcl_GetChannelMode) (Tcl_Channel chan); /* 155 */
+		const char* (*tcl_GetChannelName) (Tcl_Channel chan); /* 156 */
+		int (*tcl_GetChannelOption) (Tcl_Interp* interp, Tcl_Channel chan, const char* optionName, Tcl_DString* dsPtr); /* 157 */
+		const Tcl_ChannelType* (*tcl_GetChannelType) (Tcl_Channel chan); /* 158 */
+		int (*tcl_GetCommandInfo) (Tcl_Interp* interp, const char* cmdName, Tcl_CmdInfo* infoPtr); /* 159 */
+		const char* (*tcl_GetCommandName) (Tcl_Interp* interp, Tcl_Command command); /* 160 */
+		int (*tcl_GetErrno) (void); /* 161 */
+		const char* (*tcl_GetHostName) (void); /* 162 */
+		int (*tcl_GetInterpPath) (Tcl_Interp* interp, Tcl_Interp* childInterp); /* 163 */
+		Tcl_Interp* (*tcl_GetParent) (Tcl_Interp* interp); /* 164 */
+		const char* (*tcl_GetNameOfExecutable) (void); /* 165 */
+		Tcl_Obj* (*tcl_GetObjResult) (Tcl_Interp* interp); /* 166 */
+		int (*tcl_GetOpenFile) (Tcl_Interp* interp, const char* chanID, int forWriting, int checkUsage, void** filePtr); /* 167 */
+		Tcl_PathType(*tcl_GetPathType) (const char* path); /* 168 */
+		Tcl_Size(*tcl_Gets) (Tcl_Channel chan, Tcl_DString* dsPtr); /* 169 */
+		Tcl_Size(*tcl_GetsObj) (Tcl_Channel chan, Tcl_Obj* objPtr); /* 170 */
+		int (*tcl_GetServiceMode) (void); /* 171 */
+		Tcl_Interp* (*tcl_GetChild) (Tcl_Interp* interp, const char* name); /* 172 */
+		Tcl_Channel(*tcl_GetStdChannel) (int type); /* 173 */
+		void (*reserved174)(void);
+		void (*reserved175)(void);
+		const char* (*tcl_GetVar2) (Tcl_Interp* interp, const char* part1, const char* part2, int flags); /* 176 */
+		void (*reserved177)(void);
+		void (*reserved178)(void);
+		int (*tcl_HideCommand) (Tcl_Interp* interp, const char* cmdName, const char* hiddenCmdToken); /* 179 */
+		int (*tcl_Init) (Tcl_Interp* interp); /* 180 */
+		void (*tcl_InitHashTable) (Tcl_HashTable* tablePtr, int keyType); /* 181 */
+		int (*tcl_InputBlocked) (Tcl_Channel chan); /* 182 */
+		int (*tcl_InputBuffered) (Tcl_Channel chan); /* 183 */
+		int (*tcl_InterpDeleted) (Tcl_Interp* interp); /* 184 */
+		int (*tcl_IsSafe) (Tcl_Interp* interp); /* 185 */
+		char* (*tcl_JoinPath) (Tcl_Size argc, const char* const* argv, Tcl_DString* resultPtr); /* 186 */
+		int (*tcl_LinkVar) (Tcl_Interp* interp, const char* varName, void* addr, int type); /* 187 */
+		void (*reserved188)(void);
+		Tcl_Channel(*tcl_MakeFileChannel) (void* handle, int mode); /* 189 */
+		void (*reserved190)(void);
+		Tcl_Channel(*tcl_MakeTcpClientChannel) (void* tcpSocket); /* 191 */
+		char* (*tcl_Merge) (Tcl_Size argc, const char* const* argv); /* 192 */
+		Tcl_HashEntry* (*tcl_NextHashEntry) (Tcl_HashSearch* searchPtr); /* 193 */
+		void (*tcl_NotifyChannel) (Tcl_Channel channel, int mask); /* 194 */
+		Tcl_Obj* (*tcl_ObjGetVar2) (Tcl_Interp* interp, Tcl_Obj* part1Ptr, Tcl_Obj* part2Ptr, int flags); /* 195 */
+		Tcl_Obj* (*tcl_ObjSetVar2) (Tcl_Interp* interp, Tcl_Obj* part1Ptr, Tcl_Obj* part2Ptr, Tcl_Obj* newValuePtr, int flags); /* 196 */
+		Tcl_Channel(*tcl_OpenCommandChannel) (Tcl_Interp* interp, Tcl_Size argc, const char** argv, int flags); /* 197 */
+		Tcl_Channel(*tcl_OpenFileChannel) (Tcl_Interp* interp, const char* fileName, const char* modeString, int permissions); /* 198 */
+		Tcl_Channel(*tcl_OpenTcpClient) (Tcl_Interp* interp, int port, const char* address, const char* myaddr, int myport, int flags); /* 199 */
+		Tcl_Channel(*tcl_OpenTcpServer) (Tcl_Interp* interp, int port, const char* host, Tcl_TcpAcceptProc* acceptProc, void* callbackData); /* 200 */
+		void (*tcl_Preserve) (void* data); /* 201 */
+		void (*tcl_PrintDouble) (Tcl_Interp* interp, double value, char* dst); /* 202 */
+		int (*tcl_PutEnv) (const char* assignment); /* 203 */
+		const char* (*tcl_PosixError) (Tcl_Interp* interp); /* 204 */
+		void (*tcl_QueueEvent) (Tcl_Event* evPtr, int position); /* 205 */
+		Tcl_Size(*tcl_Read) (Tcl_Channel chan, char* bufPtr, Tcl_Size toRead); /* 206 */
+		void (*tcl_ReapDetachedProcs) (void); /* 207 */
+		int (*tcl_RecordAndEval) (Tcl_Interp* interp, const char* cmd, int flags); /* 208 */
+		int (*tcl_RecordAndEvalObj) (Tcl_Interp* interp, Tcl_Obj* cmdPtr, int flags); /* 209 */
+		void (*tcl_RegisterChannel) (Tcl_Interp* interp, Tcl_Channel chan); /* 210 */
+		void (*tcl_RegisterObjType) (const Tcl_ObjType* typePtr); /* 211 */
+		Tcl_RegExp(*tcl_RegExpCompile) (Tcl_Interp* interp, const char* pattern); /* 212 */
+		int (*tcl_RegExpExec) (Tcl_Interp* interp, Tcl_RegExp regexp, const char* text, const char* start); /* 213 */
+		int (*tcl_RegExpMatch) (Tcl_Interp* interp, const char* text, const char* pattern); /* 214 */
+		void (*tcl_RegExpRange) (Tcl_RegExp regexp, Tcl_Size index, const char** startPtr, const char** endPtr); /* 215 */
+		void (*tcl_Release) (void* clientData); /* 216 */
+		void (*tcl_ResetResult) (Tcl_Interp* interp); /* 217 */
+		Tcl_Size(*tcl_ScanElement) (const char* src, int* flagPtr); /* 218 */
+		Tcl_Size(*tcl_ScanCountedElement) (const char* src, Tcl_Size length, int* flagPtr); /* 219 */
+		void (*reserved220)(void);
+		int (*tcl_ServiceAll) (void); /* 221 */
+		int (*tcl_ServiceEvent) (int flags); /* 222 */
+		void (*tcl_SetAssocData) (Tcl_Interp* interp, const char* name, Tcl_InterpDeleteProc* proc, void* clientData); /* 223 */
+		void (*tcl_SetChannelBufferSize) (Tcl_Channel chan, Tcl_Size sz); /* 224 */
+		int (*tcl_SetChannelOption) (Tcl_Interp* interp, Tcl_Channel chan, const char* optionName, const char* newValue); /* 225 */
+		int (*tcl_SetCommandInfo) (Tcl_Interp* interp, const char* cmdName, const Tcl_CmdInfo* infoPtr); /* 226 */
+		void (*tcl_SetErrno) (int err); /* 227 */
+		void (*tcl_SetErrorCode) (Tcl_Interp* interp, ...); /* 228 */
+		void (*tcl_SetMaxBlockTime) (const Tcl_Time* timePtr); /* 229 */
+		void (*reserved230)(void);
+		Tcl_Size(*tcl_SetRecursionLimit) (Tcl_Interp* interp, Tcl_Size depth); /* 231 */
+		void (*reserved232)(void);
+		int (*tcl_SetServiceMode) (int mode); /* 233 */
+		void (*tcl_SetObjErrorCode) (Tcl_Interp* interp, Tcl_Obj* errorObjPtr); /* 234 */
+		void (*tcl_SetObjResult) (Tcl_Interp* interp, Tcl_Obj* resultObjPtr); /* 235 */
+		void (*tcl_SetStdChannel) (Tcl_Channel channel, int type); /* 236 */
+		void (*reserved237)(void);
+		const char* (*tcl_SetVar2) (Tcl_Interp* interp, const char* part1, const char* part2, const char* newValue, int flags); /* 238 */
+		const char* (*tcl_SignalId) (int sig); /* 239 */
+		const char* (*tcl_SignalMsg) (int sig); /* 240 */
+		void (*tcl_SourceRCFile) (Tcl_Interp* interp); /* 241 */
+		int (*tclSplitList) (Tcl_Interp* interp, const char* listStr, void* argcPtr, const char*** argvPtr); /* 242 */
+		void (*tclSplitPath) (const char* path, void* argcPtr, const char*** argvPtr); /* 243 */
+		void (*reserved244)(void);
+		void (*reserved245)(void);
+		void (*reserved246)(void);
+		void (*reserved247)(void);
+		int (*tcl_TraceVar2) (Tcl_Interp* interp, const char* part1, const char* part2, int flags, Tcl_VarTraceProc* proc, void* clientData); /* 248 */
+		char* (*tcl_TranslateFileName) (Tcl_Interp* interp, const char* name, Tcl_DString* bufferPtr); /* 249 */
+		Tcl_Size(*tcl_Ungets) (Tcl_Channel chan, const char* str, Tcl_Size len, int atHead); /* 250 */
+		void (*tcl_UnlinkVar) (Tcl_Interp* interp, const char* varName); /* 251 */
+		int (*tcl_UnregisterChannel) (Tcl_Interp* interp, Tcl_Channel chan); /* 252 */
+		void (*reserved253)(void);
+		int (*tcl_UnsetVar2) (Tcl_Interp* interp, const char* part1, const char* part2, int flags); /* 254 */
+		void (*reserved255)(void);
+		void (*tcl_UntraceVar2) (Tcl_Interp* interp, const char* part1, const char* part2, int flags, Tcl_VarTraceProc* proc, void* clientData); /* 256 */
+		void (*tcl_UpdateLinkedVar) (Tcl_Interp* interp, const char* varName); /* 257 */
+		void (*reserved258)(void);
+		int (*tcl_UpVar2) (Tcl_Interp* interp, const char* frameName, const char* part1, const char* part2, const char* localName, int flags); /* 259 */
+		int (*tcl_VarEval) (Tcl_Interp* interp, ...); /* 260 */
+		void (*reserved261)(void);
+		void* (*tcl_VarTraceInfo2) (Tcl_Interp* interp, const char* part1, const char* part2, int flags, Tcl_VarTraceProc* procPtr, void* prevClientData); /* 262 */
+		Tcl_Size(*tcl_Write) (Tcl_Channel chan, const char* s, Tcl_Size slen); /* 263 */
+		void (*tcl_WrongNumArgs) (Tcl_Interp* interp, Tcl_Size objc, Tcl_Obj* const objv[], const char* message); /* 264 */
+		int (*tcl_DumpActiveMemory) (const char* fileName); /* 265 */
+		void (*tcl_ValidateAllMemory) (const char* file, int line); /* 266 */
+		void (*reserved267)(void);
+		void (*reserved268)(void);
+		char* (*tcl_HashStats) (Tcl_HashTable* tablePtr); /* 269 */
+		const char* (*tcl_ParseVar) (Tcl_Interp* interp, const char* start, const char** termPtr); /* 270 */
+		void (*reserved271)(void);
+		const char* (*tcl_PkgPresentEx) (Tcl_Interp* interp, const char* name, const char* version, int exact, void* clientDataPtr); /* 272 */
+		void (*reserved273)(void);
+		void (*reserved274)(void);
+		void (*reserved275)(void);
+		void (*reserved276)(void);
+		Tcl_Pid(*tcl_WaitPid) (Tcl_Pid pid, int* statPtr, int options); /* 277 */
+		void (*reserved278)(void);
+		void (*tcl_GetVersion) (int* major, int* minor, int* patchLevel, int* type); /* 279 */
+		void (*tcl_InitMemory) (Tcl_Interp* interp); /* 280 */
+		Tcl_Channel(*tcl_StackChannel) (Tcl_Interp* interp, const Tcl_ChannelType* typePtr, void* instanceData, int mask, Tcl_Channel prevChan); /* 281 */
+		int (*tcl_UnstackChannel) (Tcl_Interp* interp, Tcl_Channel chan); /* 282 */
+		Tcl_Channel(*tcl_GetStackedChannel) (Tcl_Channel chan); /* 283 */
+		void (*tcl_SetMainLoop) (Tcl_MainLoopProc* proc); /* 284 */
+		int (*tcl_GetAliasObj) (Tcl_Interp* interp, const char* childCmd, Tcl_Interp** targetInterpPtr, const char** targetCmdPtr, Tcl_Size* objcPtr, Tcl_Obj*** objvPtr); /* 285 */
+		void (*tcl_AppendObjToObj) (Tcl_Obj* objPtr, Tcl_Obj* appendObjPtr); /* 286 */
+		Tcl_Encoding(*tcl_CreateEncoding) (const Tcl_EncodingType* typePtr); /* 287 */
+		void (*tcl_CreateThreadExitHandler) (Tcl_ExitProc* proc, void* clientData); /* 288 */
+		void (*tcl_DeleteThreadExitHandler) (Tcl_ExitProc* proc, void* clientData); /* 289 */
+		void (*reserved290)(void);
+		int (*tcl_EvalEx) (Tcl_Interp* interp, const char* script, Tcl_Size numBytes, int flags); /* 291 */
+		int (*tcl_EvalObjv) (Tcl_Interp* interp, Tcl_Size objc, Tcl_Obj* const objv[], int flags); /* 292 */
+		int (*tcl_EvalObjEx) (Tcl_Interp* interp, Tcl_Obj* objPtr, int flags); /* 293 */
+		TCL_NORETURN1 void (*tcl_ExitThread) (int status); /* 294 */
+		int (*tcl_ExternalToUtf) (Tcl_Interp* interp, Tcl_Encoding encoding, const char* src, Tcl_Size srcLen, int flags, Tcl_EncodingState* statePtr, char* dst, Tcl_Size dstLen, int* srcReadPtr, int* dstWrotePtr, int* dstCharsPtr); /* 295 */
+		char* (*tcl_ExternalToUtfDString) (Tcl_Encoding encoding, const char* src, Tcl_Size srcLen, Tcl_DString* dsPtr); /* 296 */
+		void (*tcl_FinalizeThread) (void); /* 297 */
+		void (*tcl_FinalizeNotifier) (void* clientData); /* 298 */
+		void (*tcl_FreeEncoding) (Tcl_Encoding encoding); /* 299 */
+		Tcl_ThreadId(*tcl_GetCurrentThread) (void); /* 300 */
+		Tcl_Encoding(*tcl_GetEncoding) (Tcl_Interp* interp, const char* name); /* 301 */
+		const char* (*tcl_GetEncodingName) (Tcl_Encoding encoding); /* 302 */
+		void (*tcl_GetEncodingNames) (Tcl_Interp* interp); /* 303 */
+		int (*tcl_GetIndexFromObjStruct) (Tcl_Interp* interp, Tcl_Obj* objPtr, const void* tablePtr, Tcl_Size offset, const char* msg, int flags, void* indexPtr); /* 304 */
+		void* (*tcl_GetThreadData) (Tcl_ThreadDataKey* keyPtr, Tcl_Size size); /* 305 */
+		Tcl_Obj* (*tcl_GetVar2Ex) (Tcl_Interp* interp, const char* part1, const char* part2, int flags); /* 306 */
+		void* (*tcl_InitNotifier) (void); /* 307 */
+		void (*tcl_MutexLock) (Tcl_Mutex* mutexPtr); /* 308 */
+		void (*tcl_MutexUnlock) (Tcl_Mutex* mutexPtr); /* 309 */
+		void (*tcl_ConditionNotify) (Tcl_Condition* condPtr); /* 310 */
+		void (*tcl_ConditionWait) (Tcl_Condition* condPtr, Tcl_Mutex* mutexPtr, const Tcl_Time* timePtr); /* 311 */
+		Tcl_Size(*tclNumUtfChars) (const char* src, Tcl_Size length); /* 312 */
+		Tcl_Size(*tcl_ReadChars) (Tcl_Channel channel, Tcl_Obj* objPtr, Tcl_Size charsToRead, int appendFlag); /* 313 */
+		void (*reserved314)(void);
+		void (*reserved315)(void);
+		int (*tcl_SetSystemEncoding) (Tcl_Interp* interp, const char* name); /* 316 */
+		Tcl_Obj* (*tcl_SetVar2Ex) (Tcl_Interp* interp, const char* part1, const char* part2, Tcl_Obj* newValuePtr, int flags); /* 317 */
+		void (*tcl_ThreadAlert) (Tcl_ThreadId threadId); /* 318 */
+		void (*tcl_ThreadQueueEvent) (Tcl_ThreadId threadId, Tcl_Event* evPtr, int position); /* 319 */
+		int (*tcl_UniCharAtIndex) (const char* src, Tcl_Size index); /* 320 */
+		int (*tcl_UniCharToLower) (int ch); /* 321 */
+		int (*tcl_UniCharToTitle) (int ch); /* 322 */
+		int (*tcl_UniCharToUpper) (int ch); /* 323 */
+		Tcl_Size(*tcl_UniCharToUtf) (int ch, char* buf); /* 324 */
+		const char* (*tclUtfAtIndex) (const char* src, Tcl_Size index); /* 325 */
+		int (*tclUtfCharComplete) (const char* src, Tcl_Size length); /* 326 */
+		Tcl_Size(*tcl_UtfBackslash) (const char* src, int* readPtr, char* dst); /* 327 */
+		const char* (*tcl_UtfFindFirst) (const char* src, int ch); /* 328 */
+		const char* (*tcl_UtfFindLast) (const char* src, int ch); /* 329 */
+		const char* (*tclUtfNext) (const char* src); /* 330 */
+		const char* (*tclUtfPrev) (const char* src, const char* start); /* 331 */
+		int (*tcl_UtfToExternal) (Tcl_Interp* interp, Tcl_Encoding encoding, const char* src, Tcl_Size srcLen, int flags, Tcl_EncodingState* statePtr, char* dst, Tcl_Size dstLen, int* srcReadPtr, int* dstWrotePtr, int* dstCharsPtr); /* 332 */
+		char* (*tcl_UtfToExternalDString) (Tcl_Encoding encoding, const char* src, Tcl_Size srcLen, Tcl_DString* dsPtr); /* 333 */
+		Tcl_Size(*tcl_UtfToLower) (char* src); /* 334 */
+		Tcl_Size(*tcl_UtfToTitle) (char* src); /* 335 */
+		Tcl_Size(*tcl_UtfToChar16) (const char* src, unsigned short* chPtr); /* 336 */
+		Tcl_Size(*tcl_UtfToUpper) (char* src); /* 337 */
+		Tcl_Size(*tcl_WriteChars) (Tcl_Channel chan, const char* src, Tcl_Size srcLen); /* 338 */
+		Tcl_Size(*tcl_WriteObj) (Tcl_Channel chan, Tcl_Obj* objPtr); /* 339 */
+		void (*reserved340)(void);
+		void (*reserved341)(void);
+		void (*reserved342)(void);
+		void (*tcl_AlertNotifier) (void* clientData); /* 343 */
+		void (*tcl_ServiceModeHook) (int mode); /* 344 */
+		int (*tcl_UniCharIsAlnum) (int ch); /* 345 */
+		int (*tcl_UniCharIsAlpha) (int ch); /* 346 */
+		int (*tcl_UniCharIsDigit) (int ch); /* 347 */
+		int (*tcl_UniCharIsLower) (int ch); /* 348 */
+		int (*tcl_UniCharIsSpace) (int ch); /* 349 */
+		int (*tcl_UniCharIsUpper) (int ch); /* 350 */
+		int (*tcl_UniCharIsWordChar) (int ch); /* 351 */
+		Tcl_Size(*tcl_Char16Len) (const unsigned short* uniStr); /* 352 */
+		void (*reserved353)(void);
+		char* (*tcl_Char16ToUtfDString) (const unsigned short* uniStr, Tcl_Size uniLength, Tcl_DString* dsPtr); /* 354 */
+		unsigned short* (*tcl_UtfToChar16DString) (const char* src, Tcl_Size length, Tcl_DString* dsPtr); /* 355 */
+		Tcl_RegExp(*tcl_GetRegExpFromObj) (Tcl_Interp* interp, Tcl_Obj* patObj, int flags); /* 356 */
+		void (*reserved357)(void);
+		void (*tcl_FreeParse) (Tcl_Parse* parsePtr); /* 358 */
+		void (*tcl_LogCommandInfo) (Tcl_Interp* interp, const char* script, const char* command, Tcl_Size length); /* 359 */
+		int (*tcl_ParseBraces) (Tcl_Interp* interp, const char* start, Tcl_Size numBytes, Tcl_Parse* parsePtr, int append, const char** termPtr); /* 360 */
+		int (*tcl_ParseCommand) (Tcl_Interp* interp, const char* start, Tcl_Size numBytes, int nested, Tcl_Parse* parsePtr); /* 361 */
+		int (*tcl_ParseExpr) (Tcl_Interp* interp, const char* start, Tcl_Size numBytes, Tcl_Parse* parsePtr); /* 362 */
+		int (*tcl_ParseQuotedString) (Tcl_Interp* interp, const char* start, Tcl_Size numBytes, Tcl_Parse* parsePtr, int append, const char** termPtr); /* 363 */
+		int (*tcl_ParseVarName) (Tcl_Interp* interp, const char* start, Tcl_Size numBytes, Tcl_Parse* parsePtr, int append); /* 364 */
+		char* (*tcl_GetCwd) (Tcl_Interp* interp, Tcl_DString* cwdPtr); /* 365 */
+		int (*tcl_Chdir) (const char* dirName); /* 366 */
+		int (*tcl_Access) (const char* path, int mode); /* 367 */
+		int (*tcl_Stat) (const char* path, struct stat* bufPtr); /* 368 */
+		int (*tclUtfNcmp) (const char* s1, const char* s2, size_t n); /* 369 */
+		int (*tclUtfNcasecmp) (const char* s1, const char* s2, size_t n); /* 370 */
+		int (*tcl_StringCaseMatch) (const char* str, const char* pattern, int nocase); /* 371 */
+		int (*tcl_UniCharIsControl) (int ch); /* 372 */
+		int (*tcl_UniCharIsGraph) (int ch); /* 373 */
+		int (*tcl_UniCharIsPrint) (int ch); /* 374 */
+		int (*tcl_UniCharIsPunct) (int ch); /* 375 */
+		int (*tcl_RegExpExecObj) (Tcl_Interp* interp, Tcl_RegExp regexp, Tcl_Obj* textObj, Tcl_Size offset, Tcl_Size nmatches, int flags); /* 376 */
+		void (*tcl_RegExpGetInfo) (Tcl_RegExp regexp, Tcl_RegExpInfo* infoPtr); /* 377 */
+		Tcl_Obj* (*tcl_NewUnicodeObj) (const Tcl_UniChar* unicode, Tcl_Size numChars); /* 378 */
+		void (*tcl_SetUnicodeObj) (Tcl_Obj* objPtr, const Tcl_UniChar* unicode, Tcl_Size numChars); /* 379 */
+		Tcl_Size(*tclGetCharLength) (Tcl_Obj* objPtr); /* 380 */
+		int (*tclGetUniChar) (Tcl_Obj* objPtr, Tcl_Size index); /* 381 */
+		void (*reserved382)(void);
+		Tcl_Obj* (*tclGetRange) (Tcl_Obj* objPtr, Tcl_Size first, Tcl_Size last); /* 383 */
+		void (*tcl_AppendUnicodeToObj) (Tcl_Obj* objPtr, const Tcl_UniChar* unicode, Tcl_Size length); /* 384 */
+		int (*tcl_RegExpMatchObj) (Tcl_Interp* interp, Tcl_Obj* textObj, Tcl_Obj* patternObj); /* 385 */
+		void (*tcl_SetNotifier) (const Tcl_NotifierProcs* notifierProcPtr); /* 386 */
+		Tcl_Mutex* (*tcl_GetAllocMutex) (void); /* 387 */
+		int (*tcl_GetChannelNames) (Tcl_Interp* interp); /* 388 */
+		int (*tcl_GetChannelNamesEx) (Tcl_Interp* interp, const char* pattern); /* 389 */
+		int (*tcl_ProcObjCmd) (void* clientData, Tcl_Interp* interp, Tcl_Size objc, Tcl_Obj* const objv[]); /* 390 */
+		void (*tcl_ConditionFinalize) (Tcl_Condition* condPtr); /* 391 */
+		void (*tcl_MutexFinalize) (Tcl_Mutex* mutex); /* 392 */
+		int (*tcl_CreateThread) (Tcl_ThreadId* idPtr, Tcl_ThreadCreateProc* proc, void* clientData, size_t stackSize, int flags); /* 393 */
+		Tcl_Size(*tcl_ReadRaw) (Tcl_Channel chan, char* dst, Tcl_Size bytesToRead); /* 394 */
+		Tcl_Size(*tcl_WriteRaw) (Tcl_Channel chan, const char* src, Tcl_Size srcLen); /* 395 */
+		Tcl_Channel(*tcl_GetTopChannel) (Tcl_Channel chan); /* 396 */
+		int (*tcl_ChannelBuffered) (Tcl_Channel chan); /* 397 */
+		const char* (*tcl_ChannelName) (const Tcl_ChannelType* chanTypePtr); /* 398 */
+		Tcl_ChannelTypeVersion(*tcl_ChannelVersion) (const Tcl_ChannelType* chanTypePtr); /* 399 */
+		Tcl_DriverBlockModeProc* (*tcl_ChannelBlockModeProc) (const Tcl_ChannelType* chanTypePtr); /* 400 */
+		void (*reserved401)(void);
+		Tcl_DriverClose2Proc* (*tcl_ChannelClose2Proc) (const Tcl_ChannelType* chanTypePtr); /* 402 */
+		Tcl_DriverInputProc* (*tcl_ChannelInputProc) (const Tcl_ChannelType* chanTypePtr); /* 403 */
+		Tcl_DriverOutputProc* (*tcl_ChannelOutputProc) (const Tcl_ChannelType* chanTypePtr); /* 404 */
+		void (*reserved405)(void);
+		Tcl_DriverSetOptionProc* (*tcl_ChannelSetOptionProc) (const Tcl_ChannelType* chanTypePtr); /* 406 */
+		Tcl_DriverGetOptionProc* (*tcl_ChannelGetOptionProc) (const Tcl_ChannelType* chanTypePtr); /* 407 */
+		Tcl_DriverWatchProc* (*tcl_ChannelWatchProc) (const Tcl_ChannelType* chanTypePtr); /* 408 */
+		Tcl_DriverGetHandleProc* (*tcl_ChannelGetHandleProc) (const Tcl_ChannelType* chanTypePtr); /* 409 */
+		Tcl_DriverFlushProc* (*tcl_ChannelFlushProc) (const Tcl_ChannelType* chanTypePtr); /* 410 */
+		Tcl_DriverHandlerProc* (*tcl_ChannelHandlerProc) (const Tcl_ChannelType* chanTypePtr); /* 411 */
+		int (*tcl_JoinThread) (Tcl_ThreadId threadId, int* result); /* 412 */
+		int (*tcl_IsChannelShared) (Tcl_Channel channel); /* 413 */
+		int (*tcl_IsChannelRegistered) (Tcl_Interp* interp, Tcl_Channel channel); /* 414 */
+		void (*tcl_CutChannel) (Tcl_Channel channel); /* 415 */
+		void (*tcl_SpliceChannel) (Tcl_Channel channel); /* 416 */
+		void (*tcl_ClearChannelHandlers) (Tcl_Channel channel); /* 417 */
+		int (*tcl_IsChannelExisting) (const char* channelName); /* 418 */
+		void (*reserved419)(void);
+		void (*reserved420)(void);
+		Tcl_HashEntry* (*tcl_DbCreateHashEntry) (Tcl_HashTable* tablePtr, const void* key, int* newPtr, const char* file, int line); /* 421 */
+		Tcl_HashEntry* (*tcl_CreateHashEntry) (Tcl_HashTable* tablePtr, const void* key, int* newPtr); /* 422 */
+		void (*tcl_InitCustomHashTable) (Tcl_HashTable* tablePtr, int keyType, const Tcl_HashKeyType* typePtr); /* 423 */
+		void (*tcl_InitObjHashTable) (Tcl_HashTable* tablePtr); /* 424 */
+		void* (*tcl_CommandTraceInfo) (Tcl_Interp* interp, const char* varName, int flags, Tcl_CommandTraceProc* procPtr, void* prevClientData); /* 425 */
+		int (*tcl_TraceCommand) (Tcl_Interp* interp, const char* varName, int flags, Tcl_CommandTraceProc* proc, void* clientData); /* 426 */
+		void (*tcl_UntraceCommand) (Tcl_Interp* interp, const char* varName, int flags, Tcl_CommandTraceProc* proc, void* clientData); /* 427 */
+		void* (*tcl_AttemptAlloc) (size_t size); /* 428 */
+		void* (*tcl_AttemptDbCkalloc) (size_t size, const char* file, int line); /* 429 */
+		void* (*tcl_AttemptRealloc) (void* ptr, size_t size); /* 430 */
+		void* (*tcl_AttemptDbCkrealloc) (void* ptr, size_t size, const char* file, int line); /* 431 */
+		int (*tcl_AttemptSetObjLength) (Tcl_Obj* objPtr, Tcl_Size length); /* 432 */
+		Tcl_ThreadId(*tcl_GetChannelThread) (Tcl_Channel channel); /* 433 */
+		Tcl_UniChar* (*tclGetUnicodeFromObj) (Tcl_Obj* objPtr, void* lengthPtr); /* 434 */
+		void (*reserved435)(void);
+		void (*reserved436)(void);
+		Tcl_Obj* (*tcl_SubstObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, int flags); /* 437 */
+		int (*tcl_DetachChannel) (Tcl_Interp* interp, Tcl_Channel channel); /* 438 */
+		int (*tcl_IsStandardChannel) (Tcl_Channel channel); /* 439 */
+		int (*tcl_FSCopyFile) (Tcl_Obj* srcPathPtr, Tcl_Obj* destPathPtr); /* 440 */
+		int (*tcl_FSCopyDirectory) (Tcl_Obj* srcPathPtr, Tcl_Obj* destPathPtr, Tcl_Obj** errorPtr); /* 441 */
+		int (*tcl_FSCreateDirectory) (Tcl_Obj* pathPtr); /* 442 */
+		int (*tcl_FSDeleteFile) (Tcl_Obj* pathPtr); /* 443 */
+		int (*tcl_FSLoadFile) (Tcl_Interp* interp, Tcl_Obj* pathPtr, const char* sym1, const char* sym2, Tcl_LibraryInitProc** proc1Ptr, Tcl_LibraryInitProc** proc2Ptr, Tcl_LoadHandle* handlePtr, Tcl_FSUnloadFileProc** unloadProcPtr); /* 444 */
+		int (*tcl_FSMatchInDirectory) (Tcl_Interp* interp, Tcl_Obj* result, Tcl_Obj* pathPtr, const char* pattern, Tcl_GlobTypeData* types); /* 445 */
+		Tcl_Obj* (*tcl_FSLink) (Tcl_Obj* pathPtr, Tcl_Obj* toPtr, int linkAction); /* 446 */
+		int (*tcl_FSRemoveDirectory) (Tcl_Obj* pathPtr, int recursive, Tcl_Obj** errorPtr); /* 447 */
+		int (*tcl_FSRenameFile) (Tcl_Obj* srcPathPtr, Tcl_Obj* destPathPtr); /* 448 */
+		int (*tcl_FSLstat) (Tcl_Obj* pathPtr, Tcl_StatBuf* buf); /* 449 */
+		int (*tcl_FSUtime) (Tcl_Obj* pathPtr, struct utimbuf* tval); /* 450 */
+		int (*tcl_FSFileAttrsGet) (Tcl_Interp* interp, int index, Tcl_Obj* pathPtr, Tcl_Obj** objPtrRef); /* 451 */
+		int (*tcl_FSFileAttrsSet) (Tcl_Interp* interp, int index, Tcl_Obj* pathPtr, Tcl_Obj* objPtr); /* 452 */
+		const char* const* (*tcl_FSFileAttrStrings) (Tcl_Obj* pathPtr, Tcl_Obj** objPtrRef); /* 453 */
+		int (*tcl_FSStat) (Tcl_Obj* pathPtr, Tcl_StatBuf* buf); /* 454 */
+		int (*tcl_FSAccess) (Tcl_Obj* pathPtr, int mode); /* 455 */
+		Tcl_Channel(*tcl_FSOpenFileChannel) (Tcl_Interp* interp, Tcl_Obj* pathPtr, const char* modeString, int permissions); /* 456 */
+		Tcl_Obj* (*tcl_FSGetCwd) (Tcl_Interp* interp); /* 457 */
+		int (*tcl_FSChdir) (Tcl_Obj* pathPtr); /* 458 */
+		int (*tcl_FSConvertToPathType) (Tcl_Interp* interp, Tcl_Obj* pathPtr); /* 459 */
+		Tcl_Obj* (*tcl_FSJoinPath) (Tcl_Obj* listObj, Tcl_Size elements); /* 460 */
+		Tcl_Obj* (*tclFSSplitPath) (Tcl_Obj* pathPtr, void* lenPtr); /* 461 */
+		int (*tcl_FSEqualPaths) (Tcl_Obj* firstPtr, Tcl_Obj* secondPtr); /* 462 */
+		Tcl_Obj* (*tcl_FSGetNormalizedPath) (Tcl_Interp* interp, Tcl_Obj* pathPtr); /* 463 */
+		Tcl_Obj* (*tcl_FSJoinToPath) (Tcl_Obj* pathPtr, Tcl_Size objc, Tcl_Obj* const objv[]); /* 464 */
+		void* (*tcl_FSGetInternalRep) (Tcl_Obj* pathPtr, const Tcl_Filesystem* fsPtr); /* 465 */
+		Tcl_Obj* (*tcl_FSGetTranslatedPath) (Tcl_Interp* interp, Tcl_Obj* pathPtr); /* 466 */
+		int (*tcl_FSEvalFile) (Tcl_Interp* interp, Tcl_Obj* fileName); /* 467 */
+		Tcl_Obj* (*tcl_FSNewNativePath) (const Tcl_Filesystem* fromFilesystem, void* clientData); /* 468 */
+		const void* (*tcl_FSGetNativePath) (Tcl_Obj* pathPtr); /* 469 */
+		Tcl_Obj* (*tcl_FSFileSystemInfo) (Tcl_Obj* pathPtr); /* 470 */
+		Tcl_Obj* (*tcl_FSPathSeparator) (Tcl_Obj* pathPtr); /* 471 */
+		Tcl_Obj* (*tcl_FSListVolumes) (void); /* 472 */
+		int (*tcl_FSRegister) (void* clientData, const Tcl_Filesystem* fsPtr); /* 473 */
+		int (*tcl_FSUnregister) (const Tcl_Filesystem* fsPtr); /* 474 */
+		void* (*tcl_FSData) (const Tcl_Filesystem* fsPtr); /* 475 */
+		const char* (*tcl_FSGetTranslatedStringPath) (Tcl_Interp* interp, Tcl_Obj* pathPtr); /* 476 */
+		const Tcl_Filesystem* (*tcl_FSGetFileSystemForPath) (Tcl_Obj* pathPtr); /* 477 */
+		Tcl_PathType(*tcl_FSGetPathType) (Tcl_Obj* pathPtr); /* 478 */
+		int (*tcl_OutputBuffered) (Tcl_Channel chan); /* 479 */
+		void (*tcl_FSMountsChanged) (const Tcl_Filesystem* fsPtr); /* 480 */
+		int (*tcl_EvalTokensStandard) (Tcl_Interp* interp, Tcl_Token* tokenPtr, Tcl_Size count); /* 481 */
+		void (*tcl_GetTime) (Tcl_Time* timeBuf); /* 482 */
+		Tcl_Trace(*tcl_CreateObjTrace) (Tcl_Interp* interp, Tcl_Size level, int flags, Tcl_CmdObjTraceProc* objProc, void* clientData, Tcl_CmdObjTraceDeleteProc* delProc); /* 483 */
+		int (*tcl_GetCommandInfoFromToken) (Tcl_Command token, Tcl_CmdInfo* infoPtr); /* 484 */
+		int (*tcl_SetCommandInfoFromToken) (Tcl_Command token, const Tcl_CmdInfo* infoPtr); /* 485 */
+		Tcl_Obj* (*tcl_DbNewWideIntObj) (Tcl_WideInt wideValue, const char* file, int line); /* 486 */
+		int (*tcl_GetWideIntFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_WideInt* widePtr); /* 487 */
+		Tcl_Obj* (*tcl_NewWideIntObj) (Tcl_WideInt wideValue); /* 488 */
+		void (*tcl_SetWideIntObj) (Tcl_Obj* objPtr, Tcl_WideInt wideValue); /* 489 */
+		Tcl_StatBuf* (*tcl_AllocStatBuf) (void); /* 490 */
+		long long (*tcl_Seek) (Tcl_Channel chan, long long offset, int mode); /* 491 */
+		long long (*tcl_Tell) (Tcl_Channel chan); /* 492 */
+		Tcl_DriverWideSeekProc* (*tcl_ChannelWideSeekProc) (const Tcl_ChannelType* chanTypePtr); /* 493 */
+		int (*tcl_DictObjPut) (Tcl_Interp* interp, Tcl_Obj* dictPtr, Tcl_Obj* keyPtr, Tcl_Obj* valuePtr); /* 494 */
+		int (*tcl_DictObjGet) (Tcl_Interp* interp, Tcl_Obj* dictPtr, Tcl_Obj* keyPtr, Tcl_Obj** valuePtrPtr); /* 495 */
+		int (*tcl_DictObjRemove) (Tcl_Interp* interp, Tcl_Obj* dictPtr, Tcl_Obj* keyPtr); /* 496 */
+		int (*tclDictObjSize) (Tcl_Interp* interp, Tcl_Obj* dictPtr, void* sizePtr); /* 497 */
+		int (*tcl_DictObjFirst) (Tcl_Interp* interp, Tcl_Obj* dictPtr, Tcl_DictSearch* searchPtr, Tcl_Obj** keyPtrPtr, Tcl_Obj** valuePtrPtr, int* donePtr); /* 498 */
+		void (*tcl_DictObjNext) (Tcl_DictSearch* searchPtr, Tcl_Obj** keyPtrPtr, Tcl_Obj** valuePtrPtr, int* donePtr); /* 499 */
+		void (*tcl_DictObjDone) (Tcl_DictSearch* searchPtr); /* 500 */
+		int (*tcl_DictObjPutKeyList) (Tcl_Interp* interp, Tcl_Obj* dictPtr, Tcl_Size keyc, Tcl_Obj* const* keyv, Tcl_Obj* valuePtr); /* 501 */
+		int (*tcl_DictObjRemoveKeyList) (Tcl_Interp* interp, Tcl_Obj* dictPtr, Tcl_Size keyc, Tcl_Obj* const* keyv); /* 502 */
+		Tcl_Obj* (*tcl_NewDictObj) (void); /* 503 */
+		Tcl_Obj* (*tcl_DbNewDictObj) (const char* file, int line); /* 504 */
+		void (*tcl_RegisterConfig) (Tcl_Interp* interp, const char* pkgName, const Tcl_Config* configuration, const char* valEncoding); /* 505 */
+		Tcl_Namespace* (*tcl_CreateNamespace) (Tcl_Interp* interp, const char* name, void* clientData, Tcl_NamespaceDeleteProc* deleteProc); /* 506 */
+		void (*tcl_DeleteNamespace) (Tcl_Namespace* nsPtr); /* 507 */
+		int (*tcl_AppendExportList) (Tcl_Interp* interp, Tcl_Namespace* nsPtr, Tcl_Obj* objPtr); /* 508 */
+		int (*tcl_Export) (Tcl_Interp* interp, Tcl_Namespace* nsPtr, const char* pattern, int resetListFirst); /* 509 */
+		int (*tcl_Import) (Tcl_Interp* interp, Tcl_Namespace* nsPtr, const char* pattern, int allowOverwrite); /* 510 */
+		int (*tcl_ForgetImport) (Tcl_Interp* interp, Tcl_Namespace* nsPtr, const char* pattern); /* 511 */
+		Tcl_Namespace* (*tcl_GetCurrentNamespace) (Tcl_Interp* interp); /* 512 */
+		Tcl_Namespace* (*tcl_GetGlobalNamespace) (Tcl_Interp* interp); /* 513 */
+		Tcl_Namespace* (*tcl_FindNamespace) (Tcl_Interp* interp, const char* name, Tcl_Namespace* contextNsPtr, int flags); /* 514 */
+		Tcl_Command(*tcl_FindCommand) (Tcl_Interp* interp, const char* name, Tcl_Namespace* contextNsPtr, int flags); /* 515 */
+		Tcl_Command(*tcl_GetCommandFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr); /* 516 */
+		void (*tcl_GetCommandFullName) (Tcl_Interp* interp, Tcl_Command command, Tcl_Obj* objPtr); /* 517 */
+		int (*tcl_FSEvalFileEx) (Tcl_Interp* interp, Tcl_Obj* fileName, const char* encodingName); /* 518 */
+		void (*reserved519)(void);
+		void (*tcl_LimitAddHandler) (Tcl_Interp* interp, int type, Tcl_LimitHandlerProc* handlerProc, void* clientData, Tcl_LimitHandlerDeleteProc* deleteProc); /* 520 */
+		void (*tcl_LimitRemoveHandler) (Tcl_Interp* interp, int type, Tcl_LimitHandlerProc* handlerProc, void* clientData); /* 521 */
+		int (*tcl_LimitReady) (Tcl_Interp* interp); /* 522 */
+		int (*tcl_LimitCheck) (Tcl_Interp* interp); /* 523 */
+		int (*tcl_LimitExceeded) (Tcl_Interp* interp); /* 524 */
+		void (*tcl_LimitSetCommands) (Tcl_Interp* interp, Tcl_Size commandLimit); /* 525 */
+		void (*tcl_LimitSetTime) (Tcl_Interp* interp, Tcl_Time* timeLimitPtr); /* 526 */
+		void (*tcl_LimitSetGranularity) (Tcl_Interp* interp, int type, int granularity); /* 527 */
+		int (*tcl_LimitTypeEnabled) (Tcl_Interp* interp, int type); /* 528 */
+		int (*tcl_LimitTypeExceeded) (Tcl_Interp* interp, int type); /* 529 */
+		void (*tcl_LimitTypeSet) (Tcl_Interp* interp, int type); /* 530 */
+		void (*tcl_LimitTypeReset) (Tcl_Interp* interp, int type); /* 531 */
+		Tcl_Size(*tcl_LimitGetCommands) (Tcl_Interp* interp); /* 532 */
+		void (*tcl_LimitGetTime) (Tcl_Interp* interp, Tcl_Time* timeLimitPtr); /* 533 */
+		int (*tcl_LimitGetGranularity) (Tcl_Interp* interp, int type); /* 534 */
+		Tcl_InterpState(*tcl_SaveInterpState) (Tcl_Interp* interp, int status); /* 535 */
+		int (*tcl_RestoreInterpState) (Tcl_Interp* interp, Tcl_InterpState state); /* 536 */
+		void (*tcl_DiscardInterpState) (Tcl_InterpState state); /* 537 */
+		int (*tcl_SetReturnOptions) (Tcl_Interp* interp, Tcl_Obj* options); /* 538 */
+		Tcl_Obj* (*tcl_GetReturnOptions) (Tcl_Interp* interp, int result); /* 539 */
+		int (*tcl_IsEnsemble) (Tcl_Command token); /* 540 */
+		Tcl_Command(*tcl_CreateEnsemble) (Tcl_Interp* interp, const char* name, Tcl_Namespace* namespacePtr, int flags); /* 541 */
+		Tcl_Command(*tcl_FindEnsemble) (Tcl_Interp* interp, Tcl_Obj* cmdNameObj, int flags); /* 542 */
+		int (*tcl_SetEnsembleSubcommandList) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj* subcmdList); /* 543 */
+		int (*tcl_SetEnsembleMappingDict) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj* mapDict); /* 544 */
+		int (*tcl_SetEnsembleUnknownHandler) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj* unknownList); /* 545 */
+		int (*tcl_SetEnsembleFlags) (Tcl_Interp* interp, Tcl_Command token, int flags); /* 546 */
+		int (*tcl_GetEnsembleSubcommandList) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj** subcmdListPtr); /* 547 */
+		int (*tcl_GetEnsembleMappingDict) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj** mapDictPtr); /* 548 */
+		int (*tcl_GetEnsembleUnknownHandler) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj** unknownListPtr); /* 549 */
+		int (*tcl_GetEnsembleFlags) (Tcl_Interp* interp, Tcl_Command token, int* flagsPtr); /* 550 */
+		int (*tcl_GetEnsembleNamespace) (Tcl_Interp* interp, Tcl_Command token, Tcl_Namespace** namespacePtrPtr); /* 551 */
+		void (*tcl_SetTimeProc) (Tcl_GetTimeProc* getProc, Tcl_ScaleTimeProc* scaleProc, void* clientData); /* 552 */
+		void (*tcl_QueryTimeProc) (Tcl_GetTimeProc** getProc, Tcl_ScaleTimeProc** scaleProc, void** clientData); /* 553 */
+		Tcl_DriverThreadActionProc* (*tcl_ChannelThreadActionProc) (const Tcl_ChannelType* chanTypePtr); /* 554 */
+		Tcl_Obj* (*tcl_NewBignumObj) (void* value); /* 555 */
+		Tcl_Obj* (*tcl_DbNewBignumObj) (void* value, const char* file, int line); /* 556 */
+		void (*tcl_SetBignumObj) (Tcl_Obj* obj, void* value); /* 557 */
+		int (*tcl_GetBignumFromObj) (Tcl_Interp* interp, Tcl_Obj* obj, void* value); /* 558 */
+		int (*tcl_TakeBignumFromObj) (Tcl_Interp* interp, Tcl_Obj* obj, void* value); /* 559 */
+		int (*tcl_TruncateChannel) (Tcl_Channel chan, long long length); /* 560 */
+		Tcl_DriverTruncateProc* (*tcl_ChannelTruncateProc) (const Tcl_ChannelType* chanTypePtr); /* 561 */
+		void (*tcl_SetChannelErrorInterp) (Tcl_Interp* interp, Tcl_Obj* msg); /* 562 */
+		void (*tcl_GetChannelErrorInterp) (Tcl_Interp* interp, Tcl_Obj** msg); /* 563 */
+		void (*tcl_SetChannelError) (Tcl_Channel chan, Tcl_Obj* msg); /* 564 */
+		void (*tcl_GetChannelError) (Tcl_Channel chan, Tcl_Obj** msg); /* 565 */
+		int (*tcl_InitBignumFromDouble) (Tcl_Interp* interp, double initval, void* toInit); /* 566 */
+		Tcl_Obj* (*tcl_GetNamespaceUnknownHandler) (Tcl_Interp* interp, Tcl_Namespace* nsPtr); /* 567 */
+		int (*tcl_SetNamespaceUnknownHandler) (Tcl_Interp* interp, Tcl_Namespace* nsPtr, Tcl_Obj* handlerPtr); /* 568 */
+		int (*tcl_GetEncodingFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Encoding* encodingPtr); /* 569 */
+		Tcl_Obj* (*tcl_GetEncodingSearchPath) (void); /* 570 */
+		int (*tcl_SetEncodingSearchPath) (Tcl_Obj* searchPath); /* 571 */
+		const char* (*tcl_GetEncodingNameFromEnvironment) (Tcl_DString* bufPtr); /* 572 */
+		int (*tcl_PkgRequireProc) (Tcl_Interp* interp, const char* name, Tcl_Size objc, Tcl_Obj* const objv[], void* clientDataPtr); /* 573 */
+		void (*tcl_AppendObjToErrorInfo) (Tcl_Interp* interp, Tcl_Obj* objPtr); /* 574 */
+		void (*tcl_AppendLimitedToObj) (Tcl_Obj* objPtr, const char* bytes, Tcl_Size length, Tcl_Size limit, const char* ellipsis); /* 575 */
+		Tcl_Obj* (*tcl_Format) (Tcl_Interp* interp, const char* format, Tcl_Size objc, Tcl_Obj* const objv[]); /* 576 */
+		int (*tcl_AppendFormatToObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, const char* format, Tcl_Size objc, Tcl_Obj* const objv[]); /* 577 */
+		Tcl_Obj* (*tcl_ObjPrintf) (const char* format, ...) TCL_FORMAT_PRINTF(1, 2); /* 578 */
+		void (*tcl_AppendPrintfToObj) (Tcl_Obj* objPtr, const char* format, ...) TCL_FORMAT_PRINTF(2, 3); /* 579 */
+		int (*tcl_CancelEval) (Tcl_Interp* interp, Tcl_Obj* resultObjPtr, void* clientData, int flags); /* 580 */
+		int (*tcl_Canceled) (Tcl_Interp* interp, int flags); /* 581 */
+		int (*tcl_CreatePipe) (Tcl_Interp* interp, Tcl_Channel* rchan, Tcl_Channel* wchan, int flags); /* 582 */
+		Tcl_Command(*tcl_NRCreateCommand) (Tcl_Interp* interp, const char* cmdName, Tcl_ObjCmdProc* proc, Tcl_ObjCmdProc* nreProc, void* clientData, Tcl_CmdDeleteProc* deleteProc); /* 583 */
+		int (*tcl_NREvalObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, int flags); /* 584 */
+		int (*tcl_NREvalObjv) (Tcl_Interp* interp, Tcl_Size objc, Tcl_Obj* const objv[], int flags); /* 585 */
+		int (*tcl_NRCmdSwap) (Tcl_Interp* interp, Tcl_Command cmd, Tcl_Size objc, Tcl_Obj* const objv[], int flags); /* 586 */
+		void (*tcl_NRAddCallback) (Tcl_Interp* interp, Tcl_NRPostProc* postProcPtr, void* data0, void* data1, void* data2, void* data3); /* 587 */
+		int (*tcl_NRCallObjProc) (Tcl_Interp* interp, Tcl_ObjCmdProc* objProc, void* clientData, Tcl_Size objc, Tcl_Obj* const objv[]); /* 588 */
+		unsigned (*tcl_GetFSDeviceFromStat) (const Tcl_StatBuf* statPtr); /* 589 */
+		unsigned (*tcl_GetFSInodeFromStat) (const Tcl_StatBuf* statPtr); /* 590 */
+		unsigned (*tcl_GetModeFromStat) (const Tcl_StatBuf* statPtr); /* 591 */
+		int (*tcl_GetLinkCountFromStat) (const Tcl_StatBuf* statPtr); /* 592 */
+		int (*tcl_GetUserIdFromStat) (const Tcl_StatBuf* statPtr); /* 593 */
+		int (*tcl_GetGroupIdFromStat) (const Tcl_StatBuf* statPtr); /* 594 */
+		int (*tcl_GetDeviceTypeFromStat) (const Tcl_StatBuf* statPtr); /* 595 */
+		long long (*tcl_GetAccessTimeFromStat) (const Tcl_StatBuf* statPtr); /* 596 */
+		long long (*tcl_GetModificationTimeFromStat) (const Tcl_StatBuf* statPtr); /* 597 */
+		long long (*tcl_GetChangeTimeFromStat) (const Tcl_StatBuf* statPtr); /* 598 */
+		unsigned long long (*tcl_GetSizeFromStat) (const Tcl_StatBuf* statPtr); /* 599 */
+		unsigned long long (*tcl_GetBlocksFromStat) (const Tcl_StatBuf* statPtr); /* 600 */
+		unsigned (*tcl_GetBlockSizeFromStat) (const Tcl_StatBuf* statPtr); /* 601 */
+		int (*tcl_SetEnsembleParameterList) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj* paramList); /* 602 */
+		int (*tcl_GetEnsembleParameterList) (Tcl_Interp* interp, Tcl_Command token, Tcl_Obj** paramListPtr); /* 603 */
+		int (*tclParseArgsObjv) (Tcl_Interp* interp, const Tcl_ArgvInfo* argTable, void* objcPtr, Tcl_Obj* const* objv, Tcl_Obj*** remObjv); /* 604 */
+		int (*tcl_GetErrorLine) (Tcl_Interp* interp); /* 605 */
+		void (*tcl_SetErrorLine) (Tcl_Interp* interp, int lineNum); /* 606 */
+		void (*tcl_TransferResult) (Tcl_Interp* sourceInterp, int code, Tcl_Interp* targetInterp); /* 607 */
+		int (*tcl_InterpActive) (Tcl_Interp* interp); /* 608 */
+		void (*tcl_BackgroundException) (Tcl_Interp* interp, int code); /* 609 */
+		int (*tcl_ZlibDeflate) (Tcl_Interp* interp, int format, Tcl_Obj* data, int level, Tcl_Obj* gzipHeaderDictObj); /* 610 */
+		int (*tcl_ZlibInflate) (Tcl_Interp* interp, int format, Tcl_Obj* data, Tcl_Size buffersize, Tcl_Obj* gzipHeaderDictObj); /* 611 */
+		unsigned int (*tcl_ZlibCRC32) (unsigned int crc, const unsigned char* buf, Tcl_Size len); /* 612 */
+		unsigned int (*tcl_ZlibAdler32) (unsigned int adler, const unsigned char* buf, Tcl_Size len); /* 613 */
+		int (*tcl_ZlibStreamInit) (Tcl_Interp* interp, int mode, int format, int level, Tcl_Obj* dictObj, Tcl_ZlibStream* zshandle); /* 614 */
+		Tcl_Obj* (*tcl_ZlibStreamGetCommandName) (Tcl_ZlibStream zshandle); /* 615 */
+		int (*tcl_ZlibStreamEof) (Tcl_ZlibStream zshandle); /* 616 */
+		int (*tcl_ZlibStreamChecksum) (Tcl_ZlibStream zshandle); /* 617 */
+		int (*tcl_ZlibStreamPut) (Tcl_ZlibStream zshandle, Tcl_Obj* data, int flush); /* 618 */
+		int (*tcl_ZlibStreamGet) (Tcl_ZlibStream zshandle, Tcl_Obj* data, Tcl_Size count); /* 619 */
+		int (*tcl_ZlibStreamClose) (Tcl_ZlibStream zshandle); /* 620 */
+		int (*tcl_ZlibStreamReset) (Tcl_ZlibStream zshandle); /* 621 */
+		void (*tcl_SetStartupScript) (Tcl_Obj* path, const char* encoding); /* 622 */
+		Tcl_Obj* (*tcl_GetStartupScript) (const char** encodingPtr); /* 623 */
+		int (*tcl_CloseEx) (Tcl_Interp* interp, Tcl_Channel chan, int flags); /* 624 */
+		int (*tcl_NRExprObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Obj* resultPtr); /* 625 */
+		int (*tcl_NRSubstObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, int flags); /* 626 */
+		int (*tcl_LoadFile) (Tcl_Interp* interp, Tcl_Obj* pathPtr, const char* const symv[], int flags, void* procPtrs, Tcl_LoadHandle* handlePtr); /* 627 */
+		void* (*tcl_FindSymbol) (Tcl_Interp* interp, Tcl_LoadHandle handle, const char* symbol); /* 628 */
+		int (*tcl_FSUnloadFile) (Tcl_Interp* interp, Tcl_LoadHandle handlePtr); /* 629 */
+		void (*tcl_ZlibStreamSetCompressionDictionary) (Tcl_ZlibStream zhandle, Tcl_Obj* compressionDictionaryObj); /* 630 */
+		Tcl_Channel(*tcl_OpenTcpServerEx) (Tcl_Interp* interp, const char* service, const char* host, unsigned int flags, int backlog, Tcl_TcpAcceptProc* acceptProc, void* callbackData); /* 631 */
+		int (*tclZipfs_Mount) (Tcl_Interp* interp, const char* zipname, const char* mountPoint, const char* passwd); /* 632 */
+		int (*tclZipfs_Unmount) (Tcl_Interp* interp, const char* mountPoint); /* 633 */
+		Tcl_Obj* (*tclZipfs_TclLibrary) (void); /* 634 */
+		int (*tclZipfs_MountBuffer) (Tcl_Interp* interp, const void* data, size_t datalen, const char* mountPoint, int copy); /* 635 */
+		void (*tcl_FreeInternalRep) (Tcl_Obj* objPtr); /* 636 */
+		char* (*tcl_InitStringRep) (Tcl_Obj* objPtr, const char* bytes, size_t numBytes); /* 637 */
+		Tcl_ObjInternalRep* (*tcl_FetchInternalRep) (Tcl_Obj* objPtr, const Tcl_ObjType* typePtr); /* 638 */
+		void (*tcl_StoreInternalRep) (Tcl_Obj* objPtr, const Tcl_ObjType* typePtr, const Tcl_ObjInternalRep* irPtr); /* 639 */
+		int (*tcl_HasStringRep) (Tcl_Obj* objPtr); /* 640 */
+		void (*tcl_IncrRefCount) (Tcl_Obj* objPtr); /* 641 */
+		void (*tcl_DecrRefCount) (Tcl_Obj* objPtr); /* 642 */
+		int (*tcl_IsShared) (Tcl_Obj* objPtr); /* 643 */
+		int (*tcl_LinkArray) (Tcl_Interp* interp, const char* varName, void* addr, int type, Tcl_Size size); /* 644 */
+		int (*tcl_GetIntForIndex) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Size endValue, Tcl_Size* indexPtr); /* 645 */
+		Tcl_Size(*tcl_UtfToUniChar) (const char* src, int* chPtr); /* 646 */
+		char* (*tcl_UniCharToUtfDString) (const int* uniStr, Tcl_Size uniLength, Tcl_DString* dsPtr); /* 647 */
+		int* (*tcl_UtfToUniCharDString) (const char* src, Tcl_Size length, Tcl_DString* dsPtr); /* 648 */
+		unsigned char* (*tclGetBytesFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, void* numBytesPtr); /* 649 */
+		unsigned char* (*tcl_GetBytesFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Size* numBytesPtr); /* 650 */
+		char* (*tcl_GetStringFromObj) (Tcl_Obj* objPtr, Tcl_Size* lengthPtr); /* 651 */
+		Tcl_UniChar* (*tcl_GetUnicodeFromObj) (Tcl_Obj* objPtr, Tcl_Size* lengthPtr); /* 652 */
+		int (*tcl_GetSizeIntFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Size* sizePtr); /* 653 */
+		int (*tcl_UtfCharComplete) (const char* src, Tcl_Size length); /* 654 */
+		const char* (*tcl_UtfNext) (const char* src); /* 655 */
+		const char* (*tcl_UtfPrev) (const char* src, const char* start); /* 656 */
+		int (*tcl_FSTildeExpand) (Tcl_Interp* interp, const char* path, Tcl_DString* dsPtr); /* 657 */
+		int (*tcl_ExternalToUtfDStringEx) (Tcl_Interp* interp, Tcl_Encoding encoding, const char* src, Tcl_Size srcLen, int flags, Tcl_DString* dsPtr, Tcl_Size* errorLocationPtr); /* 658 */
+		int (*tcl_UtfToExternalDStringEx) (Tcl_Interp* interp, Tcl_Encoding encoding, const char* src, Tcl_Size srcLen, int flags, Tcl_DString* dsPtr, Tcl_Size* errorLocationPtr); /* 659 */
+		int (*tcl_AsyncMarkFromSignal) (Tcl_AsyncHandler async, int sigNumber); /* 660 */
+		int (*tcl_ListObjGetElements) (Tcl_Interp* interp, Tcl_Obj* listPtr, Tcl_Size* objcPtr, Tcl_Obj*** objvPtr); /* 661 */
+		int (*tcl_ListObjLength) (Tcl_Interp* interp, Tcl_Obj* listPtr, Tcl_Size* lengthPtr); /* 662 */
+		int (*tcl_DictObjSize) (Tcl_Interp* interp, Tcl_Obj* dictPtr, Tcl_Size* sizePtr); /* 663 */
+		int (*tcl_SplitList) (Tcl_Interp* interp, const char* listStr, Tcl_Size* argcPtr, const char*** argvPtr); /* 664 */
+		void (*tcl_SplitPath) (const char* path, Tcl_Size* argcPtr, const char*** argvPtr); /* 665 */
+		Tcl_Obj* (*tcl_FSSplitPath) (Tcl_Obj* pathPtr, Tcl_Size* lenPtr); /* 666 */
+		int (*tcl_ParseArgsObjv) (Tcl_Interp* interp, const Tcl_ArgvInfo* argTable, Tcl_Size* objcPtr, Tcl_Obj* const* objv, Tcl_Obj*** remObjv); /* 667 */
+		Tcl_Size(*tcl_UniCharLen) (const int* uniStr); /* 668 */
+		Tcl_Size(*tcl_NumUtfChars) (const char* src, Tcl_Size length); /* 669 */
+		Tcl_Size(*tcl_GetCharLength) (Tcl_Obj* objPtr); /* 670 */
+		const char* (*tcl_UtfAtIndex) (const char* src, Tcl_Size index); /* 671 */
+		Tcl_Obj* (*tcl_GetRange) (Tcl_Obj* objPtr, Tcl_Size first, Tcl_Size last); /* 672 */
+		int (*tcl_GetUniChar) (Tcl_Obj* objPtr, Tcl_Size index); /* 673 */
+		int (*tcl_GetBool) (Tcl_Interp* interp, const char* src, int flags, char* charPtr); /* 674 */
+		int (*tcl_GetBoolFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, int flags, char* charPtr); /* 675 */
+		Tcl_Command(*tcl_CreateObjCommand2) (Tcl_Interp* interp, const char* cmdName, Tcl_ObjCmdProc2* proc2, void* clientData, Tcl_CmdDeleteProc* deleteProc); /* 676 */
+		Tcl_Trace(*tcl_CreateObjTrace2) (Tcl_Interp* interp, Tcl_Size level, int flags, Tcl_CmdObjTraceProc2* objProc2, void* clientData, Tcl_CmdObjTraceDeleteProc* delProc); /* 677 */
+		Tcl_Command(*tcl_NRCreateCommand2) (Tcl_Interp* interp, const char* cmdName, Tcl_ObjCmdProc2* proc, Tcl_ObjCmdProc2* nreProc2, void* clientData, Tcl_CmdDeleteProc* deleteProc); /* 678 */
+		int (*tcl_NRCallObjProc2) (Tcl_Interp* interp, Tcl_ObjCmdProc2* objProc2, void* clientData, Tcl_Size objc, Tcl_Obj* const objv[]); /* 679 */
+		int (*tcl_GetNumberFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, void** clientDataPtr, int* typePtr); /* 680 */
+		int (*tcl_GetNumber) (Tcl_Interp* interp, const char* bytes, Tcl_Size numBytes, void** clientDataPtr, int* typePtr); /* 681 */
+		int (*tcl_RemoveChannelMode) (Tcl_Interp* interp, Tcl_Channel chan, int mode); /* 682 */
+		Tcl_Size(*tcl_GetEncodingNulLength) (Tcl_Encoding encoding); /* 683 */
+		int (*tcl_GetWideUIntFromObj) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_WideUInt* uwidePtr); /* 684 */
+		Tcl_Obj* (*tcl_DStringToObj) (Tcl_DString* dsPtr); /* 685 */
+		int (*tcl_UtfNcmp) (const char* s1, const char* s2, size_t n); /* 686 */
+		int (*tcl_UtfNcasecmp) (const char* s1, const char* s2, size_t n); /* 687 */
+		Tcl_Obj* (*tcl_NewWideUIntObj) (Tcl_WideUInt wideValue); /* 688 */
+		void (*tcl_SetWideUIntObj) (Tcl_Obj* objPtr, Tcl_WideUInt uwideValue); /* 689 */
+		int (*tcl_IsEmpty) (Tcl_Obj* obj); /* 690 */
+		const char* (*tcl_GetEncodingNameForUser) (Tcl_DString* bufPtr); /* 691 */
+		int (*tcl_ListObjReverse) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Obj** resultPtrPtr); /* 692 */
+		int (*tcl_ListObjRepeat) (Tcl_Interp* interp, Tcl_Size repeatCount, Tcl_Size objc, Tcl_Obj* const objv[], Tcl_Obj** resultPtrPtr); /* 693 */
+		int (*tcl_ListObjRange) (Tcl_Interp* interp, Tcl_Obj* objPtr, Tcl_Size start, Tcl_Size end, Tcl_Obj** resultPtrPtr); /* 694 */
+		void (*tclUnusedStubEntry) (void); /* 695 */
+	} TclStubs;
+
+	extern const TclStubs* tclStubsPtr;
+
+#ifdef __cplusplus
+}
+#endif
 
 #if defined(USE_TCL_STUBS)
 
