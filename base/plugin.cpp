@@ -1,5 +1,5 @@
+#include "api/IEccoPlugin.h"
 #include "sdk_api.h"
-#include "plugin.h"
 
 //Ecco
 IEccoFuncs* g_pEccoFuncs;

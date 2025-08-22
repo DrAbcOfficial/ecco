@@ -5,7 +5,6 @@
     <ClCompile Include="plugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="plugin.h" />
     <ClInclude Include="sdk_api.h" />
   </ItemGroup>
 </Project>
