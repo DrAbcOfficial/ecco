@@ -3,6 +3,24 @@
 class IEccoScriptSystem {
 public:	
 	using Object = void;
+	enum class ScriptArgType {
+		Unknown = 0,
+		Int,
+		String,
+		Double,
+		Boolean
+	};
+	using ScriptContent = struct {
+		ScriptArgType type = ScriptArgType::Unknown;
+		union {
+			int intValue;
+			const char* strValue;
+			double doubleValue;
+			bool boolValue;
+			Object* listValue;
+			Object* dictValue;
+		};
+	};
 	enum class Result {
 		OK = 0,
 		Error,
@@ -10,14 +28,14 @@ public:
 		Break,
 		Continue
 	};
-	typedef Result(*fnFunc)(IEccoScriptSystem* interp, int argc, const char* argv[]);
+	typedef Result(*fnFunc)(IEccoScriptSystem* interp, int argc, const ScriptContent* argv[]);
 	
 	/// <summary>
 	/// Create a command in the script engine
 	/// </summary>
 	/// <param name="name">command name</param>
 	/// <param name="callback">callback</param>
-	virtual void CreateCommand(const char* name, fnFunc callback) = 0;
+	virtual void CreateCommand(const char* name, const char* symbol, fnFunc callback) = 0;
 	/// <summary>
 	/// Eval a script content
 	/// </summary>

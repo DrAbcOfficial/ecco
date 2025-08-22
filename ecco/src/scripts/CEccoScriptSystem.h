@@ -5,7 +5,7 @@ class CEccoScriptSystem : public IEccoScriptSystem {
 public:
 	CEccoScriptSystem();
 
-	virtual void CreateCommand(const char* name, fnFunc callback);
+	virtual void CreateCommand(const char* name, const char* symbol, fnFunc callback);
 	virtual Result Eval(const char* content);
 	virtual void ThrowError(const char* code, const char* msg);
 	virtual Object* NewObject();
