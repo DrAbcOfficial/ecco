@@ -65,13 +65,6 @@ bool ClientSayCommandHandler(edict_t* caller) {
             auto& trigger = GetEccoConfig()->BuyMenu.OpenShopTriggers;
             auto it = std::find(trigger.begin(), trigger.end(), command);
             if (it != trigger.end()) {
-                const char* mapname = STRING(gpGlobals->mapname);
-                bool is_banned_map = IsBannedMap(mapname);
-                if (is_banned_map) {
-                    std::string translated = GetTranslation(caller, "ecco_banned_map");
-                    EccoMetaUtility::ClientPrintf(caller, EccoMetaUtility::ClientPrintTarget::Talk, translated.c_str());
-                    return false;
-                }
                 auto item = s_mapRegistedClientCmdMap.find("buy");
                 if (item != s_mapRegistedClientCmdMap.end()) {
                     std::vector<std::string> result;

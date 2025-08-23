@@ -22,6 +22,11 @@ static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, { CEcco
 		pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_banned_map");
         return false;
     }
+	bool is_alive = caller->v.deadflag == DEAD_NO;
+    if (!is_alive && !GetEccoConfig()->BuyMenu.AllowDeathPlayerBuy) {
+        pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_dead_player_buy");
+        return false;
+    }
     if (args.size() > 0) {
         CEccoTextMenuExecutor* pExecutor = g_pRootMenuExecutor;
         for (auto& s : args) {
