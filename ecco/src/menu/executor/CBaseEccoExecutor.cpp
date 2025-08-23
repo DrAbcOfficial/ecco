@@ -1,9 +1,11 @@
 #include "lang/lang.h"
 
 #include "CBaseEccoExecutor.h"
+#include "storage/Storage.h"
+#include "plugin/plugin_system.h"
 
 void CBaseEccoExecutor::Excute(edict_t* pPlayer, int selection) {
-
+	Call_OnMenuExcuted(this, GetPlayerStorageItem(pPlayer));
 }
 
 std::string CBaseEccoExecutor::GetDisplayName(edict_t* pPlyaer){

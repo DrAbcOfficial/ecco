@@ -32,6 +32,7 @@
     <ClCompile Include="src\menu\MenuParser.cpp" />
     <ClCompile Include="src\meta_api.cpp" />
     <ClCompile Include="src\meta_utility.cpp" />
+    <ClCompile Include="src\plugin\hook.cpp" />
     <ClCompile Include="src\plugin\plugin_system.cpp" />
     <ClCompile Include="src\scripts\CEccoScriptItem.cpp" />
     <ClCompile Include="src\scripts\CEccoScriptSystem.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\timer\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\api\HookDef.h" />
     <ClInclude Include="include\api\IEccoBaseExcutor.h" />
     <ClInclude Include="include\api\IEccoFuncs.h" />
     <ClInclude Include="include\api\IEccoPlugin.h" />

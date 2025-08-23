@@ -19,6 +19,25 @@ plugin_info_t* gpPlugin_info;			// master plugin info
 
 #define PLUGIN_VERSION __DATE__ "T" __TIME__
 
+static void Hook_OnPlayerCreditsChanged(IPlayerStorageItem* player, int oldCredits, int &credits) {
+    edict_t* plr = player->GetPlayer();
+	int nCredits = credits;
+    int newCredits = credits;
+    AS_CALL(PlayerCreditsChanged, plr->pvPrivateData, oldCredits, nCredits, &newCredits);
+	credits = newCredits;
+}
+static void Hook_OnPlayerScoreToCredits(IPlayerStorageItem* player, int score, int& added) {
+    edict_t* plr = player->GetPlayer();
+    int addedd = added;
+    int newAdded = added;
+    AS_CALL(PlayerScoreToCredits, plr->pvPrivateData, score, addedd, &newAdded);
+    added = newAdded;
+}
+static void Hook_OnMenuExcuted(IEccoBaseExcutor* menu, IPlayerStorageItem* player) {
+    edict_t* plr = player->GetPlayer();
+    AS_CALL(MenuExcuted, menu, plr->pvPrivateData);
+}
+
 class CEccoPlugin : public IEccoPlugin {
 	virtual const char* GetName() const { return "AngelScript"; };
 	virtual const char* GetDescription() const { return "Angelscript interface"; }
@@ -174,7 +193,11 @@ class CEccoPlugin : public IEccoPlugin {
 			RegisterAngelScriptHooks();
 		}
 	};
-	virtual void Initialize(){};
+	virtual void Initialize(){
+        g_pEccoFuncs->AddHook(Hook_Type::ON_PLAYER_CREDITS_CHANGED, &Hook_OnPlayerCreditsChanged);
+		g_pEccoFuncs->AddHook(Hook_Type::ON_PLAYER_SCORE_TO_CREDITS, &Hook_OnPlayerScoreToCredits);
+		g_pEccoFuncs->AddHook(Hook_Type::ON_MENU_EXCUTE, &Hook_OnMenuExcuted);
+    };
 	virtual void Shutdown() {};
 };
 static CEccoPlugin s_EccoPluginInstance;

@@ -40,7 +40,9 @@ extern void RegisterAngelScriptHooks();
 
 #pragma region TypeDef
 using angelhook_t = struct angelhook_s {
-
+	void* PlayerCreditsChanged;
+	void* PlayerScoreToCredits;
+	void* MenuExcuted;
 };
 extern angelhook_t g_AngelHook;
 #pragma endregion

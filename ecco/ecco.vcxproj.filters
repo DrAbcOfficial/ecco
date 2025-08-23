@@ -133,6 +133,9 @@
     <ClCompile Include="src\scripts\tcl_loader.cpp">
       <Filter>core\scripts\tcl</Filter>
     </ClCompile>
+    <ClCompile Include="src\plugin\hook.cpp">
+      <Filter>core\plugin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dlldef.h">
@@ -237,6 +240,9 @@
     </ClInclude>
     <ClInclude Include="src\scripts\tcl_dynamic.h">
       <Filter>core\scripts\tcl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\api\HookDef.h">
+      <Filter>api</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

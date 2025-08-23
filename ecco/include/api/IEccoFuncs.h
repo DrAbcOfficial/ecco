@@ -1,6 +1,7 @@
 #pragma once
 #include "IPlayerStorageItem.h"
 #include "IEccoBaseExcutor.h"
+#include "HookDef.h"
 #include <extdll.h>
 
 class IEccoFuncs {
@@ -17,4 +18,7 @@ public:
 
 	virtual void ClientPrintf(edict_t* target, unsigned int hud, const char* text) = 0;
 	virtual void ClientPrintfAll(unsigned int hud, const char* text) = 0;
+
+	virtual void AddHook(Hook_Type type, void* func) = 0;
+	virtual void RemoveHook(Hook_Type type, void* func) = 0;
 };

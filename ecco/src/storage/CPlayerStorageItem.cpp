@@ -7,6 +7,7 @@
 
 #include "meta_utility.h"
 #include "config/CConfig.h"
+#include "plugin/plugin_system.h"
 
 #undef read
 #undef close
@@ -50,13 +51,13 @@ const char* CPlayerStorageItem::GetName() const{
 }
 
 void CPlayerStorageItem::SetCredits(int ulCredits){
+	Call_OnPlayerCreditsChanged(this, m_saveData.Credits, ulCredits);
 	m_saveData.Credits = ulCredits;
 	SaveData();
 }
 
 void CPlayerStorageItem::AddCredits(int ulCredits){
-	m_saveData.Credits += ulCredits;
-	SaveData();
+	SetCredits(m_saveData.Credits + ulCredits);
 }
 
 void CPlayerStorageItem::SaveData(){
@@ -74,6 +75,7 @@ void CPlayerStorageItem::ScoreToCredits(int newScore){
 	int added = static_cast<int>((newScore - m_iScore) * GetEccoConfig()->ScoreToMoneyMultiplier);
 	if(m_iLastCredits + added > limit)
 		added = limit - m_iLastCredits;
+	Call_OnPlayerScoreToCredits(this, newScore, added);
 	AddCredits(added);
 	m_iLastCredits += added;
 	m_iScore = newScore;

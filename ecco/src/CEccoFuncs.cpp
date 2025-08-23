@@ -2,6 +2,7 @@
 #include "menu/executor/CBaseEccoExecutor.h"
 
 #include "storage/Storage.h"
+#include "plugin/plugin_system.h"
 
 #include "CEccoFuncs.h"
 
@@ -49,6 +50,14 @@ void CEccoFuncs::ClientPrintf(edict_t* target, unsigned int hud, const char* tex
 
 void CEccoFuncs::ClientPrintfAll(unsigned int hud, const char* text){
 	EccoMetaUtility::ClientPrintfAll(static_cast<EccoMetaUtility::ClientPrintTarget>(hud), text);
+}
+
+void CEccoFuncs::AddHook(Hook_Type type, void* func){
+	::AddHook(type, func);
+}
+
+void CEccoFuncs::RemoveHook(Hook_Type type, void* func){
+	::RemoveHook(type, func);
 }
 
 CEccoFuncs g_pEccoFuncs;

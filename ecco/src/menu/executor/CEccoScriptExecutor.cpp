@@ -16,6 +16,7 @@ void CEccoScriptExecutor::Excute(edict_t* pPlayer, int selection){
     if(remain < m_iCost){
 		ClientPrintfTranslation(pPlayer, ClientPrintTarget::Talk, "not_enough_credits", 
             StringToU8String(GetTranslation(pPlayer, m_szId)), StringToU8String(std::to_string(m_iCost)), StringToU8String(std::to_string(remain)));
+        CBaseEccoExecutor::Excute(pPlayer, selection);
         return;
 	}
     IEccoScriptSystem::Result ret = EvalScriptContent(pPlayer, this);
@@ -24,6 +25,7 @@ void CEccoScriptExecutor::Excute(edict_t* pPlayer, int selection){
     case IEccoScriptSystem::Result::Error: ClientPrintfTranslation(pPlayer, ClientPrintTarget::Talk, "ecco_eval_exception", StringToU8String(GetTranslation(pPlayer, m_szId)));break;
     default: break;
     }
+    CBaseEccoExecutor::Excute(pPlayer, selection);
 }
 
 std::string CEccoScriptExecutor::GetDisplayName(edict_t* pPlyaer){

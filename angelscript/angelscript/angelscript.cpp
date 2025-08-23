@@ -18,6 +18,27 @@ class IASPlayerStorageItem : public IPlayerStorageItem {
 	}
 };
 
+class IASEccoBaseExcutor : public IEccoBaseExcutor {
+public:
+	void ASExcute(void* pPlayer, int selection) {
+		edict_t* plr = g_pEccoFuncs->PrivateToEdict(pPlayer);
+		if (FNullEnt(plr))
+			return;
+		Excute(plr, selection);
+	}
+	void ASGetDisplayNameRaw(CString* str, void* pPlyaer) {
+		edict_t* plr = g_pEccoFuncs->PrivateToEdict(pPlyaer);
+		if (FNullEnt(plr))
+			return;
+		const char* name = GetDisplayNameRaw(plr);
+		str->assign(name, strlen(name));
+	}
+	void ASGetId(CString* str) {
+		const char* id = GetId();
+		str->assign(id, strlen(id));
+	}
+};
+
 static IPlayerStorageItem* SC_SERVER_DECL CASPlayerFuncs_GetEccoStorage(void* pthis, SC_SERVER_DUMMYARG void* player) {
 	edict_t* plr = g_pEccoFuncs->PrivateToEdict(player);
 	if (FNullEnt(plr))
@@ -37,6 +58,13 @@ void RegisterAngelScriptMethods(){
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Set player language", "CEccoPlayerStorage", "void SetLangAS(string&in lang)", IASPlayerStorageItem, SetLangAS, asCALL_THISCALL);
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Get player ecco admin level", "CEccoPlayerStorage", "int GetAdminLevel()", IASPlayerStorageItem, GetAdminLevel, asCALL_THISCALL);
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Set player ecco admin level", "CEccoPlayerStorage", "void SetAdminLevel(int level)", IASPlayerStorageItem, SetAdminLevel, asCALL_THISCALL);
+
+
+		ASEXT_RegisterObjectType(pASDoc, "Ecco menu excutor", "CEccoMenuExcutor", 0, asOBJ_REF | asOBJ_NOCOUNT);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Excute a ecco menu", "CEccoMenuExcutor", "void Excute(CBasePlayer@ pPlayer, int selection)", IASEccoBaseExcutor, ASExcute, asCALL_THISCALL);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get display name to a player", "CEccoMenuExcutor", "void GetDisplayName(string& out display, CBasePlayer@ pPlayer)", IASEccoBaseExcutor, ASGetDisplayNameRaw, asCALL_THISCALL);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Id", "CEccoMenuExcutor", "void GetId(string& out id)", IASEccoBaseExcutor, ASGetId, asCALL_THISCALL);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Index", "CEccoMenuExcutor", "uint GetIndex()", IASEccoBaseExcutor, GetIndex, asCALL_THISCALL);
 	
 		ASEXT_RegisterObjectMethod(pASDoc,
 			"Get Ecco storage", "CPlayerFuncs", "CEccoPlayerStorage@ GetEccoStorage(CBasePlayer@ pPlayer)",
@@ -45,5 +73,10 @@ void RegisterAngelScriptMethods(){
 }
 
 void RegisterAngelScriptHooks(){
-
+	AS_CREATE_HOOK(PlayerCreditsChanged, "call before player credits changed", 
+		"Player", "PlayerCreditsChanged", "CBasePlayer@ pPlayer, int oldCredits, int newCredits, int& out outCredits");
+	AS_CREATE_HOOK(MenuExcuted, "call after menu excuted",
+		"Menu", "MenuExcuted", "CEccoMenuExcutor@ pMenu, CBasePlayer@ pPlayer");
+	AS_CREATE_HOOK(PlayerScoreToCredits, "call before player score to credits",
+		"Player", "PlayerScoreToCredits", "CBasePlayer@ pPlayer, int score, int added, int& out newadded");
 }

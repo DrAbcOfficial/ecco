@@ -151,4 +151,5 @@ void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
 			g_aryTextMenus[i] = this;
 		}
 	}
+	CBaseEccoExecutor::Excute(pPlayer, selection);
 }

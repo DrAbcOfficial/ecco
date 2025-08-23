@@ -14,5 +14,8 @@ public:
 
 	virtual void ClientPrintf(edict_t* target, unsigned int hud, const char* text);
 	virtual void ClientPrintfAll(unsigned int hud, const char* text);
+
+	virtual void AddHook(Hook_Type type, void* func);
+	virtual void RemoveHook(Hook_Type type, void* func);
 };
 
