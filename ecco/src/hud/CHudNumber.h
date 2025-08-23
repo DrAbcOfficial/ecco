@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <cstdint>
 #include <extdll.h>
 
 #pragma region HUD_ENUM
@@ -60,16 +61,16 @@ public:
 		Channel.
 		Range: 0-15 (each module type has its own channel group).
 	*/
-	unsigned _int8 m_iChannel; // channel to draw on
+	uint8_t m_iChannel; // channel to draw on
 	/*
 		Flags
 		See HUD_ELEM, HUD_NUM (numeric display only) and HUD_TIME (time display only) enums.
 	*/
 	int m_bitsFlags;
 	//Default number of digits (numeric display only)
-	unsigned __int8 m_iDefDigits;
+	uint8_t m_iDefDigits;
 	//	Maximum number of digits (numeric display only)
-	unsigned __int8 m_iMaxDigits;
+	uint8_t m_iMaxDigits;
 	/*
 		Horizontal position on the screen.
 		<0, 1.0> = left to right
@@ -85,9 +86,9 @@ public:
 	*/
 	float m_fY;
 	//	Color 1
-	unsigned int m_iColor1; // color to draw
+	uint32_t m_iColor1; // color to draw
 	//Color 2
-	unsigned int m_iColor2; // color to draw
+	uint32_t m_iColor2; // color to draw
 	//	Fade in time
 	float m_flFadeinTime;
 	//Fade out time
@@ -100,19 +101,19 @@ public:
 		Effect
 		See HUD_EFFECT enum.
 	*/
-	unsigned __int8 m_iEffect; // effect to use
+	uint8_t m_iEffect; // effect to use
 	//Sprite name
 	std::string m_szSpriteName;
 	/*
 		Sprite left offset
 		Range: 0-255
 	*/
-	unsigned __int8 m_iLeft;
+	uint8_t m_iLeft;
 	/*
 		Sprite top offset
 		Range: 0-255
 	*/
-	unsigned __int8 m_iTop;
+	uint8_t m_iTop;
 	/*
 		Sprite width
 		Range : 0 - 512 (0: auto; use total width of the sprite)

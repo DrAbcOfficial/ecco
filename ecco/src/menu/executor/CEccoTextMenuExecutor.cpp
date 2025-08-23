@@ -30,7 +30,7 @@ void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, 
 
 // handle player selections
 bool TextMenuClientCommandHook(edict_t* pEntity) {
-	if (!_stricmp(CMD_ARGV(0), "menuselect")) {
+	if (!StringCaseCmp(CMD_ARGV(0), "menuselect")) {
 		int selection = atoi(CMD_ARGV(1)) - 1;
 		if (selection < 0 || selection >= MAX_MENU_OPTIONS)
 			return true;

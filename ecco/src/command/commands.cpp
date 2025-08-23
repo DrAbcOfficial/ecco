@@ -3,7 +3,7 @@
 
 #include "CEccoClientCommand.h"
 #include "CEccoServerCommand.h"
-#include "menu/Menuparser.h"
+#include "menu/MenuParser.h"
 #include "scripts/script_system.h"
 #include "storage/Storage.h"
 #include "lang/lang.h"

@@ -2,6 +2,13 @@
 #include <extdll.h>
 #include <string>
 
+#ifdef WIN32
+#define StringNCaseCmp(a,b,n) _strnicmp(a,b,n)
+#define StringCaseCmp(a,b) _stricmp(a,b)
+#else
+#define StringNCaseCmp(a,b,n) strncasecmp(a,b,n)
+#define StringCaseCmp(a,b) strcasecmp(a,b)
+#endif
 
 namespace EccoMetaUtility
 {

@@ -61,8 +61,9 @@ CEccoScriptSystem::CEccoScriptSystem(){
 		LOG_ERROR(PLID, "Tcl init failed!\n%s", Tcl_GetStringResult(s_pTclinterp));
 		return;
 	}
-	char path[MAX_PATH];
-	snprintf(path, MAX_PATH, "{%s}\n{%s}", s_szLibpath, s_szPkgpath);
+#define MAX_AUTO_PATH (MAX_PATH * 2 + 6)
+	char path[MAX_AUTO_PATH];
+	snprintf(path, MAX_AUTO_PATH, "{%s}\n{%s}", s_szLibpath, s_szPkgpath);
 	Tcl_SetVar(s_pTclinterp, "auto_path", path, TCL_GLOBAL_ONLY);
 	if (Tcl_SetSystemEncoding(s_pTclinterp, "utf-8") == TCL_ERROR) {
 		LOG_ERROR(PLID, "Tcl set utf-8 encoding failed!\n%s", Tcl_GetStringResult(s_pTclinterp));

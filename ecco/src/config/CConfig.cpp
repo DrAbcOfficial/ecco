@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #include <extdll.h>
 #include <meta_api.h>

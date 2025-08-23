@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <cstdint>
 
 struct CEccoConfigHud {
 	//0 为不显示
