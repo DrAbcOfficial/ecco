@@ -58,6 +58,7 @@ static void GameInit() {
 }
 
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
+	SET_META_RESULT(MRES_HANDLED);
 	ResetHud();
 	ResetEccoScriptItems();
 	CleanPlayerLastCredits(nullptr);
@@ -65,25 +66,24 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	const char* mapname = STRING(gpGlobals->mapname);
 	bool is_banned_map = IsBannedMap(mapname);
 	extern bool g_bIsSeriesMap;
-	if (is_banned_map) {
-		LoadEccoScriptItems();
-		ReseAllMenus();
-		ParseRootMenu();
-		PrecacheAllScriptItems();
+	if (is_banned_map)
+		return;
+	LoadEccoScriptItems();
+	ReseAllMenus();
+	ParseRootMenu();
+	PrecacheAllScriptItems();
 
-		
-		int save_set = GetEccoConfig()->StorePlayerScore;
-		if (save_set < 2) {
-			if (save_set <= 0)
+	
+	int save_set = GetEccoConfig()->StorePlayerScore;
+	if (save_set < 2) {
+		if (save_set <= 0)
+			CleanPlayerCredites(nullptr);
+		else if (save_set == 1) {
+			if (!g_bIsSeriesMap)
 				CleanPlayerCredites(nullptr);
-			else if (save_set == 1) {
-				if (!g_bIsSeriesMap)
-					CleanPlayerCredites(nullptr);
-			}
 		}
 	}
 	g_bIsSeriesMap = false;
-	SET_META_RESULT(MRES_HANDLED);
 }
 
 static void	 ClientCommand (edict_t* pEntity) {
