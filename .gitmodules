@@ -13,3 +13,6 @@
 [submodule "ecco/tcl"]
 	path = ecco/tcl
 	url = https://github.com/tcltk/tcl
+[submodule "angelscript/metamod"]
+	path = angelscript/metamod
+	url = https://github.com/hzqst/metamod-fallguys
