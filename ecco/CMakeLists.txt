@@ -1,131 +1,102 @@
-cmake_minimum_required(VERSION 3.16.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15)
+project(ecco LANGUAGES C CXX)
 
-project(ecco C CXX)
-
-################################################################################
-# Set target arch type if empty. Visual studio solution generator provides it.
-################################################################################
-if(NOT CMAKE_VS_PLATFORM_NAME)
-    set(CMAKE_VS_PLATFORM_NAME "Win32")
-endif()
-message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
-
-if(NOT ("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Win32"))
-    message(FATAL_ERROR "${CMAKE_VS_PLATFORM_NAME} arch is not supported!")
-endif()
-
-################################################################################
-# Global configuration types
-################################################################################
-set(CMAKE_CONFIGURATION_TYPES
-    "Debug"
-    "Release"
-    CACHE STRING "" FORCE
-)
-
-################################################################################
-# Global compiler options
-################################################################################
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-set(CMAKE_BUILD_TYPE Release)
-
-set(CMAKE_C_FLAGS "-m32")
-set(CMAKE_C_FLAGS_DEBUG "-m32")
-set(CMAKE_C_FLAGS_RELEASE "-m32 -Os -ffunction-sections")
-set(CMAKE_CXX_FLAGS "-m32")
-set(CMAKE_CXX_FLAGS_DEBUG "-m32")
-set(CMAKE_CXX_FLAGS_RELEASE "-m32 -Os -ffunction-sections")
-
-set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "-s -Wl,--as-needed")
-
-################################################################################
-# Global linker options
-################################################################################
-if(MSVC)
-    # remove default flags provided with CMake for MSVC
-    set(CMAKE_EXE_LINKER_FLAGS "")
-    set(CMAKE_MODULE_LINKER_FLAGS "")
-    set(CMAKE_SHARED_LINKER_FLAGS "")
-    set(CMAKE_STATIC_LINKER_FLAGS "")
-    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS}")
-    set(CMAKE_MODULE_LINKER_FLAGS_DEBUG "${CMAKE_MODULE_LINKER_FLAGS}")
-    set(CMAKE_SHARED_LINKER_FLAGS_DEBUG "${CMAKE_SHARED_LINKER_FLAGS}")
-    set(CMAKE_STATIC_LINKER_FLAGS_DEBUG "${CMAKE_STATIC_LINKER_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS}")
-    set(CMAKE_MODULE_LINKER_FLAGS_RELEASE "${CMAKE_MODULE_LINKER_FLAGS}")
-    set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS}")
-    set(CMAKE_STATIC_LINKER_FLAGS_RELEASE "${CMAKE_STATIC_LINKER_FLAGS}")
+set(SOURCES
+    mmlib/src/Scheduler.cpp
+    src/CEccoFuncs.cpp
+    src/command/CEccoBaseCommand.cpp
+    src/command/CEccoClientCommand.cpp
+    src/command/CEccoServerCommand.cpp
+    src/command/commands.cpp
+    src/config/CConfig.cpp
+    src/dllapi.cpp
+    src/engine_api.cpp
+    src/hud/CHudNumber.cpp
+    src/hud/hud.cpp
+    src/h_export.cpp
+    src/lang/lang.cpp
+    src/menu/executor/CBaseEccoExecutor.cpp
+    src/menu/executor/CEccoBackExecutor.cpp
+    src/menu/executor/CEccoScriptExecutor.cpp
+    src/menu/executor/CEccoTextMenuExecutor.cpp
+    src/menu/MenuParser.cpp
+    src/meta_api.cpp
+    src/meta_utility.cpp
+    src/plugin/hook.cpp
+    src/plugin/plugin_system.cpp
+    src/scripts/CEccoScriptItem.cpp
+    src/scripts/CEccoScriptSystem.cpp
+    src/scripts/script_system.cpp
+    src/scripts/tcl_loader.cpp
+    src/sdk_util.cpp
+    src/storage/CPlayerStorageItem.cpp
+    src/storage/Storage.cpp
+    src/timer/Timer.cpp
+)
+if(WIN32)
+    list(APPEND SOURCES src/dllmain.cpp)
 endif()
 
-################################################################################
-# Nuget packages function stub.
-################################################################################
-function(use_package TARGET PACKAGE VERSION)
-    message(WARNING "No implementation of use_package. Create yours. "
-                    "Package \"${PACKAGE}\" with version \"${VERSION}\" "
-                    "for target \"${TARGET}\" is ignored!")
-endfunction()
-
-################################################################################
-# Common utils
-################################################################################
-include(CMake/Utils.cmake)
-
-################################################################################
-# Additional Global Settings(add specific info there)
-################################################################################
-include(CMake/GlobalSettingsInclude.cmake OPTIONAL)
-
-################################################################################
-# Use solution folders feature
-################################################################################
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-################################################################################
-# Sub-projects
-################################################################################
-
-set(PROJECT_NAME ecco)
-
-################################################################################
-# Source groups
-################################################################################
-set(no_group_source_files
-#not done yet
+set(INCLUDE_DIRS
+    ./metamod/hlsdk/common
+    ./metamod/hlsdk/dlls
+    ./metamod/hlsdk/pm_shared
+    ./metamod/hlsdk/engine
+    ./mmlib/src
+    ./tcl/build/include
+    ./include
+    ./src
+    ./
+    ${META_INCLUDE}
 )
-source_group("" FILES ${no_group_source_files})
+include_directories(${INCLUDE_DIRS})
 
-set(ALL_FILES
-    ${no_group_source_files}
-)
+if(UNIX)
+	set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+	set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+endif()
 
-################################################################################
-# Target
-################################################################################
-add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
+set(COMMON_DEFINES ${META_VERSION})
+if(WIN32)
+    list(APPEND COMMON_DEFINES WIN32 _WINDOWS PLATFORM_WINDOWS)
+elseif(UNIX)
+    list(APPEND COMMON_DEFINES LINUX PLATFORM_LINUX _GNU_SOURCE linux)
+endif()
+add_compile_definitions(${COMMON_DEFINES})
 
-use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
-set(ROOT_NAMESPACE ecco)
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    VS_GLOBAL_KEYWORD "Win32Proj"
-)
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    INTERPROCEDURAL_OPTIMIZATION_RELEASE "TRUE"
-)
+if(WIN32)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W3 /SDL /MDd /permissive-)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        LINK_FLAGS "/DEF:${CMAKE_CURRENT_SOURCE_DIR}/exports.def"
+        SUFFIX ".dll"
+    )
+    target_link_libraries(${PROJECT_NAME} PRIVATE kernel32.lib user32.lib)
+elseif(UNIX)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -O0 -g)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        VERSION 1.0 SOVERSION 1 SUFFIX ".so"
+    )
+    target_link_libraries(${PROJECT_NAME} PRIVATE dl)
+endif()
 
-################################################################################
-# Include directories
-################################################################################
-target_include_directories(${PROJECT_NAME} PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/src;"
-    "${CMAKE_CURRENT_SOURCE_DIR}/metamod/hlsdk/common;"
-    "${CMAKE_CURRENT_SOURCE_DIR}/metamod/hlsdk/dlls;"
-    "${CMAKE_CURRENT_SOURCE_DIR}/metamod/hlsdk/pm_shared;"
-    "${CMAKE_CURRENT_SOURCE_DIR}/metamod/hlsdk/engine;"
-    "${CMAKE_CURRENT_SOURCE_DIR}/metamod/metamod;"
-    "${CMAKE_CURRENT_SOURCE_DIR}/metamod/asext/include;"
-    "${CMAKE_CURRENT_SOURCE_DIR}/mmlib/include/sven;"
-)
+
+set(DEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../build/addons/metamod/dlls)
+if(WIN32)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND if not exist "${DEST_DIR}" mkdir "${DEST_DIR}"
+        COMMAND copy /Y "$<TARGET_FILE:${PROJECT_NAME}>" "${DEST_DIR}/"
+    )
+elseif(UNIX)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND mkdir -p "${DEST_DIR}"
+        COMMAND cp -f "$<TARGET_FILE:${PROJECT_NAME}>" "${DEST_DIR}/"
+    )
+endif()
