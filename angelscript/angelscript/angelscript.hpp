@@ -1,10 +1,9 @@
 #pragma once
-#ifdef _GAME_SVENCOOP
 #ifndef __ANGELSCRIPT_API_HEADER
 #define __ANGELSCRIPT_API_HEADER
 
 #include "asext_api.h"
-#include "angelscript/angelscriptlib.h"
+#include "angelscriptlib.h"
 
 #pragma region Template
 template <typename T>
@@ -54,4 +53,3 @@ extern angelhook_t g_AngelHook;
 #pragma endregion
 
 #endif // !__ANGELSCRIPT_API_HEADER
-#endif // _GAME_SVENCOOP

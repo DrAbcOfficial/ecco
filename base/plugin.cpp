@@ -11,6 +11,7 @@ globalvars_t* gpGlobals;
 meta_globals_t* gpMetaGlobals;		// metamod globals
 gamedll_funcs_t* gpGamedllFuncs;	// gameDLL function tables
 mutil_funcs_t* gpMetaUtilFuncs;		// metamod utility functions
+plugin_info_t* gpPlugin_info;			// master plugin info
 
 static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName) {
 	int istr = MAKE_STRING(pszName);
@@ -399,9 +400,10 @@ class CEccoPlugin : public IEccoPlugin {
 
 	}
 
-	virtual void Initialize(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,
+	virtual void Query(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,
 		enginefuncs_t* pengfuncsFromEngine, globalvars_t* pGlobals,
-		meta_globals_t* penMetaGlobals, gamedll_funcs_t* penGamedllFuncs, mutil_funcs_t* penMetaUtilFuncs) {
+		meta_globals_t* penMetaGlobals, gamedll_funcs_t* penGamedllFuncs, mutil_funcs_t* penMetaUtilFuncs,
+		plugin_info_t* pPluginInfo) {
 		g_pEccoFuncs = ecco_funcs;
 		g_pScriptSystem = script_system;
 		memcpy(&g_engfuncs, pengfuncsFromEngine, sizeof(enginefuncs_t));
@@ -409,7 +411,10 @@ class CEccoPlugin : public IEccoPlugin {
 		gpMetaGlobals = penMetaGlobals;
 		gpGamedllFuncs = penGamedllFuncs;
 		gpMetaUtilFuncs = penMetaUtilFuncs;
+		gpPlugin_info = pPluginInfo;
+	};
 
+	virtual void Initialize() {
 		RegisteMethods();
 	};
 

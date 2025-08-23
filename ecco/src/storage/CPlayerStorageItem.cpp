@@ -109,13 +109,3 @@ void CPlayerStorageItem::ReadData(){
 	ifs.read(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));
 	ifs.close();
 }
-
-#ifdef _GAME_SVENCOOP
-void CPlayerStorageItem::GetLangAS(CString* out) {
-	out->assign(m_saveData.Lang, sizeof(m_saveData.Lang));
-}
-
-void CPlayerStorageItem::SetLangAS(CString* in){
-	SetLang(in->c_str());
-}
-#endif

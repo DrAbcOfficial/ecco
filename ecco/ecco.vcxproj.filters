@@ -4,9 +4,6 @@
     <Filter Include="core">
       <UniqueIdentifier>{1bea9f33-90f5-4f46-8a9c-f866f33e41e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="angelscript">
-      <UniqueIdentifier>{4ce407ae-1657-4a12-8534-11554251a427}</UniqueIdentifier>
-    </Filter>
     <Filter Include="api">
       <UniqueIdentifier>{26932d62-6696-46f2-9fdf-65d49caa5fc6}</UniqueIdentifier>
     </Filter>
@@ -69,9 +66,6 @@
     <ClCompile Include="src\meta_utility.cpp" />
     <ClCompile Include="mmlib\src\Scheduler.cpp">
       <Filter>core\timer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\angelscript\angelscript.cpp">
-      <Filter>angelscript</Filter>
     </ClCompile>
     <ClCompile Include="src\config\CConfig.cpp">
       <Filter>core\config</Filter>
@@ -156,12 +150,6 @@
     <ClInclude Include="src\meta_utility.h" />
     <ClInclude Include="mmlib\src\Scheduler.h">
       <Filter>core\timer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\angelscript\angelscript.hpp">
-      <Filter>angelscript</Filter>
-    </ClInclude>
-    <ClInclude Include="src\angelscript\angelscriptlib.h">
-      <Filter>angelscript</Filter>
     </ClInclude>
     <ClInclude Include="src\config\CConfig.h">
       <Filter>core\config</Filter>

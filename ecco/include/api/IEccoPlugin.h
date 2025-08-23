@@ -13,9 +13,11 @@ public:
 	virtual const char* GetVersion() const = 0;
 	virtual const char* GetAuthor() const = 0;
 
-	virtual void Initialize(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,
+	virtual void Query(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,
 		enginefuncs_t* pengfuncsFromEngine, globalvars_t* pGlobals,
-		meta_globals_t* penMetaGlobals, gamedll_funcs_t* penGamedllFuncs, mutil_funcs_t* penMetaUtilFuncs) = 0;
+		meta_globals_t* penMetaGlobals, gamedll_funcs_t* penGamedllFuncs, mutil_funcs_t* penMetaUtilFuncs,
+		plugin_info_t* pPluginInfo) = 0;
+	virtual void Initialize() = 0;
 	virtual void Shutdown() = 0;
 };
 
@@ -24,5 +26,8 @@ public:
 #else
 #define ECCO_API extern "C" __attribute__((visibility("default")))
 #endif
+
+extern plugin_info_t* gpPlugin_info;			// master plugin info
+#define MPLID gpPlugin_info
 
 ECCO_API IEccoPlugin* GetEccoPluginInstance();

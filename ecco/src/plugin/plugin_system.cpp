@@ -15,10 +15,16 @@
 std::vector<IEccoPlugin*> g_aryPlugins;
 static std::vector<void*> g_aryPluginHandles;
 
+void CallPluginQuery() {
+    extern CEccoFuncs g_pEccoFuncs;
+    for (IEccoPlugin* plugin : g_aryPlugins) {
+        plugin->Query(GetEccoScriptSystem(), &g_pEccoFuncs, &g_engfuncs, gpGlobals, gpMetaGlobals, gpGamedllFuncs, gpMetaUtilFuncs, &Plugin_info);
+    }
+}
 void CallPluginInit() {
     extern CEccoFuncs g_pEccoFuncs;
     for (IEccoPlugin* plugin : g_aryPlugins) {
-        plugin->Initialize(GetEccoScriptSystem(), &g_pEccoFuncs, &g_engfuncs, gpGlobals, gpMetaGlobals, gpGamedllFuncs, gpMetaUtilFuncs);
+        plugin->Initialize();
     }
 }
 

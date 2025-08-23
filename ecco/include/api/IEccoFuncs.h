@@ -10,6 +10,7 @@ public:
 	virtual bool IsValidPlayer(edict_t* pentPlayer) = 0;
 	virtual const char* GetGameDir() = 0;
 	virtual void FakeClientCommand(edict_t* pent, const char* cmd) = 0;
+	virtual edict_t* PrivateToEdict(void* pPrivate) = 0;
 
 	virtual IPlayerStorageItem* GetPlayerItem(int index) = 0;
 	virtual IEccoBaseExcutor* GetMenuExcutor(int index) = 0;

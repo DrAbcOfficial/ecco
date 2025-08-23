@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mmlib\src\Scheduler.cpp" />
-    <ClCompile Include="src\angelscript\angelscript.cpp" />
     <ClCompile Include="src\CEccoFuncs.cpp" />
     <ClCompile Include="src\command\CEccoBaseCommand.cpp" />
     <ClCompile Include="src\command\CEccoClientCommand.cpp" />
@@ -50,8 +49,6 @@
     <ClInclude Include="include\api\IEccoScriptSystem.h" />
     <ClInclude Include="include\api\IPlayerStorageItem.h" />
     <ClInclude Include="mmlib\src\Scheduler.h" />
-    <ClInclude Include="src\angelscript\angelscript.hpp" />
-    <ClInclude Include="src\angelscript\angelscriptlib.h" />
     <ClInclude Include="src\CEccoFuncs.h" />
     <ClInclude Include="src\command\CEccoBaseCommand.h" />
     <ClInclude Include="src\command\CEccoClientCommand.h" />

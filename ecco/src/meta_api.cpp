@@ -42,7 +42,6 @@
 #include <meta_api.h>		// of course
 
 #include "signatures.h"
-#include "angelscript/angelscript.hpp"
 
 #include "config/CConfig.h"
 #include "plugin/plugin_system.h"
@@ -52,10 +51,6 @@
 #include "meta_utility.h"
 
 mBOOL dlclose_handle_invalid;
-
-#ifdef _GAME_SVENCOOP
-IMPORT_ASEXT_API_DEFINE()
-#endif
 
 // Must provide at least one of these..
 static META_FUNCTIONS gMetaFunctionTable = {
@@ -140,26 +135,9 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME /* now */,
 	if (!LoadTCLLibrary())
 		return FALSE;
 	InitializeScriptSystem();
-	if (GetEccoConfig()->ExportToAngelScript) {
-#ifdef _GAME_SVENCOOP
-		void* asextHandle = nullptr;
-#ifdef _WIN32
-		LOAD_PLUGIN(PLID, "addons/metamod/dlls/asext.dll", PLUG_LOADTIME::PT_ANYTIME, &asextHandle);
-#else
-		LOAD_PLUGIN(PLID, "addons/metamod/dlls/asext.so", PLUG_LOADTIME::PT_ANYTIME, &asextHandle);
-#endif
-		if (!asextHandle)
-		{
-			LOG_ERROR(PLID, "asext dll handle not found!");
-			return FALSE;
-		}
-		IMPORT_ASEXT_API(asext);
-		RegisterAngelScriptMethods();
-		RegisterAngelScriptHooks();
-#endif
-	}
 	// Load all plugins
 	LoadPlugins();
+	CallPluginQuery();
 	return TRUE;
 }
 

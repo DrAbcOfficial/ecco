@@ -30,6 +30,10 @@ void CEccoFuncs::FakeClientCommand(edict_t* pent, const char* cmd){
 	EccoMetaUtility::FakeClientCommand(pent, cmd);
 }
 
+edict_t* CEccoFuncs::PrivateToEdict(void* pPrivate) {
+	return EccoMetaUtility::PrivateToEdict(pPrivate);
+}
+
 IPlayerStorageItem* CEccoFuncs::GetPlayerItem(int index){
 	return GetPlayerStorageItem(INDEXENT(index));
 }
