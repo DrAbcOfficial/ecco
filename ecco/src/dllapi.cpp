@@ -42,7 +42,6 @@
 #include "command/CEccoBaseCommand.h"
 #include "command/command_system.h"
 #include "plugin/plugin_system.h"
-#include "storage/Storage.h"
 #include "config/CConfig.h"
 
 #include "dlldef.h"
@@ -61,19 +60,26 @@ static void GameInit() {
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	ResetHud();
 	ResetEccoScriptItems();
-	LoadEccoScriptItems();
-	ReseAllMenus();
-	ParseRootMenu();
-	PrecacheAllScriptItems();
+
+	const char* mapname = STRING(gpGlobals->mapname);
+	bool is_banned_map = IsBannedMap(mapname);
 
 	extern bool g_bIsSeriesMap;
-	int save_set = GetEccoConfig()->StorePlayerScore;
-	if (save_set < 2) {
-		if(save_set <= 0)
-			CleanPlayerCredites(nullptr);
-		else if (save_set == 1) {
-			if(!g_bIsSeriesMap)
+	if (is_banned_map) {
+		LoadEccoScriptItems();
+		ReseAllMenus();
+		ParseRootMenu();
+		PrecacheAllScriptItems();
+
+		
+		int save_set = GetEccoConfig()->StorePlayerScore;
+		if (save_set < 2) {
+			if (save_set <= 0)
 				CleanPlayerCredites(nullptr);
+			else if (save_set == 1) {
+				if (!g_bIsSeriesMap)
+					CleanPlayerCredites(nullptr);
+			}
 		}
 	}
 	g_bIsSeriesMap = false;

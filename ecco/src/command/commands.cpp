@@ -8,6 +8,7 @@
 #include "storage/Storage.h"
 #include "lang/lang.h"
 #include "api/IEccoPlugin.h"
+#include "config/CConfig.h"
 
 #include "meta_utility.h"
 
@@ -15,6 +16,12 @@ using namespace EccoMetaUtility;
 
 #pragma region Client
 static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, { CEccoCmdArgSet("pages", true) }, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
+    const char* mapname = STRING(gpGlobals->mapname);
+    bool is_banned_map = IsBannedMap(mapname);
+    if (is_banned_map) {
+		pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_banned_map");
+        return false;
+    }
     if (args.size() > 0) {
         CEccoTextMenuExecutor* pExecutor = g_pRootMenuExecutor;
         for (auto& s : args) {

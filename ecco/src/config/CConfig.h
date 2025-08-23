@@ -46,12 +46,8 @@ struct CEccoConfigColor {
 };
 
 struct CEccoConfigBuyMenu {
-	//允许无视Trigger前缀
-	bool AllowIgnoreBuyPrefix;
 	//购买指令Trigger
 	std::vector<std::string> OpenShopTriggers;
-	//命令直接购买物品时是否使用模糊匹配
-	bool UseBlurMatchForCommand;
 	//是否允许死亡玩家购买
 	bool AllowDeathPlayerBuy;
 	//购买后重新打开菜单
@@ -85,10 +81,8 @@ struct CEccoConfig{
 
 	//默认的语言
 	std::string DefaultLang;
-
-	//导出到AngelScript
-	bool ExportToAngelScript;
 };
 
+extern bool IsBannedMap(const char* map);
 extern inline CEccoConfig* GetEccoConfig();
 extern bool LoadEccoConfig();

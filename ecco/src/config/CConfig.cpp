@@ -1,5 +1,7 @@
 #include <tomlplusplus/toml.hpp>
 #include <filesystem>
+#include <vector>
+#include <string>
 
 #include <extdll.h>
 #include <meta_api.h>
@@ -8,9 +10,14 @@
 #include "config/CConfig.h"
 
 static CEccoConfig s_pEccoConfig;
+static std::vector<std::string> s_aryBannedMaps{};
 
 inline CEccoConfig* GetEccoConfig(){
 	return &s_pEccoConfig;
+}
+
+bool IsBannedMap(const char* map){
+	return std::find(s_aryBannedMaps.begin(), s_aryBannedMaps.end(), map) != s_aryBannedMaps.end();
 }
 
 bool LoadEccoConfig(){
@@ -38,13 +45,11 @@ bool LoadEccoConfig(){
 		GET_VALUE_OR(Color, Incresed, 0x00FF00FF);
 		GET_VALUE_OR(Color, Decresed, 0xFF0000FF);
 
-		GET_VALUE_OR(BuyMenu, AllowIgnoreBuyPrefix, false);
 		auto shoptrigger = toml["Ecco"]["BuyMenu"]["OpenShopTriggers"].as_array();
 		for (auto iter = shoptrigger->begin(); iter != shoptrigger->end(); iter++) {
 			auto str = (*iter).value_or("");
 			s_pEccoConfig.BuyMenu.OpenShopTriggers.push_back(str);
 		}
-		GET_VALUE_OR(BuyMenu, UseBlurMatchForCommand, true);
 		GET_VALUE_OR(BuyMenu, AllowDeathPlayerBuy, true);
 		GET_VALUE_OR(BuyMenu, ReOpenMenuAfterBuy, true);
 
@@ -53,7 +58,16 @@ bool LoadEccoConfig(){
 		GET_ROOT_VALUE_OR(PlayerStartScore, 0);
 		GET_ROOT_VALUE_OR(MoneyLimitePerMap, -1);
 		GET_ROOT_VALUE_OR(DefaultLang, "en");
-		GET_ROOT_VALUE_OR(ExportToAngelScript, false);
+
+		// load banned maps
+		std::filesystem::path banmapspath(EccoMetaUtility::GetGameDir());
+		banmapspath.append("addons/ecco/");
+		banmapspath.append(s_pEccoConfig.Path.BanMaps);
+		std::ifstream banmaps(banmapspath);
+		std::string map;
+		while (std::getline(banmaps, map)) {
+			s_aryBannedMaps.push_back(map);
+		}
 	}
 	catch (const toml::parse_error& err){
 		auto& src = err.source();
