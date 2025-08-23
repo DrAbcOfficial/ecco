@@ -39,8 +39,14 @@
 #include "menu/executor/CEccoTextMenuExecutor.h"
 
 #pragma region PreHooks
+bool g_bIsSeriesMap = false;
 static void MessageBegin (int msg_dest, int msg_type, const float* pOrigin, edict_t* ed) {
 	TextMenuMessageBeginHook(msg_dest, msg_type, pOrigin, ed);
+	SET_META_RESULT(MRES_HANDLED);
+}
+
+static void	ChangeLevel(char* nextmap, char* param) {
+	g_bIsSeriesMap = true;
 	SET_META_RESULT(MRES_HANDLED);
 }
 enginefuncs_t meta_engfuncs = {
@@ -51,7 +57,7 @@ enginefuncs_t meta_engfuncs = {
 	NULL,						// pfnModelFrames()
 
 	NULL,						// pfnSetSize()
-	NULL,						// pfnChangeLevel()
+	ChangeLevel,						// pfnChangeLevel()
 	NULL,						// pfnGetSpawnParms()
 	NULL,						// pfnSaveSpawnParms()
 

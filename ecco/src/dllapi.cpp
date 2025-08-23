@@ -42,6 +42,8 @@
 #include "command/CEccoBaseCommand.h"
 #include "command/command_system.h"
 #include "plugin/plugin_system.h"
+#include "storage/Storage.h"
+#include "config/CConfig.h"
 
 #include "dlldef.h"
 
@@ -63,6 +65,18 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	ReseAllMenus();
 	ParseRootMenu();
 	PrecacheAllScriptItems();
+
+	extern bool g_bIsSeriesMap;
+	int save_set = GetEccoConfig()->StorePlayerScore;
+	if (save_set < 2) {
+		if(save_set <= 0)
+			CleanPlayerCredites(nullptr);
+		else if (save_set == 1) {
+			if(!g_bIsSeriesMap)
+				CleanPlayerCredites(nullptr);
+		}
+	}
+	g_bIsSeriesMap = false;
 	SET_META_RESULT(MRES_HANDLED);
 }
 

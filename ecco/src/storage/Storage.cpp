@@ -5,10 +5,27 @@
 #include "meta_utility.h"
 
 #include "Storage.h"
+#include "config/CConfig.h"
 
 using namespace EccoMetaUtility;
 
 static std::map<std::string, CPlayerStorageItem*> s_mapPlayerStorage;
+
+
+void CleanPlayerCredites(edict_t* pent) {
+	int start_money = GetEccoConfig()->PlayerStartScore;
+	if (pent) {
+		auto item = GetPlayerStorageItem(pent);
+		item->SetCredits(start_money);
+		item->SaveData();
+	}
+	else {
+		for(auto& pair : s_mapPlayerStorage) {
+			pair.second->SetCredits(start_money);
+			pair.second->SaveData();
+		}
+	}
+}
 
 void StorageClientPutinServerHandle(edict_t* pent){
 	if (!pent)

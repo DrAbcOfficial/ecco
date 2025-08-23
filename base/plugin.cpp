@@ -336,6 +336,67 @@ class CEccoPlugin : public IEccoPlugin {
 		return IEccoScriptSystem::Result::OK;
 		});
 #pragma endregion
+
+#pragma region NewworkMessage
+	g_pScriptSystem->CreateCommand("NetMsg::Begin", "int msg_dest, int msg_type, float msg_org_x, float msg_org_y, foat msg_org_z, int target", "Begin a network message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		int msg_dest = argv[0]->intValue;
+		int msg_type = argv[1]->intValue;
+		float msg_org[3] = {
+			argv[2]->floatValue,
+			argv[3]->floatValue,
+			argv[4]->floatValue
+		};
+		int target = argv[5]->intValue;
+		auto pent = INDEXENT(target);
+		MESSAGE_BEGIN(msg_dest, msg_type, msg_org, pent);
+		return IEccoScriptSystem::Result::OK;
+	});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteByte", "int value", "Write a byte to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		int value = argv[0]->intValue;
+		WRITE_BYTE(value);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteChar", "int value", "Write a char to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		int value = argv[0]->intValue;
+		WRITE_CHAR(value);
+		return IEccoScriptSystem::Result::OK;
+	});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteShort", "int value", "Write a short to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		int value = argv[0]->intValue;
+		WRITE_SHORT(value);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteLong", "int value", "Write a long to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		int value = argv[0]->intValue;
+		WRITE_LONG(value);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteAngle", "float value", "Write a angle to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		float value = argv[0]->floatValue;
+		WRITE_ANGLE(value);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteCoord", "float value", "Write a coord to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		float value = argv[0]->floatValue;
+		WRITE_COORD(value);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteString", "string value", "Write a string to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		const char* value = argv[0]->strValue;
+		WRITE_STRING(value);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("NetMsg::WriteEntity", "int value", "Write a entity to message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		int value = argv[0]->intValue;
+		WRITE_ENTITY(value);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("NetMsg::End", "", "End a network message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		MESSAGE_END();
+		return IEccoScriptSystem::Result::OK;
+	});
+#pragma endregion
+
 	}
 
 	virtual void Initialize(IEccoScriptSystem* script_system, IEccoFuncs* ecco_funcs,
