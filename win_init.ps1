@@ -1,5 +1,5 @@
 # 定义需要检测的文件夹
-$requiredFolders = @("tcl", "tomlplusplus", "metamod", "mmlib")
+$requiredFolders = @("ecco/tcl", "ecco/tomlplusplus", "ecco/metamod", "ecco/mmlib", "base/mmlib", "angelscript/metamod")
 
 # 检查文件夹是否存在
 $foldersMissing = $false
@@ -95,8 +95,8 @@ do {
 } while ($confirmChoice -ne "Y" -and $confirmChoice -ne "N")
 
 # 处理Build_template.props文件并生成Build.props
-$templatePath = "Build_template.props"
-$outputPath = "Build.props"
+$templatePath = "./ecco/Build_template.props"
+$outputPath = "./ecco/Build.props"
 
 if (Test-Path -Path $templatePath -PathType Leaf) {
     # 读取模板文件内容
