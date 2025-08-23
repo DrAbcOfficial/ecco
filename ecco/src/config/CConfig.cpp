@@ -13,7 +13,7 @@
 static CEccoConfig s_pEccoConfig;
 static std::vector<std::string> s_aryBannedMaps{};
 
-inline CEccoConfig* GetEccoConfig(){
+CEccoConfig* GetEccoConfig(){
 	return &s_pEccoConfig;
 }
 

@@ -85,5 +85,5 @@ struct CEccoConfig{
 };
 
 extern bool IsBannedMap(const char* map);
-extern inline CEccoConfig* GetEccoConfig();
+extern CEccoConfig* GetEccoConfig();
 extern bool LoadEccoConfig();
