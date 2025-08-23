@@ -27,6 +27,18 @@ void CleanPlayerCredites(edict_t* pent) {
 	}
 }
 
+void CleanPlayerLastCredits(edict_t* pent){
+	if (pent) {
+		auto item = GetPlayerStorageItem(pent);
+		item->CleanLastCredits();
+	}
+	else {
+		for (auto& pair : s_mapPlayerStorage) {
+			pair.second->CleanLastCredits();
+		}
+	}
+}
+
 void StorageClientPutinServerHandle(edict_t* pent){
 	if (!pent)
 		return;

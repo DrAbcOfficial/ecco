@@ -31,6 +31,7 @@ public:
 #endif
 
 	void ScoreToCredits(int newScore);
+	void CleanLastCredits();
 private:
 	std::string m_szStoragePath;
 
@@ -45,6 +46,7 @@ private:
 public:
 	edict_t* m_pPlayer;
 	int m_iScore;
+	int m_iLastCredits;
 private:
 	void ReadData();
 };

@@ -68,9 +68,20 @@ void CPlayerStorageItem::SaveData(){
 void CPlayerStorageItem::ScoreToCredits(int newScore){
 	if (m_iScore == newScore)
 		return;
-	AddCredits(static_cast<int>((newScore - m_iScore) * GetEccoConfig()->ScoreToMoneyMultiplier));
+	int limit = GetEccoConfig()->MoneyLimitePerMap;
+	if (limit > 0 && m_iLastCredits >= limit)
+		return;
+	int added = static_cast<int>((newScore - m_iScore) * GetEccoConfig()->ScoreToMoneyMultiplier);
+	if(m_iLastCredits + added > limit)
+		added = limit - m_iLastCredits;
+	AddCredits(added);
+	m_iLastCredits += added;
 	m_iScore = newScore;
 	SaveData();
+}
+
+void CPlayerStorageItem::CleanLastCredits(){
+	m_iLastCredits = 0;
 }
 
 const char* CPlayerStorageItem::GetLang(){

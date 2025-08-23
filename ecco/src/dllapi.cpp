@@ -60,10 +60,10 @@ static void GameInit() {
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	ResetHud();
 	ResetEccoScriptItems();
+	CleanPlayerLastCredits(nullptr);
 
 	const char* mapname = STRING(gpGlobals->mapname);
 	bool is_banned_map = IsBannedMap(mapname);
-
 	extern bool g_bIsSeriesMap;
 	if (is_banned_map) {
 		LoadEccoScriptItems();
