@@ -35,6 +35,27 @@ add_library(${PROJECT_NAME} SHARED
     ${HEADER_FILES}
 )
 
+set(COMMON_DEFINES ${META_VERSION})
+if(WIN32)
+    list(APPEND COMMON_DEFINES
+        WIN32
+        _WINDOWS
+        _USRDLL
+        PLATFORM_WINDOWS
+        _CRT_SECURE_NO_WARNINGS
+        $<$<CONFIG:Debug>:_DEBUG>
+        $<$<CONFIG:Release>:NDEBUG> 
+    )
+elseif(UNIX)
+    list(APPEND COMMON_DEFINES
+        LINUX
+        PLATFORM_LINUX
+        _GNU_SOURCE
+        linux
+    )
+endif()
+add_compile_definitions(${COMMON_DEFINES})
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     BASE_EXPORTS 
     $<$<CONFIG:Debug>:_DEBUG>

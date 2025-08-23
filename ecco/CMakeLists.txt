@@ -146,8 +146,6 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    VERSION 1.0
-    SOVERSION 1
     SUFFIX ".so"
     CXX_VISIBILITY_PRESET hidden
     VISIBILITY_INLINES_HIDDEN ON

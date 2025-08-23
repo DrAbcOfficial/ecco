@@ -194,9 +194,9 @@ class CEccoPlugin : public IEccoPlugin {
 		}
 	};
 	virtual void Initialize(){
-        g_pEccoFuncs->AddHook(Hook_Type::ON_PLAYER_CREDITS_CHANGED, &OnPlayerCreditsChanged);
-		g_pEccoFuncs->AddHook(Hook_Type::ON_PLAYER_SCORE_TO_CREDITS, &OnPlayerScoreToCredits);
-		g_pEccoFuncs->AddHook(Hook_Type::ON_MENU_EXCUTE, &OnMenuExcuted);
+        g_pEccoFuncs->AddHook(Hook_Type::ON_PLAYER_CREDITS_CHANGED, (void*)&OnPlayerCreditsChanged);
+		g_pEccoFuncs->AddHook(Hook_Type::ON_PLAYER_SCORE_TO_CREDITS, (void*)&OnPlayerScoreToCredits);
+		g_pEccoFuncs->AddHook(Hook_Type::ON_MENU_EXCUTE, (void*)&OnMenuExcuted);
     };
 	virtual void Shutdown() {};
 };
