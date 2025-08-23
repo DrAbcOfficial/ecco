@@ -38,3 +38,4 @@ Realse
 *.out
 *.app
 /Build.props
+/ecco/Build.props
