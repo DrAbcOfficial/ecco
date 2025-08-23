@@ -43,28 +43,15 @@ do {
     if ($versionChoice -eq "1") {
         $version = "5:13"
         $metaInclude = "./mmlib/include/metamod"
+        $gameDefine = "_META_5_13"
     } elseif ($versionChoice -eq "2") {
         $version = "5:18"
         $metaInclude = "./metamod/metamod"
+        $gameDefine = "_META_5_18"
     } else {
         Write-Host "无效选项，请重新输入"
     }
 } while ([string]::IsNullOrEmpty($version))
-
-# 提示用户选择是否开启svencoop支持
-do {
-    $svencoopChoice = Read-Host "是否开启svencoop支持? (Y/N)"
-    $svencoopChoice = $svencoopChoice.ToUpper()
-    if ($svencoopChoice -eq "Y") {
-        $enableSvencoop = $true
-        $gameDefine = "_GAME_SVENCOOP"
-    } elseif ($svencoopChoice -eq "N") {
-        $enableSvencoop = $false
-        $gameDefine = ""
-    } else {
-        Write-Host "无效选项，请输入 Y 或 N"
-    }
-} while ($svencoopChoice -ne "Y" -and $svencoopChoice -ne "N")
 
 # 提示用户输入调试器路径，并确保以斜杠结尾
 do {
@@ -91,7 +78,6 @@ do {
 # 显示已存储的变量值
 Write-Host "`n已存储的配置信息:"
 Write-Host "版本: $version"
-Write-Host "开启svencoop支持: $enableSvencoop"
 Write-Host "调试器路径: $debuggerPath"
 Write-Host "调试器名称: $debuggerName"
 

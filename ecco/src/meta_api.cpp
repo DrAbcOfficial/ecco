@@ -62,7 +62,7 @@ static META_FUNCTIONS gMetaFunctionTable = {
 	NULL,			// pfnGetNewDLLFunctions_Post	META; called after game DLL
 	GetEngineFunctions,	// pfnGetEngineFunctions	META; called before HL engine
 	GetEngineFunctions_Post,			// pfnGetEngineFunctions_Post	META; called after HL engine
-#ifdef _GAME_SVENCOOP
+#ifdef _META_5_18
 	NULL,			// pfnGetStudioBlendingInterface 2022/07/02 Added by hzqst
 	NULL,			// pfnGetStudioBlendingInterface_Post 2022/07/02 Added by hzqst
 #endif
@@ -91,7 +91,7 @@ mutil_funcs_t* gpMetaUtilFuncs;		// metamod utility functions
 //  pPlugInfo		(requested) struct with info about plugin
 //  pMetaUtilFuncs	(given) table of utility functions provided by metamod
 
-#ifdef _GAME_SVENCOOP
+#ifdef _META_5_18
 C_DLLEXPORT int Meta_Query(const char* interfaceVersion, plugin_info_t** pPlugInfo, mutil_funcs_t* pMetaUtilFuncs)
 #else
 C_DLLEXPORT int Meta_Query(char* interfaceVersion, plugin_info_t** pPlugInfo, mutil_funcs_t* pMetaUtilFuncs)

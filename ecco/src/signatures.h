@@ -1,6 +1,6 @@
 #pragma once
-#ifdef _GAME_SVENCOOP
+#ifdef _META_5_18
 
 #include <signatures_template.h>
 
-#endif // _GAME_SVENCOOP
+#endif // _META_5_18
