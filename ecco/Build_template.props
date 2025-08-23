@@ -2,28 +2,28 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-	<DebugProgram>{{DEBUG_PROGRAM}}</DebugProgram>
+	<DEBUGGER>{{DEBUG_PROGRAM}}</DEBUGGER>
 	<DebugPath>{{DEBUG_PATH}}</DebugPath>
-    <MetamodIncludePath>{{META_INCLUDE}}</MetamodIncludePath>
-    <Svencoop>{{GAME_DEFINE}}</Svencoop>
+    <META_INCLUDE>{{META_INCLUDE}}</META_INCLUDE>
+    <META_VERSION>{{GAME_DEFINE}}</META_VERSION>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
   <ItemGroup>
-	<BuildMacro Include="DebugProgram">
-      <Value>$(DebugProgram)</Value>
+	<BuildMacro Include="DEBUGGER">
+      <Value>$(DEBUGGER)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="DebugPath">
       <Value>$(DebugPath)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="MetamodIncludePath">
-      <Value>$(MetamodIncludePath)</Value>
+    <BuildMacro Include="META_INCLUDE">
+      <Value>$(META_INCLUDE)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="Svencoop">
-      <Value>$(Svencoop)</Value>
+    <BuildMacro Include="META_VERSION">
+      <Value>$(META_VERSION)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

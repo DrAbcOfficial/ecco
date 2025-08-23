@@ -150,9 +150,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;$(Svencoop);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;$(META_VERSION);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/asext/include;./mmlib/src;./mmlib/include/sven;./tcl/build/include;./include;./src;./;$(MetamodIncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./metamod/hlsdk/common;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/engine;./metamod/asext/include;./mmlib/src;./mmlib/include/sven;./tcl/build/include;./include;./src;./;$(META_INCLUDE)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
