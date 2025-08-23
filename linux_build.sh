@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # 显示版本选择菜单
-echo "请选择要编译的MeatMod版本："
+echo "Chose MeatMod Version："
 echo "1) 5.13 (metamod-p, metamod-r)"
 echo "2) 5.18 (metamod-fallguys)"
 
 # 读取用户输入
-read -p "请输入选择 (1 或 2)：" version_choice
+read -p "Chose (1 or 2)：" version_choice
 
 # 根据选择设置对应的参数
 case $version_choice in
@@ -19,7 +19,7 @@ case $version_choice in
         META_VERSION="_META_5_18"
         ;;
     *)
-        echo "无效选择，请输入 1 或 2"
+        echo "Ivalid，chose 1 or 2"
         exit 1
         ;;
 esac
@@ -27,8 +27,7 @@ esac
 current_dir=$(pwd)
 
 # 编译TCL
-echo "开始编译TCL..."
-cd ecco/tcl/unix || { echo "无法进入tcl/unix目录"; exit 1; }
+cd ecco/tcl/unix || { exit 1; }
 
 touch tclStubInit.c tclOOStubInit.c tclOOScript.h
 mkdir -p ../build
@@ -38,25 +37,25 @@ mkdir -p ../build
 make -j4 all
 make install
 
-cd "$current_dir" || { echo "无法返回原目录"; exit 1; }
+cd "$current_dir" || { exit 1; }
 
 # 编译ecco核心
 mkdir -p ecco/build && cd ecco/build
 cmake .. -DMETA_INCLUDE="$META_INCLUDE" -DMETA_VERSION="$META_VERSION" -DCMAKE_BUILD_TYPE=Release
 make -j4
-cd "$current_dir" || { echo "无法返回原目录"; exit 1; }
+cd "$current_dir" || { exit 1; }
 
 # 编译base
 mkdir -p base/build && cd base/build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j4
-cd "$current_dir" || { echo "无法返回原目录"; exit 1; }
+cd "$current_dir" || { exit 1; }
 
 # 编译angelscript
 mkdir -p angelscript/build && cd angelscript/build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j4
-cd "$current_dir" || { echo "无法返回原目录"; exit 1; }
+cd "$current_dir" || { exit 1; }
 
 # 构建package
 mkdir -p dist/ecco
@@ -79,5 +78,3 @@ unzip -o "ecco/tcl/unix/libtcl9.1a1.zip" -d "$tclDir/"
 mv -f "$tclDir/tcl_library" "$tclDir/lib"
 
 mkdir -p "$tclDir/pkg"
-
-echo "所有编译操作已完成"

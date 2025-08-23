@@ -9,7 +9,7 @@ else{
 }
 if (-not(Test-Path -Path $vsPath)){
 $vsPath
-	Write-Host "系统未安装VC工具……"
+	Write-Host "No VC tools in this system……"
 	exit 1
 }
 cmd /c "call `"$vsPath`" && set" | foreach {

@@ -5,41 +5,36 @@ $requiredFolders = @("ecco/tcl", "ecco/tomlplusplus", "ecco/metamod", "ecco/mmli
 $foldersMissing = $false
 foreach ($folder in $requiredFolders) {
     if (-not (Test-Path -Path $folder -PathType Container)) {
-        Write-Host "缺少必要的文件夹: $folder"
+        Write-Host "Missing: $folder"
         $foldersMissing = $true
     }
 }
 
 # 如果有文件夹缺失，执行git submodule命令
 if ($foldersMissing) {
-    Write-Host "正在更新git子模块..."
     git submodule update --init
     
     # 验证是否成功获取了所有文件夹
     foreach ($folder in $requiredFolders) {
         if (-not (Test-Path -Path $folder -PathType Container)) {
-            Write-Error "获取子模块失败，仍然缺少文件夹: $folder"
             exit 1
         }
     }
-    Write-Host "子模块更新完成"
-} else {
-    Write-Host "所有必要的文件夹都已存在"
 }
 
 # 检测vswhere.exe是否存在
 if (-not(Test-Path -Path "./vswhere.exe")){
-	Write-Host "vswhere.exe不存在，从网络拉取"
+	Write-Host "downloading vswhere.exe"
 	Invoke-WebRequest -Uri "https://github.com/microsoft/vswhere/releases/download/3.1.7/vswhere.exe" -OutFile "./vswhere.exe"
 }
 
 # 提示用户选择版本
-Write-Host "`n请选择版本:"
-Write-Host "1. 5:13版本（metamod-p metamod-r）"
-Write-Host "2. 5:18版本（metamod-fallguys）"
+Write-Host "`nChose metamod version:"
+Write-Host "1. 5:13（metamod-p metamod-r）"
+Write-Host "2. 5:18（metamod-fallguys）"
 
 do {
-    $versionChoice = Read-Host "请输入选项 (1 或 2)"
+    $versionChoice = Read-Host "Chose (1 or 2)"
     if ($versionChoice -eq "1") {
         $version = "5:13"
         $metaInclude = "./mmlib/include/metamod"
@@ -49,15 +44,23 @@ do {
         $metaInclude = "./metamod/metamod"
         $gameDefine = "_META_5_18"
     } else {
-        Write-Host "无效选项，请重新输入"
+        Write-Host "Invalid, 1 or 2"
     }
 } while ([string]::IsNullOrEmpty($version))
 
+# 提示用户输入调试器名称
+do {
+    $debuggerName = Read-Host "Debugger name:"
+    if ([string]::IsNullOrEmpty($debuggerName)) {
+        Write-Host "Invalid, try again"
+    }
+} while ([string]::IsNullOrEmpty($debuggerName))
+
 # 提示用户输入调试器路径，并确保以斜杠结尾
 do {
-    $debuggerPath = Read-Host "请输入调试器路径"
+    $debuggerPath = Read-Host "Debugger path:"
     if ([string]::IsNullOrEmpty($debuggerPath)) {
-        Write-Host "调试器路径不能为空，请重新输入"
+        Write-Host "Invalid, try again"
     } else {
         # 检查路径是否以\或/结尾，如果不是则添加/
         $lastChar = $debuggerPath.Substring($debuggerPath.Length - 1)
@@ -67,30 +70,22 @@ do {
     }
 } while ([string]::IsNullOrEmpty($debuggerPath))
 
-# 提示用户输入调试器名称
-do {
-    $debuggerName = Read-Host "请输入调试器名称"
-    if ([string]::IsNullOrEmpty($debuggerName)) {
-        Write-Host "调试器名称不能为空，请重新输入"
-    }
-} while ([string]::IsNullOrEmpty($debuggerName))
-
 # 显示已存储的变量值
-Write-Host "`n已存储的配置信息:"
-Write-Host "版本: $version"
-Write-Host "调试器路径: $debuggerPath"
-Write-Host "调试器名称: $debuggerName"
+Write-Host "`nConfig:"
+Write-Host "Metamod Version: $version"
+Write-Host "Debugger Name: $debuggerName"
+Write-Host "Debugger Path: $debuggerPath"
 
 # 用户确认设置是否正确
 do {
-    $confirmChoice = Read-Host "`n以上设置是否正确? (Y/N)"
+    $confirmChoice = Read-Host "`nAll good? (Y/N)"
     $confirmChoice = $confirmChoice.ToUpper()
     
     if ($confirmChoice -eq "N") {
-        Write-Host "操作已取消，将退出脚本"
+        Write-Host "canceled"
         exit 0
     } elseif ($confirmChoice -ne "Y") {
-        Write-Host "无效选项，请输入 Y 或 N"
+        Write-Host "Invalid，Y or N"
     }
 } while ($confirmChoice -ne "Y" -and $confirmChoice -ne "N")
 
@@ -112,13 +107,13 @@ if (Test-Path -Path $templatePath -PathType Leaf) {
     $content | Set-Content -Path $outputPath -Force
     
     if (Test-Path -Path $outputPath -PathType Leaf) {
-        Write-Host "`n成功生成Build.props文件"
+        Write-Host "`ngenerated Build.props"
     } else {
-        Write-Error "`n生成Build.props文件失败"
+        Write-Error "`ngenerating Build.props failed"
         exit 1
     }
 } else {
-    Write-Error "`n错误: 未找到模板文件Build_template.props"
+    Write-Error "`nNo Build_template.props"
     exit 1
 }
     
