@@ -13,7 +13,7 @@ foreach ($folder in $requiredFolders) {
 # 如果有文件夹缺失，执行git submodule命令
 if ($foldersMissing) {
     Write-Host "正在更新git子模块..."
-    git submodule update --remote --init
+    git submodule update --init
     
     # 验证是否成功获取了所有文件夹
     foreach ($folder in $requiredFolders) {

@@ -2044,15 +2044,18 @@ bool LoadTCLLibrary() {
     g_libtommathHandle = LOAD_LIB(tcllib.string() + "libtommath.dll");
     g_Zlib1Handle = LOAD_LIB(tcllib.string() + "zlib1.dll");
     g_TclLibHandle = LOAD_LIB(tcllib.string() + "tcl91.dll");
-#else
-    g_libtommathHandle = LOAD_LIB(tcllib.string() + "libtommath.so");
-    g_Zlib1Handle = LOAD_LIB(tcllib.string() + "zlib1.so");
-    g_TclLibHandle = LOAD_LIB(tcllib.string() + "tcl91.so");
-#endif
     if (!g_libtommathHandle || !g_Zlib1Handle || !g_TclLibHandle) {
-		LOG_ERROR(PLID, "Can not load tcl91 library\n");
+        LOG_ERROR(PLID, "Can not load tcl91 library\n");
         return false;
     }
+#else
+    g_TclLibHandle = LOAD_LIB(tcllib.string() + "libtcl9.1.so");
+    if (!g_TclLibHandle) {
+        LOG_ERROR(PLID, "Can not load tcl91 library\n");
+        return false;
+    }
+#endif
+    
 
     // 依次加载所有API
 #pragma region Load API

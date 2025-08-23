@@ -8,7 +8,7 @@
 
 extern int g_msgTextMsg;
 
-inline void EccoMetaUtility::WriteFloat(float value){
+void EccoMetaUtility::WriteFloat(float value){
 	WRITE_LONG(*reinterpret_cast<int*>(&value));
 }
 

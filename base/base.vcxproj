@@ -88,6 +88,7 @@
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>./mmlib/include;./mmlib/include/metamod;./mmlib/include/hlsdk/engine;./mmlib/include/hlsdk/dlls;./mmlib/include/hlsdk/pm_shared;./mmlib/include/hlsdk/common;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -103,8 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;BASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>./mmlib/include;./mmlib/include/metamod;./mmlib/include/hlsdk/engine;./mmlib/include/hlsdk/dlls;./mmlib/include/hlsdk/pm_shared;./mmlib/include/hlsdk/common;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

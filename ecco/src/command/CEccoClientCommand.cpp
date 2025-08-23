@@ -24,8 +24,9 @@ bool ClientCommandHandler(edict_t* caller) {
     if (it == s_mapRegistedClientCmdMap.end()) 
         return false;
     CEccoClientCommand* command = it->second;
-    if (!command) 
+    if (!command) {
         return false;
+    }  
 	return command->Call(caller, false);
 }
 

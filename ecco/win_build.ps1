@@ -47,3 +47,5 @@ cd "tcl/win/"
 nmake -f makefile.vc
 nmake -f makefile.vc install INSTALLDIR=../build
 cd ../..
+
+msbuild ecco.vcxproj /p:Configuration=Release

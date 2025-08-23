@@ -12,7 +12,7 @@
 
 namespace EccoMetaUtility
 {
-	extern inline void WriteFloat(float value);
+	extern void WriteFloat(float value);
 	extern void WriteRGBA(unsigned int rgba);
 
 	extern std::string GetPlayerSteamId(edict_t* pent);
