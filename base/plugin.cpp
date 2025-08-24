@@ -22,7 +22,7 @@ static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName) {
 	}
 	VARS(pent)->origin = VARS(pev)->origin;
 	// SF_NORESPAWN 
-	pent->v.spawnflags |= (1 << 30);
+	pent->v.spawnflags |= (1 << 10);
 	MDLL_Spawn(pent);
 	return pent;
 }
