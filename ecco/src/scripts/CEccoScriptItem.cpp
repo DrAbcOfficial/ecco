@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include <tomlplusplus/toml.hpp>
 
 #include <extdll.h>
