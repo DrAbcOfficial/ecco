@@ -367,7 +367,7 @@ class CEccoPlugin : public IEccoPlugin {
 #pragma endregion
 
 #pragma region NewworkMessage
-	g_pScriptSystem->CreateCommand("NetMsg::Begin", "int msg_dest, int msg_type, float msg_org_x, float msg_org_y, foat msg_org_z, int target", "Begin a network message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+	g_pScriptSystem->CreateCommand("NetMsg::Begin", "int msg_dest, int msg_type, float msg_org_x, float msg_org_y, float msg_org_z, int target", "Begin a network message", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 		int msg_dest = argv[0]->intValue;
 		int msg_type = argv[1]->intValue;
 		float msg_org[3] = {

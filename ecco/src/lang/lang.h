@@ -6,7 +6,7 @@
 #include <meta_api.h>
 #include "meta_utility.h"
 
-extern std::string& GetTranslation(edict_t* player, std::string key);
+extern std::string GetTranslation(edict_t* player, std::string key);
 extern void ResetTranslations();
 extern void LoadTranslations();
 extern std::vector<std::string>& GetAvaliableLangs();

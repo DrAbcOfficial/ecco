@@ -39,7 +39,7 @@ std::vector<std::string>& GetAvaliableLangs() {
 }
 
 
-std::string& GetTranslation(edict_t* player, std::string key){
+std::string GetTranslation(edict_t* player, std::string key){
 	std::string player_lang = GetPlayerStorageItem(player)->GetLang();
     auto user_it = s_mapUserTranslations.find(player_lang);
     if (user_it == s_mapUserTranslations.end())
@@ -54,19 +54,22 @@ std::string& GetTranslation(edict_t* player, std::string key){
         it = s_mapTranslations.begin();
 
     std::unordered_map<std::string, lang_pair_t*> pair_map;
-    for (lang_pair_t* pair : it->second) {
-        if (pair)
-            pair_map[pair->key] = pair;
+    if (it != s_mapTranslations.end()) {
+        for (lang_pair_t* pair : it->second) {
+            if (pair)
+                pair_map[pair->key] = pair;
+        }
     }
-    for (lang_pair_t* pair : user_it->second) {
-        if (pair)
-            pair_map[pair->key] = pair;
+    if (user_it != s_mapUserTranslations.end()) {
+        for (lang_pair_t* pair : user_it->second) {
+            if (pair)
+                pair_map[pair->key] = pair;
+        }
     }
     auto target = pair_map.find(key);
     if (target != pair_map.end())
         return target->second->translation;
-    static std::string temp = key;
-    return temp;
+    return key;
 }
 
 void ResetTranslations() {

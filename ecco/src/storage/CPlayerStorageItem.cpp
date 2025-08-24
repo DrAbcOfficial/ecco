@@ -73,7 +73,7 @@ void CPlayerStorageItem::ScoreToCredits(int newScore){
 	if (limit > 0 && m_iLastCredits >= limit)
 		return;
 	int added = static_cast<int>((newScore - m_iScore) * GetEccoConfig()->ScoreToMoneyMultiplier);
-	if(m_iLastCredits + added > limit)
+	if(limit > 0 && m_iLastCredits + added > limit)
 		added = limit - m_iLastCredits;
 	Call_OnPlayerScoreToCredits(this, newScore, added);
 	AddCredits(added);
