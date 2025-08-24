@@ -1,6 +1,7 @@
 #include <format>
 #include <filesystem>
 #include <unordered_map>
+#include <algorithm>
 #include <tomlplusplus/toml.hpp>
 
 #include "storage/Storage.h"
@@ -122,7 +123,8 @@ void LoadTranslations(){
                 }
             } 
             catch (const toml::parse_error& err) {
-                LOG_ERROR(PLID, "Error parsing translation file %s: %s", entry.path().string().c_str(), err.description());
+               auto& src = err.source();
+               LOG_ERROR(PLID, "Pharse file %s \n\tat line %d, column %d\n\twith error: %s", src.path.get()->c_str(), src.begin.line, src.begin.column, err.what());
             }
         }
 	}
