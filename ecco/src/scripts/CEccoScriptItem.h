@@ -14,6 +14,7 @@ public:
 
 	std::vector<std::string> m_aryPrecaches;
 	std::vector<std::string> m_arySoundPrecaches;
+	std::vector<std::string> m_aryOtherPrecaches;
 
 	CEccoScriptItem(std::string path);
 };

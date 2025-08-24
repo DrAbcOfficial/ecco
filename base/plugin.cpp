@@ -336,6 +336,34 @@ class CEccoPlugin : public IEccoPlugin {
 		interp->SetObjectResult(obj);
 		return IEccoScriptSystem::Result::OK;
 		});
+	g_pScriptSystem->CreateCommand("respawn_player", "int ent_index, float tillRevive", "respawn a player", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		int index = argv[0]->intValue;
+		float revive = argv[1]->floatValue;
+		if (index < 0)
+			return IEccoScriptSystem::Result::Error;
+		auto pent = INDEXENT(index);
+		if (FNullEnt(pent)) {
+			interp->ThrowError("NULL ent", "Try to respawn a NULL player!");
+			return IEccoScriptSystem::Result::Error;
+		}
+		CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pent->pvPrivateData);
+		if (!pPlayer->IsPlayer()) {
+			interp->ThrowError("NULL ent", "Try to respawn is NOT a player!");
+			return IEccoScriptSystem::Result::Error;
+		}
+		pPlayer->BeginRevive(revive);
+		return IEccoScriptSystem::Result::OK;
+		});
+	g_pScriptSystem->CreateCommand("con_command", "string cmd", "send a cmd to console", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+		const char* cmd = argv[0]->strValue;
+		if (!cmd || strlen(cmd) < 0) {
+			interp->ThrowError("NULL string", "Try to submit a NULL string!");
+			return IEccoScriptSystem::Result::Error;
+		}
+		SERVER_COMMAND(const_cast<char*>(cmd));
+		return IEccoScriptSystem::Result::OK;
+		});
+
 #pragma endregion
 
 #pragma region NewworkMessage
