@@ -87,8 +87,11 @@ extern std::unordered_map<std::string, CEccoClientCommand*> s_mapRegistedClientC
 static CEccoClientCommand help("help", "list all commands", ADMIN_LEVEL::NONE, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
     std::string buffer = std::format(HELP_FORMAT, "Command", "Description", "Usage");
     pThis->PrintMessageByFrom(caller, talk, buffer.c_str());
+    auto storage = GetPlayerStorageItem(caller);
     for (auto& cmd : s_mapRegistedClientCmdMap) {
         auto& item = cmd.second;
+        if (item->GetAdminLevel() > storage->GetAdminLevel())
+            continue;
         buffer = std::format(HELP_FORMAT, item->m_szCmd, item->m_szDescription, item->GetUsage());
         pThis->PrintMessageByFrom(caller, talk, buffer.c_str());
     }

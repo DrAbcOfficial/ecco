@@ -112,6 +112,10 @@ bool CEccoClientCommand::Call(edict_t* caller, bool from_talk){
 	return DirectCall(caller, from_talk, args);
 }
 
+ADMIN_LEVEL CEccoClientCommand::GetAdminLevel() const {
+    return m_iPrivilege;
+}
+
 bool CEccoClientCommand::DirectCall(edict_t* caller, bool from_talk, const std::vector<std::string>& args){
     if (!m_pfnCallback)
         return false;

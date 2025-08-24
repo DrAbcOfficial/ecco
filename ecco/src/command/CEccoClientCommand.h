@@ -16,6 +16,8 @@ public:
 	}
 
 	bool DirectCall(edict_t* caller, bool from_talk, const std::vector<std::string>& args);
+
+	ADMIN_LEVEL GetAdminLevel() const;
 private:
 	std::function<bool(edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args)> m_pfnCallback;
 	ADMIN_LEVEL m_iPrivilege;
