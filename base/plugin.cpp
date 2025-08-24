@@ -177,8 +177,7 @@ class CEccoPlugin : public IEccoPlugin {
 			if (FNullEnt(pent)) {
 				interp->ThrowError("NULL give item", "NULL with give named item");
 				return IEccoScriptSystem::Result::Error;
-			}	
-			MDLL_Touch(pent, pev);
+			}
 			return IEccoScriptSystem::Result::OK;
 		});
 	g_pScriptSystem->CreateCommand("saytext", "int ent_index, string content", "Say something to a player", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
@@ -354,13 +353,16 @@ class CEccoPlugin : public IEccoPlugin {
 		pPlayer->BeginRevive(revive);
 		return IEccoScriptSystem::Result::OK;
 		});
-	g_pScriptSystem->CreateCommand("con_command", "string cmd", "send a cmd to console", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
+	g_pScriptSystem->CreateCommand("con_command", "string cmd, string args", "send a cmd to console", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv) {
 		const char* cmd = argv[0]->strValue;
+		const char* args = argv[1]->strValue;
 		if (!cmd || strlen(cmd) < 0) {
 			interp->ThrowError("NULL string", "Try to submit a NULL string!");
 			return IEccoScriptSystem::Result::Error;
 		}
-		SERVER_COMMAND(const_cast<char*>(cmd));
+		std::string fullcmd = std::string(cmd) + " " + std::string(args) + "\n";
+		SERVER_COMMAND(const_cast<char*>(fullcmd.c_str()));
+		SERVER_EXECUTE();
 		return IEccoScriptSystem::Result::OK;
 		});
 
