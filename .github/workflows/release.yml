@@ -33,8 +33,12 @@ jobs:
     - name: Setup MSBuild
       if: matrix.os == 'windows'
       uses: microsoft/setup-msbuild@v1.0.2
+    
+    - name: Setup NMake
+      if: matrix.os == 'windows'
+      uses: ilammy/msvc-dev-cmd@v1
       with:
-        msbuild-architecture: x86
+        arch: amd64_x86
     
     - name: Setup Build Enviroment
       if: matrix.os == 'ubuntu'
