@@ -1,26 +1,36 @@
 #!/bin/bash
 
-# 显示版本选择菜单
-echo "Chose MeatMod Version："
-echo "1) 5.13 (metamod-p, metamod-r)"
-echo "2) 5.18 (metamod-fallguys)"
+# 检查是否提供了版本参数
+if [ $# -eq 1 ]; then
+    version_choice=$1
+else
+    # 显示版本选择菜单
+    echo "Choose MeatMod Version："
+    echo "1) 5.13 (metamod-p, metamod-r)"
+    echo "2) 5.16 (metamod-fallguys)"
 
-# 读取用户输入
-read -p "Chose (1 or 2)：" version_choice
+    # 读取用户输入
+    read -p "Choose (1 or 2)：" version_choice
+fi
+
+# 验证选择是否有效
+if [ "$version_choice" != "1" ] && [ "$version_choice" != "2" ]; then
+    echo "Invalid choice: $version_choice"
+    echo "Please choose 1 or 2"
+    exit 1
+fi
 
 # 根据选择设置对应的参数
 case $version_choice in
     1)
+        echo "Selected version: 5.13 (metamod-p, metamod-r)"
         META_INCLUDE="./mmlib/include/metamod"
         META_VERSION="_META_5_13"
         ;;
     2)
+        echo "Selected version: 5.18 (metamod-fallguys)"
         META_INCLUDE="./metamod/metamod"
         META_VERSION="_META_5_18"
-        ;;
-    *)
-        echo "Ivalid，chose 1 or 2"
-        exit 1
         ;;
 esac
 

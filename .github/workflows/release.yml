@@ -1,0 +1,163 @@
+name: Release File
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        os: [ubuntu, windows]
+        metamod: [5_13, 5_16]
+
+    runs-on: ${{ matrix.os }}-latest 
+
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Init dependencies
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: git submodule update --init
+      shell: pwsh
+
+    - name: Setup MSBuild
+      if: matrix.os == 'windows'
+      uses: microsoft/setup-msbuild@v1.0.2
+      with:
+        msbuild-architecture: x86
+    
+    - name: Setup Build Enviroment
+      if: matrix.os == 'ubuntu'
+      uses: ConorMacBride/install-package@v1
+      with:
+        apt: make build-essential gcc g++-multilib gcc-multilib libc6-dev-i386 zlib1g-dev cmake git unzip 
+
+    - name: Build Windows
+      if: matrix.os == 'windows'
+      shell: pwsh
+      run: |
+        if ("${{ matrix.metamod }}" -eq "5_13") {
+            $metaInclude = "./mmlib/include/metamod"
+            $gameDefine = "_META_5_13"
+        } elseif ("${{ matrix.metamod }}" -eq "5_16") {
+            $metaInclude = "./metamod/metamod"
+            $gameDefine = "_META_5_18"
+        } 
+        $templatePath = "./ecco/Build_template.props"
+        $outputPath = "./ecco/Build.props"
+        if (Test-Path -Path $templatePath -PathType Leaf) {
+            $content = Get-Content -Path $templatePath -Raw
+            $content = $content -replace '{{DEBUG_PROGRAM}}', ""
+            $content = $content -replace '{{DEBUG_PATH}}', ""
+            $content = $content -replace '{{META_INCLUDE}}', $metaInclude
+            $content = $content -replace '{{GAME_DEFINE}}', $gameDefine
+            $content | Set-Content -Path $outputPath -Force
+        }
+        cd "ecco/tcl/win/"
+        nmake -f makefile.vc
+        nmake -f makefile.vc install INSTALLDIR=../build
+        cd ../../..
+        msbuild ecco.sln /p:Configuration=Release
+        mkdir dist/ecco
+        Copy-Item Release/ecco.dll dist/ecco -Force
+        $extensionDir = "dist/ecco/extensions"
+        mkdir $extensionDir
+        Copy-Item Release/angelscript.dll $extensionDir -Force
+        Copy-Item Release/base.dll $extensionDir -Force
+        Copy-Item ecco/package/lang dist/ecco/lang -Recurse -Force
+        Copy-Item ecco/package/scripts dist/ecco/scripts -Recurse -Force
+        Copy-Item ecco/package/Config.toml dist/ecco/Config.toml -Force
+        $tclDir = "dist/ecco/tcl"
+        mkdir $tclDir
+        Copy-Item ecco/tcl/build/bin/tcl91.dll $tclDir -Force
+        Copy-Item ecco/tcl/build/bin/libtommath.dll $tclDir -Force
+        Copy-Item ecco/tcl/build/bin/zlib1.dll $tclDir -Force
+        Expand-Archive -Path "ecco/tcl/build/lib/libtcl9.1a1.zip" -DestinationPath "$tclDir/"
+        Move-Item "$tclDir/tcl_library" "$tclDir/lib" -Force
+        mkdir "$tclDir/pkg"
+        Copy-Item "ecco/tcl/build/lib/registry1.4" "$tclDir/pkg/registry1.4" -Recurse -Force -Exclude "*.lib"
+        Copy-Item "ecco/tcl/build/lib/dde1.5" "$tclDir/pkg/dde1.5" -Recurse -Force -Exclude "*.lib"
+
+
+    - name: Build Linux
+      if: matrix.os == 'ubuntu'
+      run: |
+        if [ "${{ matrix.metamod }}" == "5_13" ]; then
+          META_INCLUDE="./mmlib/include/metamod"
+          META_VERSION="_META_5_13"
+        elif [ "${{ matrix.metamod }}" == "5_16" ]; then
+          META_INCLUDE="./metamod/metamod"
+          META_VERSION="_META_5_18"
+        fi
+        current_dir=$(pwd)
+        cd ecco/tcl/unix || { exit 1; }
+        touch tclStubInit.c tclOOStubInit.c tclOOScript.h
+        mkdir -p ../build
+        ./configure CFLAGS=-m32 CPPFLAGS=-m32 LDFLAGS=-m32 --disable-64bit --enable-shared --prefix=$(cd ../build;pwd)
+        make -j4 all
+        make install
+        cd "$current_dir" || { exit 1; }
+        mkdir -p ecco/build && cd ecco/build
+        cmake .. -DMETA_INCLUDE="$META_INCLUDE" -DMETA_VERSION="$META_VERSION" -DCMAKE_BUILD_TYPE=Release
+        make -j4
+        cd "$current_dir" || { exit 1; }
+        mkdir -p base/build && cd base/build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        make -j4
+        cd "$current_dir" || { exit 1; }
+        mkdir -p angelscript/build && cd angelscript/build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        make -j4
+        cd "$current_dir" || { exit 1; }
+        mkdir -p dist/ecco
+        cp -f ecco/build/libecco.so dist/ecco/ecco.so
+        extensionDir="dist/ecco/extensions"
+        mkdir -p "$extensionDir"
+        cp -f angelscript/build/libangelscript.so "$extensionDir/"
+        cp -f base/build/libbase.so "$extensionDir/"
+        cp -rf ecco/package/lang dist/ecco/
+        cp -rf ecco/package/scripts dist/ecco/
+        cp -f ecco/package/Config.toml dist/ecco/
+        tclDir="dist/ecco/tcl"
+        mkdir -p "$tclDir"
+        cp -f ecco/tcl/build/lib/libtcl9.1.so "$tclDir/"
+        unzip -o "ecco/tcl/unix/libtcl9.1a1.zip" -d "$tclDir/"
+        mv -f "$tclDir/tcl_library" "$tclDir/lib"
+        mkdir -p "$tclDir/pkg"
+
+    - name: Zipping All
+      if: matrix.os == 'windows'
+      uses: vimtor/action-zip@v1
+      with:
+          files: ./dist
+          dest: ecco-${{ matrix.os }}-${{ matrix.metamod }}.zip
+
+    - name: Tarball All
+      if: matrix.os != 'windows'
+      run: tar -czvf ./ecco-${{ matrix.os }}-${{ matrix.metamod }}.tar.gz ./dist
+
+    - name: Create Release Unix
+      if: matrix.os != 'windows' && startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+          name: ecco-${{ github.ref }}
+          files: |
+            ./ecco-${{ matrix.os }}-${{ matrix.metamod }}.tar.gz
+
+    - name: Create Release Win
+      if: matrix.os == 'windows' && startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+          name: ecco-${{ github.ref }}
+          files: |
+            ecco-${{ matrix.os }}-${{ matrix.metamod }}.zip

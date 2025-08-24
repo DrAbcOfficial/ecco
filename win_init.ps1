@@ -28,25 +28,50 @@ if (-not(Test-Path -Path "./vswhere.exe")){
 	Invoke-WebRequest -Uri "https://github.com/microsoft/vswhere/releases/download/3.1.7/vswhere.exe" -OutFile "./vswhere.exe"
 }
 
-# 提示用户选择版本
-Write-Host "`nChose metamod version:"
-Write-Host "1. 5:13（metamod-p metamod-r）"
-Write-Host "2. 5:18（metamod-fallguys）"
+# 处理版本选择 - 支持命令行参数或交互式输入
+$version = $null
+$metaInclude = $null
+$gameDefine = $null
 
-do {
-    $versionChoice = Read-Host "Chose (1 or 2)"
+# 检查是否提供了版本参数
+if ($args.Count -ge 1) {
+    $versionChoice = $args[0]
+    
+    # 验证参数有效性
     if ($versionChoice -eq "1") {
         $version = "5:13"
         $metaInclude = "./mmlib/include/metamod"
         $gameDefine = "_META_5_13"
     } elseif ($versionChoice -eq "2") {
-        $version = "5:18"
+        $version = "5:16"
         $metaInclude = "./metamod/metamod"
         $gameDefine = "_META_5_18"
     } else {
-        Write-Host "Invalid, 1 or 2"
+        Write-Host "Invalid version parameter: $versionChoice"
+        Write-Host "Please use 1 or 2"
+        exit 1
     }
-} while ([string]::IsNullOrEmpty($version))
+} else {
+    # 没有参数，使用交互式选择
+    Write-Host "`nChose metamod version:"
+    Write-Host "1. 5:13（metamod-p metamod-r）"
+    Write-Host "2. 5:16（metamod-fallguys）"
+
+    do {
+        $versionChoice = Read-Host "Chose (1 or 2)"
+        if ($versionChoice -eq "1") {
+            $version = "5:13"
+            $metaInclude = "./mmlib/include/metamod"
+            $gameDefine = "_META_5_13"
+        } elseif ($versionChoice -eq "2") {
+            $version = "5:16"
+            $metaInclude = "./metamod/metamod"
+            $gameDefine = "_META_5_18"
+        } else {
+            Write-Host "Invalid, 1 or 2"
+        }
+    } while ([string]::IsNullOrEmpty($version))
+}
 
 # 提示用户输入调试器名称
 do {
