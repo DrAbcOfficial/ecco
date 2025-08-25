@@ -1,4 +1,4 @@
-#include <map>
+#include <unordered_map>
 #include <extdll.h>
 #include <meta_api.h>
 
@@ -9,8 +9,7 @@
 
 using namespace EccoMetaUtility;
 
-static std::map<std::string, CPlayerStorageItem*> s_mapPlayerStorage;
-
+static std::unordered_map<std::string, CPlayerStorageItem*> s_mapPlayerStorage;
 
 void CleanPlayerCredites(edict_t* pent) {
 	int start_money = GetEccoConfig()->PlayerStartScore;

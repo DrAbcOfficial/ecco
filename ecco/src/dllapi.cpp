@@ -94,13 +94,14 @@ static void	 ClientCommand (edict_t* pEntity) {
 		SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 }
 
-constexpr int QUERY_CVAR_CONST = 114514;
 static void ClientDisconnect(edict_t* pEntity) {
 	RemoveHudUpdateTimer(pEntity);
 	RemovePlayerScoreToCreditsTimer(pEntity);
 	StorageClientDisconnectHandle(pEntity);
 	SET_META_RESULT(MRES_HANDLED);
 }
+
+constexpr int QUERY_CVAR_CONST = 114514;
 static void ClientPutInServer(edict_t* pEntity) {
 	StorageClientPutinServerHandle(pEntity);
 	AddPlayerScoreToCreditsTimer(pEntity);
