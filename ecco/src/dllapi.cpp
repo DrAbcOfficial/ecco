@@ -65,23 +65,21 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 
 	const char* mapname = STRING(gpGlobals->mapname);
 	bool is_banned_map = IsBannedMap(mapname);
-	extern bool g_bIsSeriesMap;
 	if (is_banned_map)
 		return;
+
 	LoadEccoScriptItems();
 	ReseAllMenus();
 	ParseRootMenu();
 	PrecacheAllScriptItems();
 
-	
+	extern bool g_bIsSeriesMap;
 	int save_set = GetEccoConfig()->StorePlayerScore;
 	if (save_set < 2) {
 		if (save_set <= 0)
 			CleanPlayerCredites(nullptr);
-		else if (save_set == 1) {
-			if (!g_bIsSeriesMap)
-				CleanPlayerCredites(nullptr);
-		}
+		else if (!g_bIsSeriesMap)
+			CleanPlayerCredites(nullptr);
 	}
 	g_bIsSeriesMap = false;
 }

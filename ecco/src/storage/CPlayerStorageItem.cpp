@@ -86,6 +86,7 @@ void CPlayerStorageItem::ScoreToCredits(int newScore){
 
 void CPlayerStorageItem::CleanLastCredits(){
 	m_iLastCredits = 0;
+	m_iScore = 0;
 }
 
 const char* CPlayerStorageItem::GetLang(){
