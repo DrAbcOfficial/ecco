@@ -81,6 +81,8 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 		else if (!g_bIsSeriesMap)
 			CleanPlayerCredites(nullptr);
 	}
+	CleanUnconnectedPlayerStorage();
+
 	g_bIsSeriesMap = false;
 }
 
@@ -289,6 +291,7 @@ static void CvarValue2(const edict_t* pEnt, int requestID, const char* cvarName,
 		}
 		auto item = GetPlayerStorageItem(pent);
 		item->SetLang(value);
+		item->SaveData();
 		RETURN_META(MRES_HANDLED);
 	}
 	SET_META_RESULT(MRES_IGNORED);

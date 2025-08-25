@@ -52,6 +52,8 @@ void AddHudUpdateTimer(edict_t* pent){
 		return; // already has a timer
 	auto t = g_Scheduler.SetInterval(
 		[pent]() {
+			if(FNullEnt(pent))
+				return;
 			if (!IsValidPlayer(pent))
 				return;
 			CPlayerStorageItem* pItem = GetPlayerStorageItem(pent);

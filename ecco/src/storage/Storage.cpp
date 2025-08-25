@@ -1,4 +1,6 @@
 #include <unordered_map>
+#include <algorithm>
+
 #include <extdll.h>
 #include <meta_api.h>
 
@@ -22,6 +24,15 @@ void CleanPlayerCredites(edict_t* pent) {
 		for(auto& pair : s_mapPlayerStorage) {
 			pair.second->SetCredits(start_money);
 			pair.second->SaveData();
+		}
+	}
+}
+
+void CleanUnconnectedPlayerStorage(){
+	for (auto& pair : s_mapPlayerStorage) {
+		if(pair.second->m_bDeleteMe) {
+			delete pair.second;
+			s_mapPlayerStorage.erase(pair.first);
 		}
 	}
 }
@@ -54,9 +65,7 @@ void StorageClientDisconnectHandle(edict_t* pent){
 	std::string steamid = GetPlayerSteamId(pent);
 	auto it = s_mapPlayerStorage.find(steamid);
 	if (it != s_mapPlayerStorage.end()) {
-		it->second->SaveData();
-		delete it->second;
-		s_mapPlayerStorage.erase(it);
+		it->second->m_bDeleteMe = true;
 	}
 }
 

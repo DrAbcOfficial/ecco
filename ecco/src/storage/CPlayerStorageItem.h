@@ -30,9 +30,9 @@ private:
 
 	struct save_data_t
 	{
-		char SteamId[64]; // 0x40
-		int Credits; // 0x80
-		char Lang[8]; // 0x88
+		char SteamId[24];
+		int Credits;
+		char Lang[16];
 		short Admin;
 	};
 	save_data_t m_saveData{};
@@ -40,6 +40,8 @@ public:
 	edict_t* m_pPlayer;
 	int m_iScore;
 	int m_iLastCredits;
+
+	bool m_bDeleteMe = false;
 private:
 	void ReadData();
 };

@@ -6,6 +6,8 @@
 
 #include "Scheduler.h"
 
+#include "meta_utility.h"
+
 static std::map<edict_t*, ScheduledFunction> s_mapPlayerScoreToCreditsTimer;
 
 void AddPlayerScoreToCreditsTimer(edict_t* pent){
@@ -16,6 +18,10 @@ void AddPlayerScoreToCreditsTimer(edict_t* pent){
 		return;
 	auto t = g_Scheduler.SetInterval(
 		[pent]() {
+			if(FNullEnt(pent))
+				return;
+			if (!EccoMetaUtility::IsValidPlayer(pent))
+				return;
 			CPlayerStorageItem* pItem = GetPlayerStorageItem(pent);
 			if (pItem)
 				pItem->ScoreToCredits((int)pent->v.frags);

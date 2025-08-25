@@ -65,8 +65,13 @@ static CEccoClientCommand reload("reload", "reload all script", ADMIN_LEVEL::ADM
     pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_scripts_reloaded");
 	return true;
 });
-static CEccoClientCommand setlang("lang", "set language", ADMIN_LEVEL::NONE, { CEccoCmdArgSet("language") }, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
-	auto& target_lang = args[0];
+static CEccoClientCommand setlang("lang", "set language", ADMIN_LEVEL::NONE, { CEccoCmdArgSet("language", true) }, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
+    if (args.size() == 0) {
+        auto item = GetPlayerStorageItem(caller);
+        pThis->PrintMessageByFrom(caller, talk, item->GetLang());
+        return true;
+    }
+    auto& target_lang = args[0];
     auto& langs = GetAvaliableLangs();
     if (target_lang.empty() || std::find(langs.begin(), langs.end(), target_lang) == langs.end()) {
         pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_lang_invalid");
