@@ -1,5 +1,6 @@
 #include <filesystem>
 #include <array>
+#include <algorithm>
 #include <extdll.h>
 
 #include "storage/Storage.h"
@@ -8,6 +9,9 @@
 
 #include <meta_api.h>
 #include "meta_utility.h"
+
+#undef min
+#undef max
 
 std::vector<CEccoScriptItem*> g_aryEccoScriptItems;
 
@@ -47,6 +51,31 @@ bool LoadEccoScriptItems(){
 		if (entry.is_regular_file() && entry.path().extension() == ".toml") 
 			g_aryEccoScriptItems.push_back(new CEccoScriptItem(entry.path().string()));
 	}
+
+	static auto getCharWeight = [](char c) -> int {
+		if (isdigit(c))
+			return 1 + (c - '0');
+		else if (islower(c))
+			return 11 + (c - 'a');
+		else if (isupper(c))
+			return 37 + (c - 'A');
+		return 100;
+	};
+	static auto compareIds = [](const std::string& a, const std::string& b) {
+		size_t minLen = std::min(a.length(), b.length());
+		for (size_t i = 0; i < minLen; ++i) {
+			int weightA = getCharWeight(a[i]);
+			int weightB = getCharWeight(b[i]);
+			if (weightA != weightB)
+				return weightA < weightB;
+		}
+		return a.length() < b.length();
+		};
+	std::sort(g_aryEccoScriptItems.begin(), g_aryEccoScriptItems.end(),
+		[](CEccoScriptItem* a1, CEccoScriptItem* a2) {
+			return compareIds(a1->m_szId, a2->m_szId);
+		}
+	);
 	return true;
 }
 

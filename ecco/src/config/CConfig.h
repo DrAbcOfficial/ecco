@@ -82,6 +82,9 @@ struct CEccoConfig{
 
 	//默认的语言
 	std::string DefaultLang;
+
+	//查询用于查询客户端语言的cvar，留空为不查询
+	std::string QueryLangCVar;
 };
 
 extern bool IsBannedMap(const char* map);

@@ -96,6 +96,7 @@ static void	 ClientCommand (edict_t* pEntity) {
 		SET_META_RESULT(TextMenuClientCommandHook(pEntity) ? MRES_SUPERCEDE : MRES_IGNORED);
 }
 
+constexpr int QUERY_CVAR_CONST = 114514;
 static void ClientDisconnect(edict_t* pEntity) {
 	RemoveHudUpdateTimer(pEntity);
 	RemovePlayerScoreToCreditsTimer(pEntity);
@@ -106,6 +107,9 @@ static void ClientPutInServer(edict_t* pEntity) {
 	StorageClientPutinServerHandle(pEntity);
 	AddPlayerScoreToCreditsTimer(pEntity);
 	AddHudUpdateTimer(pEntity);
+	auto config = GetEccoConfig();
+	if (config->QueryLangCVar.size() > 0)
+		QUERY_CLIENT_CVAR_VALUE2(pEntity, config->QueryLangCVar.c_str(), ENTINDEX(pEntity) + QUERY_CVAR_CONST);
 	SET_META_RESULT(MRES_HANDLED);
 }
 
@@ -268,6 +272,61 @@ C_DLLEXPORT int GetEntityAPI2_Post(DLL_FUNCTIONS* pFunctionTable,
 		return(FALSE);
 	}
 	memcpy(pFunctionTable, &gFunctionTable_Post, sizeof(DLL_FUNCTIONS));
+	return(TRUE);
+}
+#pragma endregion
+
+#pragma region NewDllFunctions
+
+static void CvarValue2(const edict_t* pEnt, int requestID, const char* cvarName, const char* value){
+	if (!strcmp(value, "Bad CVAR request") || !strcmp(value, "Bad Player")) {
+		RETURN_META(MRES_IGNORED);
+	}
+	if(requestID > QUERY_CVAR_CONST) {
+		int index = requestID - QUERY_CVAR_CONST;
+		edict_t* pent = INDEXENT(index);
+		if (FNullEnt(pent)) {
+			RETURN_META(MRES_IGNORED);
+		}
+		auto item = GetPlayerStorageItem(pent);
+		item->SetLang(value);
+		RETURN_META(MRES_HANDLED);
+	}
+	SET_META_RESULT(MRES_IGNORED);
+}
+
+static NEW_DLL_FUNCTIONS gNewDllFunctionTable =
+{
+	// Called right before the object's memory is freed. 
+	// Calls its destructor.
+	NULL,
+	NULL,
+	NULL,
+
+	// Added 2005/08/11 (no SDK update):
+	NULL,//void(*pfnCvarValue)(const edict_t *pEnt, const char *value);
+
+	// Added 2005/11/21 (no SDK update):
+	//    value is "Bad CVAR request" on failure (i.e that user is not connected or the cvar does not exist).
+	//    value is "Bad Player" if invalid player edict.
+	CvarValue2,//void(*pfnCvarValue2)(const edict_t *pEnt, int requestID, const char *cvarName, const char *value);
+};
+
+C_DLLEXPORT int GetNewDLLFunctions(NEW_DLL_FUNCTIONS* pNewDllFunctionTable,
+	int* interfaceVersion)
+{
+	if (!pNewDllFunctionTable) {
+		LOG_ERROR(PLID, "GetNewDLLFunctions called with null pFunctionTable");
+		return(FALSE);
+	}
+	else if (*interfaceVersion != NEW_DLL_FUNCTIONS_VERSION) {
+		LOG_ERROR(PLID, "GetNewDLLFunctions version mismatch; requested=%d ours=%d", *interfaceVersion, NEW_DLL_FUNCTIONS_VERSION);
+		//! Tell metamod what version we had, so it can figure out who is out of date.
+		*interfaceVersion = NEW_DLL_FUNCTIONS_VERSION;
+		return(FALSE);
+	}
+	memcpy(pNewDllFunctionTable, &gNewDllFunctionTable, sizeof(NEW_DLL_FUNCTIONS));
+
 	return(TRUE);
 }
 #pragma endregion

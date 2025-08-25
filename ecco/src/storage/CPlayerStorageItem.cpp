@@ -1,5 +1,6 @@
 #include <fstream>
 #include <filesystem>
+#include <algorithm>
 
 #include "CPlayerStorageItem.h"
 
@@ -8,6 +9,7 @@
 #include "meta_utility.h"
 #include "config/CConfig.h"
 #include "plugin/plugin_system.h"
+#include "lang/lang.h"
 
 #undef read
 #undef close
@@ -91,7 +93,11 @@ const char* CPlayerStorageItem::GetLang(){
 }
 
 void CPlayerStorageItem::SetLang(const char* lang){
-	strncpy(m_saveData.Lang, lang, sizeof(m_saveData.Lang));
+	auto& langs = GetAvaliableLangs();
+	if (std::find(langs.begin(), langs.end(), lang) == langs.end())
+		strncpy(m_saveData.Lang, GetEccoConfig()->DefaultLang.c_str(), sizeof(m_saveData.Lang));
+	else
+		strncpy(m_saveData.Lang, lang, sizeof(m_saveData.Lang));
 }
 
 ADMIN_LEVEL CPlayerStorageItem::GetAdminLevel() const{
