@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <algorithm>
 
 #include "tcl_dynamic.h"
 #undef DLLEXPORT

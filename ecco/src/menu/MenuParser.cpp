@@ -1,4 +1,5 @@
 #include <ranges>
+#include <algorithm>
 
 #include "scripts/script_system.h"
 
@@ -84,6 +85,13 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 		pMenu->AddItem(pExitExecutor);
 	};
 	CEccoTextMenuExecutor* pMenu = pParentExecutor;
+	std::sort(pParserItem->aryChild.begin(), pParserItem->aryChild.end(), [](ecco_parser_item_t* a, ecco_parser_item_t* b) {
+		if (a->pScriptItem && !b->pScriptItem)
+			return false;
+		if (!a->pScriptItem && b->pScriptItem)
+			return true;
+		return a->szId < b->szId;
+	});
 	for (auto& child : pParserItem->aryChild) {
 		if (page > 0 && counter == 0) {
 			//下一页
