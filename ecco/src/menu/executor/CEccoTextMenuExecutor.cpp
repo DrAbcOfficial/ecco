@@ -1,8 +1,11 @@
 // Shit, wootguy didnt finish TextMenu
 // Have to write by myself :(
+#include <bitset>
+
 #include "meta_utility.h"
 #include "lang/lang.h"
 #include "CEccoTextMenuExecutor.h"
+#include "config/CConfig.h"
 
 std::array<CEccoTextMenuExecutor*, MAX_PLAYERS> g_aryTextMenus;
 
@@ -48,12 +51,13 @@ bool CEccoTextMenuExecutor::IsPlayerViewing(edict_t* ent){
 	if (!IsValidPlayer(ent))
 		return false;
 	int index = ENTINDEX(ent)-1;
-	return m_iViewers.test(index);
+	return m_aryViewers[index].IsViewing();
 }
 
 void CEccoTextMenuExecutor::SetPlayerViewing(edict_t* ent, bool view){
 	int index = ENTINDEX(ent) - 1;
-	m_iViewers.set(index, view);
+	m_aryViewers[index].Viewing = view;
+	m_aryViewers[index].StopVIewTime = view ? g_engfuncs.pfnTime() + GetEccoConfig()->BuyMenu.KeepOpenTime : 0.0f;
 	g_aryTextMenus[index] = view ? this : nullptr;
 }
 
@@ -63,13 +67,15 @@ void CEccoTextMenuExecutor::HandleMenuMessage(int msg_dest, edict_t* ed) {
 
 	// If this message is in fact triggered by this object, then the viewer flags should be set
 	// after this func finishes
-	if (m_iViewers.none())
+	if (NoneViewer())
 		return;
 
 	if ((msg_dest == MSG_ONE || msg_dest == MSG_ONE_UNRELIABLE) && ed)
 		SetPlayerViewing(ed, false);
 	else if (msg_dest == MSG_ALL) {
-		m_iViewers.reset();
+		for (auto& view : m_aryViewers) {
+			view.SetViewing(false);
+		}
 		for (size_t i = 0; i < g_aryTextMenus.size(); i++) {
 			g_aryTextMenus[i] = nullptr;
 		}
@@ -79,7 +85,7 @@ void CEccoTextMenuExecutor::HandleMenuMessage(int msg_dest, edict_t* ed) {
 }
 
 void CEccoTextMenuExecutor::HandleMenuselectCmd(edict_t* pEntity, int selection) {
-	if (m_iViewers.none())
+	if (NoneViewer())
 		return;
 	if (IsPlayerViewing(pEntity)) {
 		auto item = m_aryOption[selection];
@@ -94,6 +100,18 @@ size_t CEccoTextMenuExecutor::GetSize() const{
 
 CBaseEccoExecutor* CEccoTextMenuExecutor::GetOption(size_t index){
 	return m_aryOption[index];
+}
+
+bool CEccoTextMenuExecutor::NoneViewer(){
+	bool none = true;
+	for (auto& prop : m_aryViewers) {
+		none &= !prop.Viewing;
+	}
+	return none;
+}
+
+void CEccoTextMenuExecutor::FlipVIewer(){
+
 }
 
 void CEccoTextMenuExecutor::AddItem(CBaseEccoExecutor* pItem) {
@@ -115,10 +133,12 @@ void CEccoTextMenuExecutor::Close(edict_t* pent) {
 	if (pent)
 		SetPlayerViewing(pent, false);
 	else {
-		m_iViewers.reset();
-		for (size_t i = 0; i < m_iViewers.size(); i++) {
-			if(m_iViewers.test(i))
+		for (size_t i = 0; i < m_aryViewers.size(); i++) {
+			if(m_aryViewers[i].Viewing)
 				g_aryTextMenus[i] = nullptr;
+		}
+		for (auto& view : m_aryViewers) {
+			view.SetViewing(false);
 		}
 	}
 }
@@ -150,10 +170,27 @@ void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
 	if (validplayer)
 		SetPlayerViewing(pPlayer, true);
 	else{
-		m_iViewers.reset().flip();
+		for (auto& view : m_aryViewers) {
+			view.SetViewing(true);
+		}
 		for (size_t i = 0; i < g_aryTextMenus.size(); i++) {
 			g_aryTextMenus[i] = this;
 		}
 	}
 	CBaseEccoExecutor::Excute(pPlayer, selection);
+}
+
+void CEccoTextMenuExecutor::viewer_prop_s::SetViewing(bool view){
+	Viewing = view;
+	StopVIewTime = view ? g_engfuncs.pfnTime() + GetEccoConfig()->BuyMenu.KeepOpenTime : 0.0f;
+}
+
+bool CEccoTextMenuExecutor::viewer_prop_s::IsViewing() const{
+	float game_time = g_engfuncs.pfnTime();
+	return Viewing && (game_time < StopVIewTime);
+}
+
+void CEccoTextMenuExecutor::viewer_prop_s::Flip(){
+	Viewing = !Viewing;
+	SetViewing(Viewing);
 }

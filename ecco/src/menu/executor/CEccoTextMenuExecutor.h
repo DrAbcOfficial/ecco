@@ -3,7 +3,6 @@
 
 #pragma once
 #include <array>
-#include <bitset>
 
 #include <extdll.h>
 #include <meta_api.h>
@@ -50,8 +49,20 @@ public:
 	CBaseEccoExecutor* GetOption(size_t index);
 	std::string m_szTitle;
 private:
+	using viewer_prop_t = struct viewer_prop_s
+	{
+		bool Viewing;
+		float StopVIewTime;
+
+		void SetViewing(bool view);
+		bool IsViewing() const;
+		void Flip();
+	};
+
+	bool NoneViewer();
+	void FlipVIewer();
 	int m_iDuration = 255; // how long the menu shuold be displayed for
-	std::bitset<MAX_PLAYERS> m_iViewers = 0; // bitfield indicating who can see the menu
+	std::array<viewer_prop_t, MAX_PLAYERS> m_aryViewers{}; // who can see the menu
 	std::array<CBaseEccoExecutor*, MAX_MENU_OPTIONS> m_aryOption; //ONLY 10 options
 	size_t m_iSize = 0; // current size of the menu, used to determine if the menu is full
 };

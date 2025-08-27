@@ -53,6 +53,8 @@ struct CEccoConfigBuyMenu {
 	bool AllowDeathPlayerBuy;
 	//购买后重新打开菜单
 	bool ReOpenMenuAfterBuy;
+	// 菜单保持的时间
+	float KeepOpenTime;
 };
 struct CEccoConfig{
 	//Hud
