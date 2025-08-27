@@ -4,6 +4,6 @@ class CEccoBackExecutor : public CBaseEccoExecutor
 {
 public:
 	virtual void Excute(edict_t* pPlayer, int selection) override;
-	CBaseEccoExecutor* m_pParentExecutor;
+	CBaseEccoExecutor* m_pParentExecutor = nullptr;
 };
 

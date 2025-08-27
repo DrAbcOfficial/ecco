@@ -20,6 +20,6 @@ public:
 public:
 	std::bitset<32> m_bitFlags;
 	std::string m_szScript;
-	int m_iCost;
+	int m_iCost = 0;
 	CBaseEccoExecutor* m_pParent = nullptr; // parent menu, if any
 };

@@ -10,7 +10,7 @@
 CEccoTextMenuExecutor* g_pRootMenuExecutor = nullptr;
 using ecco_parser_item_t = struct ecco_parser_item_s {
 	std::string szId;
-	ecco_parser_item_s* pParent;
+	ecco_parser_item_s* pParent = nullptr;
 	std::vector<ecco_parser_item_s*> aryChild;
 	CEccoScriptItem* pScriptItem = nullptr;
 };
@@ -128,18 +128,18 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 			ParseMenu(pExecutor, child);
 		}
 		counter++;
-		if (counter % 6 == 0) {
+		if (pParserItem->aryChild.size() > MAX_ITEM_NO_PAGE && counter % (MAX_ITEMS_PER_PAGE - 1) == 0) {
 			add_back(pMenu);
 			add_prev(pMenu);
 			page++;
 			counter = 0;
 		}
 	}
-	int result = pParserItem->aryChild.size() % 6;
+	int result = pParserItem->aryChild.size() % (MAX_ITEMS_PER_PAGE - 1);
 	if (page > 0) {
 		if (result != 0) {
 			//填充空白
-			for (int i = result; i < 6; i++) {
+			for (int i = result; i < MAX_ITEMS_PER_PAGE - 1; i++) {
 				pMenu->AddItem(nullptr);
 			}
 			//返回和上一页
@@ -151,13 +151,11 @@ static void ParseMenu(CEccoTextMenuExecutor* pParentExecutor, ecco_parser_item_t
 		}
 	}
 	else {
-		if (pParserItem->aryChild.size() % 8 != 0) {
-			//填充空白
-			for (int i = result; i < 8; i++) {
-				pMenu->AddItem(nullptr);
-			}
+		for (int i = pMenu->GetSize(); i <= MAX_ITEMS_PER_PAGE; i++) {
+			pMenu->AddItem(nullptr);
 		}
-		add_back(pMenu);
+		if (pParserItem->aryChild.size() <= (MAX_ITEMS_PER_PAGE + 1))
+			add_back(pMenu);
 		add_exit(pMenu);
 	}
 }

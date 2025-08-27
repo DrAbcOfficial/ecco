@@ -88,6 +88,10 @@ void CEccoTextMenuExecutor::HandleMenuselectCmd(edict_t* pEntity, int selection)
 	}
 }
 
+size_t CEccoTextMenuExecutor::GetSize() const{
+	return m_iSize;
+}
+
 CBaseEccoExecutor* CEccoTextMenuExecutor::GetOption(size_t index){
 	return m_aryOption[index];
 }

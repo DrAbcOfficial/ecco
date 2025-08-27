@@ -13,7 +13,10 @@
 constexpr int MAX_MENU_OPTIONS = 10;
 constexpr int EXITOPTION_INDEX = 10;
 constexpr int MAX_PLAYERS = 32;
-constexpr int ITEMS_PER_PAGE = 7;
+
+constexpr int MAX_ITEMS_PER_PAGE = 7;
+constexpr int MAX_ITEM_NO_PAGE = 9;
+
 
 // this must be called as part of a MessageBegin hook for text menus to know when they are active
 extern void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, edict_t* ed);
@@ -39,6 +42,8 @@ public:
 	void HandleMenuMessage(int msg_dest, edict_t* ed);
 	// don't call directly. This is triggered by global hook functions
 	void HandleMenuselectCmd(edict_t* pEntity, int selection);
+	
+	size_t GetSize() const;
 
 	CBaseEccoExecutor* m_pParent = nullptr; // parent menu, if any
 
