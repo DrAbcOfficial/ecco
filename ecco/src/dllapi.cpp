@@ -50,8 +50,6 @@
 
 static void GameInit() {
 	InitHud();
-	ResetTranslations();
-	LoadTranslations();
 	RegistServerCommandToEngine();
 	CallPluginInit();
 	SET_META_RESULT(MRES_HANDLED);
@@ -59,6 +57,9 @@ static void GameInit() {
 
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	SET_META_RESULT(MRES_HANDLED);
+	ResetTranslations();
+	LoadTranslations();
+
 	ResetHud();
 	ResetEccoScriptItems();
 	CleanPlayerLastCredits(nullptr);
