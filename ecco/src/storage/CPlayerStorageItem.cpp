@@ -116,6 +116,14 @@ void CPlayerStorageItem::FlagSelf(){
 			SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, true);
 		else if (!g_bIsSeriesMap)
 			SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, true);
+		else {
+			SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, false);
+			SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, false);
+		}
+	}
+	else {
+		SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, false);
+		SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, false);
 	}
 }
 
