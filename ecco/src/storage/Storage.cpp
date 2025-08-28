@@ -13,17 +13,11 @@ using namespace EccoMetaUtility;
 
 static std::unordered_map<std::string, CPlayerStorageItem*> s_mapPlayerStorage;
 
-void CleanPlayerCredites(edict_t* pent) {
-	int start_money = GetEccoConfig()->PlayerStartScore;
-	if (pent) {
-		auto item = GetPlayerStorageItem(pent);
-		item->SetCredits(start_money);
+void RemoveAllPlayerStorage(){
+	for (auto& pair : s_mapPlayerStorage) {
+		delete pair.second;
 	}
-	else {
-		for(auto& pair : s_mapPlayerStorage) {
-			pair.second->SetCredits(start_money);
-		}
-	}
+	s_mapPlayerStorage.clear();
 }
 
 void CleanPlayerLastCredits(edict_t* pent){
@@ -59,7 +53,7 @@ void StorageClientDisconnectHandle(edict_t* pent){
 		int save_set = GetEccoConfig()->StorePlayerScore;
 		if (save_set < 2) {
 			if (save_set <= 0)
-				item->SetCredits(GetEccoConfig()->PlayerStartScore);
+				item->SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, true);
 			else if (!g_bIsSeriesMap)
 				item->SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, true);
 		}

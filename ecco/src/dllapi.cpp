@@ -79,6 +79,8 @@ static void ServerDeactivate() {
 	extern bool g_bLevelChangedOccurred;
 	g_bIsSeriesMap = g_bLevelChangedOccurred;
 	g_bLevelChangedOccurred = false;
+
+	RemoveAllPlayerStorage();
 	SET_META_RESULT(MRES_HANDLED);
 }
 

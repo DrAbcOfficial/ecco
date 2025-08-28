@@ -33,17 +33,11 @@ CPlayerStorageItem::CPlayerStorageItem(edict_t* pent){
 		auto startScore = GetEccoConfig()->PlayerStartScore;
 		if (std::filesystem::exists(m_szStoragePath)) {
 			ReadData();
-			if (TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END)) {
-				extern bool g_bIsSeriesMap;
-				int save_set = GetEccoConfig()->StorePlayerScore;
-				if (save_set < 2) {
-					if (save_set <= 0)
-						SetCredits(startScore);
-					else if (!g_bIsSeriesMap)
-						SetCredits(startScore);
-				}
-				SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, false);
-			}
+			extern bool g_bIsSeriesMap;
+			if (TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END) && !g_bIsSeriesMap) 
+				SetCredits(startScore);
+			else if(TestFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT))
+				SetCredits(startScore);
 		}
 		else {
 			m_saveData.Credits = startScore;
