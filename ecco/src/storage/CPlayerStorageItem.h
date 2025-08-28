@@ -28,6 +28,8 @@ public:
 
 	void ScoreToCredits(int newScore);
 	void CleanLastCredits();
+
+	void FlagSelf();
 private:
 	std::string m_szStoragePath{};
 

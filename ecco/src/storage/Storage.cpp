@@ -7,14 +7,14 @@
 #include "meta_utility.h"
 
 #include "Storage.h"
-#include "config/CConfig.h"
 
 using namespace EccoMetaUtility;
 
 static std::unordered_map<std::string, CPlayerStorageItem*> s_mapPlayerStorage;
 
-void RemoveAllPlayerStorage(){
+void StorageMapEndHandle(){
 	for (auto& pair : s_mapPlayerStorage) {
+		pair.second->FlagSelf();
 		delete pair.second;
 	}
 	s_mapPlayerStorage.clear();
@@ -49,14 +49,7 @@ void StorageClientDisconnectHandle(edict_t* pent){
 	auto it = s_mapPlayerStorage.find(steamid);
 	if (it != s_mapPlayerStorage.end()) {
 		auto item = it->second;
-		extern bool g_bIsSeriesMap;
-		int save_set = GetEccoConfig()->StorePlayerScore;
-		if (save_set < 2) {
-			if (save_set <= 0)
-				item->SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, true);
-			else if (!g_bIsSeriesMap)
-				item->SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, true);
-		}
+		item->FlagSelf();
 		delete item;
 		s_mapPlayerStorage.erase(it);
 	}

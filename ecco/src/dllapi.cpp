@@ -80,7 +80,7 @@ static void ServerDeactivate() {
 	g_bIsSeriesMap = g_bLevelChangedOccurred;
 	g_bLevelChangedOccurred = false;
 
-	RemoveAllPlayerStorage();
+	StorageMapEndHandle();
 	SET_META_RESULT(MRES_HANDLED);
 }
 

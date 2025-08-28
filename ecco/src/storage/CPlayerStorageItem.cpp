@@ -108,6 +108,17 @@ void CPlayerStorageItem::CleanLastCredits(){
 	m_iScore = 0;
 }
 
+void CPlayerStorageItem::FlagSelf(){
+	extern bool g_bIsSeriesMap;
+	int save_set = GetEccoConfig()->StorePlayerScore;
+	if (save_set < 2) {
+		if (save_set <= 0)
+			SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, true);
+		else if (!g_bIsSeriesMap)
+			SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, true);
+	}
+}
+
 const char* CPlayerStorageItem::GetLang(){
 	return m_saveData.Lang;
 }
