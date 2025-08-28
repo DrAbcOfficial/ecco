@@ -1,7 +1,10 @@
+#include <filesystem>
 #include <tomlplusplus/toml.hpp>
+
 
 #include <extdll.h>
 #include <meta_api.h>
+#include "meta_utility.h"
 
 #include "scripts/CEccoScriptItem.h"
 
@@ -16,21 +19,31 @@ CEccoScriptItem::CEccoScriptItem(std::string path){
 		m_iCost = toml["Ecco"]["cost"].value_or(0);
 		m_szScripts = toml["Ecco"]["script"].value_or("");
 
-		auto precache = toml["Ecoo"]["precaches"].as_array();
+		auto precache = toml["Ecco"]["precaches"].as_array();
 		if (precache) {
 			for (auto iter = precache->begin(); iter != precache->end(); iter++) {
-				m_aryPrecaches.push_back((*iter).value_or(""));
+				std::filesystem::path path = (*iter).value_or("");
+				if (!path.empty()) {
+					auto ext = path.extension();
+					if (ext == ".spr")
+						path = "sprites" / path;
+					else if (ext == ".mdl")
+						path = "models" / path;
+					else
+						LOG_CONSOLE(PLID, "Unkown extension: %s, but add it to precache list and try to precache.", ext);
+					m_aryPrecaches.push_back(path.string());
+				}
 			}
 		}
 
-		auto sound_precache = toml["Ecoo"]["sound_precaches"].as_array();
+		auto sound_precache = toml["Ecco"]["sound_precaches"].as_array();
 		if (sound_precache) {
 			for (auto iter = sound_precache->begin(); iter != sound_precache->end(); iter++) {
 				m_arySoundPrecaches.push_back((*iter).value_or(""));
 			}
 		}
 
-		auto other_precache = toml["Ecoo"]["other_precaches"].as_array();
+		auto other_precache = toml["Ecco"]["other_precaches"].as_array();
 		if (other_precache) {
 			for (auto iter = other_precache->begin(); iter != other_precache->end(); iter++) {
 				m_aryOtherPrecaches.push_back((*iter).value_or(""));
