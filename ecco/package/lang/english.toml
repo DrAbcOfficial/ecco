@@ -1,0 +1,12 @@
+[Lang]
+not_enough_credits="{0} needs ${1}, but you only have ${2}."
+ecco_menu_back="Back"
+ecco_menu_prev_page="Previous"
+ecco_menu_next_page="Next"
+ecco_menu_exit="Exit"
+ecco_menu_root="\\w[\\yEcco Store\\w]\n\\c============"
+ecco_eval_exception="theres a error when buying {0}, tell the server operator"
+ecco_cmd_access_deny="you cant use dat!"
+ecco_scripts_reloading="reloading...."
+ecco_scripts_reloaded="done!"
+ecco_cmd_usage="Usage:"

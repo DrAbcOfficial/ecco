@@ -41,16 +41,14 @@ Incresed=0x00FF00FF
 Decresed=0xFF0000FF
 
 [Ecco.BuyMenu]
-#允许无视Trigger前缀
-AllowIgnoreBuyPrefix=false
 #购买指令Trigger
 OpenShopTriggers=["buy", "shop"]
-#命令直接购买物品时是否使用模糊匹配
-UseBlurMatchForCommand=true
 #是否允许死亡玩家购买
 AllowDeathPlayerBuy=true
 #购买后重新打开菜单
 ReOpenMenuAfterBuy=true
+#菜单保持的时间
+KeepOpenTime=10.0
 
 [Ecco]
 #玩家获得的分数转化为金钱的倍数
@@ -66,6 +64,6 @@ PlayerStartScore=0
 #小于0为不限制
 MoneyLimitePerMap=-1
 #默认的语言
-DefaultLang="cn"
-#导出到AngelScript
-ExportToAngelScript=true
+DefaultLang="english"
+#查询用于查询客户端语言的cvar，留空为不查询
+QueryLangCVar="cap_lang"
