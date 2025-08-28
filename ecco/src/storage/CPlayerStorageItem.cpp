@@ -29,10 +29,24 @@ CPlayerStorageItem::CPlayerStorageItem(edict_t* pent){
 			std::filesystem::create_directories(storage_file);
 		storage_file.append(m_saveData.SteamId);
 		m_szStoragePath = storage_file.string().c_str();
-		if (std::filesystem::exists(m_szStoragePath))
+
+		auto startScore = GetEccoConfig()->PlayerStartScore;
+		if (std::filesystem::exists(m_szStoragePath)) {
 			ReadData();
+			if (TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END)) {
+				extern bool g_bIsSeriesMap;
+				int save_set = GetEccoConfig()->StorePlayerScore;
+				if (save_set < 2) {
+					if (save_set <= 0)
+						SetCredits(startScore);
+					else if (!g_bIsSeriesMap)
+						SetCredits(startScore);
+				}
+				SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, false);
+			}
+		}
 		else {
-			m_saveData.Credits = 0;
+			m_saveData.Credits = startScore;
 			SaveData();
 		}
 	}
@@ -68,6 +82,18 @@ void CPlayerStorageItem::SaveData(){
 	ofs.close();
 }
 
+bool CPlayerStorageItem::TestFlags(STORAGE_FLAGS flag) const{
+	return (m_saveData.Flags & static_cast<unsigned long long>(flag)) != 0;
+}
+
+void CPlayerStorageItem::SetFlags(STORAGE_FLAGS flag, bool on){
+	if (on)
+		m_saveData.Flags |= static_cast<unsigned long long>(flag);
+	else
+		m_saveData.Flags &= ~static_cast<unsigned long long>(flag);
+	SaveData();
+}
+
 void CPlayerStorageItem::ScoreToCredits(int newScore){
 	if (m_iScore == newScore)
 		return;
@@ -81,7 +107,6 @@ void CPlayerStorageItem::ScoreToCredits(int newScore){
 	AddCredits(added);
 	m_iLastCredits += added;
 	m_iScore = newScore;
-	SaveData();
 }
 
 void CPlayerStorageItem::CleanLastCredits(){

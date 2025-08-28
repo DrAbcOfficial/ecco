@@ -39,12 +39,30 @@ public:
 	}
 };
 
+class CEccoFunc{
+public:
+	IPlayerStorageItem* GetPlayerStorage(int index){
+		edict_t* pent = INDEXENT(index);
+		if (FNullEnt(pent))
+			return nullptr;
+		return g_pEccoFuncs->GetPlayerItem(index);
+	}
+	IPlayerStorageItem* GetPlayerStoragePrivate(void* player) {
+		edict_t* plr = g_pEccoFuncs->PrivateToEdict(player);
+		if (FNullEnt(plr))
+			return nullptr;
+		int index = ENTINDEX(plr);
+		return g_pEccoFuncs->GetPlayerItem(index);
+	}
+	IASEccoBaseExcutor* GetMenuByIndex(int index) {
+		auto menu = g_pEccoFuncs->GetMenuExcutor(index);
+		return static_cast<IASEccoBaseExcutor*>(menu);
+	}
+};
+CEccoFunc g_EccoFunc;
+
 static IPlayerStorageItem* SC_SERVER_DECL CASPlayerFuncs_GetEccoStorage(void* pthis, SC_SERVER_DUMMYARG void* player) {
-	edict_t* plr = g_pEccoFuncs->PrivateToEdict(player);
-	if (FNullEnt(plr))
-		return nullptr;
-	int index = ENTINDEX(plr);
-	return g_pEccoFuncs->GetPlayerItem(index);
+	
 }
 
 void RegisterAngelScriptMethods(){
@@ -65,10 +83,15 @@ void RegisterAngelScriptMethods(){
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Get display name to a player", "CEccoMenuExcutor", "void GetDisplayName(string& out display, CBasePlayer@ pPlayer)", IASEccoBaseExcutor, ASGetDisplayNameRaw, asCALL_THISCALL);
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Id", "CEccoMenuExcutor", "void GetId(string& out id)", IASEccoBaseExcutor, ASGetId, asCALL_THISCALL);
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Index", "CEccoMenuExcutor", "uint GetIndex()", IASEccoBaseExcutor, GetIndex, asCALL_THISCALL);
-	
-		ASEXT_RegisterObjectMethod(pASDoc,
-			"Get Ecco storage", "CPlayerFuncs", "CEccoPlayerStorage@ GetEccoStorage(CBasePlayer@ pPlayer)",
-			(void*)CASPlayerFuncs_GetEccoStorage, asCALL_THISCALL);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Cost", "CEccoMenuExcutor", "int GetCost()", IASEccoBaseExcutor, GetCost, asCALL_THISCALL);
+
+
+		ASEXT_RegisterObjectType(pASDoc, "Ecco functions", "CEccoFuncs", 0, asOBJ_REF | asOBJ_NOCOUNT);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Ecco storage", "CEccoFuncs", "CEccoPlayerStorage@ GetEccoStorage(CBasePlayer@ pPlayer)", CEccoFunc, GetPlayerStoragePrivate, asCALL_THISCALL);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Ecco storage", "CEccoFuncs", "CEccoPlayerStorage@ GetEccoStorage(int player_index)", CEccoFunc, GetPlayerStorage, asCALL_THISCALL);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Ecco menu", "CEccoFuncs", "CEccoMenuExcutor@ GetMenuByIndex(int menu_index)", CEccoFunc, GetMenuByIndex, asCALL_THISCALL);
+
+		ASEXT_RegisterGlobalProperty(pASDoc, "Ecco functions", "CEccoFuncs@ g_EccoFuncs", &g_EccoFunc);
 	});
 }
 

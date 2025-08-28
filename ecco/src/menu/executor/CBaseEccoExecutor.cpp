@@ -24,3 +24,7 @@ const char* CBaseEccoExecutor::GetDisplayNameRaw(edict_t* pPlyaer) {
 const char* CBaseEccoExecutor::GetId(){
 	return m_szId.c_str();
 }
+
+int CBaseEccoExecutor::GetCost() const{
+	return 0;
+}

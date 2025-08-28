@@ -72,18 +72,14 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	ReseAllMenus();
 	ParseRootMenu();
 	PrecacheAllScriptItems();
+}
 
-	extern bool g_bIsSeriesMap;
-	int save_set = GetEccoConfig()->StorePlayerScore;
-	if (save_set < 2) {
-		if (save_set <= 0)
-			CleanPlayerCredites(nullptr);
-		else if (!g_bIsSeriesMap)
-			CleanPlayerCredites(nullptr);
-	}
-	CleanUnconnectedPlayerStorage();
-
-	g_bIsSeriesMap = false;
+bool g_bIsSeriesMap = false;
+static void ServerDeactivate() {
+	extern bool g_bLevelChangedOccurred;
+	g_bIsSeriesMap = g_bLevelChangedOccurred;
+	g_bLevelChangedOccurred = false;
+	SET_META_RESULT(MRES_HANDLED);
 }
 
 static void	 ClientCommand (edict_t* pEntity) {
@@ -144,7 +140,7 @@ static DLL_FUNCTIONS gFunctionTable = {
 	ClientCommand,					// pfnClientCommand
 	NULL,					// pfnClientUserInfoChanged
 	ServerActivate,					// pfnServerActivate
-	NULL,					// pfnServerDeactivate
+	ServerDeactivate,					// pfnServerDeactivate
 
 	NULL,					// pfnPlayerPreThink
 	NULL,					// pfnPlayerPostThink

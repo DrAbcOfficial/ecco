@@ -18,21 +18,10 @@ void CleanPlayerCredites(edict_t* pent) {
 	if (pent) {
 		auto item = GetPlayerStorageItem(pent);
 		item->SetCredits(start_money);
-		item->SaveData();
 	}
 	else {
 		for(auto& pair : s_mapPlayerStorage) {
 			pair.second->SetCredits(start_money);
-			pair.second->SaveData();
-		}
-	}
-}
-
-void CleanUnconnectedPlayerStorage(){
-	for (auto& pair : s_mapPlayerStorage) {
-		if(pair.second->m_bDeleteMe) {
-			delete pair.second;
-			s_mapPlayerStorage.erase(pair.first);
 		}
 	}
 }
@@ -65,7 +54,17 @@ void StorageClientDisconnectHandle(edict_t* pent){
 	std::string steamid = GetPlayerSteamId(pent);
 	auto it = s_mapPlayerStorage.find(steamid);
 	if (it != s_mapPlayerStorage.end()) {
-		it->second->m_bDeleteMe = true;
+		auto item = it->second;
+		extern bool g_bIsSeriesMap;
+		int save_set = GetEccoConfig()->StorePlayerScore;
+		if (save_set < 2) {
+			if (save_set <= 0)
+				item->SetCredits(GetEccoConfig()->PlayerStartScore);
+			else if (!g_bIsSeriesMap)
+				item->SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, true);
+		}
+		delete item;
+		s_mapPlayerStorage.erase(it);
 	}
 }
 

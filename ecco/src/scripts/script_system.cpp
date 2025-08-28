@@ -23,10 +23,10 @@ void InitializeScriptSystem(){
 
 IEccoScriptSystem::Result EvalScriptContent(edict_t* caller, CEccoScriptExecutor* pexcuter){
 	g_ScriptSystem->ResetEnviroment();
-	auto index = g_ScriptSystem->NewIntObject(ENTINDEX(caller));
-	g_ScriptSystem->SetValue("caller_index", index);
-	index = g_ScriptSystem->NewIntObject(pexcuter->m_iIndex);
-	g_ScriptSystem->SetValue("item_index", index);
+	auto caller_index = g_ScriptSystem->NewIntObject(ENTINDEX(caller));
+	g_ScriptSystem->SetValue("caller_index", caller_index);
+	auto item_index = g_ScriptSystem->NewIntObject(pexcuter->m_iIndex);
+	g_ScriptSystem->SetValue("item_index", item_index);
 	auto ret = g_ScriptSystem->Eval(pexcuter->m_szScript.c_str());
 	g_ScriptSystem->UnsetValue("caller_index");
 	g_ScriptSystem->UnsetValue("item_index");

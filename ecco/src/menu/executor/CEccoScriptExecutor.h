@@ -16,7 +16,9 @@ public:
 
 	virtual std::string GetDisplayName(edict_t* pPlyaer) override;
 
-	std::string GetDisplayNameForChai(CPlayerStorageItem* chaiPlayer);
+	virtual int GetCost() const override;
+
+	std::string GetDisplayNameFromStorage(CPlayerStorageItem* chaiPlayer);
 public:
 	std::bitset<32> m_bitFlags;
 	std::string m_szScript;

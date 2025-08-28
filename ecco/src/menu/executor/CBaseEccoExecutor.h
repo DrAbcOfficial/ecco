@@ -9,6 +9,7 @@ public:
 	virtual size_t GetIndex();
 	virtual const char* GetDisplayNameRaw(edict_t* pPlyaer);
 	virtual const char* GetId();
+	virtual int GetCost() const;
 
 public:
 	size_t m_iIndex = 0;

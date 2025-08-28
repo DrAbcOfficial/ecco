@@ -7,7 +7,6 @@
 /// </summary>
 /// <param name="pent">target</param>
 extern void CleanPlayerCredites(edict_t* pent);
-extern void CleanUnconnectedPlayerStorage();
 extern void CleanPlayerLastCredits(edict_t* pent);
 extern void StorageClientPutinServerHandle(edict_t* pent);
 extern void StorageClientDisconnectHandle(edict_t* pent);

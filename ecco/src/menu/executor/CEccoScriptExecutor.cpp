@@ -34,6 +34,10 @@ std::string CEccoScriptExecutor::GetDisplayName(edict_t* pPlyaer){
     return  GetTranslation(pPlyaer, m_szId) + " - " + std::to_string(m_iCost);
 }
 
-std::string CEccoScriptExecutor::GetDisplayNameForChai(CPlayerStorageItem* chaiPlayer){
+int CEccoScriptExecutor::GetCost() const{
+    return m_iCost;
+}
+
+std::string CEccoScriptExecutor::GetDisplayNameFromStorage(CPlayerStorageItem* chaiPlayer){
     return GetDisplayName(chaiPlayer->m_pPlayer);
 }

@@ -23,10 +23,13 @@ public:
 
 	virtual void SaveData();
 
+	virtual bool TestFlags(STORAGE_FLAGS flag) const;
+	virtual void SetFlags(STORAGE_FLAGS flag, bool on);
+
 	void ScoreToCredits(int newScore);
 	void CleanLastCredits();
 private:
-	std::string m_szStoragePath;
+	std::string m_szStoragePath{};
 
 	struct save_data_t
 	{
@@ -34,14 +37,13 @@ private:
 		int Credits;
 		char Lang[16];
 		short Admin;
+		unsigned long long Flags;
 	};
 	save_data_t m_saveData{};
 public:
-	edict_t* m_pPlayer;
-	int m_iScore;
-	int m_iLastCredits;
-
-	bool m_bDeleteMe = false;
+	edict_t* m_pPlayer = nullptr;
+	int m_iScore = 0;
+	int m_iLastCredits = 0;
 private:
 	void ReadData();
 };

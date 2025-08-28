@@ -6,6 +6,11 @@ enum class ADMIN_LEVEL {
 	ADMIN,
 	OWNER
 };
+enum class STORAGE_FLAGS {
+	NONE = 0,
+	DELETE_WHEN_SERIES_END = 1 << 0,
+	DELETE_WHEN_DISCONNECT = 1 << 1,
+};
 class IPlayerStorageItem {
 public:
 	virtual int GetCredits() const = 0;
@@ -22,6 +27,9 @@ public:
 	virtual void SetAdminLevel(ADMIN_LEVEL level) = 0;
 
 	virtual edict_t* GetPlayer() const = 0;
+
+	virtual bool TestFlags(STORAGE_FLAGS flag) const = 0;
+	virtual void SetFlags(STORAGE_FLAGS flag, bool on) = 0;
 
 	virtual void SaveData() = 0;
 };

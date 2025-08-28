@@ -21,6 +21,8 @@ plugin_info_t* gpPlugin_info;			// master plugin info
 
 static void OnPlayerCreditsChanged(IPlayerStorageItem* player, int oldCredits, int &credits) {
     edict_t* plr = player->GetPlayer();
+    if (!plr)
+        return;
 	int nCredits = credits;
     int newCredits = credits;
     AS_CALL(PlayerCreditsChanged, plr->pvPrivateData, oldCredits, nCredits, &newCredits);
@@ -28,6 +30,8 @@ static void OnPlayerCreditsChanged(IPlayerStorageItem* player, int oldCredits, i
 }
 static void OnPlayerScoreToCredits(IPlayerStorageItem* player, int score, int& added) {
     edict_t* plr = player->GetPlayer();
+    if (!plr)
+        return;
     int addedd = added;
     int newAdded = added;
     AS_CALL(PlayerScoreToCredits, plr->pvPrivateData, score, addedd, &newAdded);
@@ -35,6 +39,8 @@ static void OnPlayerScoreToCredits(IPlayerStorageItem* player, int score, int& a
 }
 static void OnMenuExcuted(IEccoBaseExcutor* menu, IPlayerStorageItem* player) {
     edict_t* plr = player->GetPlayer();
+    if (!plr)
+        return;
     AS_CALL(MenuExcuted, menu, plr->pvPrivateData);
 }
 
