@@ -41,18 +41,18 @@ public:
 
 class CEccoFunc{
 public:
-	IPlayerStorageItem* GetPlayerStorage(int index){
+	IASPlayerStorageItem* GetPlayerStorage(int index){
 		edict_t* pent = INDEXENT(index);
 		if (FNullEnt(pent))
 			return nullptr;
-		return g_pEccoFuncs->GetPlayerItem(index);
+		return reinterpret_cast<IASPlayerStorageItem*>(g_pEccoFuncs->GetPlayerItem(index));
 	}
-	IPlayerStorageItem* GetPlayerStoragePrivate(void* player) {
+	IASPlayerStorageItem* GetPlayerStoragePrivate(void* player) {
 		edict_t* plr = g_pEccoFuncs->PrivateToEdict(player);
 		if (FNullEnt(plr))
 			return nullptr;
 		int index = ENTINDEX(plr);
-		return g_pEccoFuncs->GetPlayerItem(index);
+		return reinterpret_cast<IASPlayerStorageItem*>(g_pEccoFuncs->GetPlayerItem(index));
 	}
 	IASEccoBaseExcutor* GetMenuByIndex(int index) {
 		auto menu = g_pEccoFuncs->GetMenuExcutor(index);
