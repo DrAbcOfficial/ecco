@@ -61,7 +61,6 @@ private:
 
 	bool NoneViewer();
 	void FlipVIewer();
-	int m_iDuration = 255; // how long the menu shuold be displayed for
 	std::array<viewer_prop_t, MAX_PLAYERS> m_aryViewers{}; // who can see the menu
 	std::array<CBaseEccoExecutor*, MAX_MENU_OPTIONS> m_aryOption; //ONLY 10 options
 	size_t m_iSize = 0; // current size of the menu, used to determine if the menu is full

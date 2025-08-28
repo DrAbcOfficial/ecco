@@ -57,7 +57,9 @@ bool CEccoTextMenuExecutor::IsPlayerViewing(edict_t* ent){
 void CEccoTextMenuExecutor::SetPlayerViewing(edict_t* ent, bool view){
 	int index = ENTINDEX(ent) - 1;
 	m_aryViewers[index].Viewing = view;
-	m_aryViewers[index].StopVIewTime = view ? g_engfuncs.pfnTime() + GetEccoConfig()->BuyMenu.KeepOpenTime : 0.0f;
+	float keep_time = GetEccoConfig()->BuyMenu.KeepOpenTime;
+	float game_time = g_engfuncs.pfnTime();
+	m_aryViewers[index].StopVIewTime = view ? (game_time + keep_time) : 0.0f;
 	g_aryTextMenus[index] = view ? this : nullptr;
 }
 
@@ -162,8 +164,10 @@ void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
 		MESSAGE_BEGIN(MSG_ONE, g_msgShowMenu, NULL, pPlayer);
 	else
 		MESSAGE_BEGIN(MSG_ALL, g_msgShowMenu);
+
+	byte duration = static_cast<byte>(GetEccoConfig()->BuyMenu.KeepOpenTime * 10);
 	WRITE_SHORT(validslots.to_ulong());
-	WRITE_CHAR(m_iDuration);
+	WRITE_CHAR(duration);
 	WRITE_BYTE(FALSE); // "need more" (?)
 	WRITE_STRING(buffer.c_str());
 	MESSAGE_END();
@@ -182,7 +186,7 @@ void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
 
 void CEccoTextMenuExecutor::viewer_prop_s::SetViewing(bool view){
 	Viewing = view;
-	StopVIewTime = view ? g_engfuncs.pfnTime() + GetEccoConfig()->BuyMenu.KeepOpenTime : 0.0f;
+	StopVIewTime = view ? (g_engfuncs.pfnTime() + GetEccoConfig()->BuyMenu.KeepOpenTime) : 0.0f;
 }
 
 bool CEccoTextMenuExecutor::viewer_prop_s::IsViewing() const{

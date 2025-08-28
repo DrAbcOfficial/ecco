@@ -53,6 +53,7 @@ bool LoadEccoConfig(){
 		}
 		GET_VALUE_OR(BuyMenu, AllowDeathPlayerBuy, true);
 		GET_VALUE_OR(BuyMenu, ReOpenMenuAfterBuy, true);
+		GET_VALUE_OR(BuyMenu, KeepOpenTime, 15.0f);
 
 		GET_ROOT_VALUE_OR(ScoreToMoneyMultiplier, 1.0f);
 		GET_ROOT_VALUE_OR(StorePlayerScore, 1);
