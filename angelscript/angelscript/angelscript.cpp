@@ -61,10 +61,6 @@ public:
 };
 CEccoFunc g_EccoFunc;
 
-static IPlayerStorageItem* SC_SERVER_DECL CASPlayerFuncs_GetEccoStorage(void* pthis, SC_SERVER_DUMMYARG void* player) {
-	
-}
-
 void RegisterAngelScriptMethods(){
 	ASEXT_RegisterDocInitCallback([](CASDocumentation* pASDoc) {
 		asSFuncPtr reg;
