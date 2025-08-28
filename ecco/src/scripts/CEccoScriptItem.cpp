@@ -30,7 +30,7 @@ CEccoScriptItem::CEccoScriptItem(std::string path){
 					else if (ext == ".mdl")
 						path = "models" / path;
 					else
-						LOG_CONSOLE(PLID, "Unkown extension: %s, but add it to precache list and try to precache.", ext);
+						LOG_CONSOLE(PLID, "Unknown extension: %s, but add it to precache list and try to precache.", ext);
 					m_aryPrecaches.push_back(path.string());
 				}
 			}
