@@ -12,9 +12,13 @@ public:
 	int m_iCost;
 	std::string m_szScripts;
 
-	std::vector<std::string> m_aryPrecaches;
-	std::vector<std::string> m_arySoundPrecaches;
-	std::vector<std::string> m_aryOtherPrecaches;
-
 	CEccoScriptItem(std::string path);
+	~CEccoScriptItem();
+
+	void Precache();
+
+private:
+	std::vector<char*> m_aryPrecaches{};
+	std::vector<char*> m_arySoundPrecaches{};
+	std::vector<char*> m_aryOtherPrecaches{};
 };

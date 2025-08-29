@@ -165,7 +165,7 @@ void CEccoTextMenuExecutor::Excute(edict_t* pPlayer, int selection) {
 	else
 		MESSAGE_BEGIN(MSG_ALL, g_msgShowMenu);
 
-	byte duration = static_cast<byte>(GetEccoConfig()->BuyMenu.KeepOpenTime * 10);
+	char duration = static_cast<char>(GetEccoConfig()->BuyMenu.KeepOpenTime);
 	WRITE_SHORT(validslots.to_ulong());
 	WRITE_CHAR(duration);
 	WRITE_BYTE(FALSE); // "need more" (?)

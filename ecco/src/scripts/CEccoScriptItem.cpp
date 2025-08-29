@@ -31,7 +31,10 @@ CEccoScriptItem::CEccoScriptItem(std::string path){
 						path = "models" / path;
 					else
 						LOG_CONSOLE(PLID, "Unknown extension: %s, but add it to precache list and try to precache.", ext);
-					m_aryPrecaches.push_back(path.string());
+					auto str = path.string();
+					char* p = new char[str.size() + 1];
+					strcpy(p, str.c_str());
+					m_aryPrecaches.push_back(p);
 				}
 			}
 		}
@@ -39,19 +42,52 @@ CEccoScriptItem::CEccoScriptItem(std::string path){
 		auto sound_precache = toml["Ecco"]["sound_precaches"].as_array();
 		if (sound_precache) {
 			for (auto iter = sound_precache->begin(); iter != sound_precache->end(); iter++) {
-				m_arySoundPrecaches.push_back((*iter).value_or(""));
+				std::string str = (*iter).value_or("");
+				char* p = new char[str.size() + 1];
+				strcpy(p, str.c_str());
+				m_arySoundPrecaches.push_back(p);
 			}
 		}
 
 		auto other_precache = toml["Ecco"]["other_precaches"].as_array();
 		if (other_precache) {
 			for (auto iter = other_precache->begin(); iter != other_precache->end(); iter++) {
-				m_aryOtherPrecaches.push_back((*iter).value_or(""));
+				std::string str = (*iter).value_or("");
+				char* p = new char[str.size() + 1];
+				strcpy(p, str.c_str());
+				m_aryOtherPrecaches.push_back(p);
 			}
 		}
 	}
 	catch (const toml::parse_error& err) {
 		auto& src = err.source();
 		LOG_CONSOLE(PLID, "Pharse file %s \n\tat line %d, column %d\n\twith error: %s", src.path.get()->c_str(), src.begin.line, src.begin.column, err.what());
+	}
+}
+
+CEccoScriptItem::~CEccoScriptItem(){
+	for (auto p : m_aryPrecaches) {
+		delete[] p;
+	}
+	m_aryPrecaches.clear();
+	for (auto p : m_arySoundPrecaches) {
+		delete[] p;
+	}
+	m_arySoundPrecaches.clear();
+	for (auto p : m_aryOtherPrecaches) {
+		delete[] p;
+	}
+	m_aryOtherPrecaches.clear();
+}
+
+void CEccoScriptItem::Precache(){
+	for (auto p : m_aryPrecaches) {
+		PRECACHE_MODEL(p);
+	}
+	for (auto p : m_arySoundPrecaches) {
+		PRECACHE_SOUND(p);
+	}
+	for (auto p : m_aryOtherPrecaches) {
+		PRECACHE_GENERIC(p);
 	}
 }
