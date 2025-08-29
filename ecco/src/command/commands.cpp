@@ -56,7 +56,7 @@ static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, { CEcco
 });
 static CEccoClientCommand reload("reload", "reload all script", ADMIN_LEVEL::ADMIN, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
     pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_scripts_reloading");
-    ReseAllMenus();
+    ResetAllMenus();
 	ResetEccoScriptItems();
     ResetTranslations();
     LoadTranslations();

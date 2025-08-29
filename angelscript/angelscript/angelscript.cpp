@@ -87,7 +87,7 @@ void RegisterAngelScriptMethods(){
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Ecco storage", "CEccoFuncs", "CEccoPlayerStorage@ GetEccoStorage(int player_index)", CEccoFunc, GetPlayerStorage, asCALL_THISCALL);
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Ecco menu", "CEccoFuncs", "CEccoMenuExcutor@ GetMenuByIndex(int menu_index)", CEccoFunc, GetMenuByIndex, asCALL_THISCALL);
 
-		ASEXT_RegisterGlobalProperty(pASDoc, "Ecco functions", "CEccoFuncs@ g_EccoFuncs", &g_EccoFunc);
+		ASEXT_RegisterGlobalProperty(pASDoc, "Ecco functions", "CEccoFuncs g_EccoFuncs", &g_EccoFunc);
 	});
 }
 

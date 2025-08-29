@@ -58,8 +58,6 @@ static void GameInit() {
 static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	SET_META_RESULT(MRES_HANDLED);
 	ResetTranslations();
-	LoadTranslations();
-
 	ResetHud();
 	ResetEccoScriptItems();
 	CleanPlayerLastCredits(nullptr);
@@ -70,9 +68,13 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 		return;
 
 	LoadEccoScriptItems();
-	ReseAllMenus();
+	LoadTranslations();
+	ResetAllMenus();
 	ParseRootMenu();
 	PrecacheAllScriptItems();
+
+	std::string icon = "sprites/" +  GetEccoConfig()->Path.MoneyIcon;
+	PRECACHE_MODEL(const_cast<char*>(icon.c_str()));
 }
 
 bool g_bIsSeriesMap = false;
