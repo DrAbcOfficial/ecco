@@ -157,6 +157,17 @@ public:
 	/// </summary>
 	/// <param name="name">name</param>
 	virtual void UnsetValue(const char* name) = 0;
+	/// <summary>
+	/// Get a global variable value
+	/// </summary>
+	/// <param name="name">name</param>
+	/// <returns>value</returns>
+	virtual Object* GetValue(const char* name) = 0;
+	virtual int GetValueInt(Object* value) = 0;
+	virtual const char* GetValueString(Object* value, size_t* len) = 0;
+	virtual double GetValueDouble(Object* value) = 0;
+	virtual float GetValueFloat(Object* value) = 0;
+	virtual bool GetValueBoolean(Object* value) = 0;
 
 	/// <summary>
 	/// Reset whole enviroment

@@ -29,6 +29,10 @@ IEccoScriptSystem::Result EvalScriptContent(edict_t* caller, CEccoScriptExecutor
 	auto ret = g_ScriptSystem->Eval(pexcuter->m_szScript.c_str());
 	g_ScriptSystem->UnsetValue("caller_index");
 	g_ScriptSystem->UnsetValue("item_index");
+	if (ret == IEccoScriptSystem::Result::OK) {
+		auto obj = g_ScriptSystem->GetValue("result");
+		ret = static_cast<IEccoScriptSystem::Result>(g_ScriptSystem->GetValueInt(obj));
+	}
 	return ret;
 }
 

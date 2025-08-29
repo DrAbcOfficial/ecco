@@ -299,6 +299,45 @@ void CEccoScriptSystem::SetValue(const char* name, Object* value){
 void CEccoScriptSystem::UnsetValue(const char* name){
 	Tcl_UnsetVar2(s_pTclinterp, name, nullptr, TCL_GLOBAL_ONLY);
 }
+IEccoScriptSystem::Object* CEccoScriptSystem::GetValue(const char* name){
+	return Tcl_GetVar2Ex(s_pTclinterp, name, nullptr, TCL_GLOBAL_ONLY);
+}
+int CEccoScriptSystem::GetValueInt(Object* value){
+	if (value == nullptr)
+		return 0;
+	int intValue = 0;
+	Tcl_GetIntFromObj(s_pTclinterp, static_cast<Tcl_Obj*>(value), &intValue);
+	return intValue;
+}
+const char* CEccoScriptSystem::GetValueString(Object* value, size_t* len){
+	if (value != nullptr)
+		return Tcl_GetStringFromObj(static_cast<Tcl_Obj*>(value), reinterpret_cast<int*>(len));
+	return nullptr;
+}
+double CEccoScriptSystem::GetValueDouble(Object* value){
+	if (value != nullptr) {
+		double doubleValue = 0.0;
+		Tcl_GetDoubleFromObj(s_pTclinterp, static_cast<Tcl_Obj*>(value), &doubleValue);
+		return doubleValue;
+	}
+	return 0.0;
+}
+float CEccoScriptSystem::GetValueFloat(Object* value){
+	if (value != nullptr) {
+		double doubleValue = 0.0;
+		Tcl_GetDoubleFromObj(s_pTclinterp, static_cast<Tcl_Obj*>(value), &doubleValue);
+		return static_cast<float>(doubleValue);
+	}
+	return 0.0f;
+}
+bool CEccoScriptSystem::GetValueBoolean(Object* value){
+	if (value != nullptr) {
+		int boolValue = 0;
+		Tcl_GetBooleanFromObj(s_pTclinterp, static_cast<Tcl_Obj*>(value), &boolValue);
+		return boolValue != 0;
+	}
+	return false;
+}
 void* CEccoScriptSystem::GetScriptEngine() const{
 	return s_pTclinterp;
 }

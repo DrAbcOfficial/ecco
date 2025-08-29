@@ -25,6 +25,12 @@ public:
 	virtual void SetObjectResult(Object* object);
 	virtual void SetValue(const char* name, Object* value);
 	virtual void UnsetValue(const char* name);
+	virtual Object* GetValue(const char* name);
+	virtual int GetValueInt(Object* value);
+	virtual const char* GetValueString(Object* value, size_t* len);
+	virtual double GetValueDouble(Object* value);
+	virtual float GetValueFloat(Object* value);
+	virtual bool GetValueBoolean(Object* value);
 	virtual void ResetEnviroment();
 	virtual void* GetScriptEngine() const;
 };
