@@ -17,35 +17,36 @@
 
 using namespace EccoMetaUtility;
 
-CPlayerStorageItem::CPlayerStorageItem(edict_t* pent){
-	if (pent) {
-		std::string id = GetPlayerSteamId(pent);
-		strcpy(m_saveData.SteamId, id.c_str());
-
-		std::filesystem::path storage_file(GetGameDir());
-		storage_file.append("addons/ecco/");
-		storage_file.append(GetEccoConfig()->Path.Data);
-		if(!std::filesystem::exists(storage_file))
-			std::filesystem::create_directories(storage_file);
-		storage_file.append(m_saveData.SteamId);
-		m_szStoragePath = storage_file.string().c_str();
-
-		auto startScore = GetEccoConfig()->PlayerStartScore;
-		if (std::filesystem::exists(m_szStoragePath)) {
-			ReadData();
-			extern bool g_bIsSeriesMap;
-			if (TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END) && !g_bIsSeriesMap) 
-				SetCredits(startScore);
-			else if(TestFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT))
-				SetCredits(startScore);
-		}
-		else {
-			m_saveData.Credits = startScore;
-			SaveData();
-		}
+CPlayerStorageItem::CPlayerStorageItem(edict_t* pent)
+	: m_iScore(0), m_pPlayer(pent)
+{
+	if (!pent) 
+		return;
+	const std::string steamId = GetPlayerSteamId(pent);
+	strcpy(m_saveData.SteamId, steamId.c_str());
+	std::filesystem::path storagePath(GetGameDir());
+	storagePath /= "addons/ecco/";
+	storagePath /= GetEccoConfig()->Path.Data;
+	if (!std::filesystem::exists(storagePath)) {
+		std::filesystem::create_directories(storagePath);
 	}
-	m_iScore = 0;
-	m_pPlayer = pent;
+	storagePath /= m_saveData.SteamId;
+	m_szStoragePath = storagePath.string().c_str();
+	const auto startScore = GetEccoConfig()->PlayerStartScore;
+	const bool fileExists = std::filesystem::exists(m_szStoragePath);
+	if (fileExists) {
+		ReadData();
+		extern bool g_bIsSeriesMap;
+		const bool shouldResetScore =
+			(TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END) && !g_bIsSeriesMap) ||
+			TestFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT);
+		if (shouldResetScore)
+			SetCredits(startScore);
+	}
+	else {
+		m_saveData.Credits = startScore;
+		SaveData();
+	}
 }
 
 int CPlayerStorageItem::GetCredits() const{
@@ -108,23 +109,21 @@ void CPlayerStorageItem::CleanLastCredits(){
 	m_iScore = 0;
 }
 
-void CPlayerStorageItem::FlagSelf(){
+void CPlayerStorageItem::FlagSelf() {
 	extern bool g_bIsSeriesMap;
-	int save_set = GetEccoConfig()->StorePlayerScore;
-	if (save_set < 2) {
-		if (save_set <= 0)
-			SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, true);
-		else if (!g_bIsSeriesMap)
-			SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, true);
-		else {
-			SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, false);
-			SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, false);
+	const int saveSet = GetEccoConfig()->StorePlayerScore;
+	bool deleteOnDisconnect = false;
+	bool deleteOnSeriesEnd = false;
+	if (saveSet < 2) {
+		if (saveSet <= 0) {
+			deleteOnDisconnect = true;
+		}
+		else if (!g_bIsSeriesMap) {
+			deleteOnSeriesEnd = true;
 		}
 	}
-	else {
-		SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, false);
-		SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, false);
-	}
+	SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, deleteOnDisconnect);
+	SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, deleteOnSeriesEnd);
 }
 
 const char* CPlayerStorageItem::GetLang(){

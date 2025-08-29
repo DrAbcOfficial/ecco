@@ -1,8 +1,6 @@
-// Shit, wootguy didnt finish TextMenu
-// Have to write by myself :(
-
 #pragma once
 #include <array>
+#include <string>
 
 #include <extdll.h>
 #include <meta_api.h>
@@ -10,59 +8,47 @@
 #include "menu/executor/CBaseEccoExecutor.h"
 
 constexpr int MAX_MENU_OPTIONS = 10;
-constexpr int EXITOPTION_INDEX = 10;
 constexpr int MAX_PLAYERS = 32;
-
 constexpr int MAX_ITEMS_PER_PAGE = 7;
 constexpr int MAX_ITEM_NO_PAGE = 9;
 
-
-// this must be called as part of a MessageBegin hook for text menus to know when they are active
 extern void TextMenuMessageBeginHook(int msg_dest, int msg_type, const float* pOrigin, edict_t* ed);
-
-// this must be called as part of a DLL ClientCommand hook for option selections to work
 extern bool TextMenuClientCommandHook(edict_t* pEntity);
 
 class CEccoTextMenuExecutor : public CBaseEccoExecutor {
 public:
-	void AddItem(CBaseEccoExecutor* pItem);
+    void AddItem(CBaseEccoExecutor* pItem);
+    void Excute(edict_t* pPlayer, int selection) override;
+    void Close(edict_t* pent);
+    std::string GetDisplayTitle(edict_t* pPlayer) const;
+    bool IsPlayerViewing(edict_t* ent);
+    void SetPlayerViewing(edict_t* ent, bool view);
+    size_t GetSize() const { return m_iSize; }
+    CBaseEccoExecutor* GetOption(size_t index) { return m_aryOption[index]; }
 
-	// set player to NULL to send to all players.
-	virtual void Excute(edict_t* pPlayer, int selection) override;
-	// set player to NULL to send to all players.
-	void Close(edict_t* pent);
+    std::string m_szTitle;
+    CBaseEccoExecutor* m_pParent = nullptr;
 
-	std::string GetDisplayTitle(edict_t* pPlayer) const;
-
-	bool IsPlayerViewing(edict_t* ent);
-	void SetPlayerViewing(edict_t* ent, bool view);
-
-	// don't call directly. This is triggered by global hook functions
-	void HandleMenuMessage(int msg_dest, edict_t* ed);
-	// don't call directly. This is triggered by global hook functions
-	void HandleMenuselectCmd(edict_t* pEntity, int selection);
-	
-	size_t GetSize() const;
-
-	CBaseEccoExecutor* m_pParent = nullptr; // parent menu, if any
-
-	CBaseEccoExecutor* GetOption(size_t index);
-	std::string m_szTitle;
 private:
-	using viewer_prop_t = struct viewer_prop_s
-	{
-		bool Viewing;
-		float StopVIewTime;
+    friend void TextMenuMessageBeginHook(int, int, const float*, edict_t*);
+    friend bool TextMenuClientCommandHook(edict_t*);
 
-		void SetViewing(bool view);
-		bool IsViewing() const;
-		void Flip();
-	};
+    struct viewer_prop_s {
+        bool viewing = false;
+        float stopViewTime = 0.0f;
 
-	bool NoneViewer();
-	void FlipVIewer();
-	std::array<viewer_prop_t, MAX_PLAYERS> m_aryViewers{}; // who can see the menu
-	std::array<CBaseEccoExecutor*, MAX_MENU_OPTIONS> m_aryOption; //ONLY 10 options
-	size_t m_iSize = 0; // current size of the menu, used to determine if the menu is full
+        void SetViewing(bool view);
+        bool IsViewing() const;
+        void Flip() { viewing = !viewing; SetViewing(viewing); }
+    };
+
+    void HandleMenuMessage(int msg_dest, edict_t* ed);
+    void HandleMenuselectCmd(edict_t* pEntity, int selection);
+
+
+    bool NoneViewer() const;
+
+    std::array<viewer_prop_s, MAX_PLAYERS> m_aryViewers{};
+    std::array<CBaseEccoExecutor*, MAX_MENU_OPTIONS> m_aryOption{};
+    size_t m_iSize = 0;
 };
-

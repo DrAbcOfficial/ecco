@@ -36,10 +36,14 @@ void StorageClientPutinServerHandle(edict_t* pent){
 	if (!pent)
 		return;
 	std::string steamid = GetPlayerSteamId(pent);
+	CPlayerStorageItem* pItem;
 	if(s_mapPlayerStorage.find(steamid) == s_mapPlayerStorage.end()){
-		CPlayerStorageItem* pItem = new CPlayerStorageItem(pent);
+		pItem = new CPlayerStorageItem(pent);
 		s_mapPlayerStorage[steamid] = pItem;
 	}
+	else
+		pItem = s_mapPlayerStorage[steamid];
+	pItem->FlagSelf();
 }
 
 void StorageClientDisconnectHandle(edict_t* pent){
