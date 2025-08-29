@@ -28,6 +28,7 @@ public:
 	std::string args_str;
 	std::string symbol;
 	IEccoScriptSystem::fnFunc callback;
+	void* user_args;
 };
 
 static std::map<const char*, CScriptCmd*> s_mapCommands{};
@@ -69,7 +70,7 @@ CEccoScriptSystem::CEccoScriptSystem(){
 	}
 }
 
-void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback) {
+void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback, void* user_args) {
 	CScriptCmd* cmd = new CScriptCmd();
 	cmd->interface = this;
 	cmd->name = name;
@@ -197,13 +198,21 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 			}
 		}
 		IEccoScriptSystem::ScriptContent* const* argv2 = args.data();
-		auto ret = cmd->callback(cmd->interface, args.size(), argv2);
+		auto ret = cmd->callback(cmd->interface, args.size(), argv2, cmd->user_args);
 		for (auto arg : args) {
 			delete arg;
 		}
 		return (int)ret;
 	}, cmd, nullptr);
 	s_mapCommands.emplace(name, cmd);
+}
+void CEccoScriptSystem::RemoveCommand(const char* name){
+	auto it = s_mapCommands.find(name);
+	if (it != s_mapCommands.end()) {
+		Tcl_DeleteCommand(s_pTclinterp, name);
+		delete it->second;
+		s_mapCommands.erase(it);
+	}
 }
 CEccoScriptSystem::Result CEccoScriptSystem::Eval(const char* content){
 	auto result = Tcl_Eval(s_pTclinterp, content);

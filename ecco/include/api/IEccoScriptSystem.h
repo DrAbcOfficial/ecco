@@ -33,14 +33,19 @@ public:
 		Break,
 		Continue
 	};
-	typedef Result(*fnFunc)(IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv);
+	typedef Result(*fnFunc)(IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv, void* user_args);
 	
 	/// <summary>
 	/// Create a command in the script engine
 	/// </summary>
 	/// <param name="name">command name</param>
 	/// <param name="callback">callback</param>
-	virtual void CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback) = 0;
+	virtual void CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback, void* user_args = nullptr) = 0;
+	/// <summary>
+	/// Remove a command from the script engine
+	/// </summary>
+	/// <param name="name">command name</param>
+	virtual void RemoveCommand(const char* name) = 0;
 	/// <summary>
 	/// Eval a script content
 	/// </summary>
