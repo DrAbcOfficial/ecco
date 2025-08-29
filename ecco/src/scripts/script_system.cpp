@@ -7,7 +7,6 @@
 #include "script_system.h"
 #include "CEccoScriptSystem.h"
 
-#include <meta_api.h>
 #include "meta_utility.h"
 
 #undef min

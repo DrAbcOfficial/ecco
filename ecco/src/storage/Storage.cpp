@@ -2,7 +2,6 @@
 #include <algorithm>
 
 #include <extdll.h>
-#include <meta_api.h>
 
 #include "meta_utility.h"
 

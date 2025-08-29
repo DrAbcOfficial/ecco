@@ -13,7 +13,6 @@
 #include "CEccoScriptSystem.h"
 
 #include <extdll.h>
-#include <meta_api.h>
 #include "meta_utility.h"
 
 static Tcl_Interp* s_pTclinterp = nullptr;

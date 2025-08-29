@@ -3,13 +3,11 @@
 #include <algorithm>
 
 #include "CPlayerStorageItem.h"
-
-#include <meta_api.h>
-
-#include "meta_utility.h"
 #include "config/CConfig.h"
 #include "plugin/plugin_system.h"
 #include "lang/lang.h"
+
+#include "meta_utility.h"
 
 #undef read
 #undef close

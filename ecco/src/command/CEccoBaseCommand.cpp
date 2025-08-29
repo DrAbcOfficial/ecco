@@ -2,7 +2,6 @@
 
 #include "lang/lang.h"
 
-#include <meta_api.h>
 #include "meta_utility.h"
 using namespace EccoMetaUtility;
 

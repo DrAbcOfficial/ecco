@@ -30,7 +30,7 @@ static CEccoClientCommand buy("buy", "open buy menu", ADMIN_LEVEL::NONE, { CEcco
     if (args.size() > 0) {
         CEccoTextMenuExecutor* pExecutor = g_pRootMenuExecutor;
         for (auto& s : args) {
-            int input = StringToInterger(s) - 1;
+            int input = StringToInteger(s) - 1;
             size_t chose = static_cast<size_t>(input < 0 ? 9 : input);
             if (chose >= MAX_MENU_OPTIONS)
                 return false;
@@ -107,7 +107,7 @@ static CEccoClientCommand help("help", "list all commands", ADMIN_LEVEL::NONE, [
 #pragma region Server
 static CEccoServerCommand setadmin("set_admin", "set a player as admin", { CEccoCmdArgSet("SteamId64"), CEccoCmdArgSet("AdminLevel")}, [](CEccoServerCommand* pThis, const std::vector<std::string>& args)->bool {
 
-    short result = StringToInterger(args[1]);
+    short result = StringToInteger(args[1]);
     ADMIN_LEVEL level = result < 0 ? ADMIN_LEVEL::NONE : (result > (short)ADMIN_LEVEL::OWNER ? ADMIN_LEVEL::OWNER : static_cast<ADMIN_LEVEL>(result));
     const char* id = args[0].c_str();
 	edict_t* pent = GetPlayerBySteamId(id);

@@ -1,9 +1,7 @@
 #include <filesystem>
 #include <tomlplusplus/toml.hpp>
 
-
 #include <extdll.h>
-#include <meta_api.h>
 #include "meta_utility.h"
 
 #include "scripts/CEccoScriptItem.h"

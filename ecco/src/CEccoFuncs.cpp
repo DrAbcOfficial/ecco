@@ -6,7 +6,6 @@
 
 #include "CEccoFuncs.h"
 
-#include <meta_api.h>
 #include "meta_utility.h"
 
 const char* CEccoFuncs::GetPlayerSteamId(edict_t* pent){

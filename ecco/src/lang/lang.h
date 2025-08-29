@@ -3,7 +3,6 @@
 #include <vector>
 
 #include <extdll.h>
-#include <meta_api.h>
 #include "meta_utility.h"
 
 extern std::string GetTranslation(edict_t* player, std::string key);

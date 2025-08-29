@@ -1,6 +1,5 @@
 #include "CHudNumber.h"
 
-#include <meta_api.h>
 #include "meta_utility.h"
 
 extern int g_msgNumDisplay;

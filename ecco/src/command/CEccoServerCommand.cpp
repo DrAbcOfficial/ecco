@@ -1,7 +1,6 @@
 #include <unordered_map>
 
 #include "CEccoServerCommand.h"
-#include <meta_api.h>
 #include "meta_utility.h"
 
 std::unordered_map<std::string, CEccoServerCommand*> s_mapRegistedServerCmdMap;

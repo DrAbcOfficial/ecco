@@ -7,7 +7,6 @@
 #include "lang/lang.h"
 #include "config/CConfig.h"
 
-#include <meta_api.h>
 #include "meta_utility.h"
 using namespace EccoMetaUtility;
 

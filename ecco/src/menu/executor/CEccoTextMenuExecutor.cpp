@@ -1,10 +1,10 @@
 #include <bitset>
-#include <cassert>
 
-#include "meta_utility.h"
 #include "lang/lang.h"
 #include "CEccoTextMenuExecutor.h"
 #include "config/CConfig.h"
+
+#include "meta_utility.h"
 
 using namespace EccoMetaUtility;
 
