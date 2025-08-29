@@ -15,7 +15,7 @@ namespace EccoMetaUtility{
     }
 
     std::string GetPlayerSteamId(edict_t* pent){
-        if (!IsValidPlayer(pent))
+        if (FNullEnt(pent))
             return "";
         const char* infobuffer = GET_INFOKEYBUFFER(pent);
         return infobuffer ? INFOKEY_VALUE(const_cast<char*>(infobuffer), const_cast<char*>("*sid")) : "";
