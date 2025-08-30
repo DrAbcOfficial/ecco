@@ -176,7 +176,6 @@ public:
 				pArgList->Push(arg);
 			}
 			auto as_func = reinterpret_cast<asIScriptFunction*>(user_args);
-			auto declation = as_func->GetDeclaration();
 			ctx->Prepare(as_func);
 			ctx->SetArgObject(0, item);
 			ctx->SetArgObject(1, menu);
