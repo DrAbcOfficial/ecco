@@ -2,10 +2,10 @@
 #include "api/IEccoFuncs.h"
 class CEccoFuncs : public IEccoFuncs{
 public:
-	virtual const char* GetPlayerSteamId(edict_t* pent);
+	virtual void GetPlayerSteamId(edict_t* pent, char* dest);
 	virtual edict_t* GetPlayerBySteamId(const char* steamid);
 	virtual bool IsValidPlayer(edict_t* pentPlayer);
-	virtual const char* GetGameDir();
+	virtual void GetGameDir(char* dest);
 	virtual void FakeClientCommand(edict_t* pent, const char* cmd);
 	virtual edict_t* PrivateToEdict(void* pPrivate);
 
@@ -17,5 +17,7 @@ public:
 
 	virtual void AddHook(Hook_Type type, void* func);
 	virtual void RemoveHook(Hook_Type type, void* func);
+
+	virtual void GetTranslation(edict_t* pent, const char* code, char* dest);
 };
 

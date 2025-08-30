@@ -6,10 +6,10 @@
 
 class IEccoFuncs {
 public:
-	virtual const char* GetPlayerSteamId(edict_t* pent) = 0;
+	virtual void GetPlayerSteamId(edict_t* pent, char* dest) = 0;
 	virtual edict_t* GetPlayerBySteamId(const char* steamid) = 0;
 	virtual bool IsValidPlayer(edict_t* pentPlayer) = 0;
-	virtual const char* GetGameDir() = 0;
+	virtual void GetGameDir(char* dest) = 0;
 	virtual void FakeClientCommand(edict_t* pent, const char* cmd) = 0;
 	virtual edict_t* PrivateToEdict(void* pPrivate) = 0;
 
@@ -21,4 +21,6 @@ public:
 
 	virtual void AddHook(Hook_Type type, void* func) = 0;
 	virtual void RemoveHook(Hook_Type type, void* func) = 0;
+
+	virtual void GetTranslation(edict_t* pent, const char* code, char* dest) = 0;
 };

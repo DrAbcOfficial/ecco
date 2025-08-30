@@ -46,6 +46,7 @@ public:
 	}
 };
 
+#pragma region TCL
 class CTCLArgItem {
 private:
 public:
@@ -59,7 +60,7 @@ public:
 	};
 	int GetType() const { return type; }
 	int GetInt() const { return type == static_cast<int>(IEccoScriptSystem::ScriptArgType::Int) ? intValue : 0; }
-	void GetString(CString* str){
+	void GetString(CString* str) {
 		if (type == static_cast<int>(IEccoScriptSystem::ScriptArgType::String))
 			str->assign(strValue, strlen(strValue));
 	}
@@ -88,6 +89,9 @@ public:
 private:
 	std::vector<CTCLArgItem*> m_aryArgs;
 };
+
+#pragma endregion
+
 
 class CEccoFunc{
 private:
@@ -197,6 +201,16 @@ public:
 			}
 		}
 	}
+
+	void GetTranslation(void* pPlayer, CString* code, CString* dest) {
+		edict_t* pent = g_pEccoFuncs->PrivateToEdict(pPlayer);
+		if (FNullEnt(pent))
+			return;
+		constexpr size_t TEMP_STR_LEN = 512;
+		char temp[TEMP_STR_LEN];
+		g_pEccoFuncs->GetTranslation(pent, code->c_str(), temp);
+		dest->assign(temp, TEMP_STR_LEN);
+	}
 };
 CEccoFunc g_pASEccoFunc;
 void CleanASTCLFuncs() {
@@ -254,6 +268,7 @@ void RegisterAngelScriptMethods(){
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Get Ecco menu", "CEccoFuncs", "CEccoMenuExcutor@ GetMenuByIndex(int menu_index)", CEccoFunc, GetMenuByIndex, asCALL_THISCALL);
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Register Ecco script function", "CEccoFuncs", "void RegisterTCLFunction(string&in name, string&in args, string&in description, fnEccoFuncCallback@ func)", CEccoFunc, RegisterEccoScriptFunction, asCALL_THISCALL);
 		REGISTE_OBJMETHODEX(reg, pASDoc, "Unregister Ecco script function", "CEccoFuncs", "void UnregisteTCLFunction(string&in name)", CEccoFunc, UnregisterEccoScriptFunction, asCALL_THISCALL);
+		REGISTE_OBJMETHODEX(reg, pASDoc, "Get translation", "CEccoFuncs", "void GetTranslation(CBasePlayer@ pPlayer, string&in code, string&out translation)", CEccoFunc, GetTranslation, asCALL_THISCALL);
 
 		ASEXT_RegisterGlobalProperty(pASDoc, "Ecco functions", "CEccoFuncs g_EccoFuncs", &g_pASEccoFunc);
 	});

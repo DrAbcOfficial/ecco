@@ -3,15 +3,15 @@
 
 #include "storage/Storage.h"
 #include "plugin/plugin_system.h"
+#include "lang/lang.h"
 
 #include "CEccoFuncs.h"
 
 #include "meta_utility.h"
 
-const char* CEccoFuncs::GetPlayerSteamId(edict_t* pent){
-	static char steamid[64];
-	strcpy(steamid, EccoMetaUtility::GetPlayerSteamId(pent).c_str());
-	return steamid;
+void CEccoFuncs::GetPlayerSteamId(edict_t* pent, char* dest){
+	const char* temp = EccoMetaUtility::GetPlayerSteamId(pent).c_str();
+	strcpy(dest, temp);
 }
 
 edict_t* CEccoFuncs::GetPlayerBySteamId(const char* steamid){
@@ -22,8 +22,9 @@ bool CEccoFuncs::IsValidPlayer(edict_t* pentPlayer){
 	return EccoMetaUtility::IsValidPlayer(pentPlayer);
 }
 
-const char* CEccoFuncs::GetGameDir(){
-	return EccoMetaUtility::GetGameDir().data();
+void CEccoFuncs::GetGameDir(char* dest){
+	const char* temp = EccoMetaUtility::GetGameDir().data();
+	strcpy(dest, temp);
 }
 
 void CEccoFuncs::FakeClientCommand(edict_t* pent, const char* cmd){
@@ -57,6 +58,11 @@ void CEccoFuncs::AddHook(Hook_Type type, void* func){
 
 void CEccoFuncs::RemoveHook(Hook_Type type, void* func){
 	::RemoveHook(type, func);
+}
+
+void CEccoFuncs::GetTranslation(edict_t* pent, const char* code, char* dest){
+	const char* temp = ::GetTranslation(pent, std::string(code)).c_str();
+	strcpy(dest, temp);
 }
 
 CEccoFuncs g_pEccoFuncs;
