@@ -204,7 +204,10 @@ class CEccoPlugin : public IEccoPlugin {
 		g_pEccoFuncs->AddHook(Hook_Type::ON_PLAYER_SCORE_TO_CREDITS, (void*)&OnPlayerScoreToCredits);
 		g_pEccoFuncs->AddHook(Hook_Type::ON_MENU_EXCUTE, (void*)&OnMenuExcuted);
     };
-	virtual void Shutdown() {};
+	virtual void Shutdown() {
+        extern void CleanASTCLFuncs();
+        CleanASTCLFuncs();
+    };
 };
 static CEccoPlugin s_EccoPluginInstance;
 

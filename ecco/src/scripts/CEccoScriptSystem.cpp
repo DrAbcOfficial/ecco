@@ -77,6 +77,7 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 	cmd->description = description;
 	cmd->symbol = symbol;
 	cmd->callback = callback;
+	cmd->user_args = user_args;
 	std::vector<std::string> split{};
 	std::stringstream ss(symbol);
 	std::string item;
