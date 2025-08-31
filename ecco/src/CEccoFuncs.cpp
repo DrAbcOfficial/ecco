@@ -10,8 +10,7 @@
 #include "meta_utility.h"
 
 void CEccoFuncs::GetPlayerSteamId(edict_t* pent, char* dest){
-	const char* temp = EccoMetaUtility::GetPlayerSteamId(pent).c_str();
-	strcpy(dest, temp);
+	strcpy(dest, EccoMetaUtility::GetPlayerSteamId(pent).c_str());
 }
 
 edict_t* CEccoFuncs::GetPlayerBySteamId(const char* steamid){
@@ -61,8 +60,7 @@ void CEccoFuncs::RemoveHook(Hook_Type type, void* func){
 }
 
 void CEccoFuncs::GetTranslation(edict_t* pent, const char* code, char* dest){
-	const char* temp = ::GetTranslation(pent, std::string(code)).c_str();
-	strcpy(dest, temp);
+	strcpy(dest, ::GetTranslation(pent, std::string(code)).c_str());
 }
 
 CEccoFuncs g_pEccoFuncs;

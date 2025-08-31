@@ -72,7 +72,7 @@ static META_FUNCTIONS gMetaFunctionTable = {
 plugin_info_t Plugin_info = {
 	const_cast<char*>(META_INTERFACE_VERSION),	// ifvers
 	const_cast<char*>("Ecco"),	// name
-	const_cast<char*>("NOT READY FOR USE"),	// version
+	const_cast<char*>("1.0.0"),	// version
 	const_cast<char*>("2025"),	// date
 	const_cast<char*>("Dr.Abc"),	// author
 	const_cast<char*>("https://github.com/DrAbcOfficial/ecco"),	// url
