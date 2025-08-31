@@ -1,6 +1,8 @@
 #include <charconv>
 #include <ranges>
 
+#include "config/CConfig.h"
+
 #include "meta_utility.h"
 
 extern int g_msgTextMsg;
@@ -102,5 +104,38 @@ namespace EccoMetaUtility{
             return (*pev_ptr)->pContainingEntity;
         else
             return nullptr;
+    }
+
+    void PrecacheOther(const char* szClassname) {
+        edict_t* pent;
+        pent = CREATE_NAMED_ENTITY(MAKE_STRING(szClassname));
+        if (FNullEnt(pent)) {
+            ALERT(at_console, "NULL Ent in PrecacheOther\n");
+            return;
+        }
+        void* pEntity = pent->pvPrivateData;
+        if (!pEntity) {
+            ALERT(at_console, "NULL PrivateData in PrecacheOther\n");
+            return;
+        }
+
+#ifdef _WIN32
+#define SERVER_DECL __fastcall
+#define SERVER_DUMMYARG , int dummy
+#define SERVER_PASS_DUMMYARG , 0
+#else
+#define SERVER_DECL 
+#define SERVER_DUMMYARG
+#define SERVER_PASS_DUMMYARG
+#endif
+        using PrecacheFunc = void (SERVER_DECL*)(void* pThis SERVER_DUMMYARG);
+        char** vtable = *reinterpret_cast<char***>(pEntity);
+        PrecacheFunc pfnPrecache = reinterpret_cast<PrecacheFunc>(vtable[(GetEccoConfig()->PrecacheOffset * 8)]);
+        if (pfnPrecache)
+            pfnPrecache(pEntity SERVER_PASS_DUMMYARG);
+        REMOVE_ENTITY(pent);
+#undef SERVER_DECL
+#undef SERVER_DUMMYARG
+#undef SERVER_PASS_DUMMYARG
     }
 }

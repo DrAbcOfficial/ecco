@@ -76,7 +76,8 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	std::string icon = "sprites/" +  GetEccoConfig()->Path.MoneyIcon;
 	static char icon_perment[MAX_PATH] = { 0 };
 	strcpy(icon_perment, icon.c_str());
-	PRECACHE_MODEL(const_cast<char*>(icon_perment));
+	PRECACHE_MODEL(icon_perment);
+	PRECACHE_GENERIC(icon_perment);
 }
 
 bool g_bIsSeriesMap = false;

@@ -49,6 +49,8 @@ namespace EccoMetaUtility
     int StringToInteger(const std::string& s);
     std::string TrimString(const std::string& s);
     edict_t* PrivateToEdict(void* PrivateData);
+
+    void PrecacheOther(const char* szClassname);
 }
 
 #define WRITE_FLOAT EccoMetaUtility::WriteFloat

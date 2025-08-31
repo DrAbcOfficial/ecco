@@ -21,17 +21,19 @@ CEccoScriptItem::CEccoScriptItem(std::string path){
 		if (precache) {
 			for (auto iter = precache->begin(); iter != precache->end(); iter++) {
 				std::filesystem::path path = (*iter).value_or("");
+				std::string result = path.string();
 				if (!path.empty()) {
 					auto ext = path.extension();
-					if (ext == ".spr")
-						path = "sprites" / path;
+					if (ext == ".spr") {
+						result = "sprites/";
+					}
 					else if (ext == ".mdl")
-						path = "models" / path;
+						result = "models/";
 					else
 						LOG_CONSOLE(PLID, "Unknown extension: %s, but add it to precache list and try to precache.", ext);
-					auto str = path.string();
-					char* p = new char[str.size() + 1];
-					strcpy(p, str.c_str());
+					result += path.string();
+					char* p = new char[result.size() + 1];
+					strcpy(p, result.c_str());
 					m_aryPrecaches.push_back(p);
 				}
 			}
@@ -81,11 +83,15 @@ CEccoScriptItem::~CEccoScriptItem(){
 void CEccoScriptItem::Precache(){
 	for (auto p : m_aryPrecaches) {
 		PRECACHE_MODEL(p);
+		PRECACHE_GENERIC(p);
 	}
 	for (auto p : m_arySoundPrecaches) {
 		PRECACHE_SOUND(p);
+		std::filesystem::path generic = "sound";
+		generic = generic / p;
+		PRECACHE_GENERIC(const_cast<char*>(generic.string().c_str()));
 	}
 	for (auto p : m_aryOtherPrecaches) {
-		PRECACHE_GENERIC(p);
+		EccoMetaUtility::PrecacheOther(p);
 	}
 }

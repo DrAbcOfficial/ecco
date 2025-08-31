@@ -67,3 +67,11 @@ MoneyLimitePerMap=-1
 DefaultLang="english"
 #查询用于查询客户端语言的cvar，留空为不查询
 QueryLangCVar="cap_lang"
+#Precache偏移量，用户PrecacheOther
+#Half-Life（包括cs,dod）为2
+#Sven Co-op 为4
+#错误的偏移量会导致游戏崩溃
+#如果你不知道你的游戏偏移量是多少
+#最好的方法是通过precache变量来进行precache
+#而不是选择使用other_precache
+PrecacheOffset=4
