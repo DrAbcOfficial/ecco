@@ -179,19 +179,13 @@ public:
 				pArgList->Push(arg);
 			}
 			auto as_func = reinterpret_cast<asIScriptFunction*>(user_args);
-			if (!ctx || ctx->Prepare(as_func) != asSUCCESS) {
-				return IEccoScriptSystem::Result::Error;
-			}
 			ctx->Prepare(as_func);
 			ctx->SetArgObject(0, item);
 			ctx->SetArgObject(1, menu);
 			ctx->SetArgObject(2, pArgList);
 			ctx->Execute();
-			// 执行并处理返回值
-			if (ctx->Execute() == asSUCCESS) {
-				byte ret = ctx->GetReturnByte();
-				g_pScriptSystem->SetObjectResult(g_pScriptSystem->NewBooleanObject(ret));
-			}
+			byte ret = ctx->GetReturnByte();
+			g_pScriptSystem->SetObjectResult(g_pScriptSystem->NewBooleanObject(ret));
 			delete pArgList;
 			as_engine->ReturnContext(ctx);
 			return IEccoScriptSystem::Result::OK;

@@ -59,6 +59,7 @@ bool LoadEccoScriptItems(){
 
 void PrecacheAllScriptItems(){
 	for (auto& item : g_aryEccoScriptItems) {
+		item->Precache();
 	}
 }
 
