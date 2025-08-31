@@ -146,8 +146,7 @@ public:
 			//读取剩下的参数，并将其打包为参数列表传递
 			static auto serverManager = ASEXT_GetServerManager();
 			static auto as_engine = serverManager->scriptEngine;
-			static asIScriptContext* ctx = as_engine->RequestContext();
-
+			asIScriptContext* ctx = as_engine->RequestContext();
 			CTCLArgList* pArgList = new CTCLArgList();
 			int remain_argc = argc - 2;
 			for(int i = 0; i < remain_argc; i++) {
@@ -180,14 +179,21 @@ public:
 				pArgList->Push(arg);
 			}
 			auto as_func = reinterpret_cast<asIScriptFunction*>(user_args);
+			if (!ctx || ctx->Prepare(as_func) != asSUCCESS) {
+				return IEccoScriptSystem::Result::Error;
+			}
 			ctx->Prepare(as_func);
 			ctx->SetArgObject(0, item);
 			ctx->SetArgObject(1, menu);
 			ctx->SetArgObject(2, pArgList);
 			ctx->Execute();
-			byte ret = ctx->GetReturnByte();
-			g_pScriptSystem->SetObjectResult(g_pScriptSystem->NewBooleanObject(ret));
+			// 执行并处理返回值
+			if (ctx->Execute() == asSUCCESS) {
+				byte ret = ctx->GetReturnByte();
+				g_pScriptSystem->SetObjectResult(g_pScriptSystem->NewBooleanObject(ret));
+			}
 			delete pArgList;
+			as_engine->ReturnContext(ctx);
 			return IEccoScriptSystem::Result::OK;
 			}, func->asfunc);
 	}
