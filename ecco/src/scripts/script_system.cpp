@@ -27,13 +27,11 @@ IEccoScriptSystem::Result EvalScriptContent(edict_t* caller, CEccoScriptExecutor
 	auto item_index = g_ScriptSystem->NewIntObject(pexcuter->m_iIndex);
 	g_ScriptSystem->SetValue("item_index", item_index);
 	auto ret = g_ScriptSystem->Eval(pexcuter->m_szScript.c_str());
-	g_ScriptSystem->UnsetValue("caller_index");
-	g_ScriptSystem->UnsetValue("item_index");
 	if (ret == IEccoScriptSystem::Result::OK) {
 		auto obj = g_ScriptSystem->GetValue("result");
 		ret = static_cast<IEccoScriptSystem::Result>(g_ScriptSystem->GetValueInt(obj));
 	}
-	g_ScriptSystem->UnsetValue("result");
+	g_ScriptSystem->Reset();
 	return ret;
 }
 

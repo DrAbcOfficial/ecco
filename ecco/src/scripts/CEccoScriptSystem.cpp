@@ -71,6 +71,21 @@ CEccoScriptSystem::CEccoScriptSystem(){
 	}
 }
 
+void CEccoScriptSystem::Reset(){
+	const char* varListCmd = "info globals";
+	Tcl_Eval(s_pTclinterp, varListCmd);
+	Tcl_Obj* varListObj = Tcl_GetObjResult(s_pTclinterp);
+	int varCount;
+	Tcl_Obj** vars;
+	Tcl_ListObjGetElements(s_pTclinterp, varListObj, &varCount, &vars);
+	for (int i = 0; i < varCount; ++i) {
+		const char* varName = Tcl_GetString(vars[i]);
+		Tcl_UnsetVar(s_pTclinterp, varName, 0);
+	}
+	Tcl_Eval(s_pTclinterp, "foreach ns [namespace children] { namespace delete $ns }");
+	Tcl_ResetResult(s_pTclinterp);
+}
+
 void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback, void* user_args) {
 	CScriptCmd* cmd = new CScriptCmd();
 	cmd->interface = this;
