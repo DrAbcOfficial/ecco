@@ -33,6 +33,7 @@ IEccoScriptSystem::Result EvalScriptContent(edict_t* caller, CEccoScriptExecutor
 		auto obj = g_ScriptSystem->GetValue("result");
 		ret = static_cast<IEccoScriptSystem::Result>(g_ScriptSystem->GetValueInt(obj));
 	}
+	g_ScriptSystem->UnsetValue("result");
 	return ret;
 }
 
