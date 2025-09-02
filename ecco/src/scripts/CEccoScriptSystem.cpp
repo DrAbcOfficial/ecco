@@ -82,7 +82,6 @@ void CEccoScriptSystem::Reset(){
 		const char* varName = Tcl_GetString(vars[i]);
 		Tcl_UnsetVar(s_pTclinterp, varName, 0);
 	}
-	Tcl_Eval(s_pTclinterp, "foreach ns [namespace children] { namespace delete $ns }");
 	Tcl_ResetResult(s_pTclinterp);
 }
 
