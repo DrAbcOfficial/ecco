@@ -72,8 +72,7 @@ CEccoScriptSystem::CEccoScriptSystem(){
 }
 
 void CEccoScriptSystem::Reset(){
-	const char* varListCmd = "info globals";
-	Tcl_Eval(s_pTclinterp, varListCmd);
+	Tcl_Eval(s_pTclinterp, "info globals");
 	Tcl_Obj* varListObj = Tcl_GetObjResult(s_pTclinterp);
 	int varCount;
 	Tcl_Obj** vars;
