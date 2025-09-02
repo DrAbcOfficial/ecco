@@ -78,9 +78,18 @@ void CEccoScriptSystem::Reset(){
 	int varCount;
 	Tcl_Obj** vars;
 	Tcl_ListObjGetElements(s_pTclinterp, varListObj, &varCount, &vars);
+	const char* ignoreList[] = {"tcl_library", "tcl_pkgPath", "tcl_interactive"};
 	for (int i = 0; i < varCount; ++i) {
 		const char* varName = Tcl_GetString(vars[i]);
-		Tcl_UnsetVar(s_pTclinterp, varName, 0);
+		bool ignore = false;
+		for (const char* ign : ignoreList) {
+			if (!strcmp(varName, ign)) {
+				ignore = true;
+				break;
+			}
+		}
+		if(!ignore)
+			Tcl_UnsetVar(s_pTclinterp, varName, 0);
 	}
 	Tcl_ResetResult(s_pTclinterp);
 }
