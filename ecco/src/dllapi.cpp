@@ -78,6 +78,7 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	strcpy(icon_perment, icon.c_str());
 	PRECACHE_MODEL(icon_perment);
 	PRECACHE_GENERIC(icon_perment);
+	StorageServerActivateHandle();
 }
 
 bool g_bIsSeriesMap = false;

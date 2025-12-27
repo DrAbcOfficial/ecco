@@ -68,3 +68,9 @@ CPlayerStorageItem* GetPlayerStorageItem(edict_t* pent){
 	}
 	return nullptr;
 }
+
+void StorageServerActivateHandle(){
+	for (auto& pair : s_mapPlayerStorage) {
+		pair.second->FlagSelf();
+	}
+}
