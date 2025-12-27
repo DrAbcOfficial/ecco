@@ -72,25 +72,144 @@ CEccoScriptSystem::CEccoScriptSystem(){
 }
 
 void CEccoScriptSystem::Reset(){
-	Tcl_Eval(s_pTclinterp, "info globals");
-	Tcl_Obj* varListObj = Tcl_GetObjResult(s_pTclinterp);
-	int varCount;
-	Tcl_Obj** vars;
-	Tcl_ListObjGetElements(s_pTclinterp, varListObj, &varCount, &vars);
-	const char* ignoreList[] = {"tcl_library", "tcl_pkgPath", "tcl_interactive"};
-	for (int i = 0; i < varCount; ++i) {
-		const char* varName = Tcl_GetString(vars[i]);
-		bool ignore = false;
-		for (const char* ign : ignoreList) {
-			if (!strcmp(varName, ign)) {
-				ignore = true;
-				break;
-			}
-		}
-		if(!ignore)
-			Tcl_UnsetVar(s_pTclinterp, varName, 0);
+	const char* tcl_library = Tcl_GetVar(s_pTclinterp, "tcl_library", TCL_GLOBAL_ONLY);
+	const char* tcl_pkgPath = Tcl_GetVar(s_pTclinterp, "tcl_pkgPath", TCL_GLOBAL_ONLY);
+	const char* auto_path = Tcl_GetVar(s_pTclinterp, "auto_path", TCL_GLOBAL_ONLY);
+
+	// 保存变量值到临时缓冲区
+	char saved_library[MAX_PATH] = { 0 };
+	char saved_pkgPath[MAX_PATH] = { 0 };
+	char saved_autoPath[MAX_PATH * 2 + 6] = { 0 };
+
+	if (tcl_library) 
+		strncpy(saved_library, tcl_library, MAX_PATH - 1);
+	if (tcl_pkgPath) 
+		strncpy(saved_pkgPath, tcl_pkgPath, MAX_PATH - 1);
+	if (auto_path) 
+		strncpy(saved_autoPath, auto_path, sizeof(saved_autoPath) - 1);
+
+	Tcl_DeleteInterp(s_pTclinterp);
+	s_pTclinterp = Tcl_CreateInterp();
+
+	if (saved_library[0]) 
+		Tcl_SetVar(s_pTclinterp, "tcl_library", saved_library, TCL_GLOBAL_ONLY);
+	if (saved_pkgPath[0]) 
+		Tcl_SetVar(s_pTclinterp, "tcl_pkgPath", saved_pkgPath, TCL_GLOBAL_ONLY);
+	if (saved_autoPath[0]) 
+		Tcl_SetVar(s_pTclinterp, "auto_path", saved_autoPath, TCL_GLOBAL_ONLY);
+
+	Tcl_SetVar(s_pTclinterp, "tcl_interactive", "0", TCL_GLOBAL_ONLY);
+
+	if (Tcl_Init(s_pTclinterp) == TCL_ERROR) {
+		LOG_DEVELOPER(PLID, "Tcl init failed after reset!\n%s", Tcl_GetStringResult(s_pTclinterp));
+		return;
 	}
-	Tcl_ResetResult(s_pTclinterp);
+	if (Tcl_SetSystemEncoding(s_pTclinterp, "utf-8") == TCL_ERROR) {
+		LOG_DEVELOPER(PLID, "Tcl set utf-8 encoding failed after reset!\n%s", Tcl_GetStringResult(s_pTclinterp));
+	}
+	ReregisterCommands();
+}
+
+// TCL命令处理器 - 公共逻辑提取
+int CEccoScriptSystem::TclCommandHandler(ClientData clientData, Tcl_Interp* interp, int argc, const char* argv[]) {
+	CScriptCmd* cmd = static_cast<CScriptCmd*>(clientData);
+	if (argc - 1 != (int)cmd->required_args.size()) {
+		Tcl_SetErrorCode(s_pTclinterp, "arguments count not match", nullptr);
+		Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+		Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
+		return TCL_ERROR;
+	}
+	
+	std::vector<IEccoScriptSystem::ScriptContent*> args{};
+	for (int i = 1; i < argc; i++) {
+		const char* arg = argv[i];
+		if (arg == nullptr) {
+			Tcl_SetErrorCode(s_pTclinterp, "Argument is NULL", nullptr);
+			Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+			Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
+			return TCL_ERROR;
+		}
+		
+		IEccoScriptSystem::ScriptArgType type = cmd->required_args[i - 1];
+		switch (type) {
+		case IEccoScriptSystem::ScriptArgType::Int: {
+			char* endptr = nullptr;
+			long val = strtol(arg, &endptr, 10);
+			if (*endptr != '\0') {
+				Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
+				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+				Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
+				return TCL_ERROR;
+			}
+			auto item = new IEccoScriptSystem::ScriptContent();
+			item->type = IEccoScriptSystem::ScriptArgType::Int;
+			item->intValue = static_cast<int>(val);
+			args.push_back(item);
+			break;
+		}
+		case IEccoScriptSystem::ScriptArgType::Double: {
+			char* endptr = nullptr;
+			double val = strtod(arg, &endptr);
+			if (*endptr != '\0') {
+				Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
+				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+				Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
+				return TCL_ERROR;
+			}
+			auto item = new IEccoScriptSystem::ScriptContent();
+			item->type = IEccoScriptSystem::ScriptArgType::Double;
+			item->doubleValue = val;
+			args.push_back(item);
+			break;
+		}
+		case IEccoScriptSystem::ScriptArgType::Float: {
+			char* endptr = nullptr;
+			float val = strtof(arg, &endptr);
+			if (*endptr != '\0') {
+				Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
+				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
+				Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
+				return TCL_ERROR;
+			}
+			auto item = new IEccoScriptSystem::ScriptContent();
+			item->type = IEccoScriptSystem::ScriptArgType::Float;
+			item->floatValue = val;
+			args.push_back(item);
+			break;
+		}
+		case IEccoScriptSystem::ScriptArgType::Boolean: {
+			std::string lowerArg = arg;
+			std::transform(lowerArg.begin(), lowerArg.end(), lowerArg.begin(), ::tolower);
+			bool val = (lowerArg == "1" || lowerArg == "true" || lowerArg == "yes");
+			auto item = new IEccoScriptSystem::ScriptContent();
+			item->type = IEccoScriptSystem::ScriptArgType::Boolean;
+			item->boolValue = val;
+			args.push_back(item);
+			break;
+		}
+		default:
+		case IEccoScriptSystem::ScriptArgType::String: {
+			auto item = new IEccoScriptSystem::ScriptContent();
+			item->type = IEccoScriptSystem::ScriptArgType::String;
+			item->strValue = arg;
+			args.push_back(item);
+			break;
+		}
+		}
+	}
+	
+	IEccoScriptSystem::ScriptContent* const* argv2 = args.data();
+	auto ret = cmd->callback(cmd->interface, args.size(), argv2, cmd->user_args);
+	for (auto arg : args) {
+		delete arg;
+	}
+	return (int)ret;
+}
+
+void CEccoScriptSystem::ReregisterCommands(){
+	for (const auto& [name, cmd] : s_mapCommands) {
+		Tcl_CreateCommand(s_pTclinterp, name, TclCommandHandler, cmd, nullptr);
+	}
 }
 
 void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback, void* user_args) {
@@ -131,103 +250,13 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 		else if (!strcmp(s.c_str(), "bool"))
 			cmd->required_args.push_back(IEccoScriptSystem::ScriptArgType::Boolean);
 		else {
-			LOG_ERROR(PLID, "Unknown script command argument type: %s in command %s", s.c_str(), name);
+			LOG_DEVELOPER(PLID, "Unknown script command argument type: %s in command %s", s.c_str(), name);
 			delete cmd;
 			return;
 		}
 	}
 
-	Tcl_CreateCommand(s_pTclinterp, name, [](ClientData clientData, Tcl_Interp* interp, int argc, const char* argv[]) {
-		CScriptCmd* cmd = static_cast<CScriptCmd*>(clientData);
-		if (argc - 1 != (int)cmd->required_args.size()) {
-			Tcl_SetErrorCode(s_pTclinterp, "arguments count not match", nullptr);
-			Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
-			Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
-			return TCL_ERROR;
-		}
-		std::vector<IEccoScriptSystem::ScriptContent*> args{};
-		for (int i = 1; i < argc; i++) {
-			const char* arg = argv[i];
-			if (arg == nullptr) {
-				Tcl_SetErrorCode(s_pTclinterp, "Argument is NULL", nullptr);
-				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
-				Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
-				return TCL_ERROR;
-			}
-			IEccoScriptSystem::ScriptArgType type = cmd->required_args[i - 1];
-			switch (type) {
-			case IEccoScriptSystem::ScriptArgType::Int: {
-				char* endptr = nullptr;
-				long val = strtol(arg, &endptr, 10);
-				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
-					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
-					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
-					return TCL_ERROR;
-				}
-				auto item = new IEccoScriptSystem::ScriptContent();
-				item->type = IEccoScriptSystem::ScriptArgType::Int;
-				item->intValue = static_cast<int>(val);
-				args.push_back(item);
-				break;
-			}
-			case IEccoScriptSystem::ScriptArgType::Double: {
-				char* endptr = nullptr;
-				double val = strtod(arg, &endptr);
-				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
-					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
-					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
-					return TCL_ERROR;
-				}
-				auto item = new IEccoScriptSystem::ScriptContent();
-				item->type = IEccoScriptSystem::ScriptArgType::Double;
-				item->doubleValue = val;
-				args.push_back(item);
-				break;
-			}
-			case IEccoScriptSystem::ScriptArgType::Float: {
-				char* endptr = nullptr;
-				float val = strtof(arg, &endptr);
-				if (*endptr != '\0') {
-					Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
-					Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
-					Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
-					return TCL_ERROR;
-				}
-				auto item = new IEccoScriptSystem::ScriptContent();
-				item->type = IEccoScriptSystem::ScriptArgType::Float;
-				item->floatValue = val;
-				args.push_back(item);
-				break;
-			}
-			case IEccoScriptSystem::ScriptArgType::Boolean: {
-				std::string lowerArg = arg;
-				std::transform(lowerArg.begin(), lowerArg.end(), lowerArg.begin(), ::tolower);
-				bool val = (lowerArg == "1" || lowerArg == "true" || lowerArg == "yes");
-				auto item = new IEccoScriptSystem::ScriptContent();
-				item->type = IEccoScriptSystem::ScriptArgType::Boolean;
-				item->boolValue = val;
-				args.push_back(item);
-				break;
-			}
-			default:
-			case IEccoScriptSystem::ScriptArgType::String: {
-				auto item = new IEccoScriptSystem::ScriptContent();
-				item->type = IEccoScriptSystem::ScriptArgType::String;
-				item->strValue = arg;
-				args.push_back(item);
-				break;
-			}
-			}
-		}
-		IEccoScriptSystem::ScriptContent* const* argv2 = args.data();
-		auto ret = cmd->callback(cmd->interface, args.size(), argv2, cmd->user_args);
-		for (auto arg : args) {
-			delete arg;
-		}
-		return (int)ret;
-	}, cmd, nullptr);
+	Tcl_CreateCommand(s_pTclinterp, name, TclCommandHandler, cmd, nullptr);
 	s_mapCommands.emplace(name, cmd);
 }
 void CEccoScriptSystem::RemoveCommand(const char* name){

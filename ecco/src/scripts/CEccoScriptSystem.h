@@ -7,6 +7,11 @@ public:
 
 	void Reset();
 
+private:
+	void ReregisterCommands();
+	static int TclCommandHandler(ClientData clientData, Tcl_Interp* interp, int argc, const char* argv[]);
+
+public:
 	virtual void CreateCommand(const char* name, const char* symbol, const char* description, fnFunc callback, void* user_args = nullptr);
 	virtual void RemoveCommand(const char* name);
 	virtual Result Eval(const char* content);
