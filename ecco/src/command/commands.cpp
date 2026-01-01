@@ -154,4 +154,53 @@ static CEccoServerCommand help_s("help", "list all commands", [](CEccoServerComm
     }
     return true;
 });
+
+static CEccoServerCommand setconfig("setconfig", "set or get config value", { CEccoCmdArgSet("path", true), CEccoCmdArgSet("value", false) }, [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {
+    if (args.size() == 0) {
+        LOG_CONSOLE(PLID, "Usage: setconfig <path> [value]");
+        LOG_CONSOLE(PLID, "  setconfig <path> - get config value");
+        LOG_CONSOLE(PLID, "  setconfig <path> <value> - set config value");
+        LOG_CONSOLE(PLID, "  setconfig list - list all config paths");
+        return false;
+    }
+
+    if (args[0] == "list") {
+        auto paths = GetAllConfigPaths();
+        LOG_CONSOLE(PLID, "Available config paths:");
+        for (const auto& path : paths) {
+            LOG_CONSOLE(PLID, "  %s", path.c_str());
+        }
+        return true;
+    }
+
+    const std::string& path = args[0];
+    if (args.size() == 1) {
+        std::string value = GetConfigValue(path);
+        if (value.empty()) {
+            LOG_CONSOLE(PLID, "Config path '%s' not found", path.c_str());
+            return false;
+        }
+        LOG_CONSOLE(PLID, "%s = %s", path.c_str(), value.c_str());
+        return true;
+    }
+
+    const std::string& value = args[1];
+    if (SetConfigValue(path, value)) {
+        LOG_CONSOLE(PLID, "Config '%s' set to '%s'", path.c_str(), value.c_str());
+        return true;
+    } else {
+        LOG_CONSOLE(PLID, "Failed to set config '%s' to '%s'", path.c_str(), value.c_str());
+        return false;
+    }
+});
+
+static CEccoServerCommand saveconfig("saveconfig", "save config to file", [](CEccoServerCommand* pThis, const std::vector<std::string>& args) -> bool {
+    if (SaveEccoConfig()) {
+        LOG_CONSOLE(PLID, "Config saved successfully");
+        return true;
+    } else {
+        LOG_CONSOLE(PLID, "Failed to save config");
+        return false;
+    }
+});
 #pragma endregion

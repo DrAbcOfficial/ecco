@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <functional>
 
 struct CEccoConfigHud {
 	//0 为不显示
@@ -105,3 +106,23 @@ struct CEccoConfig{
 extern bool IsBannedMap(const char* map);
 extern CEccoConfig* GetEccoConfig();
 extern bool LoadEccoConfig();
+
+enum class ConfigValueType {
+	UInt,
+	Int,
+	Float,
+	String,
+	Bool,
+	VectorString
+};
+
+struct ConfigValue {
+	ConfigValueType type;
+	std::function<std::string()> get;
+	std::function<bool(const std::string&)> set;
+};
+
+extern bool SetConfigValue(const std::string& path, const std::string& value);
+extern std::string GetConfigValue(const std::string& path);
+extern std::vector<std::string> GetAllConfigPaths();
+extern bool SaveEccoConfig();
