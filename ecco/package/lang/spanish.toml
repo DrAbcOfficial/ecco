@@ -1,0 +1,17 @@
+# No modifique este archivo directamente!
+# Cree pares de clave-valor con el mismo nombre en user_setting.toml para reemplazar!
+
+[Lang]
+not_enough_credits="{0} requiere {1} créditos, solo tienes {2}."
+ecco_menu_back="Volver atrás"
+ecco_menu_prev_page="Página anterior"
+ecco_menu_next_page="Siguiente página"
+ecco_menu_exit="Salir"
+ecco_menu_root="\\w[\\yTienda Ecco\\w]\n\\c============"
+ecco_eval_exception="Se produjo un error al comprar {0}, por favor toma una captura de pantalla e informa al administrador"
+ecco_cmd_access_deny="¡No puedes usar este comando!"
+ecco_scripts_reloading="Recargando scripts, idiomas y menús..."
+ecco_scripts_reloaded="¡Recarga completada!"
+ecco_cmd_usage="Uso:"
+ecco_lang_invalid="Idioma inválido, los idiomas disponibles son:"
+ecco_lang_success="¡Idioma configurado exitosamente!"

@@ -1,0 +1,10 @@
+[Ecco]
+name="Item.HealthKit"
+cost=10
+script="""
+give $caller_index "item_healthkit"
+"""
+flags=0
+precaches=[]
+sound_precaches=[]
+other_precaches=["item_healthkit"]

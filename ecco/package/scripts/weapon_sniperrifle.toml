@@ -1,0 +1,10 @@
+[Ecco]
+name="Weapon.SniperRifle"
+cost=25
+script="""
+give $caller_index "weapon_sniperrifle"
+"""
+flags=0
+precaches=[]
+sound_precaches=[]
+other_precaches=["weapon_sniperrifle"]

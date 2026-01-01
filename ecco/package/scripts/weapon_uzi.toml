@@ -1,0 +1,10 @@
+[Ecco]
+name="Weapon.Uzi"
+cost=12
+script="""
+give $caller_index "weapon_uzi"
+"""
+flags=0
+precaches=[]
+sound_precaches=[]
+other_precaches=["weapon_uzi"]
