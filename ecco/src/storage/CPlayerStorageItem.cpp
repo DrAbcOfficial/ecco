@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "CPlayerStorageItem.h"
+#include "ScopedFile.h"
 #include "config/CConfig.h"
 #include "plugin/plugin_system.h"
 #include "lang/lang.h"
@@ -70,9 +71,11 @@ void CPlayerStorageItem::AddCredits(int ulCredits){
 }
 
 void CPlayerStorageItem::SaveData(){
-	std::ofstream ofs(m_szStoragePath, std::ios::binary);
-	ofs.write(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));
-	ofs.close();
+	ScopedFileWrite file(m_szStoragePath);
+	if (!file.is_open()) {
+		return;
+	}
+	file.get().write(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));
 }
 
 bool CPlayerStorageItem::TestFlags(STORAGE_FLAGS flag) const{
@@ -149,7 +152,9 @@ edict_t* CPlayerStorageItem::GetPlayer() const{
 }
 
 void CPlayerStorageItem::ReadData(){
-	std::ifstream ifs(m_szStoragePath, std::ios::binary);
-	ifs.read(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));
-	ifs.close();
+	ScopedFileRead file(m_szStoragePath);
+	if (!file.is_open()) {
+		return;
+	}
+	file.get().read(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));
 }

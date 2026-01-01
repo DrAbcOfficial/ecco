@@ -244,6 +244,9 @@
     <ClInclude Include="include\api\HookDef.h">
       <Filter>api</Filter>
     </ClInclude>
+    <ClInclude Include="src\storage\ScopedFile.h">
+      <Filter>core\storage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="exports.def" />

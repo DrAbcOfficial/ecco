@@ -78,6 +78,7 @@
     <ClInclude Include="src\scripts\tcl_loader.h" />
     <ClInclude Include="src\signatures.h" />
     <ClInclude Include="src\storage\CPlayerStorageItem.h" />
+    <ClInclude Include="src\storage\ScopedFile.h" />
     <ClInclude Include="src\storage\Storage.h" />
     <ClInclude Include="src\timer\Timer.h" />
   </ItemGroup>
