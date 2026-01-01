@@ -28,7 +28,7 @@ Data="storage"
 #禁用地图文件路径
 BanMaps="config/BannedMaps.txt"
 #金币图标
-MoneyIcon="misc_bdsc/dollar.spr"
+MoneyIcon="dollar.spr"
 
 [Ecco.Color]
 #正数金钱RGBA
