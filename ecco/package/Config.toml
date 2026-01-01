@@ -63,6 +63,10 @@ PlayerStartScore=0
 #单张地图最大可获得金钱数目
 #小于0为不限制
 MoneyLimitePerMap=-1
+#延迟保存时间（秒）
+#小于0为即时保存
+#大于等于0为延迟保存，默认30秒
+SaveDelayTime=30.0
 #默认的语言
 DefaultLang="english"
 #查询用于查询客户端语言的cvar，留空为不查询

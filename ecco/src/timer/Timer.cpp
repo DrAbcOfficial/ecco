@@ -9,6 +9,7 @@
 #include "meta_utility.h"
 
 static std::map<edict_t*, ScheduledFunction> s_mapPlayerScoreToCreditsTimer;
+static ScheduledFunction s_PlayerStorageSaveTimer;
 
 void AddPlayerScoreToCreditsTimer(edict_t* pent){
 	if (!pent)
@@ -39,5 +40,27 @@ void RemovePlayerScoreToCreditsTimer(edict_t* pent){
 	if(it != s_mapPlayerScoreToCreditsTimer.end()){
 		g_Scheduler.RemoveTimer(it->second);
 		s_mapPlayerScoreToCreditsTimer.erase(it);
+	}
+}
+
+void AddPlayerStorageSaveTimer(){
+	if (!s_PlayerStorageSaveTimer.HasBeenRemoved())
+		return;
+	float saveDelay = GetEccoConfig()->SaveDelayTime;
+	if (saveDelay < 0)
+		return;
+	s_PlayerStorageSaveTimer = g_Scheduler.SetInterval(
+		[]() {
+			extern void StorageFlushAllDirty();
+			StorageFlushAllDirty();
+		},
+		saveDelay,
+		-1 // infinite calls
+	);
+}
+
+void RemovePlayerStorageSaveTimer(){
+	if (!s_PlayerStorageSaveTimer.HasBeenRemoved()) {
+		g_Scheduler.RemoveTimer(s_PlayerStorageSaveTimer);
 	}
 }

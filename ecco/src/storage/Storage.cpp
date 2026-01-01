@@ -5,12 +5,14 @@
 #include "meta_utility.h"
 
 #include "Storage.h"
+#include "timer/Timer.h"
 
 using namespace EccoMetaUtility;
 
 static std::unordered_map<std::string, CPlayerStorageItem*> s_mapPlayerStorage;
 
 void StorageMapEndHandle(){
+	StorageFlushAllDirty();
 	for (auto& pair : s_mapPlayerStorage) {
 		pair.second->FlagSelf();
 		delete pair.second;
@@ -52,6 +54,7 @@ void StorageClientDisconnectHandle(edict_t* pent){
 	if (it != s_mapPlayerStorage.end()) {
 		auto item = it->second;
 		item->FlagSelf();
+		item->FlushData();
 		delete item;
 		s_mapPlayerStorage.erase(it);
 	}
@@ -66,6 +69,12 @@ CPlayerStorageItem* GetPlayerStorageItem(edict_t* pent){
 		return it->second;
 	}
 	return nullptr;
+}
+
+void StorageFlushAllDirty(){
+	for (auto& pair : s_mapPlayerStorage) {
+		pair.second->FlushData();
+	}
 }
 
 void StorageServerActivateHandle(){

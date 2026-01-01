@@ -79,6 +79,7 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 	PRECACHE_MODEL(icon_perment);
 	PRECACHE_GENERIC(icon_perment);
 	StorageServerActivateHandle();
+	AddPlayerStorageSaveTimer();
 }
 
 bool g_bIsSeriesMap = false;
@@ -87,6 +88,7 @@ static void ServerDeactivate() {
 	g_bIsSeriesMap = g_bLevelChangedOccurred;
 	g_bLevelChangedOccurred = false;
 
+	RemovePlayerStorageSaveTimer();
 	StorageMapEndHandle();
 	SET_META_RESULT(MRES_HANDLED);
 }

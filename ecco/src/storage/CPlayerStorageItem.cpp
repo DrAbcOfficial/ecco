@@ -63,7 +63,7 @@ const char* CPlayerStorageItem::GetName() const{
 void CPlayerStorageItem::SetCredits(int ulCredits){
 	Call_OnPlayerCreditsChanged(this, m_saveData.Credits, ulCredits);
 	m_saveData.Credits = ulCredits;
-	SaveData();
+	MarkDirty();
 }
 
 void CPlayerStorageItem::AddCredits(int ulCredits){
@@ -87,7 +87,7 @@ void CPlayerStorageItem::SetFlags(STORAGE_FLAGS flag, bool on){
 		m_saveData.Flags |= static_cast<unsigned long long>(flag);
 	else
 		m_saveData.Flags &= ~static_cast<unsigned long long>(flag);
-	SaveData();
+	MarkDirty();
 }
 
 void CPlayerStorageItem::ScoreToCredits(int newScore){
@@ -157,4 +157,21 @@ void CPlayerStorageItem::ReadData(){
 		return;
 	}
 	file.get().read(reinterpret_cast<char*>(&m_saveData), sizeof(m_saveData));
+}
+
+void CPlayerStorageItem::FlushData(){
+	if (!m_bDirty)
+		return;
+	SaveData();
+	m_bDirty = false;
+	m_fLastSaveTime = gpGlobals->time;
+}
+
+void CPlayerStorageItem::MarkDirty(){
+	float saveDelay = GetEccoConfig()->SaveDelayTime;
+	if (saveDelay < 0) {
+		SaveData();
+		return;
+	}
+	m_bDirty = true;
 }

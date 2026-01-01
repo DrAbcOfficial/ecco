@@ -82,6 +82,10 @@ struct CEccoConfig{
 	//小于0为不限制
 	int MoneyLimitePerMap;
 
+	//延迟保存时间（秒）
+	//小于0为即时保存
+	float SaveDelayTime;
+
 	//默认的语言
 	std::string DefaultLang;
 

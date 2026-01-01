@@ -30,6 +30,7 @@ public:
 	void CleanLastCredits();
 
 	void FlagSelf();
+	void FlushData();
 private:
 	std::string m_szStoragePath{};
 
@@ -48,5 +49,9 @@ public:
 	int m_iLastCredits = 0;
 private:
 	void ReadData();
+	void MarkDirty();
+private:
+	bool m_bDirty = false;
+	float m_fLastSaveTime = 0;
 };
 
