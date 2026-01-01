@@ -1,5 +1,6 @@
 #pragma once
 #include "api/IEccoScriptSystem.h"
+#include "tcl_dynamic.h"
 
 class CEccoScriptSystem : public IEccoScriptSystem {
 public:

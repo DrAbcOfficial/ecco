@@ -39,3 +39,4 @@ Release
 *.app
 /Build.props
 /ecco/Build.props
+dist
