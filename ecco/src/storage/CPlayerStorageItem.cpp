@@ -35,15 +35,17 @@ CPlayerStorageItem::CPlayerStorageItem(edict_t* pent)
 	const bool fileExists = std::filesystem::exists(m_szStoragePath);
 	if (fileExists) {
 		ReadData();
+		FlagSelf();
 		extern bool g_bIsSeriesMap;
 		const bool shouldResetScore =
 			(TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END) && !g_bIsSeriesMap) ||
-			TestFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT);
+			(TestFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT));
 		if (shouldResetScore)
 			SetCredits(startScore);
 	}
 	else {
 		m_saveData.Credits = startScore;
+		FlagSelf();
 		SaveData();
 	}
 }
