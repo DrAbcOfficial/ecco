@@ -54,3 +54,45 @@ or want to add new hooks yourself, you can follow these steps to configure your 
 <img src="./resource/20250823-191047.jpg" width="1440" height="640"/>
 
 <img src="./resource/20250823-191651.jpg" width="1440" height="640"/>
+
+## 3. <a name='Config'></a>Configuration
+
+The Ecco plugin uses TOML files for configuration. For detailed configuration instructions, please refer to the [TOML Configuration Guide](./wiki/toml-guide.md).
+
+### 3.1 Configuration File Location
+
+The configuration file is located at `addons/ecco/Config.toml`. You can modify the settings according to your needs.
+
+### 3.2 Main Configuration Options
+
+- **HUD Settings**: Control the display method and position of money
+- **Path Settings**: Configure data storage location and file paths
+- **Color Settings**: Customize money display colors
+- **Buy Menu Settings**: Adjust buy menu behavior
+- **Core Settings**: Configure game mechanics and language options
+
+For detailed configuration instructions, please see the [TOML Configuration Guide](./wiki/toml-guide.md).
+
+## 4. <a name='Script'></a>Script System
+
+The Ecco plugin uses the Tcl scripting system to implement highly customizable game behaviors and buy menu items. By writing scripts, you can:
+
+- Create custom buy menu items
+- Implement special game mechanics
+- Customize player behavior
+- Add new game features
+
+For detailed script writing instructions, please refer to the [Ecco Script Writing Guide](./wiki/script-guide.md).
+
+### 4.1 Script File Location
+
+Script files are located in the `addons/ecco/scripts/` directory and use the `.tcl` file extension.
+
+### 4.2 Script System Features
+
+- Uses Tcl language, simple and easy to learn
+- Rich API function library
+- Automatically builds hierarchical buy menus
+- Supports complex game logic
+
+For detailed script writing instructions, please see the [Ecco Script Writing Guide](./wiki/script-guide.md).
