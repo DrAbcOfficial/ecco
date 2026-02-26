@@ -19,7 +19,7 @@ using namespace EccoMetaUtility;
 CPlayerStorageItem::CPlayerStorageItem(edict_t* pent)
 	: m_iScore(0), m_pPlayer(pent)
 {
-	if (!pent) 
+	if (!pent)
 		return;
 	const std::string steamId = GetPlayerSteamId(pent);
 	strcpy(m_saveData.SteamId, steamId.c_str());
@@ -35,13 +35,26 @@ CPlayerStorageItem::CPlayerStorageItem(edict_t* pent)
 	const bool fileExists = std::filesystem::exists(m_szStoragePath);
 	if (fileExists) {
 		ReadData();
-		FlagSelf();
 		extern bool g_bIsSeriesMap;
+		// 检查是否应该重置分数
+		// 如果有 DELETE_WHEN_SERIES_END 标志但当前不是系列图，说明系列图已结束，应该重置
 		const bool shouldResetScore =
 			(TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END) && !g_bIsSeriesMap) ||
 			(TestFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT));
-		if (shouldResetScore)
+		if (shouldResetScore) {
 			SetCredits(startScore);
+			// 重置分数后清除 DELETE_WHEN_SERIES_END 标志，避免重复重置
+			if (TestFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END) && !g_bIsSeriesMap) {
+				SetFlags(STORAGE_FLAGS::DELETE_WHEN_SERIES_END, false);
+			}
+			// 如果重置了分数，也需要清除 DELETE_WHEN_DISCONNECT 标志
+			if (TestFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT)) {
+				SetFlags(STORAGE_FLAGS::DELETE_WHEN_DISCONNECT, false);
+			}
+		}
+		FlagSelf();
+		// 更新后的标志需要保存
+		SaveData();
 	}
 	else {
 		m_saveData.Credits = startScore;
@@ -121,7 +134,11 @@ void CPlayerStorageItem::FlagSelf() {
 		if (saveSet <= 0) {
 			deleteOnDisconnect = true;
 		}
-		else if (!g_bIsSeriesMap) {
+		else {
+			// 系列图保存模式
+			// 如果当前是系列图，设置 DELETE_WHEN_SERIES_END 标志
+			// 这样如果系列图非正常结束（崩溃、换到其他地图），下次进入时可以检测到并重置金钱
+			// 如果系列图正常切换，ServerDeactivate 会保存 g_bIsSeriesMap 状态，下次进入时不会重置
 			deleteOnSeriesEnd = true;
 		}
 	}
