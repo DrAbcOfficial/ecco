@@ -113,8 +113,11 @@ static void ClientDisconnect(edict_t* pEntity) {
 constexpr int QUERY_CVAR_CONST = 114514;
 static void ClientPutInServer(edict_t* pEntity) {
 	StorageClientPutinServerHandle(pEntity);
-	AddPlayerScoreToCreditsTimer(pEntity);
-	AddHudUpdateTimer(pEntity);
+	const char* mapname = STRING(gpGlobals->mapname);
+	if (!IsBannedMap(mapname)) {
+		AddPlayerScoreToCreditsTimer(pEntity);
+		AddHudUpdateTimer(pEntity);
+	}
 	auto config = GetEccoConfig();
 	if (config->QueryLangCVar.size() > 0)
 		QUERY_CLIENT_CVAR_VALUE2(pEntity, config->QueryLangCVar.c_str(), ENTINDEX(pEntity) + QUERY_CVAR_CONST);
