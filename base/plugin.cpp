@@ -13,7 +13,7 @@ gamedll_funcs_t* gpGamedllFuncs;	// gameDLL function tables
 mutil_funcs_t* gpMetaUtilFuncs;		// metamod utility functions
 plugin_info_t* gpPlugin_info;			// master plugin info
 
-static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName) {
+static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName, int spawnflags = 0) {
 	int istr = MAKE_STRING(pszName);
 	edict_t* pent = CREATE_NAMED_ENTITY(istr);
 	if (FNullEnt(pent)) {
@@ -21,9 +21,11 @@ static edict_t* GiveNamedItem_Common(edict_t* pev, const char* pszName) {
 		return nullptr;
 	}
 	VARS(pent)->origin = VARS(pev)->origin;
+	pent->v.spawnflags |= spawnflags;
 	// SF_NORESPAWN 
 	pent->v.spawnflags |= (1 << 10);
 	MDLL_Spawn(pent);
+	MDLL_Touch(pent, pev);
 	return pent;
 }
 
@@ -165,15 +167,16 @@ class CEccoPlugin : public IEccoPlugin {
 #pragma endregion
 
 #pragma region Basic commands
-	g_pScriptSystem->CreateCommand("give", "int ent_index, string item_name", "Give named item to a player", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv, void* user_args) {
+	g_pScriptSystem->CreateCommand("give", "int ent_index, string item_name, int flags = 0", "Give named item to a player", [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv, void* user_args) {
 			int index = argv[0]->intValue;
 			const char* name = argv[1]->strValue;
+			int flags = argc > 2 ? argv[2]->intValue : 0;
 			edict_t* pev = INDEXENT(index);
 			if (FNullEnt(pev)) {
 				interp->ThrowError("NULL ent", "can not find ent with gived index");
 				return IEccoScriptSystem::Result::Error;
 			}
-			edict_t* pent = GiveNamedItem_Common(pev, name);
+			edict_t* pent = GiveNamedItem_Common(pev, name, flags);
 			if (FNullEnt(pent)) {
 				interp->ThrowError("NULL give item", "NULL with give named item");
 				return IEccoScriptSystem::Result::Error;

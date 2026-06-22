@@ -26,6 +26,7 @@ public:
 	const char* name;
 	const char* description;
 	std::vector<IEccoScriptSystem::ScriptArgType> required_args;
+	size_t min_args = 0;
 	std::string args_str;
 	std::string symbol;
 	IEccoScriptSystem::fnFunc callback;
@@ -113,7 +114,8 @@ void CEccoScriptSystem::Reset(){
 // TCL命令处理器 - 公共逻辑提取
 int CEccoScriptSystem::TclCommandHandler(ClientData clientData, Tcl_Interp* interp, int argc, const char* argv[]) {
 	CScriptCmd* cmd = static_cast<CScriptCmd*>(clientData);
-	if (argc - 1 != (int)cmd->required_args.size()) {
+	const size_t given_args = static_cast<size_t>(argc - 1);
+	if (given_args < cmd->min_args || given_args > cmd->required_args.size()) {
 		Tcl_SetErrorCode(s_pTclinterp, "arguments count not match", nullptr);
 		Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
 		Tcl_AddErrorInfo(s_pTclinterp, cmd->args_str.c_str());
@@ -134,7 +136,7 @@ int CEccoScriptSystem::TclCommandHandler(ClientData clientData, Tcl_Interp* inte
 		switch (type) {
 		case IEccoScriptSystem::ScriptArgType::Int: {
 			char* endptr = nullptr;
-			long val = strtol(arg, &endptr, 10);
+			long val = strtol(arg, &endptr, 0);
 			if (*endptr != '\0') {
 				Tcl_SetErrorCode(s_pTclinterp, "Argument not match the symbol", nullptr);
 				Tcl_AddErrorInfo(s_pTclinterp, "Require argument: ");
@@ -228,6 +230,8 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 		size_t end = item.find_last_not_of(" \t");
 		if (start != std::string::npos && end != std::string::npos) {
 			std::string s = item.substr(start, end - start + 1);
+			if (s.find('=') == std::string::npos)
+				cmd->min_args++;
 			size_t space = s.find(' ');
 			if (space != std::string::npos)
 				split.push_back(s.substr(0, space));
