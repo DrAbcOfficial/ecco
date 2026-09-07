@@ -22,18 +22,20 @@ static char s_szPkgpath[MAX_PATH] = { 0 };
 
 class CScriptCmd {
 public:
+	std::string name;
+	std::string description;
 	IEccoScriptSystem* interface;
-	const char* name;
-	const char* description;
+	const char* symbol;
 	std::vector<IEccoScriptSystem::ScriptArgType> required_args;
 	size_t min_args = 0;
 	std::string args_str;
-	std::string symbol;
 	IEccoScriptSystem::fnFunc callback;
 	void* user_args;
 };
 
-static std::map<const char*, CScriptCmd*> s_mapCommands{};
+//以命令名内容为 key（不要用 const char* 裸指针做 key：指针比较会让
+//RemoveCommand 无法按名命中，调用方传临时缓冲时 key 还会悬垂）
+static std::map<std::string, CScriptCmd*> s_mapCommands{};
 
 std::vector<std::string> GetTCLCommandsDoc() {
 	std::vector<std::string> docs;
@@ -210,7 +212,7 @@ int CEccoScriptSystem::TclCommandHandler(ClientData clientData, Tcl_Interp* inte
 
 void CEccoScriptSystem::ReregisterCommands(){
 	for (const auto& [name, cmd] : s_mapCommands) {
-		Tcl_CreateCommand(s_pTclinterp, name, TclCommandHandler, cmd, nullptr);
+		Tcl_CreateCommand(s_pTclinterp, name.c_str(), TclCommandHandler, cmd, nullptr);
 	}
 }
 
@@ -260,6 +262,12 @@ void CEccoScriptSystem::CreateCommand(const char* name, const char* symbol, cons
 		}
 	}
 
+	//同名命令重复注册时先移除旧条目，避免旧 CScriptCmd 泄漏
+	auto it = s_mapCommands.find(name);
+	if (it != s_mapCommands.end()) {
+		delete it->second;
+		s_mapCommands.erase(it);
+	}
 	Tcl_CreateCommand(s_pTclinterp, name, TclCommandHandler, cmd, nullptr);
 	s_mapCommands.emplace(name, cmd);
 }

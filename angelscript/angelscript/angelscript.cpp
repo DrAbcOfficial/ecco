@@ -105,6 +105,8 @@ private:
 public:
 	void CleanTCLFuncs() {
 		for (auto f : as_tcl_funcs) {
+			//归还注册时 AddRef 的脚本函数引用
+			reinterpret_cast<asIScriptFunction*>(f->asfunc)->Release();
 			delete f;
 		}
 		as_tcl_funcs.clear();
@@ -129,11 +131,17 @@ public:
 	}
 
 	void RegisterEccoScriptFunction(CString* name, CString* args, CString* description, aslScriptFunction* asfunc) {
+		//同名重复注册时先注销旧条目，避免 TCL 命令表里泄漏旧 CScriptCmd
+		UnregisterEccoScriptFunction(name);
 		as_tcl_funcs_s* func = new as_tcl_funcs_s();
 		strncpy(func->name, name->c_str(), sizeof(func->name) - 1);
 		strncpy(func->args, args->c_str(), sizeof(func->args) - 1);
 		strncpy(func->description, description->c_str(), sizeof(func->description) - 1);
-		func->asfunc = asfunc;
+		//传入的 funcdef 是借用引用：这里 AddRef 固定脚本函数生命周期，
+		//否则注册方模块卸载后，TCL 命令执行 Prepare(as_func) 就是悬垂指针
+		auto as_func = reinterpret_cast<asIScriptFunction*>(asfunc);
+		as_func->AddRef();
+		func->asfunc = as_func;
 		as_tcl_funcs.push_back(func);
 		g_pScriptSystem->CreateCommand(func->name, func->args, func->description, [](IEccoScriptSystem* interp, int argc, IEccoScriptSystem::ScriptContent* const* argv, void* user_args) {
 			int index = argv[0]->intValue;
@@ -195,6 +203,8 @@ public:
 		for (auto it = as_tcl_funcs.begin(); it != as_tcl_funcs.end(); it++) {
 			if (strcmp((*it)->name, name->c_str()) == 0) {
 				g_pScriptSystem->RemoveCommand((*it)->name);
+				//归还注册时 AddRef 的脚本函数引用
+				reinterpret_cast<asIScriptFunction*>((*it)->asfunc)->Release();
 				delete (*it);
 				as_tcl_funcs.erase(it);
 				break;
@@ -209,7 +219,8 @@ public:
 		constexpr size_t TEMP_STR_LEN = 512;
 		char temp[TEMP_STR_LEN];
 		g_pEccoFuncs->GetTranslation(pent, code->c_str(), temp);
-		dest->assign(temp, TEMP_STR_LEN);
+		temp[TEMP_STR_LEN - 1] = '\0';
+		dest->assign(temp, strlen(temp));
 	}
 };
 CEccoFunc g_pASEccoFunc;
