@@ -129,8 +129,15 @@ namespace EccoMetaUtility{
 #define SERVER_PASS_DUMMYARG
 #endif
         using PrecacheFunc = void (SERVER_DECL*)(void* pThis SERVER_DUMMYARG);
+        //PrecacheOffset 来自 Config.toml，越界或负值会把随机内存当函数指针调用
+        const int precache_offset = GetEccoConfig()->PrecacheOffset;
+        if (precache_offset < 0 || precache_offset > 128) {
+            ALERT(at_console, "Invalid Ecco PrecacheOffset config: %d\n", precache_offset);
+            REMOVE_ENTITY(pent);
+            return;
+        }
         char** vtable = *reinterpret_cast<char***>(pEntity);
-        PrecacheFunc pfnPrecache = reinterpret_cast<PrecacheFunc>(vtable[(GetEccoConfig()->PrecacheOffset * 8)]);
+        PrecacheFunc pfnPrecache = reinterpret_cast<PrecacheFunc>(vtable[(precache_offset * 8)]);
         if (pfnPrecache)
             pfnPrecache(pEntity SERVER_PASS_DUMMYARG);
         REMOVE_ENTITY(pent);

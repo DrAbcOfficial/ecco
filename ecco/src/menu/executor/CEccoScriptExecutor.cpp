@@ -12,6 +12,11 @@ void CEccoScriptExecutor::Excute(edict_t* pPlayer, int selection){
         m_pParent->Excute(pPlayer, selection);
 
     auto storage = GetPlayerStorageItem(pPlayer);
+    //存储条目缺失（未进服/断线竞态）时跳过扣费流程，不能解引用空指针
+    if (!storage) {
+        CBaseEccoExecutor::Excute(pPlayer, selection);
+        return;
+    }
     int remain = storage->GetCredits();
     if(remain < m_iCost){
 		ClientPrintfTranslation(pPlayer, ClientPrintTarget::Talk, "not_enough_credits", 

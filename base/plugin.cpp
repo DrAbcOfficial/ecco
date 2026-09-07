@@ -349,7 +349,7 @@ class CEccoPlugin : public IEccoPlugin {
 			return IEccoScriptSystem::Result::Error;
 		}
 		CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pent->pvPrivateData);
-		if (!pPlayer->IsPlayer()) {
+		if (!pPlayer || !pPlayer->IsPlayer()) {
 			interp->ThrowError("NULL ent", "Try to respawn is NOT a player!");
 			return IEccoScriptSystem::Result::Error;
 		}

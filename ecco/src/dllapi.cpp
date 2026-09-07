@@ -75,7 +75,8 @@ static void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax) {
 
 	std::string icon = "sprites/" +  GetEccoConfig()->Path.MoneyIcon;
 	static char icon_perment[MAX_PATH] = { 0 };
-	strcpy(icon_perment, icon.c_str());
+	strncpy(icon_perment, icon.c_str(), sizeof(icon_perment) - 1);
+	icon_perment[sizeof(icon_perment) - 1] = '\0';
 	PRECACHE_MODEL(icon_perment);
 	PRECACHE_GENERIC(icon_perment);
 	StorageServerActivateHandle();
@@ -293,17 +294,21 @@ static void CvarValue2(const edict_t* pEnt, int requestID, const char* cvarName,
 	if (!strcmp(value, "Bad CVAR request") || !strcmp(value, "Bad Player")) {
 		RETURN_META(MRES_IGNORED);
 	}
-	if(requestID > QUERY_CVAR_CONST) {
-		int index = requestID - QUERY_CVAR_CONST;
-		edict_t* pent = INDEXENT(index);
-		if (FNullEnt(pent)) {
-			RETURN_META(MRES_IGNORED);
+		if(requestID > QUERY_CVAR_CONST) {
+			int index = requestID - QUERY_CVAR_CONST;
+			edict_t* pent = INDEXENT(index);
+			if (FNullEnt(pent)) {
+				RETURN_META(MRES_IGNORED);
+			}
+			auto item = GetPlayerStorageItem(pent);
+			//cvar 查询是异步应答，玩家断线后条目已删除，此处可能为空
+			if (!item) {
+				RETURN_META(MRES_IGNORED);
+			}
+			item->SetLang(value);
+			item->SaveData();
+			RETURN_META(MRES_HANDLED);
 		}
-		auto item = GetPlayerStorageItem(pent);
-		item->SetLang(value);
-		item->SaveData();
-		RETURN_META(MRES_HANDLED);
-	}
 	SET_META_RESULT(MRES_IGNORED);
 }
 

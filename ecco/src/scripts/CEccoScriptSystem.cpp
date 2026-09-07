@@ -55,8 +55,11 @@ CEccoScriptSystem::CEccoScriptSystem(){
 
 	auto tclPath = std::filesystem::path(EccoMetaUtility::GetGameDir());
 	tclPath.append("addons/ecco/tcl");
-	strncpy(s_szLibpath, (tclPath.string() + "/lib").c_str(), MAX_PATH);
-	strncpy(s_szPkgpath, (tclPath.string() + "/pkg").c_str(), MAX_PATH);
+	//拷满 MAX_PATH 时 strncpy 不写终止符，与 Reset() 一样留一位手动补 0
+	strncpy(s_szLibpath, (tclPath.string() + "/lib").c_str(), sizeof(s_szLibpath) - 1);
+	s_szLibpath[sizeof(s_szLibpath) - 1] = '\0';
+	strncpy(s_szPkgpath, (tclPath.string() + "/pkg").c_str(), sizeof(s_szPkgpath) - 1);
+	s_szPkgpath[sizeof(s_szPkgpath) - 1] = '\0';
 
 	Tcl_SetVar(s_pTclinterp, "tcl_library", s_szLibpath, TCL_GLOBAL_ONLY);
 	Tcl_SetVar(s_pTclinterp, "tcl_pkgPath", s_szPkgpath, TCL_GLOBAL_ONLY);
@@ -312,7 +315,10 @@ void CEccoScriptSystem::SetDictValue(Object* dict, const char* key, Object* valu
 }
 IEccoScriptSystem::Object* CEccoScriptSystem::GetDictValue(Object* dict, const char* key){
 	Tcl_Obj* value = nullptr;
-	int result = Tcl_DictObjGet(s_pTclinterp, static_cast<Tcl_Obj*>(dict), Tcl_NewStringObj(key, -1), &value);
+	//Tcl_DictObjGet 不会接管 key 对象，用完必须归还引用，否则每次查询泄漏一个 Tcl_Obj
+	Tcl_Obj* keyObj = Tcl_NewStringObj(key, -1);
+	int result = Tcl_DictObjGet(s_pTclinterp, static_cast<Tcl_Obj*>(dict), keyObj, &value);
+	Tcl_DecrRefCount(keyObj);
 	if (result != TCL_OK || value == nullptr) {
 		return nullptr;
 	}

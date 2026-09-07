@@ -68,6 +68,8 @@ static CEccoClientCommand reload("reload", "reload all script", ADMIN_LEVEL::ADM
 static CEccoClientCommand setlang("lang", "set language", ADMIN_LEVEL::NONE, { CEccoCmdArgSet("language", true) }, [](edict_t* caller, CEccoClientCommand* pThis, bool talk, const std::vector<std::string>& args) -> bool {
     if (args.size() == 0) {
         auto item = GetPlayerStorageItem(caller);
+        if (!item)
+            return false;
         pThis->PrintMessageByFrom(caller, talk, item->GetLang());
         return true;
     }
@@ -83,6 +85,8 @@ static CEccoClientCommand setlang("lang", "set language", ADMIN_LEVEL::NONE, { C
         return false;
 	}
     auto item = GetPlayerStorageItem(caller);
+    if (!item)
+        return false;
     item->SetLang(target_lang.c_str());
     pThis->PrintTranslatedMessageByFrom(caller, talk, "ecco_lang_success");
     return true;
@@ -93,6 +97,8 @@ static CEccoClientCommand help("help", "list all commands", ADMIN_LEVEL::NONE, [
     std::string buffer = std::format(HELP_FORMAT, "Command", "Description", "Usage");
     pThis->PrintMessageByFrom(caller, talk, buffer.c_str());
     auto storage = GetPlayerStorageItem(caller);
+    if (!storage)
+        return false;
     for (auto& cmd : s_mapRegistedClientCmdMap) {
         auto& item = cmd.second;
         if (item->GetAdminLevel() > storage->GetAdminLevel())

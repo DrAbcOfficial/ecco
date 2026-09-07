@@ -41,7 +41,9 @@ std::vector<std::string>& GetAvaliableLangs() {
 
 
 std::string GetTranslation(edict_t* player, std::string key){
-	std::string player_lang = GetPlayerStorageItem(player)->GetLang();
+	//玩家尚未建立存储（未进服/断线竞态）时退回默认语言，而不是解引用空指针
+	auto storage = GetPlayerStorageItem(player);
+	std::string player_lang = storage ? std::string(storage->GetLang()) : GetEccoConfig()->DefaultLang;
     auto user_it = s_mapUserTranslations.find(player_lang);
     if (user_it == s_mapUserTranslations.end())
         user_it = s_mapUserTranslations.find(GetEccoConfig()->DefaultLang);
@@ -104,6 +106,9 @@ void LoadTranslations(){
                     for (auto tb = config.begin(); tb != config.end(); tb++) {
                         std::string key(tb->first);
                         auto terverse = config[key].as_table();
+                        //顶层出现非表值时 as_table 返回空，跳过而不是解引用
+                        if (!terverse)
+                            continue;
                         for (auto iter = terverse->begin(); iter != terverse->end(); iter++) {
                             lang_pair_t* lang_pair = new lang_pair_t();
                             lang_pair->key = iter->first;
@@ -114,6 +119,10 @@ void LoadTranslations(){
                 }
                 else {
                     auto terverse = config["Lang"].as_table();
+                    if (!terverse) {
+                        LOG_ERROR(PLID, "Lang file %s.toml has no [Lang] table, skipped", lang_name.c_str());
+                        continue;
+                    }
                     for (auto iter = terverse->begin(); iter != terverse->end(); iter++) {
                         lang_pair_t* lang_pair = new lang_pair_t();
                         lang_pair->key = iter->first;

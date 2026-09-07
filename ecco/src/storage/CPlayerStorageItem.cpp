@@ -22,7 +22,8 @@ CPlayerStorageItem::CPlayerStorageItem(edict_t* pent)
 	if (!pent)
 		return;
 	const std::string steamId = GetPlayerSteamId(pent);
-	strcpy(m_saveData.SteamId, steamId.c_str());
+	strncpy(m_saveData.SteamId, steamId.c_str(), sizeof(m_saveData.SteamId) - 1);
+	m_saveData.SteamId[sizeof(m_saveData.SteamId) - 1] = '\0';
 	std::filesystem::path storagePath(GetGameDir());
 	storagePath /= "addons/ecco/";
 	storagePath /= GetEccoConfig()->Path.Data;
@@ -152,10 +153,11 @@ const char* CPlayerStorageItem::GetLang(){
 
 void CPlayerStorageItem::SetLang(const char* lang){
 	auto& langs = GetAvaliableLangs();
-	if (std::find(langs.begin(), langs.end(), lang) == langs.end())
-		strncpy(m_saveData.Lang, GetEccoConfig()->DefaultLang.c_str(), sizeof(m_saveData.Lang));
-	else
-		strncpy(m_saveData.Lang, lang, sizeof(m_saveData.Lang));
+	//strncpy 拷满时不写终止符，必须留一位手动补 0，否则 GetLang 会读越界
+	const char* target = (std::find(langs.begin(), langs.end(), lang) != langs.end())
+		? lang : GetEccoConfig()->DefaultLang.c_str();
+	strncpy(m_saveData.Lang, target, sizeof(m_saveData.Lang) - 1);
+	m_saveData.Lang[sizeof(m_saveData.Lang) - 1] = '\0';
 }
 
 ADMIN_LEVEL CPlayerStorageItem::GetAdminLevel() const{

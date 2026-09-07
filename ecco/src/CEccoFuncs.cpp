@@ -40,6 +40,9 @@ IPlayerStorageItem* CEccoFuncs::GetPlayerItem(int index){
 
 IEccoBaseExcutor* CEccoFuncs::GetMenuExcutor(int index){
 	extern std::vector<CBaseEccoExecutor*> g_aryEccoMenuExecutors;
+	//索引来自脚本/插件输入，越界会读到野指针
+	if (index < 0 || static_cast<size_t>(index) >= g_aryEccoMenuExecutors.size())
+		return nullptr;
 	return g_aryEccoMenuExecutors[index];
 }
 
