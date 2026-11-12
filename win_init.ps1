@@ -43,8 +43,8 @@ if ($args.Count -ge 1) {
         $metaInclude = "./mmlib/include/metamod"
         $gameDefine = "_META_5_13"
     } elseif ($versionChoice -eq "2") {
-        $version = "5:16"
-        $metaInclude = "./metamod/metamod"
+        $version = "5:17"
+        $metaInclude = "./metamod/metamod/include"
         $gameDefine = "_META_5_18"
     } else {
         Write-Host "Invalid version parameter: $versionChoice"
@@ -55,7 +55,7 @@ if ($args.Count -ge 1) {
     # 没有参数，使用交互式选择
     Write-Host "`nChose metamod version:"
     Write-Host "1. 5:13（metamod-p metamod-r）"
-    Write-Host "2. 5:16（metamod-fallguys）"
+    Write-Host "2. 5:17（metamod-svencoop）"
 
     do {
         $versionChoice = Read-Host "Chose (1 or 2)"
@@ -64,8 +64,8 @@ if ($args.Count -ge 1) {
             $metaInclude = "./mmlib/include/metamod"
             $gameDefine = "_META_5_13"
         } elseif ($versionChoice -eq "2") {
-            $version = "5:16"
-            $metaInclude = "./metamod/metamod"
+            $version = "5:17"
+            $metaInclude = "./metamod/metamod/include"
             $gameDefine = "_META_5_18"
         } else {
             Write-Host "Invalid, 1 or 2"
