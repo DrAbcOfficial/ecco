@@ -96,10 +96,11 @@ set(HEADER_FILES
 )
 
 set(INCLUDE_DIRS
-    ./metamod/hlsdk/common
-    ./metamod/hlsdk/dlls
-    ./metamod/hlsdk/pm_shared
-    ./metamod/hlsdk/engine
+    ./metamod/metamod/include/HLSDK/common
+    ./metamod/metamod/include/HLSDK/dlls
+    ./metamod/metamod/include/HLSDK/pm_shared
+    ./metamod/metamod/include/HLSDK/engine
+    ./metamod/metamod/include
     ./mmlib/src
     ./tcl/build/include
     ./include

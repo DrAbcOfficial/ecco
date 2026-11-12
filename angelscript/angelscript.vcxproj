@@ -88,7 +88,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./metamod/metamod;./metamod/hlsdk/engine;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/common;./metamod/asext/include;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./metamod/metamod/include;./metamod/metamod/include/HLSDK/engine;./metamod/metamod/include/HLSDK/dlls;./metamod/metamod/include/HLSDK/pm_shared;./metamod/metamod/include/HLSDK/common;./metamod/asext/include;./metamod/thirdparty/angelscript-sdk/angelscript/include;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -109,7 +109,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./metamod/metamod;./metamod/hlsdk/engine;./metamod/hlsdk/dlls;./metamod/hlsdk/pm_shared;./metamod/hlsdk/common;./metamod/asext/include;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./metamod/metamod/include;./metamod/metamod/include/HLSDK/engine;./metamod/metamod/include/HLSDK/dlls;./metamod/metamod/include/HLSDK/pm_shared;./metamod/metamod/include/HLSDK/common;./metamod/asext/include;./metamod/thirdparty/angelscript-sdk/angelscript/include;../ecco/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>

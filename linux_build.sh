@@ -7,7 +7,7 @@ else
     # 显示版本选择菜单
     echo "Choose MeatMod Version："
     echo "1) 5.13 (metamod-p, metamod-r)"
-    echo "2) 5.16 (metamod-fallguys)"
+    echo "2) 5.17 (metamod-svencoop)"
 
     # 读取用户输入
     read -p "Choose (1 or 2)：" version_choice
@@ -28,8 +28,8 @@ case $version_choice in
         META_VERSION="_META_5_13"
         ;;
     2)
-        echo "Selected version: 5.18 (metamod-fallguys)"
-        META_INCLUDE="./metamod/metamod"
+        echo "Selected version: 5.17 (metamod-svencoop)"
+        META_INCLUDE="./metamod/metamod/include"
         META_VERSION="_META_5_18"
         ;;
 esac

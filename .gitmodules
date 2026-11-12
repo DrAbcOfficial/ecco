@@ -1,6 +1,6 @@
 [submodule "ecco/metamod"]
 	path = ecco/metamod
-	url = https://github.com/hzqst/metamod-fallguys
+	url = https://github.com/metamod-svencoop/metamod-svencoop.git
 [submodule "ecco/mmlib"]
 	path = ecco/mmlib
 	url = https://github.com/DrAbcOfficial/mmlib
@@ -15,4 +15,4 @@
 	url = https://github.com/tcltk/tcl
 [submodule "angelscript/metamod"]
 	path = angelscript/metamod
-	url = https://github.com/hzqst/metamod-fallguys
+	url = https://github.com/metamod-svencoop/metamod-svencoop.git

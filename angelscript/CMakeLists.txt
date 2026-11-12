@@ -60,12 +60,13 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<CONFIG:Release>:NDEBUG>
 )
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ./metamod/metamod
-    ./metamod/hlsdk/engine
-    ./metamod/hlsdk/dlls
-    ./metamod/hlsdk/pm_shared
-    ./metamod/hlsdk/common
+    ./metamod/metamod/include
+    ./metamod/metamod/include/HLSDK/engine
+    ./metamod/metamod/include/HLSDK/dlls
+    ./metamod/metamod/include/HLSDK/pm_shared
+    ./metamod/metamod/include/HLSDK/common
     ./metamod/asext/include
+    ./metamod/thirdparty/angelscript-sdk/angelscript/include
     ../ecco/include
 )
 target_compile_options(${PROJECT_NAME} PRIVATE

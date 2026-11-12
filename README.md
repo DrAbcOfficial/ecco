@@ -8,7 +8,7 @@ Ecco is a complete economy & buy menu plugin mainly aimed Sven Co-op 5.x, It is 
 
 ##  1. <a name='Install'></a>Install
 
-1. install metamod-p or metamod-r or metamod-fallguys
+1. install metamod-p or metamod-r or metamod-svencoop
 2. grab ecco binary from action or release or build by yourslef
 3. edit `(GAME_FOLDER)/addons/metamod/plugins.ini`
 4. add 
